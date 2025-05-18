@@ -1,0 +1,3 @@
+function Collectiegevel() {
+  // Template code
+}

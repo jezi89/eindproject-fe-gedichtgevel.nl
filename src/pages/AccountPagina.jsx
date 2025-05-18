@@ -1,0 +1,3 @@
+function AccountPagina() {
+  // Template code
+}

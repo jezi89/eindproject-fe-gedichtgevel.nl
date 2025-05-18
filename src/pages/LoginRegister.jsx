@@ -1,0 +1,3 @@
+function LoginRegister() {
+  // Template code
+}
