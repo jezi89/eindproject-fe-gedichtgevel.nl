@@ -1,0 +1,257 @@
+/**
+ * @file _typography.scss
+ * @description Typografische stijlen en lettertype-definities voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables.scss
+ * @exports Typografische regels en hulpklassen
+ */
+
+/* ======================================================= 
+ * TYPOGRAFIE
+ * ======================================================= 
+ * Hier definiëren we alles wat met tekst te maken heeft:
+ * Lettertypefamilies, groottes (schalen), gewichten,
+ * lijnhoogtes, letterafstand. Gebruik altijd de onderstaande 
+ * variabelen voor consistentie binnen de gehele "Gedichtgevel" applicatie.
+ */
+
+/* ------------------------------------------------------- 
+ * TYPOGRAFISCHE ELEMENTEN
+ * ------------------------------------------------------- 
+ * Standaardstijlen voor:
+ * Koppen (h1-h6), bodytekst (p, ul, ol, li), links,
+ * speciale tekstcomponenten, gedichtspecifieke typografie
+ */
+
+/* Koppen (h1-h6)
+ * Hiërarchie van gedachten,
+ * Elk niveau vertelt zijn eigen verhaal,
+ * Richting in de chaos van tekst
+ */
+@mixin heading-base {
+  font-family: $font-family-section-heading;
+  font-weight: $font-weight-bold;
+  margin-bottom: 0.75em;
+  line-height: 1.2;
+  color: var(--color-text-heading);
+}
+
+h1, .h1 {
+  @include heading-base;
+  font-family: $font-family-title;
+  font-size: $font-size-xxxl;
+
+  // Alternatieve styling met klasse
+  &.alternative {
+    color: var(--color-text-heading-alt);
+  }
+}
+
+h2, .h2 {
+  @include heading-base;
+  font-size: $font-size-xxl;
+}
+
+h3, .h3 {
+  @include heading-base;
+  font-size: $font-size-xl;
+}
+
+h4, .h4 {
+  @include heading-base;
+  font-size: $font-size-l;
+}
+
+h5, .h5 {
+  @include heading-base;
+  font-size: $font-size-m;
+}
+
+h6, .h6 {
+  @include heading-base;
+  font-size: $font-size-s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Bodytekst
+ * Het canvas van gedachten,
+ * Woorden die samen dansen,
+ * De essentie van communicatie
+ */
+body {
+  font-family: $font-family-body;
+  font-size: $font-size-s;
+  line-height: $line-height-normal;
+  font-weight: $font-weight-regular;
+  color: var(--color-text-primary);
+}
+
+p {
+  margin-bottom: 1rem;
+
+  &.lead {
+    font-size: $font-size-m;
+    font-weight: $font-weight-semibold;
+  }
+
+  &.small {
+    font-size: $font-size-xs;
+  }
+}
+
+/* Links
+ * Bruggen tussen gedachten,
+ * Onzichtbare paden door tekst,
+ * Interactieve poëzie
+ */
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: var(--color-accent);
+  }
+
+  &.inverse {
+    color: var(--color-text-link-inverse);
+
+    &:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Lijsten
+ * Geordende gedachten,
+ * Punten van aandacht,
+ * Structuur in veelheid
+ */
+ul, ol {
+  margin: 0 0 1rem 1.25rem;
+  
+  li {
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Gedicht-specifieke typografie
+ * Vormgeving voor onze kerncontent,
+ * Elk gedicht een kunststuk,
+ * Typografie als canvas
+ */
+.poem {
+  font-family: $font-family-body;
+  line-height: $line-height-bigger;
+  white-space: pre-wrap;
+  
+  // Varianten
+  &-title {
+    font-family: $font-family-title;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: 1rem;
+  }
+
+  &-author {
+    font-family: $font-family-section-heading;
+    font-size: $font-size-m;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+
+  &-body {
+    font-size: $font-size-m;
+  }
+
+  // Voor dyslectische gebruikers
+  &-dyslexic {
+    font-family: "OpenDyslexic", $font-family-body;
+    line-height: $line-height-dislectic;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * HULPKLASSEN
+ * ------------------------------------------------------- 
+ * Utility classes voor typografie: Fontgewichten,
+ * tekststijlen (italic, underline), uitlijning,
+ * tekstaanpassingen (capitalization, etc.)
+ */
+
+/* Tekststijlen */
+.italic {
+  font-style: italic;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.break-words {
+  word-break: break-word;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+/* ------------------------------------------------------- 
+ * RESPONSIEVE TYPOGRAFIE
+ * ------------------------------------------------------- 
+ * Aanpassingen voor verschillende schermformaten:
+ * Mobile-first schalen
+ * Breakpoint-specifieke aanpassingen
+ * Fluid typography voor naadloze ervaring
+ */
+
+/* Fluid typografie */
+@mixin fluid-type($min-font-size, $max-font-size, $min-screen-width, $max-screen-width) {
+  font-size: $min-font-size;
+  
+  @media screen and (min-width: $min-screen-width) {
+    font-size: calc(#{$min-font-size} + #{($max-font-size - $min-font-size)} * ((100vw - #{$min-screen-width}) / #{($max-screen-width - $min-screen-width)}));
+  }
+
+  @media screen and (min-width: $max-screen-width) {
+    font-size: $max-font-size;
+  }
+}
+
+/* Breakpoint specifieke aanpassingen */
+@media (min-width: 768px) {
+  h1, .h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2, .h2 {
+    font-size: 2.75rem;
+  }
+  
+  .poem-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 1.125rem;
+  }
+  
+  .poem-body {
+    font-size: 1.375rem;
+  }
+}

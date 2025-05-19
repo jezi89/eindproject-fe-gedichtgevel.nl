@@ -1,0 +1,391 @@
+/**
+ * @file _utilities.scss
+ * @description Hulpklassen voor snelle styling en layout-aanpassingen in "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables, _mixins
+ * @exports Herbruikbare utility classes
+ */
+
+/* ======================================================= 
+ * UTILITIES
+ * ======================================================= 
+ * Verzameling van kleine, doelgerichte hulpklassen die één specifieke stijleigenschap toepassen.
+ * Gebruikt voor snelle aanpassingen zonder custom CSS te schrijven.
+ */
+
+@import './variables';
+@import './mixins';
+
+/* ------------------------------------------------------- 
+ * SPACING UTILITIES
+ * ------------------------------------------------------- 
+ * Klassen voor consistente spacing (margin/padding).
+ * Naamgeving: [property][direction]-[size]
+ * voorbeeld: .mt-md = margin-top: $spacing-m;
+ */
+
+// Margin utilities
+.m-0 { margin: 0; }
+.mt-0 { margin-top: 0; }
+.mr-0 { margin-right: 0; }
+.mb-0 { margin-bottom: 0; }
+.ml-0 { margin-left: 0; }
+
+.m-xs { margin: $spacing-xs; }
+.mt-xs { margin-top: $spacing-xs; }
+.mr-xs { margin-right: $spacing-xs; }
+.mb-xs { margin-bottom: $spacing-xs; }
+.ml-xs { margin-left: $spacing-xs; }
+
+.m-s { margin: $spacing-s; }
+.mt-s { margin-top: $spacing-s; }
+.mr-s { margin-right: $spacing-s; }
+.mb-s { margin-bottom: $spacing-s; }
+.ml-s { margin-left: $spacing-s; }
+
+.m-m { margin: $spacing-m; }
+.mt-m { margin-top: $spacing-m; }
+.mr-m { margin-right: $spacing-m; }
+.mb-m { margin-bottom: $spacing-m; }
+.ml-m { margin-left: $spacing-m; }
+
+.m-l { margin: $spacing-l; }
+.mt-l { margin-top: $spacing-l; }
+.mr-l { margin-right: $spacing-l; }
+.mb-l { margin-bottom: $spacing-l; }
+.ml-l { margin-left: $spacing-l; }
+
+.m-xl { margin: $spacing-xl; }
+.mt-xl { margin-top: $spacing-xl; }
+.mr-xl { margin-right: $spacing-xl; }
+.mb-xl { margin-bottom: $spacing-xl; }
+.ml-xl { margin-left: $spacing-xl; }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.my-auto { margin-top: auto; margin-bottom: auto; }
+
+// Padding utilities
+.p-0 { padding: 0; }
+.pt-0 { padding-top: 0; }
+.pr-0 { padding-right: 0; }
+.pb-0 { padding-bottom: 0; }
+.pl-0 { padding-left: 0; }
+
+.p-xs { padding: $spacing-xs; }
+.pt-xs { padding-top: $spacing-xs; }
+.pr-xs { padding-right: $spacing-xs; }
+.pb-xs { padding-bottom: $spacing-xs; }
+.pl-xs { padding-left: $spacing-xs; }
+
+.p-s { padding: $spacing-s; }
+.pt-s { padding-top: $spacing-s; }
+.pr-s { padding-right: $spacing-s; }
+.pb-s { padding-bottom: $spacing-s; }
+.pl-s { padding-left: $spacing-s; }
+
+.p-m { padding: $spacing-m; }
+.pt-m { padding-top: $spacing-m; }
+.pr-m { padding-right: $spacing-m; }
+.pb-m { padding-bottom: $spacing-m; }
+.pl-m { padding-left: $spacing-m; }
+
+.p-l { padding: $spacing-l; }
+.pt-l { padding-top: $spacing-l; }
+.pr-l { padding-right: $spacing-l; }
+.pb-l { padding-bottom: $spacing-l; }
+.pl-l { padding-left: $spacing-l; }
+
+.p-xl { padding: $spacing-xl; }
+.pt-xl { padding-top: $spacing-xl; }
+.pr-xl { padding-right: $spacing-xl; }
+.pb-xl { padding-bottom: $spacing-xl; }
+.pl-xl { padding-left: $spacing-xl; }
+
+/* ------------------------------------------------------- 
+ * TEXT STYLING UTILITIES
+ * ------------------------------------------------------- 
+ * Algemene tekststijlen, gewichten, groottes en uitlijning 
+ * zonder semantiek (puur voor visuele styling).
+ */
+
+// Uitlijning
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Tekengrootte
+.text-xs { font-size: $font-size-xs; }
+.text-s { font-size: $font-size-s; }
+.text-m { font-size: $font-size-m; }
+.text-l { font-size: $font-size-l; }
+.text-xl { font-size: $font-size-xl; }
+.text-xxl { font-size: $font-size-xxl; }
+
+// Lettergewicht
+.font-regular { font-weight: $font-weight-regular; }
+.font-semibold { font-weight: $font-weight-semibold; }
+.font-bold { font-weight: $font-weight-bold; }
+.font-extrabold { font-weight: $font-weight-extrabold; }
+
+// Letterfamilies
+.font-title { font-family: $font-family-title; }
+.font-heading { font-family: $font-family-section-heading; }
+.font-body { font-family: $font-family-body; }
+.font-special { font-family: $font-family-bigger-body-special; }
+.font-ui { font-family: $font-family-nav-item; }
+
+// Teksttransformatie
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+// Tekstdecoratie
+.underline { text-decoration: underline; }
+.no-underline { text-decoration: none; }
+.line-through { text-decoration: line-through; }
+
+// Tekstkleur
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-tertiary { color: $text-tertiary; }
+.text-inverse { color: $text-inverse; }
+.text-heading { color: $text-heading; }
+.text-link { color: $text-link; }
+
+/* ------------------------------------------------------- 
+ * DISPLAY & VISIBILITY
+ * ------------------------------------------------------- 
+ * Klassen voor het regelen van weergave-eigenschappen 
+ * en zichtbaarheid van elementen.
+ */
+
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.d-none { display: none; }
+
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+.opacity-0 { opacity: 0; }
+.opacity-25 { opacity: 0.25; }
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+/* ------------------------------------------------------- 
+ * FLEX UTILITIES
+ * ------------------------------------------------------- 
+ * Hulpklassen voor flexbox layout configuraties.
+ */
+
+.flex-row { flex-direction: row; }
+.flex-column { flex-direction: column; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-column-reverse { flex-direction: column-reverse; }
+
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.items-stretch { align-items: stretch; }
+
+.self-start { align-self: flex-start; }
+.self-end { align-self: flex-end; }
+.self-center { align-self: center; }
+.self-baseline { align-self: baseline; }
+.self-stretch { align-self: stretch; }
+
+.flex-1 { flex: 1; }
+.flex-auto { flex: auto; }
+.flex-initial { flex: initial; }
+.flex-none { flex: none; }
+
+.flex-grow { flex-grow: 1; }
+.flex-shrink { flex-shrink: 1; }
+.flex-no-grow { flex-grow: 0; }
+.flex-no-shrink { flex-shrink: 0; }
+
+/* ------------------------------------------------------- 
+ * GRID UTILITIES
+ * ------------------------------------------------------- 
+ * Hulpklassen voor CSS grid layouts.
+ */
+
+.grid-col-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-col-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-col-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-col-auto-fill { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+.gap-xs { gap: $spacing-xs; }
+.gap-s { gap: $spacing-s; }
+.gap-m { gap: $spacing-m; }
+.gap-l { gap: $spacing-l; }
+
+/* ------------------------------------------------------- 
+ * POSITION & LAYOUT
+ * ------------------------------------------------------- 
+ * Hulpklassen voor positionering van elementen.
+ */
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+.static { position: static; }
+
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+.z-auto { z-index: auto; }
+
+.w-full { width: 100%; }
+.w-half { width: 50%; }
+.w-auto { width: auto; }
+
+.h-full { height: 100%; }
+.h-half { height: 50%; }
+.h-auto { height: auto; }
+.h-screen { height: 100vh; }
+
+/* ------------------------------------------------------- 
+ * BORDERS & BACKGROUNDS
+ * ------------------------------------------------------- 
+ * Klassen voor grenzen en achtergrondstijlen.
+ */
+
+.border { border: 1px solid $border-default; }
+.border-t { border-top: 1px solid $border-default; }
+.border-r { border-right: 1px solid $border-default; }
+.border-b { border-bottom: 1px solid $border-default; }
+.border-l { border-left: 1px solid $border-default; }
+
+.border-none { border: none; }
+
+.rounded-none { border-radius: 0; }
+.rounded-sm { border-radius: $border-radius-sm; }
+.rounded-md { border-radius: $border-radius-md; }
+.rounded-lg { border-radius: $border-radius-lg; }
+.rounded-full { border-radius: 9999px; }
+
+.bg-page { background-color: $background-page; }
+.bg-card { background-color: $background-card; }
+.bg-card-alt { background-color: $background-card-alt; }
+.bg-popup { background-color: $background-popup; }
+.bg-inverse { background-color: $background-inverse; }
+.bg-transparent { background-color: transparent; }
+
+/* ------------------------------------------------------- 
+ * EFFECTEN & OVERGANGEN
+ * ------------------------------------------------------- 
+ * Hulpklassen voor animaties, transities en effecten.
+ */
+
+.shadow-none { box-shadow: none; }
+.shadow-sm { box-shadow: $shadow-sm; }
+.shadow-md { box-shadow: $shadow-md; }
+.shadow-lg { box-shadow: $shadow-lg; }
+
+.transition { transition: $transition-normal; }
+.transition-fast { transition: $transition-fast; }
+.transition-slow { transition: $transition-slow; }
+.transition-none { transition: none; }
+
+.animate-fade-in { animation: fadeIn $transition-normal forwards; }
+.animate-slide-up { animation: slideInUp $transition-normal forwards; }
+.animate-pulse { animation: pulse 2s infinite; }
+
+/* ------------------------------------------------------- 
+ * POËZIE-SPECIFIEKE UTILITIES
+ * ------------------------------------------------------- 
+ * Klassen specifiek voor poëzie-elementen.
+ */
+
+.poem-text-reveal { animation: textReveal 1.5s forwards; }
+.poem-ink-effect { animation: inkSpread 2s forwards; }
+.poem-shadow { text-shadow: $shadow-poem-text; }
+.poem-container { box-shadow: $shadow-poem-container; }
+
+/* ------------------------------------------------------- 
+ * ACCESSIBILITY
+ * ------------------------------------------------------- 
+ * Utilities voor toegankelijkheid.
+ */
+
+.sr-only { 
+  @include visually-hidden;
+}
+
+.focus-ring:focus { 
+  outline: 2px solid $accent-gold; 
+  outline-offset: 2px; 
+}
+
+.pointer { cursor: pointer; }
+.not-allowed { cursor: not-allowed; }
+
+/* ------------------------------------------------------- 
+ * RESPONSIVE UTILITIES
+ * ------------------------------------------------------- 
+ * Klassen die alleen op bepaalde schermformaten worden toegepast.
+ * Gebruikt in combinatie met responsive mixins.
+ */
+
+@include mobile-only {
+  .sm-d-none { display: none; }
+  .sm-d-block { display: block; }
+  .sm-d-flex { display: flex; }
+}
+
+@include tablet-up {
+  .md-d-none { display: none; }
+  .md-d-block { display: block; }
+  .md-d-flex { display: flex; }
+}
+
+@include desktop-up {
+  .lg-d-none { display: none; }
+  .lg-d-block { display: block; }
+  .lg-d-flex { display: flex; }
+}
+
+/* ------------------------------------------------------- 
+ * PRINT UTILITIES
+ * ------------------------------------------------------- 
+ * Hulpklassen specifiek voor printen.
+ */
+
+.print-only {
+  display: none;
+  @media print {
+    display: block;
+  }
+}
+
+.no-print {
+  @media print {
+    display: none;
+  }
+}
