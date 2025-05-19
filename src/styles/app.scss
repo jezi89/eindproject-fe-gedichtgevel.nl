@@ -1,0 +1,182 @@
+/**
+ * @file app.scss
+ * @description Hoofdstijlbestand voor de applicatie "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group App
+ * @imports _variables, _typography, _layout, _mixins, _themes
+ * @exports Samengestelde applicatiestijlen
+ */
+
+/* ======================================================= 
+ * APP STYLES
+ * ======================================================= 
+ * Structuur voor de hoofdsamenstelling van de applicatie. 
+ * Importeert alle basiscomponenten en definieert globale contextafhankelijke stijlen.
+ */
+
+// Importeer basiscomponenten
+@import './variables';
+@import './mixins';
+@import './layout';
+@import './typography';
+@import './themes';
+
+/* ------------------------------------------------------- 
+ * BODY & ROOT
+ * ------------------------------------------------------- 
+ * Basisstijlen voor het document en root element. 
+ * Definieert de basis voor de gehele applicatie.
+ */
+
+:root {
+  // CSS Custom Properties (variables)
+  --transition-standard: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-fast: 0.15s ease;
+}
+
+body {
+  font-family: $font-family-body;
+  background-color: $background-page;
+  color: $text-primary;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  
+  @include media-up($screen-md) {
+    // Responsive aanpassingen voor body op medium schermen
+  }
+}
+
+/* ------------------------------------------------------- 
+ * CONTAINER STRUCTUREN
+ * ------------------------------------------------------- 
+ * Hoofdcontainers die de basisstructuur van de pagina bepalen. 
+ * Deze vormen het skelet van de layout.
+ */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  padding: $spacing-m;
+  
+  @include media-up($screen-md) {
+    padding: $spacing-l;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * GLOBALE COMPONENTEN
+ * ------------------------------------------------------- 
+ * Stijlen voor componenten die door de gehele applicatie gebruikt worden, 
+ * zoals knoppen, kaarten en navigatie.
+ */
+
+// Buttons
+.button {
+  // Basis button styling
+  @include button-base;
+}
+
+.button-primary {
+  @include button-base($button-primary-background, $button-primary-text);
+}
+
+.button-secondary {
+  @include button-base($button-secondary-background, $button-secondary-text);
+}
+
+// Cards
+.card {
+  background-color: $card-background;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-m;
+  margin-bottom: $spacing-m;
+}
+
+.card-title {
+  font-family: $font-family-title;
+  font-size: $font-size-l;
+  margin-bottom: $spacing-xs;
+}
+
+.card-content {
+  font-family: $font-family-body;
+  font-size: $font-size-m;
+}
+
+/* ------------------------------------------------------- 
+ * THEMA SPECIFIEKE OVERSCHRIJVINGEN
+ * ------------------------------------------------------- 
+ * Overschrijvingen voor thema-specifieke weergave. 
+ * Deze worden toegepast via data-attributen of classes.
+ */
+
+[data-theme="dark"] {
+  // Overschrijvingen voor donker thema
+}
+
+[data-theme="high-contrast"] {
+  // Toegankelijkheidsoverschrijvingen voor hoog contrast
+}
+
+/* ------------------------------------------------------- 
+ * ANIMATIES & TRANSITIES
+ * ------------------------------------------------------- 
+ * Definities voor globale animaties en transities 
+ * die door de gehele applicatie worden toegepast.
+ */
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * MEDIAQUERY AANPASSINGEN
+ * ------------------------------------------------------- 
+ * Globale responsieve aanpassingen die niet in de 
+ * component-specifieke regels zijn opgenomen.
+ */
+
+@include large-desktop-up {
+  // Globale aanpassingen voor grote schermen
+}
+
+@media print {
+  // Print-specifieke stijlen
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none;
+  }
+}

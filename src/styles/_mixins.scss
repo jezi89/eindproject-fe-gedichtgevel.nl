@@ -1,0 +1,506 @@
+/**
+ * @file _mixins.scss
+ * @description Herbruikbare mixins en functies voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables.scss
+ * @exports Sass mixins en functies
+ */
+
+/* ======================================================= 
+ * MIXINS
+ * ======================================================= 
+ * Dit bestand bevat herbruikbare mixins voor het project gedichtgevel.nl
+ */
+
+/*
+ * Magie die herhaalt zonder kopie,
+ * Functies die verkorten onze typografie;
+ * Als dichters met herhalend refrein,
+ * Maken mixins onze code subliem en fijn.
+ */
+
+// @import 'variables';
+
+/* ------------------------------------------------------- 
+ * 1. TYPOGRAFIE
+ * ------------------------------------------------------- 
+ * Woorden krijgen stijl en vorm,
+ * Typografische patronen als de norm;
+ * Van headers tot fijnzinnig detail,
+ * Weven wij met letters ons verhaal.
+ */
+
+/// Mixin om gestandaardiseerde text styles toe te passen
+/// @param {Map} $style - Een map met font-family, font-size, font-weight en line-height
+@mixin text-style($style) {
+  font-family: map-get($style, font-family);
+  font-size: map-get($style, font-size);
+  font-weight: map-get($style, font-weight);
+  line-height: map-get($style, line-height);
+}
+
+/// Mixin voor leesbare, responsive tekst
+/// @param {Number} $min-size - Minimale font-size in rem
+/// @param {Number} $max-size - Maximale font-size in rem
+/// @param {Number} $min-width [320px] - Minimale viewportbreedte in pixels
+/// @param {Number} $max-width [1200px] - Maximale viewportbreedte in pixels
+@mixin fluid-type($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
+  font-size: #{$min-size}rem;
+
+  @media screen and (min-width: $min-width) {
+    font-size: calc(#{$min-size}rem + #{($max-size - $min-size)} * ((100vw - #{$min-width}) / #{($max-width - $min-width)}));
+  }
+
+  @media screen and (min-width: $max-width) {
+    font-size: #{$max-size}rem;
+  }
+}
+
+/// Mixin voor tekst die afbreekt met ellipsis
+/// @param {Number} $lines [1] - Aantal regels voordat tekst wordt afgekort
+@mixin text-truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * 2. LAYOUT & POSITIONERING
+ * ------------------------------------------------------- 
+ * De structuur waarop alles rust,
+ * Flexbox en Grid, met parameters bewust;
+ * Containers en sections, in balans gebracht,
+ * Voor layouts die ademen, met elegante pracht.
+ */
+
+/// Mixin voor absolute positionering, met optionele offsets
+/// @param {String} $top [null] - Top offset
+/// @param {String} $right [null] - Right offset
+/// @param {String} $bottom [null] - Bottom offset
+/// @param {String} $left [null] - Left offset
+@mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/// Mixin voor fixed positionering, met optionele offsets
+/// @param {String} $top [null] - Top offset
+/// @param {String} $right [null] - Right offset
+/// @param {String} $bottom [null] - Bottom offset
+/// @param {String} $left [null] - Left offset
+@mixin position-fixed($top: null, $right: null, $bottom: null, $left: null) {
+  position: fixed;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/// Mixin voor sticky positionering
+/// @param {String} $top [0] - Top offset
+/// @param {Number} $z-index [null] - Z-index waarde
+@mixin position-sticky($top: 0, $z-index: null) {
+  position: sticky;
+  top: $top;
+  @if $z-index != null {
+    z-index: $z-index;
+  }
+}
+
+/// Mixin voor centreren met absolute position
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/// Mixin voor vullen van container
+@mixin fill-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ------------------------------------------------------- 
+ * 3. FLEXBOX & GRID
+ * ------------------------------------------------------- */
+
+/// Mixin voor flexbox container
+/// @param {String} $direction [row] - Flex-direction
+/// @param {String} $justify [flex-start] - Justify-content
+/// @param {String} $align [stretch] - Align-items
+/// @param {String} $wrap [nowrap] - Flex-wrap
+@mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+/// Mixin voor flexbox child
+/// @param {Number|String} $grow [0] - Flex-grow
+/// @param {Number} $shrink [1] - Flex-shrink
+/// @param {String} $basis [auto] - Flex-basis
+@mixin flex-item($grow: 0, $shrink: 1, $basis: auto) {
+  flex: $grow $shrink $basis;
+}
+
+/// Mixin voor centreren met flexbox
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/// Mixin voor een grid container
+/// @param {String} $columns [repeat(12, 1fr)] - Grid-template-columns
+/// @param {String} $rows [auto] - Grid-template-rows
+/// @param {String} $gap [$spacing-m] - Grid-gap
+@mixin grid-container($columns: repeat(12, 1fr), $rows: auto, $gap: $spacing-m) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  gap: $gap;
+}
+
+/// Mixin voor grid item
+/// @param {Number|String} $col-start [auto] - Grid-column-start
+/// @param {Number|String} $col-end [auto] - Grid-column-end
+/// @param {Number|String} $row-start [auto] - Grid-row-start
+/// @param {Number|String} $row-end [auto] - Grid-row-end
+@mixin grid-item($col-start: auto, $col-end: auto, $row-start: auto, $row-end: auto) {
+  grid-column-start: $col-start;
+  grid-column-end: $col-end;
+  grid-row-start: $row-start;
+  grid-row-end: $row-end;
+}
+
+/// Mixin voor responsieve grid met auto-fill
+/// @param {Number} $min-width [250px] - Minimale breedte van een grid item
+/// @param {String} $gap [$spacing-m] - Grid-gap
+@mixin responsive-grid($min-width: 250px, $gap: $spacing-m) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+/* ------------------------------------------------------- 
+ * 4. RESPONSIVE DESIGN
+ * ------------------------------------------------------- 
+ * Van mobiel tot desktop, elk scherm omarmd,
+ * Responsive patronen die ons ontwerp beschermd;
+ * Media queries als verzen, vlot en klaar,
+ * Voor elk apparaat staat onze layout daar.
+ */
+
+/// Mixin voor media query naar boven
+/// @param {Number} $breakpoint - Min-width breakpoint in pixels
+@mixin media-up($breakpoint) {
+  @media screen and (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+/// Mixin voor media query naar beneden
+/// @param {Number} $breakpoint - Max-width breakpoint in pixels
+@mixin media-down($breakpoint) {
+  @media screen and (max-width: $breakpoint - 1px) {
+    @content;
+  }
+}
+
+/// Mixin voor media query tussen twee breakpoints
+/// @param {Number} $min - Min-width breakpoint in pixels
+/// @param {Number} $max - Max-width breakpoint in pixels
+@mixin media-between($min, $max) {
+  @media screen and (min-width: $min) and (max-width: $max - 1px) {
+    @content;
+  }
+}
+
+/// Presets voor veelgebruikte media queries
+@mixin mobile-only {
+  @include media-down($screen-sm) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @include media-up($screen-md) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @include media-up($screen-lg) {
+    @content;
+  }
+}
+
+@mixin large-desktop-up {
+  @include media-up($screen-xl) {
+    @content;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * 5. EFFECTEN
+ * ------------------------------------------------------- 
+ * Visuele illusies, subtiel maar sterk,
+ * Schaduwen en transities, een meesterwerk;
+ * Animaties die het oog verwennen,
+ * Effecten die het brein snel leren kennen.
+ */
+
+/// Mixin voor box shadow
+/// @param {String} $level [md] - Shadow niveau: sm, md, lg, xl, inner of none
+@mixin box-shadow($level: md) {
+  @if $level == sm {
+    box-shadow: $shadow-sm;
+  } @else if $level == md {
+    box-shadow: $shadow-md;
+  } @else if $level == lg {
+    box-shadow: $shadow-lg;
+  } @else if $level == xl {
+    box-shadow: $shadow-xl;
+  } @else if $level == inner {
+    box-shadow: $shadow-inner;
+  } @else if $level == none {
+    box-shadow: $shadow-none;
+  }
+}
+
+/// Mixin voor text shadow
+/// @param {String} $level [sm] - Shadow niveau: sm, md, lg of none
+@mixin text-shadow($level: sm) {
+  @if $level == sm {
+    text-shadow: $text-shadow-sm;
+  } @else if $level == md {
+    text-shadow: $text-shadow-md;
+  } @else if $level == lg {
+    text-shadow: $text-shadow-lg;
+  } @else if $level == none {
+    text-shadow: $text-shadow-none;
+  }
+}
+
+/// Mixin voor transitie
+/// @param {String} $property [all] - CSS property om te animeren
+/// @param {String} $duration [$transition-normal] - Duur van de transitie
+/// @param {String} $timing [$ease-default] - Timing functie
+/// @param {String} $delay [0s] - Vertraging
+@mixin transition($property: all, $duration: $transition-normal, $timing: $ease-default, $delay: 0s) {
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-timing-function: $timing;
+  transition-delay: $delay;
+}
+
+/// Mixin voor meerdere transitie properties
+/// @param {List} $transitions - Lijst van transitie strings
+@mixin transitions($transitions...) {
+  transition: $transitions;
+}
+
+/// Mixin voor glassmorphism effect
+/// @param {Color} $background [$neutral-white] - Achtergrondkleur
+/// @param {Number} $opacity [0.2] - Achtergrond-transparantie
+/// @param {Number} $blur [10px] - Blur radius
+/// @param {Number} $border-opacity [0.1] - Rand-transparantie
+@mixin glassmorphism($background: $neutral-white, $opacity: 0.2, $blur: 10px, $border-opacity: 0.1) {
+  background: rgba($background, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba($background, $border-opacity);
+}
+
+/* ------------------------------------------------------- 
+ * 6. COMPONENTEN
+ * ------------------------------------------------------- */
+
+/// Mixin voor basis buttonclass
+/// @param {Color} $bg [$button-primary-background] - Achtergrondkleur
+/// @param {Color} $color [$button-primary-text] - Tekstkleur
+/// @param {Color} $border [$button-primary-border] - Randkleur
+/// @param {Map} $text-style [$button-medium] - Tekststijl
+@mixin button-base($bg: $button-primary-background, $color: $button-primary-text, $border: $button-primary-border, $text-style: $button-medium) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xs $spacing-m;
+  border-radius: $border-radius-md;
+  border: $border-width-thin solid $border;
+  background-color: $bg;
+  color: $color;
+  cursor: pointer;
+  text-decoration: none;
+  @include text-style($text-style);
+  @include transition(all, $transition-fast, $ease-out);
+
+  &:hover {
+    background-color: darken($bg, 5%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($border, 0.5);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/// Mixin voor een kaart/card component
+/// @param {Color} $bg [$card-background] - Achtergrondkleur
+/// @param {Color} $border [$card-border] - Randkleur
+/// @param {String} $shadow [md] - Shadow niveau
+@mixin card($bg: $card-background, $border: $card-border, $shadow: md) {
+  background-color: $bg;
+  border-radius: $border-radius-md;
+  border: $border-width-thin solid $border;
+  overflow: hidden;
+  @include box-shadow($shadow);
+}
+
+/// Mixin voor input styling
+/// @param {Color} $bg [$search-background] - Achtergrondkleur
+/// @param {Color} $border [$search-border] - Randkleur
+/// @param {Color} $text [$search-text] - Tekstkleur
+/// @param {Color} $placeholder [$search-placeholder] - Placeholderkleur
+@mixin input-base($bg: $search-background, $border: $search-border, $text: $search-text, $placeholder: $search-placeholder) {
+  display: block;
+  width: 100%;
+  padding: $spacing-s $spacing-m;
+  background-color: $bg;
+  border: $border-width-thin solid $border;
+  border-radius: $border-radius-sm;
+  color: $text;
+  @include transition(border-color, $transition-fast);
+
+  &::placeholder {
+    color: $placeholder;
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $border-focus;
+    box-shadow: 0 0 0 3px rgba($border-focus, 0.2);
+  }
+}
+
+/* ------------------------------------------------------- 
+ * 7. UTILITIES
+ * ------------------------------------------------------- */
+
+/// Mixin voor het toepassen van een aspect ratio
+/// @param {Number} $width [16] - Breedte verhouding
+/// @param {Number} $height [9] - Hoogte verhouding
+@mixin aspect-ratio($width: 16, $height: 9) {
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/// Mixin voor het maken van een vierkant element
+/// @param {String} $size [100%] - Grootte van het vierkant
+@mixin square($size: 100%) {
+  width: $size;
+  height: $size;
+}
+
+/// Mixin voor het maken van een cirkelvormig element
+/// @param {String} $size [2rem] - Diameter van de cirkel
+@mixin circle($size: 2rem) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+/// Mixin voor het verwijderen van de standaard lijst styling
+@mixin list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/// Mixin voor het verwijderen van de standaard button styling
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/// Mixin voor het aanbrengen van een visually-hidden status (toegankelijkheid)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/// Mixin voor het aanbrengen van een custom scrollbar
+/// @param {Color} $track-color [$neutral-light] - Scrollbar track kleur
+/// @param {Color} $thumb-color [$neutral-mid] - Scrollbar thumb kleur
+/// @param {Number} $width [8px] - Scrollbar breedte
+@mixin custom-scrollbar($track-color: $neutral-light, $thumb-color: $neutral-mid, $width: 8px) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: $width / 2;
+    border: 2px solid $track-color;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+}

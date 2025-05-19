@@ -1,0 +1,208 @@
+/**
+ * @file _themes.scss
+ * @description Thema-definities en kleurschema's voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables.scss
+ * @exports CSS variabelen voor lichte en donkere thema's
+ */
+
+/* ======================================================= 
+ * THEMA
+ * ======================================================= 
+ * Dit bestand bevat variabelen en mixins voor verschillende thema's
+ * en modus-switching, zoals light/dark mode en speciale thema's zoals
+ * dyslexie-ondersteuning.
+ */
+
+/* ------------------------------------------------------- 
+ * 1. THEMAVARIABELEN
+ * ------------------------------------------------------- */
+
+:root {
+  // Default theme (light)
+  --color-background: #{$background-page};
+  --color-text: #{$text-primary};
+  --color-text-secondary: #{$text-secondary};
+  --color-text-inverse: #{$text-inverse};
+  --color-heading: #{$text-heading};
+  --color-link: #{$text-link};
+  --color-border: #{$border-default};
+  --color-primary: #{$primary-cognac};
+  --color-primary-light: #{$primary-light};
+  --color-secondary: #{$secondary-carribean-current};
+  --color-accent: #{$accent-gold};
+
+  // Layout
+  --spacing-unit: #{$spacing-m};
+  --border-radius: #{$border-radius-md};
+  --shadow-strength: 1;
+
+  // Typography
+  --font-family-body: #{$font-family-body};
+  --font-family-headings: #{$font-family-section-heading};
+  --font-size-base: #{$font-size-s};
+  --line-height-base: #{$line-height-normal};
+
+  // Animation
+  --transition-speed: #{$transition-normal};
+  --animation-curve: #{$ease-default};
+}
+
+/* ------------------------------------------------------- 
+ * 2. THEMA MIXINS
+ * ------------------------------------------------------- */
+
+/// Mixin voor het toepassen van donker thema
+/// Gebruikt binnen @media (prefers-color-scheme: dark) of .dark-theme
+@mixin dark-theme {
+  --color-background: #{$neutral-rich-black};
+  --color-text: #{$neutral-cream};
+  --color-text-secondary: #{$neutral-off-white};
+  --color-text-inverse: #{$neutral-darker};
+  --color-heading: #{$primary-light};
+  --color-link: #{$primary-lighter};
+  --color-border: #{$neutral-mid-dark};
+  --color-primary: #{$primary-lighter};
+  --color-primary-light: #{$primary-vibrant};
+  --color-secondary: #{$secondary-muted};
+  --color-accent: #{$accent-gold};
+
+  --shadow-strength: 0.8;
+}
+
+/// Mixin voor het toepassen van hoog contrast thema
+@mixin high-contrast-theme {
+  --color-background: #{$neutral-black};
+  --color-text: #{$neutral-white};
+  --color-text-secondary: #{$neutral-white};
+  --color-text-inverse: #{$neutral-black};
+  --color-heading: #{$neutral-white};
+  --color-link: #{$accent-gold};
+  --color-border: #{$neutral-white};
+  --color-primary: #{$neutral-white};
+  --color-primary-light: #{$neutral-white};
+  --color-secondary: #{$neutral-white};
+  --color-accent: #{$neutral-white};
+
+  --border-radius: 0;
+  --shadow-strength: 0;
+}
+
+/// Mixin voor het toepassen van dyslexie-vriendelijk thema
+@mixin dyslexic-theme {
+  --color-background: #{$neutral-cream};
+  --color-text: #{$neutral-rich-black};
+  --font-family-body: "OpenDyslexic", #{$font-family-body};
+  --font-family-headings: "OpenDyslexic", #{$font-family-section-heading};
+  --font-size-base: 110%;
+  --line-height-base: #{$line-height-dislectic};
+
+  // Verlaag animatiesnelheid voor betere leesbaarheid
+  --transition-speed: #{$transition-slow};
+}
+
+/* ------------------------------------------------------- 
+ * 3. HULPFUNCTIES
+ * ------------------------------------------------------- */
+
+/// Functie om shadow te genereren op basis van thema sterkte
+/// @param {Number} $elevation - De hoogte/diepte van de schaduw (1-5)
+@function theme-shadow($elevation) {
+  $shadow-light: 0 1px 2px rgba($neutral-black, calc(0.05 * var(--shadow-strength)));
+  $shadow-md: 0 4px 6px rgba($neutral-black, calc(0.07 * var(--shadow-strength)));
+  $shadow-lg: 0 10px 15px rgba($neutral-black, calc(0.1 * var(--shadow-strength)));
+  $shadow-xl: 0 20px 25px rgba($neutral-black, calc(0.15 * var(--shadow-strength)));
+  $shadow-xxl: 0 25px 50px rgba($neutral-black, calc(0.2 * var(--shadow-strength)));
+
+  @if $elevation == 1 {
+    @return $shadow-light;
+  } @else if $elevation == 2 {
+    @return $shadow-md;
+  } @else if $elevation == 3 {
+    @return $shadow-lg;
+  } @else if $elevation == 4 {
+    @return $shadow-xl;
+  } @else if $elevation == 5 {
+    @return $shadow-xxl;
+  } @else {
+    @return none;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * 4. THEMATOEPASSINGEN
+ * ------------------------------------------------------- */
+
+// Donker thema op basis van systeem preference
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include dark-theme;
+  }
+}
+
+// Een geselecteerd donker thema, ongeacht systeemvoorkeur
+.theme--dark {
+  @include dark-theme;
+}
+
+// Hoog contrast thema
+.theme--high-contrast {
+  @include high-contrast-theme;
+}
+
+// Dyslexie-vriendelijk thema
+.theme--dyslexic {
+  @include dyslexic-theme;
+}
+
+// Specifieke kleurthema's (gebaseerd op Figma variantmodes)
+.theme--green {
+  --color-background: #{$secondary-dark};
+  --color-primary: #{$secondary-lighter};
+  --color-primary-light: #{$secondary-vibrant};
+  --color-secondary: #{$primary-cognac};
+  --color-accent: #{$accent-sage};
+}
+
+.theme--warm {
+  --color-background: #{$neutral-cream};
+  --color-text: #{$neutral-rich-black};
+  --color-primary: #{$primary-vibrant};
+  --color-accent: #{$accent-brown};
+}
+
+// Ondersteunend mediaqueries voor preferenties
+@media (prefers-reduced-motion) {
+  :root {
+    --transition-speed: 0s; // Verwijdert transities
+    --animation-curve: step-end; // Stapt direct naar eindstaat
+  }
+}
+
+@media (prefers-reduced-transparency) {
+  /* Verminder transparantie waar dat voorkomt */
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    @include high-contrast-theme;
+  }
+}
+
+// Print-thema
+@media print {
+  :root {
+    --color-background: #ffffff;
+    --color-text: #000000;
+    --color-text-secondary: #333333;
+    --color-border: #666666;
+    --font-size-base: 12pt;
+    --shadow-strength: 0;
+  }
+
+  // Verberg elementen die niet nodig zijn voor printen
+  .no-print {
+    display: none !important;
+  }
+}

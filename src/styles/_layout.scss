@@ -1,0 +1,348 @@
+/**
+ * @file _layout.scss
+ * @description Herbruikbare layout structuren en grid definitie voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables, _mixins
+ * @exports Sass classes voor layout
+ */
+
+/* ======================================================= 
+ * LAYOUT
+ * ======================================================= 
+ * De architectuur van onze gedichtgevel,
+ * Een raamwerk voor inhoud, sterk en flexibel;
+ * Structuren die vorm geven aan onze visie,
+ * Een canvas voor poëzie met technische precisie.
+ */
+
+@import 'variables';
+@import 'mixins';
+
+/* ------------------------------------------------------- 
+ * CONTAINERS
+ * ------------------------------------------------------- 
+ * Omhullende grenzen die inhoud verzamelen,
+ * Containers als muren die betekenis bewaren;
+ * Centrerende kracht met responsieve zorg,
+ * De bakstenen die staan voor onze gebruikers als borg.
+ */
+
+// Standaard container
+.container {
+  width: 100%;
+  max-width: $container-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-m;
+  padding-right: $spacing-m;
+}
+
+// Container die volledige viewport hoogte gebruikt
+.container-full-height {
+  width: 100%;
+  max-width: $container-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-m;
+  padding-right: $spacing-m;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Container met padding specifiek voor gedichten
+.container-poem {
+  width: 100%;
+  max-width: $container-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $spacing-l;
+  
+  @include media-up($screen-md) {
+    padding: $spacing-xl;
+  }
+}
+
+// Container specifiek voor de poezie canvas
+.container-canvas {
+  width: 100%;
+  max-width: $width-medium-poem-showcase;
+  margin: 0 auto;
+  padding: $spacing-m;
+  
+  @include media-up($screen-md) {
+    padding: $spacing-l;
+  }
+}
+
+// Container voor collecties
+.container-collection {
+  width: 100%;
+  max-width: $container-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $spacing-m;
+  
+  @include media-up($screen-md) {
+    padding: $spacing-l;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * GRID LAYOUT
+ * ------------------------------------------------------- 
+ * Ordening in rijen en kolommen,
+ * Het grid waar elementen op stromen;
+ * Flexibel en sterk, met ruimte exact,
+ * Een digitaal raster, zorgvuldig gevrakt.
+ */
+
+// Standaard grid container
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $spacing-m;
+}
+
+// Grid voor gedichtkaarten op homepage
+.grid-poems {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-m;
+  
+  @include media-up($screen-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include media-up($screen-lg) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-l;
+  }
+  
+  @include media-up($screen-xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Grid voor collectie overzicht
+.grid-collections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-m;
+  
+  @include media-up($screen-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include media-up($screen-lg) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-l;
+  }
+}
+
+// Grid voor tools en controls
+.grid-tools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-xs;
+  
+  @include media-up($screen-md) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-s;
+  }
+}
+
+// Grid voor gedicht-details pagina
+.grid-poem-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-m;
+  
+  @include media-up($screen-md) {
+    grid-template-columns: 2fr 1fr;
+    gap: $spacing-l;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * FLEX LAYOUTS
+ * ------------------------------------------------------- 
+ * Soepele verdeling, dynamische orde,
+ * Flexbox geeft ons vrijheid in vorm en borde;
+ * Van rij naar kolom, ruimte verdelen we wijs,
+ * Een flexibel systeem voor onze ontwerpsreis.
+ */
+
+// Standaard flex container
+.flex {
+  display: flex;
+}
+
+// Flex container gecentreerd
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Flex container met kolom richting
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Flex container met ruimte tussen items
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+// Flex container speciaal voor navigatie
+.flex-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @include media-down($screen-md) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// Flex container voor gedichtdetails
+.flex-poem-details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-m;
+  
+  @include media-up($screen-md) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: $spacing-l;
+  }
+}
+
+// Flex container voor canvas controls
+.flex-canvas-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-s;
+}
+
+/* ------------------------------------------------------- 
+ * SPECIFIC LAYOUTS
+ * ------------------------------------------------------- 
+ * Unieke patronen voor specifieke secties,
+ * Toegespitste layouts met eigen selecties;
+ * Van header tot footer, elk gebied bedacht,
+ * Met zorgvuldige planning en ontwerperachtige kracht.
+ */
+
+// Header layout
+.layout-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-high;
+  background-color: var(--color-background);
+  border-bottom: 2px solid var(--color-accent);
+  padding: $spacing-s 0;
+}
+
+// Main content layout
+.layout-main {
+  flex: 1 0 auto;
+  padding-top: calc(60px + $spacing-m); // Header hoogte + padding
+  padding-bottom: $spacing-xl;
+  
+  &-no-padding {
+    padding: 0;
+  }
+}
+
+// Footer layout
+.layout-footer {
+  flex-shrink: 0;
+  background-color: var(--color-background);
+  border-top: 1px solid var(--color-border);
+  padding: $spacing-l 0;
+}
+
+// Sidebar layout
+.layout-sidebar {
+  display: none;
+  
+  @include media-up($screen-lg) {
+    display: block;
+    width: 300px;
+    padding-right: $spacing-l;
+  }
+}
+
+// Audio panel layout
+.layout-audio-panel {
+  border-radius: $border-radius-md;
+  padding: $spacing-m;
+  background-color: var(--color-background);
+  box-shadow: $shadow-md;
+  
+  @include media-up($screen-md) {
+    padding: $spacing-l;
+  }
+}
+
+// Canvas layout
+.layout-canvas {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: calc(($height-medium-poem-showcase / $width-medium-poem-showcase) * 100%);
+  background-color: var(--color-background-alt);
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  
+  &-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Modal layout
+.layout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal;
+  
+  &-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($neutral-black, 0.5);
+  }
+  
+  &-content {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: var(--color-background);
+    border-radius: $border-radius-md;
+    padding: $spacing-l;
+    box-shadow: $shadow-lg;
+    z-index: $z-toast;
+  }
+}
