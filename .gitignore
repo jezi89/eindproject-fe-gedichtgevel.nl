@@ -1,21 +1,39 @@
-# Logs
-logs
-*.log
+# Afhankelijkheden
+/node_modules
+/.pnp
+.pnp.js
+.pnpm-store/
+
+# Productie build
+/dist
+/dist-ssr
+/storybook-static
+
+# Lokale ontwikkelingsomgeving
+*.local
+
+# Omgevingsvariabelen
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.test
+.env.production
+
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Editor specifieke bestanden (WebStorm)
+.idea/*
+!.idea/jsLinters/
+!.idea/dictionaries/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,4 +41,18 @@ dist-ssr
 *.sln
 *.sw?
 
-*storybook.log
+# Testing
+/coverage
+/playwright-report
+/test-results
+
+# Storybook
+/build-storybook.log
+
+# Supabase
+.branches
+.temp
+.supabase
+
+# Cache bestanden
+.cache
