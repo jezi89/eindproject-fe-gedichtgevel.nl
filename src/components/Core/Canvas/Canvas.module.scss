@@ -1,0 +1,57 @@
+// Canvas Component Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/effects';       // Voor shadows, transitions
+//
+// 2. Canvas-specifieke overwegingen:
+//    - Canvas element sizing en positioning
+//    - Overlay controls (zoom, tools)
+//    - Selection indicators
+//    - Grid/ruler overlays
+//    - Cursor states voor verschillende tools
+//
+// 3. Performance tips:
+//    - Gebruik transform voor element beweging
+//    - Hardware acceleration waar mogelijk
+//    - Minimaliseer repaints/reflows
+
+.canvas-wrapper {
+  // Container voor canvas en overlays
+}
+
+.canvas-element {
+  // Het actual canvas element
+  // cursor verandert based op tool
+}
+
+.canvas-overlay {
+  // Transparante overlay voor UI
+}
+
+.selection-box {
+  // Selectie rectangle styling
+}
+
+.resize-handle {
+  // Handles voor resize operations
+}
+
+.canvas-grid {
+  // Optional grid overlay
+}
+
+.canvas-ruler {
+  // Ruler guides
+}
+
+.element-ghost {
+  // Preview tijdens drag operations
+}
+
+.canvas-toolbar {
+  // Floating toolbar
+}
