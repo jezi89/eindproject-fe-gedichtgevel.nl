@@ -1,0 +1,78 @@
+// Button Component Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/effects';       // Voor shadows, transitions
+//
+// 2. Button varianten:
+//    - Primary (hoofdactie)
+//    - Secondary (secundaire actie)
+//    - Tertiary (text-only)
+//    - Danger (destructieve acties)
+//    - Success (positieve acties)
+//
+// 3. Button sizes:
+//    - Small
+//    - Medium (default)
+//    - Large
+//
+// 4. Button states:
+//    - Default
+//    - Hover
+//    - Active/pressed
+//    - Disabled
+//    - Loading
+
+.button {
+  // Base button styles
+}
+
+// Variants
+.button-primary {
+  // Primary button styling
+}
+
+.button-secondary {
+  // Secondary button styling
+}
+
+.button-tertiary {
+  // Text-only button
+}
+
+.button-danger {
+  // Destructive actions
+}
+
+.button-success {
+  // Success actions
+}
+
+// Sizes
+.button-small {
+  // Small size modifier
+}
+
+.button-large {
+  // Large size modifier
+}
+
+// States
+.button-disabled {
+  // Disabled state
+}
+
+.button-loading {
+  // Loading state met spinner
+}
+
+.button-icon {
+  // Icon binnen button
+}
+
+.button-full-width {
+  // Full width variant
+}
