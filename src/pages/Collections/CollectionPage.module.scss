@@ -1,0 +1,53 @@
+// CollectionPage Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/layout';        // Voor layout utilities
+//    @import '@styles/effects';       // Voor shadows, transitions
+//
+// 2. Collection-specifieke layouts:
+//    - Grid layout voor gedichten/designs
+//    - Filter en sorteer opties
+//    - Collection cards/tiles
+//    - Pagination controls
+//
+// 3. Responsive overwegingen:
+//    - Mobile: 1 kolom
+//    - Tablet: 2-3 kolommen
+//    - Desktop: 3-4 kolommen
+
+.collection-container {
+  // Main collection page wrapper
+}
+
+.filter-toolbar {
+  // Filter en sorteer controls
+}
+
+.collection-grid {
+  // Grid container voor items
+  // Gebruik CSS Grid of Flexbox
+}
+
+.collection-item {
+  // Individual collection item card
+}
+
+.item-thumbnail {
+  // Thumbnail/preview image
+}
+
+.item-details {
+  // Title, author, metadata
+}
+
+.pagination {
+  // Pagination controls
+}
+
+.empty-state {
+  // Wanneer geen items gevonden
+}
