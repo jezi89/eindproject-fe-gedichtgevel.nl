@@ -1,0 +1,57 @@
+// DesignPage Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/layout';        // Voor layout utilities
+//    @import '@styles/effects';       // Voor shadows, transitions
+//
+// 2. Design editor specifieke layouts:
+//    - Canvas area (hoofdgebied)
+//    - Toolbar/controls panel
+//    - Properties panel
+//    - Layers panel
+//
+// 3. Interactieve elementen:
+//    - Tool buttons (active states)
+//    - Color pickers
+//    - Sliders en inputs
+//    - Drag & drop feedback
+
+.design-container {
+  // Full height layout container
+}
+
+.design-workspace {
+  // Flex container voor panels
+}
+
+.canvas-area {
+  // Main canvas werkgebied
+}
+
+.toolbar {
+  // Top toolbar met tools
+}
+
+.tool-button {
+  // Individual tool buttons
+}
+
+.properties-panel {
+  // Rechter panel voor properties
+}
+
+.layers-panel {
+  // Layers/elementen lijst
+}
+
+.color-picker {
+  // Color selection widget
+}
+
+.design-controls {
+  // Bottom controls (zoom, etc)
+}

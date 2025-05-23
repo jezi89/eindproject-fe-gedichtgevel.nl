@@ -1,0 +1,56 @@
+// AudioStreamControlButtons Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/effects';       // Voor shadows, transitions
+//
+// 2. Control button specifieke styling:
+//    - Play/pause toggle
+//    - Skip forward/backward
+//    - Stop button
+//    - Record button (met recording state)
+//
+// 3. States en feedback:
+//    - Active/inactive states
+//    - Hover effecten
+//    - Disabled states
+//    - Recording pulse animatie
+
+.control-buttons {
+  // Container voor alle buttons
+}
+
+.control-button {
+  // Base button styling
+}
+
+.play-pause-button {
+  // Toggle play/pause icon
+}
+
+.skip-button {
+  // Forward/backward skip
+}
+
+.stop-button {
+  // Stop control
+}
+
+.record-button {
+  // Record button met states
+  
+  &.recording {
+    // Pulse animatie tijdens opname
+  }
+}
+
+.button-icon {
+  // Icon styling binnen buttons
+}
+
+.button-disabled {
+  // Disabled state styling
+}

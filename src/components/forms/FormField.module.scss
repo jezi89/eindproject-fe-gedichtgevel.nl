@@ -1,0 +1,61 @@
+// FormField Component Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import './forms.module.scss';   // Gedeelde form styles
+//
+// 2. FormField specifieke styling:
+//    - Field wrapper met consistent spacing
+//    - Label positioning (top, inline, floating)
+//    - Required field indicators
+//    - Field icons (prefix/suffix)
+//
+// 3. Validation states:
+//    - Default
+//    - Focus
+//    - Valid
+//    - Invalid
+//    - Disabled
+
+.field-wrapper {
+  // Complete field container
+}
+
+.field-label {
+  // Label element
+  
+  &.required::after {
+    // Asterisk voor required fields
+  }
+}
+
+.field-input-wrapper {
+  // Input + icons container
+}
+
+.field-icon {
+  // Prefix/suffix icons
+  
+  &.prefix {
+    // Left side icon
+  }
+  
+  &.suffix {
+    // Right side icon
+  }
+}
+
+.field-message {
+  // Error/help message area
+}
+
+.field-invalid {
+  // Invalid field styling
+}
+
+.field-valid {
+  // Valid field styling
+}

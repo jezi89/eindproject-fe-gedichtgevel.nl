@@ -1,0 +1,49 @@
+// AudioPage Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@styles/effects';       // Voor shadows, transitions
+//    @import '@styles/layout';        // Voor layout utilities
+//
+// 2. Audio-specifieke styling overwegingen:
+//    - Audio player controls styling
+//    - Waveform visualisatie
+//    - Recording interface
+//    - Playlist/library layout
+//
+// 3. Interactieve elementen:
+//    - Hover states voor controls
+//    - Active/playing states
+//    - Progress indicators
+//    - Volume sliders
+
+.audio-container {
+  // Main audio page container
+}
+
+.audio-player {
+  // Audio player wrapper
+}
+
+.controls-section {
+  // Play, pause, skip controls
+}
+
+.waveform-display {
+  // Audio waveform visualisatie
+}
+
+.recording-interface {
+  // Recording controls en feedback
+}
+
+.audio-library {
+  // Lijst van audio items
+}
+
+.volume-control {
+  // Volume slider styling
+}
