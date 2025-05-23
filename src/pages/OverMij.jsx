@@ -1,3 +1,0 @@
-function OverMij() {
-  // Template code
-}
