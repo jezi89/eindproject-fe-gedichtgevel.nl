@@ -14,13 +14,12 @@
  * Importeert alle basiscomponenten en definieert globale contextafhankelijke stijlen.
  */
 
-// Importeer basiscomponenten
-@import "./fonts";       // Import fonts first
-@import "./variables";
-@import "./mixins";
-@import "./layout";
-@import "./typography";
-//@import './themes';
+// Use modules instead of import
+@use "./fonts";
+@use "./variables" as *;
+@use "./mixins" as *;
+@use "./layout";
+@use "./typography";
 
 /* ------------------------------------------------------- 
  * BODY & ROOT
