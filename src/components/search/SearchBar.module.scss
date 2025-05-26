@@ -1,0 +1,66 @@
+// SearchBar Component Styles
+// =====================================
+// Gebruik de gedeelde styles uit de styles folder:
+// 
+// 1. Import de benodigde modules:
+@import "@styles/variables";
+// Voor kleuren, spacing, breakpoints
+@import "@styles/mixins";
+// Voor herbruikbare style patronen
+@import "@styles/effects"; // Voor shadows, transitions
+//
+// 2. SearchBar specifieke elementen:
+//    - Search input field
+//    - Search icon/button
+//    - Clear button
+//    - Search suggestions dropdown
+//    - Loading indicator
+//
+// 3. Interactieve states:
+//    - Focus state met expanded view
+//    - Active search state
+//    - No results state
+
+.search-bar {
+  // Main search container
+  }
+
+.search-input-wrapper {
+  // Input + buttons container
+  }
+
+.search-input {
+  // Search text input
+  }
+
+.search-icon {
+  // Magnifying glass icon
+  }
+
+.clear-button {
+  // Clear search button
+  }
+
+.search-suggestions {
+  // Dropdown suggestions
+  }
+
+.suggestion-item {
+  // Individual suggestion
+
+  &:hover {
+	// Hover state
+	}
+
+  &.highlighted {
+	// Keyboard navigation
+	}
+  }
+
+.search-loading {
+  // Loading spinner
+  }
+
+.no-results {
+  // No results message
+  }

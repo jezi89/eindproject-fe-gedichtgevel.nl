@@ -1,3 +1,0 @@
-function Home() {
-  // Template code
-}

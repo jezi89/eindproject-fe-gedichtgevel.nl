@@ -1,3 +1,0 @@
-function LoginRegister() {
-  // Template code
-}

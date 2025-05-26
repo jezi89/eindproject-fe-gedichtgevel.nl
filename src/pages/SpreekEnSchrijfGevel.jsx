@@ -1,3 +1,0 @@
-function SpreekEnSchrijfGevel() {
-  // Template code
-}
