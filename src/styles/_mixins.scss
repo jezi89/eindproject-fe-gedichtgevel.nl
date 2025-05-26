@@ -7,6 +7,12 @@
  * @exports Sass mixins en functies
  */
 
+// Import Sass modules for built-in functions
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+@use "./variables" as *;
+
 /* ======================================================= 
  * MIXINS
  * ======================================================= 
@@ -34,11 +40,11 @@
 /// Mixin om gestandaardiseerde text styles toe te passen
 /// @param {Map} $style - Een map met font-family, font-size, font-weight en line-height
 @mixin text-style($style) {
-  font-family: map-get($style, font-family);
-  font-size: map-get($style, font-size);
-  font-weight: map-get($style, font-weight);
-  line-height: map-get($style, line-height);
-}
+  font-family: map.get($style, font-family);
+  font-size:   map.get($style, font-size);
+  font-weight: map.get($style, font-weight);
+  line-height: map.get($style, line-height);
+  }
 
 /// Mixin voor leesbare, responsive tekst
 /// @param {Number} $min-size - Minimale font-size in rem
@@ -49,28 +55,28 @@
   font-size: #{$min-size}rem;
 
   @media screen and (min-width: $min-width) {
-    font-size: calc(#{$min-size}rem + #{($max-size - $min-size)} * ((100vw - #{$min-width}) / #{($max-width - $min-width)}));
-  }
+	font-size: calc(#{$min-size}rem + #{($max-size - $min-size)} * ((100vw - #{$min-width}) / #{($max-width - $min-width)}));
+	}
 
   @media screen and (min-width: $max-width) {
-    font-size: #{$max-size}rem;
+	font-size: #{$max-size}rem;
+	}
   }
-}
 
 /// Mixin voor tekst die afbreekt met ellipsis
 /// @param {Number} $lines [1] - Aantal regels voordat tekst wordt afgekort
 @mixin text-truncate($lines: 1) {
   @if $lines == 1 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  } @else {
-    display: -webkit-box;
-    -webkit-line-clamp: $lines;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+	white-space:        nowrap;
+	overflow:           hidden;
+	text-overflow:      ellipsis;
+	} @else {
+	display:            -webkit-box;
+	-webkit-line-clamp: $lines;
+	-webkit-box-orient: vertical;
+	overflow:           hidden;
+	}
   }
-}
 
 /* ------------------------------------------------------- 
  * 2. LAYOUT & POSITIONERING
@@ -88,11 +94,11 @@
 /// @param {String} $left [null] - Left offset
 @mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
   position: absolute;
-  top: $top;
-  right: $right;
-  bottom: $bottom;
-  left: $left;
-}
+  top:      $top;
+  right:    $right;
+  bottom:   $bottom;
+  left:     $left;
+  }
 
 /// Mixin voor fixed positionering, met optionele offsets
 /// @param {String} $top [null] - Top offset
@@ -101,41 +107,41 @@
 /// @param {String} $left [null] - Left offset
 @mixin position-fixed($top: null, $right: null, $bottom: null, $left: null) {
   position: fixed;
-  top: $top;
-  right: $right;
-  bottom: $bottom;
-  left: $left;
-}
+  top:      $top;
+  right:    $right;
+  bottom:   $bottom;
+  left:     $left;
+  }
 
 /// Mixin voor sticky positionering
 /// @param {String} $top [0] - Top offset
 /// @param {Number} $z-index [null] - Z-index waarde
 @mixin position-sticky($top: 0, $z-index: null) {
   position: sticky;
-  top: $top;
+  top:      $top;
   @if $z-index != null {
-    z-index: $z-index;
+	z-index: $z-index;
+	}
   }
-}
 
 /// Mixin voor centreren met absolute position
 @mixin center-absolute {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position:  absolute;
+  top:       50%;
+  left:      50%;
   transform: translate(-50%, -50%);
-}
+  }
 
 /// Mixin voor vullen van container
 @mixin fill-container {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+  top:      0;
+  right:    0;
+  bottom:   0;
+  left:     0;
+  width:    100%;
+  height:   100%;
+  }
 
 /* ------------------------------------------------------- 
  * 3. FLEXBOX & GRID
@@ -147,12 +153,12 @@
 /// @param {String} $align [stretch] - Align-items
 /// @param {String} $wrap [nowrap] - Flex-wrap
 @mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
-  display: flex;
-  flex-direction: $direction;
+  display:         flex;
+  flex-direction:  $direction;
   justify-content: $justify;
-  align-items: $align;
-  flex-wrap: $wrap;
-}
+  align-items:     $align;
+  flex-wrap:       $wrap;
+  }
 
 /// Mixin voor flexbox child
 /// @param {Number|String} $grow [0] - Flex-grow
@@ -160,25 +166,25 @@
 /// @param {String} $basis [auto] - Flex-basis
 @mixin flex-item($grow: 0, $shrink: 1, $basis: auto) {
   flex: $grow $shrink $basis;
-}
+  }
 
 /// Mixin voor centreren met flexbox
 @mixin flex-center {
-  display: flex;
+  display:         flex;
   justify-content: center;
-  align-items: center;
-}
+  align-items:     center;
+  }
 
 /// Mixin voor een grid container
 /// @param {String} $columns [repeat(12, 1fr)] - Grid-template-columns
 /// @param {String} $rows [auto] - Grid-template-rows
 /// @param {String} $gap [$spacing-m] - Grid-gap
 @mixin grid-container($columns: repeat(12, 1fr), $rows: auto, $gap: $spacing-m) {
-  display: grid;
+  display:               grid;
   grid-template-columns: $columns;
   grid-template-rows: $rows;
-  gap: $gap;
-}
+  gap:                   $gap;
+  }
 
 /// Mixin voor grid item
 /// @param {Number|String} $col-start [auto] - Grid-column-start
@@ -187,19 +193,19 @@
 /// @param {Number|String} $row-end [auto] - Grid-row-end
 @mixin grid-item($col-start: auto, $col-end: auto, $row-start: auto, $row-end: auto) {
   grid-column-start: $col-start;
-  grid-column-end: $col-end;
-  grid-row-start: $row-start;
-  grid-row-end: $row-end;
-}
+  grid-column-end:   $col-end;
+  grid-row-start:    $row-start;
+  grid-row-end:      $row-end;
+  }
 
 /// Mixin voor responsieve grid met auto-fill
 /// @param {Number} $min-width [250px] - Minimale breedte van een grid item
 /// @param {String} $gap [$spacing-m] - Grid-gap
 @mixin responsive-grid($min-width: 250px, $gap: $spacing-m) {
-  display: grid;
+  display:               grid;
   grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
-  gap: $gap;
-}
+  gap:                   $gap;
+  }
 
 /* ------------------------------------------------------- 
  * 4. RESPONSIVE DESIGN
@@ -214,51 +220,51 @@
 /// @param {Number} $breakpoint - Min-width breakpoint in pixels
 @mixin media-up($breakpoint) {
   @media screen and (min-width: $breakpoint) {
-    @content;
+	@content;
+	}
   }
-}
 
 /// Mixin voor media query naar beneden
 /// @param {Number} $breakpoint - Max-width breakpoint in pixels
 @mixin media-down($breakpoint) {
   @media screen and (max-width: $breakpoint - 1px) {
-    @content;
+	@content;
+	}
   }
-}
 
 /// Mixin voor media query tussen twee breakpoints
 /// @param {Number} $min - Min-width breakpoint in pixels
 /// @param {Number} $max - Max-width breakpoint in pixels
 @mixin media-between($min, $max) {
   @media screen and (min-width: $min) and (max-width: $max - 1px) {
-    @content;
+	@content;
+	}
   }
-}
 
 /// Presets voor veelgebruikte media queries
 @mixin mobile-only {
   @include media-down($screen-sm) {
-    @content;
+	@content;
+	}
   }
-}
 
 @mixin tablet-up {
   @include media-up($screen-md) {
-    @content;
+	@content;
+	}
   }
-}
 
 @mixin desktop-up {
   @include media-up($screen-lg) {
-    @content;
+	@content;
+	}
   }
-}
 
 @mixin large-desktop-up {
   @include media-up($screen-xl) {
-    @content;
+	@content;
+	}
   }
-}
 
 /* ------------------------------------------------------- 
  * 5. EFFECTEN
@@ -273,33 +279,33 @@
 /// @param {String} $level [md] - Shadow niveau: sm, md, lg, xl, inner of none
 @mixin box-shadow($level: md) {
   @if $level == sm {
-    box-shadow: $shadow-sm;
-  } @else if $level == md {
-    box-shadow: $shadow-md;
-  } @else if $level == lg {
-    box-shadow: $shadow-lg;
-  } @else if $level == xl {
-    box-shadow: $shadow-xl;
-  } @else if $level == inner {
-    box-shadow: $shadow-inner;
-  } @else if $level == none {
-    box-shadow: $shadow-none;
+	box-shadow: $shadow-sm;
+	} @else if $level == md {
+	box-shadow: $shadow-md;
+	} @else if $level == lg {
+	box-shadow: $shadow-lg;
+	} @else if $level == xl {
+	box-shadow: $shadow-xl;
+	} @else if $level == inner {
+	box-shadow: $shadow-inner;
+	} @else if $level == none {
+	box-shadow: $shadow-none;
+	}
   }
-}
 
 /// Mixin voor text shadow
 /// @param {String} $level [sm] - Shadow niveau: sm, md, lg of none
 @mixin text-shadow($level: sm) {
   @if $level == sm {
-    text-shadow: $text-shadow-sm;
-  } @else if $level == md {
-    text-shadow: $text-shadow-md;
-  } @else if $level == lg {
-    text-shadow: $text-shadow-lg;
-  } @else if $level == none {
-    text-shadow: $text-shadow-none;
+	text-shadow: $text-shadow-sm;
+	} @else if $level == md {
+	text-shadow: $text-shadow-md;
+	} @else if $level == lg {
+	text-shadow: $text-shadow-lg;
+	} @else if $level == none {
+	text-shadow: $text-shadow-none;
+	}
   }
-}
 
 /// Mixin voor transitie
 /// @param {String} $property [all] - CSS property om te animeren
@@ -307,17 +313,17 @@
 /// @param {String} $timing [$ease-default] - Timing functie
 /// @param {String} $delay [0s] - Vertraging
 @mixin transition($property: all, $duration: $transition-normal, $timing: $ease-default, $delay: 0s) {
-  transition-property: $property;
-  transition-duration: $duration;
+  transition-property:        $property;
+  transition-duration:        $duration;
   transition-timing-function: $timing;
-  transition-delay: $delay;
-}
+  transition-delay:           $delay;
+  }
 
 /// Mixin voor meerdere transitie properties
 /// @param {List} $transitions - Lijst van transitie strings
 @mixin transitions($transitions...) {
   transition: $transitions;
-}
+  }
 
 /// Mixin voor glassmorphism effect
 /// @param {Color} $background [$neutral-white] - Achtergrondkleur
@@ -325,11 +331,11 @@
 /// @param {Number} $blur [10px] - Blur radius
 /// @param {Number} $border-opacity [0.1] - Rand-transparantie
 @mixin glassmorphism($background: $neutral-white, $opacity: 0.2, $blur: 10px, $border-opacity: 0.1) {
-  background: rgba($background, $opacity);
-  backdrop-filter: blur($blur);
+  background:              color.change($background, $alpha: $opacity);
+  backdrop-filter:         blur($blur);
   -webkit-backdrop-filter: blur($blur);
-  border: 1px solid rgba($background, $border-opacity);
-}
+  border:                  1px solid color.change($background, $alpha: $border-opacity);
+  }
 
 /* ------------------------------------------------------- 
  * 6. COMPONENTEN
@@ -341,33 +347,33 @@
 /// @param {Color} $border [$button-primary-border] - Randkleur
 /// @param {Map} $text-style [$button-medium] - Tekststijl
 @mixin button-base($bg: $button-primary-background, $color: $button-primary-text, $border: $button-primary-border, $text-style: $button-medium) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: $spacing-xs $spacing-m;
-  border-radius: $border-radius-md;
-  border: $border-width-thin solid $border;
+  display:          inline-flex;
+  align-items:      center;
+  justify-content:  center;
+  padding:          $spacing-xs $spacing-m;
+  border-radius:    $border-radius-md;
+  border:           $border-width-thin solid $border;
   background-color: $bg;
-  color: $color;
-  cursor: pointer;
-  text-decoration: none;
+  color:            $color;
+  cursor:           pointer;
+  text-decoration:  none;
   @include text-style($text-style);
   @include transition(all, $transition-fast, $ease-out);
 
   &:hover {
-    background-color: darken($bg, 5%);
-  }
+	background-color: color.adjust($bg, $lightness: -5%);
+	}
 
   &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba($border, 0.5);
-  }
+	outline:    none;
+	box-shadow: 0 0 0 3px color.change($border, $alpha: 0.5);
+	}
 
   &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+	opacity: 0.6;
+	cursor:  not-allowed;
+	}
   }
-}
 
 /// Mixin voor een kaart/card component
 /// @param {Color} $bg [$card-background] - Achtergrondkleur
@@ -375,11 +381,11 @@
 /// @param {String} $shadow [md] - Shadow niveau
 @mixin card($bg: $card-background, $border: $card-border, $shadow: md) {
   background-color: $bg;
-  border-radius: $border-radius-md;
-  border: $border-width-thin solid $border;
-  overflow: hidden;
+  border-radius:    $border-radius-md;
+  border:           $border-width-thin solid $border;
+  overflow:         hidden;
   @include box-shadow($shadow);
-}
+  }
 
 /// Mixin voor input styling
 /// @param {Color} $bg [$search-background] - Achtergrondkleur
@@ -387,26 +393,26 @@
 /// @param {Color} $text [$search-text] - Tekstkleur
 /// @param {Color} $placeholder [$search-placeholder] - Placeholderkleur
 @mixin input-base($bg: $search-background, $border: $search-border, $text: $search-text, $placeholder: $search-placeholder) {
-  display: block;
-  width: 100%;
-  padding: $spacing-s $spacing-m;
+  display:          block;
+  width:            100%;
+  padding:          $spacing-s $spacing-m;
   background-color: $bg;
-  border: $border-width-thin solid $border;
-  border-radius: $border-radius-sm;
-  color: $text;
+  border:           $border-width-thin solid $border;
+  border-radius:    $border-radius-sm;
+  color:            $text;
   @include transition(border-color, $transition-fast);
 
   &::placeholder {
-    color: $placeholder;
-    opacity: 1;
-  }
+	color:   $placeholder;
+	opacity: 1;
+	}
 
   &:focus {
-    outline: none;
-    border-color: $border-focus;
-    box-shadow: 0 0 0 3px rgba($border-focus, 0.2);
+	outline:      none;
+	border-color: $border-focus;
+	box-shadow:   0 0 0 3px color.change($border-focus, $alpha: 0.2);
+	}
   }
-}
 
 /* ------------------------------------------------------- 
  * 7. UTILITIES
@@ -419,67 +425,67 @@
   position: relative;
 
   &::before {
-    content: "";
-    display: block;
-    padding-top: ($height / $width) * 100%;
-  }
+	content:     "";
+	display:     block;
+	padding-top: ($height / $width) * 100%;
+	}
 
   > * {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	position: absolute;
+	top:      0;
+	left:     0;
+	width:    100%;
+	height:   100%;
+	}
   }
-}
 
 /// Mixin voor het maken van een vierkant element
 /// @param {String} $size [100%] - Grootte van het vierkant
 @mixin square($size: 100%) {
-  width: $size;
+  width:  $size;
   height: $size;
-}
+  }
 
 /// Mixin voor het maken van een cirkelvormig element
 /// @param {String} $size [2rem] - Diameter van de cirkel
 @mixin circle($size: 2rem) {
-  width: $size;
-  height: $size;
+  width:         $size;
+  height:        $size;
   border-radius: 50%;
-}
+  }
 
 /// Mixin voor het verwijderen van de standaard lijst styling
 @mixin list-unstyled {
-  margin: 0;
-  padding: 0;
+  margin:     0;
+  padding:    0;
   list-style: none;
-}
+  }
 
 /// Mixin voor het verwijderen van de standaard button styling
 @mixin button-reset {
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  cursor: pointer;
+  padding:            0;
+  border:             none;
+  background:         transparent;
+  color:              inherit;
+  font:               inherit;
+  line-height:        normal;
+  cursor:             pointer;
   -webkit-appearance: none;
-  appearance: none;
-}
+  appearance:         none;
+  }
 
 /// Mixin voor het aanbrengen van een visually-hidden status (toegankelijkheid)
 @mixin visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  position:    absolute;
+  width:       1px;
+  height:      1px;
+  padding:     0;
+  margin:      -1px;
+  overflow:    hidden;
+  clip:        rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
-}
+  border:      0;
+  }
 
 /// Mixin voor het aanbrengen van een custom scrollbar
 /// @param {Color} $track-color [$neutral-light] - Scrollbar track kleur
@@ -487,20 +493,20 @@
 /// @param {Number} $width [8px] - Scrollbar breedte
 @mixin custom-scrollbar($track-color: $neutral-light, $thumb-color: $neutral-mid, $width: 8px) {
   &::-webkit-scrollbar {
-    width: $width;
-    height: $width;
-  }
+	width:  $width;
+	height: $width;
+	}
 
   &::-webkit-scrollbar-track {
-    background: $track-color;
-  }
+	background: $track-color;
+	}
 
   &::-webkit-scrollbar-thumb {
-    background-color: $thumb-color;
-    border-radius: $width / 2;
-    border: 2px solid $track-color;
-  }
+	background-color: $thumb-color;
+	border-radius:    $width / 2;
+	border:           2px solid $track-color;
+	}
 
   scrollbar-width: thin;
   scrollbar-color: $thumb-color $track-color;
-}
+  }

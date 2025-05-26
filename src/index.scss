@@ -18,16 +18,20 @@
  * Hier start de harmonie van ons visueel apparaat.
  */
 
-// Importeer basiscomponenten in juiste volgorde
-@import "./styles/reset";
-@import "./styles/variables";
-@import "./styles/mixins";
-@import "./styles/typography";
-@import "./styles/layout";
-@import "./styles/effects";
-//@import './styles/themes';
-@import "./styles/utilities";
-@import "./styles/app";
+// Forward all modules so they can be used with @use in other files
+@forward "./styles/variables";
+@forward "./styles/mixins";
+@forward "./styles/effects";
+
+// Use modules - order matters!
+@use "./styles/reset";
+@use "./styles/variables" as *;  // Make variables globally available
+@use "./styles/mixins" as *;     // Make mixins globally available
+@use "./styles/typography";
+@use "./styles/layout";
+@use "./styles/effects" as *;    // Make effect variables globally available
+@use "./styles/utilities";
+@use "./styles/app";
 
 /* ======================================================= 
  * ACCESSIBILITY FOCUS

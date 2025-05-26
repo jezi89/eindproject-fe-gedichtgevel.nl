@@ -16,8 +16,8 @@
  * Een canvas voor poëzie met technische precisie.
  */
 
-@import 'variables';
-@import 'mixins';
+@use "./variables" as *;
+@use "./mixins" as *;
 
 /* ------------------------------------------------------- 
  * CONTAINERS

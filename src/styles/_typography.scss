@@ -7,6 +7,9 @@
  * @exports Typografische regels en hulpklassen
  */
 
+@use "./variables" as *;
+@use "./mixins" as *;
+
 /* ======================================================= 
  * TYPOGRAFIE
  * ======================================================= 
