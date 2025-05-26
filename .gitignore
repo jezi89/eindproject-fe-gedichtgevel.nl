@@ -56,3 +56,6 @@ pnpm-debug.log*
 
 # Cache bestanden
 .cache
+
+# Claude AI
+.claude

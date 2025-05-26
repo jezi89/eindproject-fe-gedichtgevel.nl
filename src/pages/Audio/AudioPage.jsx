@@ -1,4 +1,4 @@
-export const AudioPage = () => {
+export function AudioPage() {
     return (
         <></>
     )

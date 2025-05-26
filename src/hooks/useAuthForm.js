@@ -39,7 +39,7 @@ function useAuthForm(initialValues = {email: "", password: ""}) {
      * Handles input field changes
      * @param {React.ChangeEvent} e - Change event object
      */
-const handleChange = (e) => {
+function handleChange(e) {
   // Implementation
 };
 //             ...values,
@@ -57,7 +57,7 @@ function resetForm() {
      * @param {Function} submitCallback - Callback function for form submission
      * @returns {Function} Form action function
      */
-const createFormAction = (submitCallback) => {
+function createFormAction(submitCallback) {
   // Implementation
 };
 
