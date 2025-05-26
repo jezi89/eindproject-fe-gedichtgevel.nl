@@ -21,6 +21,14 @@ import styles from "./NavBar.module.scss"
  */
 const MainNavLink = ({to, children}) => {
     // Return NavLink with active/inactive styling based on current route
+    return (
+        <NavLink 
+            to={to} 
+            className={({isActive}) => isActive ? styles.active : ''}
+        >
+            {children}
+        </NavLink>
+    );
 };
 
 export default MainNavLink;
