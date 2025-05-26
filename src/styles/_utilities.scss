@@ -14,8 +14,9 @@
  * Gebruikt voor snelle aanpassingen zonder custom CSS te schrijven.
  */
 
-@import './variables';
-@import './mixins';
+@use "./variables" as *;
+@use "./mixins" as *;
+@use "./effects" as *;
 
 /* ------------------------------------------------------- 
  * SPACING UTILITIES

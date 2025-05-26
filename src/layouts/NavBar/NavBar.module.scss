@@ -1,4 +1,5 @@
-@import '@/styles/variables';
+@use "sass:color";
+@use '@/styles/variables' as *;
 
 .navbar {
   background-color: $navbar-background;
@@ -85,7 +86,7 @@
     font-size: $font-size-l;
     
     &:hover {
-      background-color: rgba($navbar-text-active, 0.1);
+      background-color: color.change($navbar-text-active, $alpha: 0.1);
       color: $navbar-text-active;
     }
     
@@ -106,7 +107,7 @@
   font-size: $font-size-l;
   
   &:hover {
-    background-color: rgba($navbar-text-active, 0.1);
+    background-color: color.change($navbar-text-active, $alpha: 0.1);
     color: $navbar-text-active;
   }
 }
