@@ -8,9 +8,9 @@
  */
 
 import {useState} from "react";
-import LoginForm from "../../../../../Eindopdracht-FE-old-REFERENCE/template/src/components/forms/LoginForm.jsx";
-import SignupForm from "../../../../../Eindopdracht-FE-old-REFERENCE/template/src/components/forms/SignupForm.jsx";
-import {ActionButton} from "../../../../../Eindopdracht-FE-old-REFERENCE/template/src/components/ui/button/ActionButton.jsx";
+// import LoginForm from "@/components/forms/LoginForm.jsx";
+// import SignupForm from "@/components/forms/SignupForm.jsx";
+// import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 
 /**
  * LoginAndRegisterPage component with toggle between login and registration
