@@ -1,4 +1,4 @@
-export const ContactPage = () => {
+export function ContactPage() {
     return (
         <></>
     )
