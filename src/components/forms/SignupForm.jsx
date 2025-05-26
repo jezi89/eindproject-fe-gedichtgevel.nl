@@ -1,25 +1,28 @@
 /**
  * SignupForm Component
- * 
+ *
  * Handles user registration with form validation,
  * error handling, and success messaging.
- * 
+ *
  * @module components/forms/SignupForm
  */
 
+/*
 import {useState} from "react";
-import {useAuth} from '../../../../../Eindopdracht-FE-old-REFERENCE/template/src/hooks/useAuth.js';
-import useAuthForm from '../../../../../Eindopdracht-FE-old-REFERENCE/template/src/hooks/useAuthForm.js';
-import {SubmitButton} from '../ui/button/ActionButton.jsx';
-import FormField from './FormField.jsx';
+import {useAuth} from '@/hooks/useAuth.js';
+import useAuthForm from '@/hooks/useAuthForm.js';
+import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
+import FormField from '@/components/forms/FormField.jsx';
 import styles from './LoginAndSignupForms.module.css';
+*/
 
 /**
  * SignupForm component for user registration
- * 
+ *
  * @component
  * @returns {JSX.Element} Signup form component
  */
+/*
 function SignupForm() {
     // States
     // - registrationSuccess: Tracks if registration was successful
@@ -32,27 +35,27 @@ function SignupForm() {
 
     // Authentication
     // - Use signUp from AuthContext
-    
-    /**
+
+    /!**
      * Validates form inputs
-     * 
+     *
      * @param {FormData} formData - Form data from form submission
      * @returns {boolean} Whether the form is valid
-     */
-    const validateForm = (formData) => {
+     *!/
+    function validateForm(formData) {
         // Validate email (required)
         // Validate password (required, min length)
         // Validate confirmPassword (required, match password)
         // Set validation errors
         // Return validation result
-    };
+    }
 
-    /**
+    /!**
      * Handles form submission
-     * 
+     *
      * @param {FormData} formData - Form data from form submission
      * @returns {Promise<Object|void>} Registration result or undefined on error
-     */
+     *!/
     const handleFormSubmit = createFormAction(async (formData) => {
         // Validate form
         // Handle captcha token for production/development environments
@@ -68,12 +71,12 @@ function SignupForm() {
         // Instructions for account activation
     }
 
-    return (
-        // Form container
-        // Form with email, password, and confirmPassword fields
-        // Error message display
-        // Registration button with loading state
-    );
+    /!*    return (
+            // Form container
+            // Form with email, password, and confirmPassword fields
+            // Error message display
+            // Registration button with loading state
+        );*!/
 }
 
-export default SignupForm;
+export default SignupForm;*/

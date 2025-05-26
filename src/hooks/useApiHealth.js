@@ -31,7 +31,7 @@ import {checkPoetryDbHealth} from "@/services/monitoring/checkPoetryDbHealth.js"
  * @returns {boolean} .isLoading - Whether check is in progress
  * @returns {Function} .refreshApiStatus - Function to manually refresh status
  */
-export const useApiHealth = (
+export function useApiHealth(
     apiType,
     {
         pollingInterval = 300000,
