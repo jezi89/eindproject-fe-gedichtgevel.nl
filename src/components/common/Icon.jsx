@@ -4,8 +4,8 @@
  * Voorbeeld implementatie:
  * ```jsx
  * // /components/common/Icon.jsx
- * import { ReactComponent as PlayIcon } from '../assets/icons/audio/play.svg';
- * import { ReactComponent as PauseIcon } from '../assets/icons/audio/pause.svg';
+ * import { ReactComponent as PlayIcon } from '@/assets/icons/audio/play.svg';
+ * import { ReactComponent as PauseIcon } from '@/assets/icons/audio/pause.svg';
  * // meer imports...
  * 
  * const iconMap = {
@@ -70,7 +70,7 @@ export function Icon({ name, size = 24, color = 'currentColor', ...props }) {
  * 
  * - Lazy loading voor zelden gebruikte iconen:
  * ```jsx
- * const StopIcon = React.lazy(() => import('../assets/icons/icons8-stop-100.svg'));
+ * const StopIcon = React.lazy(() => import('@/assets/icons/icons8-stop-100.svg'));
  * 
  * // In je render
  * {isPlaying && (

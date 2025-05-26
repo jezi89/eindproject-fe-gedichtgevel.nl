@@ -1,0 +1,127 @@
+@import '@/styles/variables';
+
+.navbar {
+  background-color: $navbar-background;
+  border-bottom: 1px solid $border-warm;
+  position: sticky;
+  top: 0;
+  z-index: $z-high;
+}
+
+.navbarContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  font-family: $font-family-title;
+  text-decoration: none;
+  color: $navbar-text;
+  
+  &:hover {
+    color: $navbar-text-active;
+  }
+}
+
+.menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.navLinks {
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
+  
+  @media (max-width: $screen-md) {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: $navbar-background;
+    box-shadow: -2px 0 5px $shadow-base-light;
+    transition: right $transition-normal;
+    padding-top: 4rem;
+    
+    &.open {
+      right: 0;
+    }
+    
+    ul {
+      flex-direction: column;
+      padding: 0 2rem;
+      gap: 1.5rem;
+    }
+  }
+}
+
+.navLink {
+  a {
+    text-decoration: none;
+    color: $navbar-text;
+    padding: $spacing-xs $spacing-m;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    font-family: $font-family-nav-item;
+    font-size: $font-size-l;
+    
+    &:hover {
+      background-color: rgba($navbar-text-active, 0.1);
+      color: $navbar-text-active;
+    }
+    
+    &.active {
+      color: $navbar-text-active;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.defaultMenuLink {
+  text-decoration: none;
+  color: $navbar-text;
+  padding: $spacing-xs $spacing-m;
+  border-radius: $border-radius-sm;
+  transition: all $transition-fast;
+  font-family: $font-family-nav-item;
+  font-size: $font-size-l;
+  
+  &:hover {
+    background-color: rgba($navbar-text-active, 0.1);
+    color: $navbar-text-active;
+  }
+}
+
+.menuOverlay {
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+}

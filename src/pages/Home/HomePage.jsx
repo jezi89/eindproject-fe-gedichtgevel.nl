@@ -7,7 +7,7 @@
  * @module pages/Home/HomePage
  */
 
-import SearchBar from "../../../../../Eindopdracht-FE-old-REFERENCE/template/src/components/search/Searchbar.jsx";
+import SearchBar from "@/components/search/Searchbar.jsx";
 
 /**
  * HomePage component
@@ -18,4 +18,12 @@ import SearchBar from "../../../../../Eindopdracht-FE-old-REFERENCE/template/src
 export function HomePage() {
     // Render welcome message and search bar
     // Handle any error states
+    
+    return (
+        <div className="page-home">
+            <h1 className="page-title">Welkom bij GedichtGevel</h1>
+            <p className="page-subtitle">Ontdek de wereld van poëzie</p>
+            {/* <SearchBar /> */}
+        </div>
+    );
 }
