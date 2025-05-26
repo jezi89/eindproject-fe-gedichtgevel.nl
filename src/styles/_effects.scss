@@ -14,7 +14,7 @@
  * die de gebruikerservaring verrijken en een coherente visuele hiërarchie creëren.
  */
 
-@import "./variables";
+@use "./variables" as *;
 
 /* ------------------------------------------------------- 
  * SCHADUWEN
