@@ -7,11 +7,11 @@
  */
 
 import React from 'react';
-import {ApiStatusCard} from '../../../../../Eindopdrachten-Clean/eindproject-fe-gedichtgevel.nl/src/components/system/ApiStatusCard.jsx';
+import {ServicesStatusCard} from '@/components/system/ServicesStatusCard.jsx';
 import styles from './StatusBanner.module.css';
 
 /**
- * StatusBanner component that acts as a container for ApiStatusCard
+ * StatusBanner component that acts as a container for ServicesStatusCard
  *
  * @component
  * @param {Object} props
@@ -25,6 +25,6 @@ export default function StatusBanner({
                                          collapsible,
                                          checkInterval
                                      }) {
-    // Render container with ApiStatusCard
-    // Pass props to ApiStatusCard for monitoring API status
+    // Render container with ServicesStatusCard
+    // Pass props to ServicesStatusCard for monitoring API status
 }
