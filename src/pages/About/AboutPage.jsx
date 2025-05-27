@@ -1,7 +1,7 @@
 export function AboutPage() {
     return (
         <>
-            <h1>Over gevelgedicht.nl</h1>
+            <h1>Over gedichtgevel.nl</h1>
         </>
 
     )
