@@ -30,6 +30,7 @@ const handleAuthSuccess = (data = null) => {
     return {success: true, ...(data && {data})};
 };
 
+// TODO functies voor stateless auth operaties
 
 /**
  * Register a new user
