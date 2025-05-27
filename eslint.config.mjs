@@ -208,6 +208,12 @@ export default [
 
             // Configuratie voor import/resolver
             'import/resolver': {
+                alias: {
+                    map: [
+                        ['@', './src']
+                    ],
+                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                },
                 node: {
                     // Ondersteunde bestandsextensies voor imports
                     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
