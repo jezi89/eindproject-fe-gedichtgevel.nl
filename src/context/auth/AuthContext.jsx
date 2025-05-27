@@ -1,29 +1,20 @@
 /**
  * Authentication Context for managing user authentication state
- * 
- * @module context/auth/AuthContext
+ *
+ * *@returns {Object|null} The current authentication context value, or null if not within a provider.
  */
 
+import {createContext, useContext} from 'react';
 
-/**
- * Initial auth state with default values
- */
-//     user: null,
-//     loading: false,
-//     error: null,
+// Implementation
+const AuthContext = createContext(null);
 
-/**
- * Auth Context for providing authentication state throughout the app
- * @type {React.Context}
- */
-
-/**
- * Custom hook for consuming the AuthContext
- * @returns {Object} Auth context value
- */
 export function useAuthContext() {
-  // Implementation
+    return useContext(AuthContext);
 }
+
+export default AuthContext;
+
     
     
 
