@@ -31,6 +31,8 @@ export function useAuth() {
 
     // Enhanced signUp following the learned FE authentication pattern
     // Let Supabase handle automatic identity linking and profile creation via database triggers
+    // TODO captcha token implementeren
+
     const signUpWithCheck = useCallback(async (email, password, additionalData = {}) => {
         try {
             // Proceed with signup - Supabase will handle duplicate emails via automatic linking
