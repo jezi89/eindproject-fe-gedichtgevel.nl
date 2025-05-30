@@ -1,78 +1,95 @@
-// Button Component Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@styles/effects';       // Voor shadows, transitions
-//
-// 2. Button varianten:
-//    - Primary (hoofdactie)
-//    - Secondary (secundaire actie)
-//    - Tertiary (text-only)
-//    - Danger (destructieve acties)
-//    - Success (positieve acties)
-//
-// 3. Button sizes:
-//    - Small
-//    - Medium (default)
-//    - Large
-//
-// 4. Button states:
-//    - Default
-//    - Hover
-//    - Active/pressed
-//    - Disabled
-//    - Loading
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/effects" as *;
+@use "@styles/typography" as *;
+// Add this line to import typography variables
+@use "sass:color"; // Add this line
 
 .button {
-  // Base button styles
-}
+  @include button-base; // Base styles from mixin
+  font-size:     $font-size-m; // Default font size
+  width:         auto; // Default width
+  padding:       $spacing-s $spacing-m; // Default padding
+  cursor:        pointer;
+  transition:    background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  text-align:    center;
+  border-radius: $border-radius-sm;
+  }
 
-// Variants
-.button-primary {
-  // Primary button styling
-}
+.buttonPrimary {
+  @include button-variant($button-primary-background, $button-primary-text);
 
-.button-secondary {
-  // Secondary button styling
-}
+  }
 
-.button-tertiary {
-  // Text-only button
-}
+.buttonSecondary {
+  @include button-variant($button-secondary-background, $button-secondary-text, $button-secondary-border);
+  }
 
-.button-danger {
-  // Destructive actions
-}
+.buttonTertiary {
+  padding:         $spacing-xs $spacing-s; // Adjust padding for text-like buttons
+  text-decoration: underline;
+  color:           $text-link; // Use link color for tertiary buttons
+  border:          none;
+  background:      transparent;
 
-.button-success {
-  // Success actions
-}
+  &:hover, &:focus {
+	color:      color.scale($text-link, $lightness: -10%);
+	background: transparent; // Ensure no background on hover for tertiary
+	}
+  }
 
-// Sizes
-.button-small {
-  // Small size modifier
-}
+.buttonDanger {
+  @include button-variant($feedback-error, $button-primary-text);
+  }
 
-.button-large {
-  // Large size modifier
-}
+.buttonSuccess {
+  @include button-variant($feedback-success, $button-primary-text);
+  }
 
-// States
-.button-disabled {
-  // Disabled state
-}
+.buttonSmall {
+  font-size: $font-size-s;
+  padding:   $spacing-xs $spacing-s; // Adjusted padding
+  }
 
-.button-loading {
-  // Loading state met spinner
-}
+.buttonLarge {
+  font-size: $font-size-l;
+  padding:   $spacing-m $spacing-l; // Adjusted padding
+  }
 
-.button-icon {
-  // Icon binnen button
-}
+.buttonDisabled {
+  cursor:  not-allowed;
+  opacity: 0.6;
+  // Ensure hover/focus effects are also disabled or less prominent
+  &:hover, &:focus {
+	// Potentially revert to base disabled colors if variants change them
+	background-color: currentColor; // Example, adjust as needed
+	}
+  }
 
-.button-full-width {
-  // Full width variant
-}
+.buttonLoading {
+  // Add styles for loading state, e.g., a spinner
+  // For now, it can share disabled styles or have a specific indicator
+  cursor:  wait;
+  opacity: 0.8; // Slightly different opacity to indicate activity
+  }
+
+.buttonIcon {
+  // Styles for buttons that primarily contain an icon
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             $spacing-xs;
+  }
+
+.buttonFullWidth {
+  display: block; // Or flex if content needs centering
+  width:   100%;
+  }
+
+// This class can be used for the main form submission button
+.formSubmit {
+  // Inherits from .button and a variant like .buttonPrimary
+  // Add any specific margin or style overrides for submit buttons if needed
+  // For example, if all submit buttons need a specific top margin:
+  margin-top: $spacing-s;
+  }

@@ -1,5 +1,5 @@
 import '@styles/App.scss';
-import {Outlet, useLocation} from "react-router-dom"; // Import Outlet
+import {Outlet, useLocation} from "react-router"; // Import Outlet
 import NavBar from "@/layouts/NavBar/NavBar.jsx";
 // import StatusBanner from "@/layouts/StatusBanner/StatusBanner.jsx";
 // import styles from "@/styles/pageStylesTemp.module.css";

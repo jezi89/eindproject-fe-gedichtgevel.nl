@@ -1,16 +1,16 @@
 /**
- * @file app.scss
+ * @file Pp.scss
  * @description Hoofdstijlbestand voor de applicatie "Gedichtgevel.nl"
  * @author Jerôme
- * @group App
+ * @group Pp
  * @imports _variables, _typography, _layout, _mixins, _themes
  * @exports Samengestelde applicatiestijlen
  */
 
-/* ======================================================= 
+/* =======================================================
  * APP STYLES
- * ======================================================= 
- * Structuur voor de hoofdsamenstelling van de applicatie. 
+ * =======================================================
+ * Structuur voor de hoofdsamenstelling van de applicatie.
  * Importeert alle basiscomponenten en definieert globale contextafhankelijke stijlen.
  */
 
@@ -21,10 +21,10 @@
 @use "./layout";
 @use "./typography";
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * BODY & ROOT
- * ------------------------------------------------------- 
- * Basisstijlen voor het document en root element. 
+ * -------------------------------------------------------
+ * Basisstijlen voor het document en root element.
  * Definieert de basis voor de gehele applicatie.
  */
 
@@ -36,23 +36,21 @@
   }
 
 body {
-  font-family:      $font-family-body;
-  overflow-x:       hidden;
-  min-height:       100vh;
-  margin:           0;
-  padding:          0;
-  color:            $text-inverse;  // Changed to light text
-  background-color: $background-page;
+  overflow-x: hidden;
+  min-height: 100vh;
+  margin:     0;
+  padding:    0;
+  // Font family, color, and background are defined in _typography.scss
 
   @include media-up($screen-md) {
 	// Responsive aanpassingen voor body op medium schermen
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * CONTAINER STRUCTUREN
- * ------------------------------------------------------- 
- * Hoofdcontainers die de basisstructuur van de pagina bepalen. 
+ * -------------------------------------------------------
+ * Hoofdcontainers die de basisstructuur van de pagina bepalen.
  * Deze vormen het skelet van de layout.
  */
 
@@ -71,30 +69,30 @@ body {
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * GLOBALE COMPONENTEN
- * ------------------------------------------------------- 
- * Stijlen voor componenten die door de gehele applicatie gebruikt worden, 
+ * -------------------------------------------------------
+ * Stijlen voor componenten die door de gehele applicatie gebruikt worden,
  * zoals knoppen, kaarten en navigatie.
  */
 
 // Page Titles
 .page-title {
-  font-family: $font-family-title;
-  font-size: $font-size-xxxl;
-  font-weight: $font-weight-bold;
-  color: $text-heading;
+  font-family:   $font-family-title;
+  font-size:     $font-size-xxxl;
+  font-weight:   $font-weight-bold;
   margin-bottom: $spacing-m;
-  text-align: center;
-}
+  text-align:    center;
+  color:         $text-heading;
+  }
 
 .page-subtitle {
-  font-family: $font-family-body;
-  font-size: $font-size-l;
-  color: $text-inverse;
-  text-align: center;
+  font-family:   $font-family-body;
+  font-size:     $font-size-l;
   margin-bottom: $spacing-xl;
-}
+  text-align:    center;
+  color:         $text-secondary;
+  }
 
 // Buttons
 .button {
@@ -130,10 +128,10 @@ body {
   font-size:   $font-size-m;
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * THEMA SPECIFIEKE OVERSCHRIJVINGEN
- * ------------------------------------------------------- 
- * Overschrijvingen voor thema-specifieke weergave. 
+ * -------------------------------------------------------
+ * Overschrijvingen voor thema-specifieke weergave.
  * Deze worden toegepast via data-attributen of classes.
  */
 
@@ -145,10 +143,10 @@ body {
   // Toegankelijkheidsoverschrijvingen voor hoog contrast
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * ANIMATIES & TRANSITIES
- * ------------------------------------------------------- 
- * Definities voor globale animaties en transities 
+ * -------------------------------------------------------
+ * Definities voor globale animaties en transities
  * die door de gehele applicatie worden toegepast.
  */
 
@@ -161,8 +159,12 @@ body {
   }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+	opacity: 0;
+	}
+  to {
+	opacity: 1;
+	}
   }
 
 @keyframes slideUp {
@@ -176,10 +178,10 @@ body {
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * MEDIAQUERY AANPASSINGEN
- * ------------------------------------------------------- 
- * Globale responsieve aanpassingen die niet in de 
+ * -------------------------------------------------------
+ * Globale responsieve aanpassingen die niet in de
  * component-specifieke regels zijn opgenomen.
  */
 

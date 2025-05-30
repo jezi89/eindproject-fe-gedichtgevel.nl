@@ -1,0 +1,117 @@
+/**
+ * Auth Layout Styles
+ *
+ * Layout styles for authentication pages:
+ * - Login
+ * - Register
+ * - Password Reset
+ * - Email Verification
+ */
+
+// Temporarily comment out imports until we have the files
+// @import '../styles/variables';
+// @import '../styles/mixins';
+
+// Het gebruik van underscores voor _auth-layout.scss duidt op een Sass-partial, wat een goede praktijk is. Het globale index.scss-bestand importeert doorgaans deze partials en definieert echt globale stijlen.
+
+// Auth page container
+.auth-layout {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  min-height:      100vh;
+  padding:         2rem;
+  background:      #f5f5f5;
+
+  @media (max-width: 768px) {
+	padding: 1rem;
+	}
+  }
+
+// Auth card
+.auth-card {
+  width:         100%;
+  max-width:     400px;
+  padding:       2.5rem;
+  border-radius: 12px;
+  background:    white;
+  box-shadow:    0 4px 6px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+	padding:    2rem;
+	background: transparent;
+	box-shadow: none;
+	}
+  }
+
+// Auth header
+.auth-header {
+  margin-bottom: 2.5rem;
+  text-align:    center;
+
+  h1 {
+	font-size:     1.875rem;
+	font-weight:   700;
+	margin-bottom: 0.5rem;
+	color:         #1a1a1a;
+	}
+
+  p {
+	font-size: 1rem;
+	color:     #666;
+	}
+  }
+
+// Auth form wrapper
+.auth-form {
+  display:        flex;
+  flex-direction: column;
+  gap:            1rem;
+  }
+
+// Auth footer links
+.auth-footer {
+  margin-top: 2rem;
+  text-align: center;
+
+  p {
+	font-size: 0.875rem;
+	color:     #666;
+	}
+
+  a {
+	font-weight:     500;
+	text-decoration: none;
+	color:           #0066cc;
+
+	&:hover {
+	  text-decoration: underline;
+	  }
+	}
+  }
+
+// Auth messages
+.auth-message {
+  font-size:     0.875rem;
+  margin-bottom: 1rem;
+  padding:       1rem;
+  border-radius: 8px;
+
+  &--error {
+	color:            #c33;
+	border:           1px solid #c33;
+	background-color: #fee;
+	}
+
+  &--success {
+	color:            #3c3;
+	border:           1px solid #3c3;
+	background-color: #efe;
+	}
+
+  &--info {
+	color:            #33c;
+	border:           1px solid #33c;
+	background-color: #eef;
+	}
+  }

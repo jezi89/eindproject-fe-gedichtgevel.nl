@@ -8,11 +8,10 @@
  */
 
 import {useState} from "react";
-// eslint-disable-next-line import/named
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import MainNavLink from "./MainNavLink.jsx";
 import styles from "./NavBar.module.scss"
-// import {useAuth} from "@/hooks/useAuth.js";
+import {useAuth} from "@/hooks/useAuth.js";
 
 /**
  * NavBar component for main site navigation
@@ -24,10 +23,9 @@ function NavBar() {
     // States
     // - isMenuOpen: Whether mobile menu is open
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // const {user, signOut} = useAuth(); // Get user and signOut function from auth context
 
-    // Authentication
-    // - Get user and signOut function from auth context
+    // Authentication - get user and signOut from refactored useAuth hook
+    const {user, signOut} = useAuth();
 
 
     /**
@@ -38,17 +36,21 @@ function NavBar() {
         setIsMenuOpen(prevState => !prevState);
     }
 
-    // /**
-    //  * Handles user logout
-    //  *
-    //  * @param {React.MouseEvent} e - Click event
-    //  */
-    // function handleLogout(e) {
-    //     // Prevent default link behavior
-    //     // Call signOut function
-    //     e.preventDefault();
-    //     signOut();
-    // }
+    /**
+     * Handles user logout
+     * Prevents default link behavior and calls signOut
+     *
+     * @param {React.MouseEvent} e - Click event
+     */
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            await signOut();
+            // Navigation is handled by auth state change
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
     return (
         // Navigation container
@@ -80,20 +82,30 @@ function NavBar() {
                             <MainNavLink to="/overmij">Over Mij</MainNavLink>
                         </li>
 
-                        {/*Conditional rendering based on authentication state with Authentication-related links*/}
-                        {/* {user ? (
+                        {/* Authentication-related links with conditional rendering */}
+                        {user ? (
                             <>
+                                {/* Show account link when logged in */}
                                 <li className={styles.navLink}>
-                                    <a href="#" onClick={handleLogout} className={styles.defaultMenuLink}>Uitloggen</a>
+                                    <MainNavLink to="/account">Mijn Account</MainNavLink>
                                 </li>
-                            </>) : (
+                                {/* Show logout button when logged in */}
+                                <li className={styles.navLink}>
+                                    <a
+                                        href="#"
+                                        onClick={handleLogout}
+                                        className={styles.defaultMenuLink}
+                                    >
+                                        Uitloggen
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            /* Show login/register link when not logged in */
                             <li className={styles.navLink}>
                                 <MainNavLink to="/welkom">Login/Registreer</MainNavLink>
                             </li>
-                        )} */}
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/welkom">Login/Registreer</MainNavLink>
-                        </li>
+                        )}
                     </ul>
                 </nav>
             </div>
