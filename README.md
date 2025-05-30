@@ -24,6 +24,7 @@ This template is designed as a learning and development exercise. It contains:
 - Architectural patterns and guidelines for building the application
 
 By starting with this template, you can:
+
 1. Understand the architecture of a complex React application
 2. Implement features by following the documentation
 3. Learn how to organize code in a maintainable way
@@ -78,30 +79,35 @@ The components directory is organized by function and feature:
 #### Core Components
 
 **Canvas Components** (`/components/Core/Canvas/`)
+
 - **Canvas.jsx**: Interactive canvas for poem visualization
-  - Manages text positioning and styling on facades
-  - Handles background image management
-  - Provides export functionality
-  - Implements an interface with props like `poemId`, `initialBackgroundUrl`, and `onSave`
+    - Manages text positioning and styling on facades
+    - Handles background image management
+    - Provides export functionality
+    - Implements an interface with props like `poemId`, `initialBackgroundUrl`, and `onSave`
 
 **Recording Components** (`/components/Core/Recording/`)
+
 - **AudioPlayer.jsx**: Complete audio playback interface
-  - Play/pause/stop controls
-  - Progress tracking
-  - Waveform visualization
-  - Volume controls
+    - Play/pause/stop controls
+    - Progress tracking
+    - Waveform visualization
+    - Volume controls
 - **RecordingsCard.jsx**: Display and management of recordings
 
 #### Form Components (`/components/forms/`)
+
 - **FormField.jsx**: Reusable form input component with validation
 - **LoginForm.jsx**: User authentication form
 - **SignupForm.jsx**: User registration form
 
 #### Search Components (`/components/search/`)
+
 - **SearchBar.jsx**: Search interface with real-time feedback
 - **SearchResults.jsx**: Display of poem search results with expandable details
 
 #### UI Components (`/components/ui/`)
+
 - **Button.jsx**: Base button component
 - **ActionButton.jsx**: Specialized buttons for different actions
 
@@ -110,22 +116,26 @@ The components directory is organized by function and feature:
 Custom React hooks that encapsulate reusable logic:
 
 #### Authentication Hooks
+
 - **useAuth.js**: Access authentication state and methods
 - **useAuthForm.js**: Manage authentication form state and validation
 
 #### API Hooks
+
 - **useApiHealth.js**: Monitor API connection status
 - **usePoems.js**: Fetch and manage poem data
 
 #### Feature-specific Hooks
+
 - **useAudioRecorder.js**: Audio recording functionality
-  - Provides methods for starting/stopping recording
-  - Manages recording state and timing
-  - Handles audio processing and storage
-  - Returns comprehensive recording interface
+    - Provides methods for starting/stopping recording
+    - Manages recording state and timing
+    - Handles audio processing and storage
+    - Returns comprehensive recording interface
 - **useCanvas.js**: Canvas manipulation for poem visualization
 
 #### Utility Hooks
+
 - **useLocalStorage.js**: Persistent browser storage
 - **useDebounce.js**: Debounce rapidly changing values
 
@@ -134,17 +144,21 @@ Custom React hooks that encapsulate reusable logic:
 Service modules that handle external interactions and business logic:
 
 #### API Services
+
 - **poetryApi.js**: Central facade for poetry-related API calls
 - **poemService.js**: Direct API calls to PoetryDB
 - **poemSearchService.js**: Advanced search functionality
 
 #### Authentication
+
 - **authService.js**: Supabase authentication methods
 
 #### Storage
+
 - **audioStorageService.js**: Audio recording storage and retrieval
 
 #### Monitoring
+
 - **checkPoetryDbHealth.js**: API health monitoring
 
 ### Pages (`/src/pages/`)
@@ -152,7 +166,7 @@ Service modules that handle external interactions and business logic:
 Page components serving as containers for main views:
 
 - **HomePage.jsx**: Main landing page with search
-- **LoginAndRegisterPage.jsx**: Authentication page
+- **LoginAndSignupPage.jsx**: Authentication page
 - **AccountPage.jsx**: User profile and settings
 - **AudioPage.jsx**: Audio recording interface
 - **CollectionPage.jsx**: Poem collections management
@@ -177,26 +191,31 @@ Utility functions used throughout the application:
 The application follows these architectural principles:
 
 ### 1. Component-Based Architecture
+
 - UI decomposed into reusable components
 - Hierarchical component organization
 - Component-specific styles using CSS modules
 
 ### 2. Custom Hook Pattern
+
 - Business logic extracted into custom hooks
 - Separation of concerns between UI and logic
 - Reusable stateful logic across components
 
 ### 3. Service Layer Pattern
+
 - External interactions isolated in service modules
 - Centralized error handling
 - Abstraction of API details
 
 ### 4. Context-Based State Management
+
 - Application-wide state managed with Context API
 - Providers encapsulate state logic
 - Custom hooks for consuming context
 
 ### 5. Repository Pattern
+
 - Data access abstracted through repository-like services
 - Consistent interface for data operations
 - Caching and optimization strategies

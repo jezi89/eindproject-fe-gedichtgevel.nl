@@ -25,13 +25,16 @@
 
 // Use modules - order matters!
 @use "./styles/reset";
-@use "./styles/variables" as *;  // Make variables globally available
-@use "./styles/mixins" as *;     // Make mixins globally available
+@use "./styles/variables" as *;
+// Make variables globally available
+@use "./styles/mixins" as *;
+// Make mixins globally available
 @use "./styles/typography";
 @use "./styles/layout";
-@use "./styles/effects" as *;    // Make effect variables globally available
+@use "./styles/effects" as *;
+// Make effect variables globally available
 @use "./styles/utilities";
-@use "./styles/app";
+@use "styles/App";
 
 /* ======================================================= 
  * ACCESSIBILITY FOCUS

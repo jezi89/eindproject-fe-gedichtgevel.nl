@@ -1,68 +1,96 @@
-// Shared Form Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@styles/typography';    // Voor text styling
-//    @import '@styles/effects';       // Voor shadows, transitions
-//
-// 2. Gedeelde form elementen:
-//    - Input fields (text, email, password)
-//    - Textareas
-//    - Select dropdowns
-//    - Checkboxes en radio buttons
-//    - Labels en help text
-//    - Validation feedback
-//
-// 3. Form layouts:
-//    - Vertical stacked
-//    - Inline forms
-//    - Multi-column forms
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "@styles/typography" as *;
+@use "sass:color";
 
-// Base form styles
+.formContainer {
+  width:         90%; // Responsive width
+  max-width:     450px; // Slightly increased max-width for better spacing
+  margin:        $spacing-l auto; // Centering and vertical margin
+  padding:       $spacing-l; // Uniform padding
+  border-radius: $border-radius-md;
+  background:    $card-background;
+  box-shadow:    $shadow-md;
+  }
+
 .form {
-  // General form container
-}
+  display:        flex;
+  flex-direction: column;
+  gap:            $spacing-l; // Increased gap for better separation of fields
+  }
 
-.form-group {
-  // Wrapper voor label + input
-}
+// Styles for FormField component structure
+.formGroup {
+  display:        flex;
+  flex-direction: column;
+  width:          100%; // Ensure form group takes full width
+  gap:            $spacing-xs; // Space between label and input
+  }
 
-.form-label {
-  // Label styling
-}
+.formLabel {
+  font-weight: $font-weight-semibold;
+  display:     block;
+  color:       $text-heading;
+  }
 
-.form-input {
-  // Text inputs, selects, textareas
-}
+.formLabelRequired::after { // Renamed for clarity
+  margin-left: 0.25em;
+  content:     "*";
+  color:       $feedback-error;
+  }
 
-.form-textarea {
-  // Textarea specifiek
-}
+.formInput {
+  @include input-base;
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+  width:      100%; // Ensure input takes full width of its container
+  }
 
-.form-select {
-  // Dropdown styling
-}
+.formInputInvalid {
+  border-color:     $feedback-error;
+  background-color: color.change($feedback-error, $alpha: 0.07);
+  }
 
-.form-checkbox,
-.form-radio {
-  // Checkbox/radio wrapper
-}
+.formError {
+  font-size: $font-size-s; // Slightly larger for better readability
+  width:     100%; // Ensure error message takes full width
+  color:     $feedback-error;
+  }
 
-.form-help {
-  // Help text onder inputs
-}
+.formSuccess {
+  padding:       $spacing-m;
+  text-align:    center;
+  color:         $feedback-success;
+  border-radius: $border-radius-sm;
+  background:    color.change($feedback-success, $alpha: 0.08);
+  }
 
-.form-error {
-  // Error message styling
-}
+.formInfo {
+  padding:       $spacing-m;
+  text-align:    center;
+  color:         $feedback-info;
+  border-radius: $border-radius-sm;
+  background:    color.change($feedback-info, $alpha: 0.08);
+  }
 
-.form-success {
-  // Success message styling
-}
+.formHelp {
+  font-size:  $font-size-s; // Standardized font size
+  text-align: right; // Align help text like "Forgot password?" to the right
+  color:      $text-secondary;
+  }
 
-.form-actions {
-  // Submit/cancel button area
-}
+.formLink {
+  cursor:          pointer;
+  text-decoration: underline;
+  color:           $text-link;
+  }
+
+.redirectMessage {
+  font-size:  $font-size-xs;
+  margin-top: $spacing-xs;
+  color:      $text-secondary;
+  }
+
+.cancelButton {
+  @include button-base($button-secondary-background, $button-secondary-text);
+  margin-top: $spacing-xs;
+  }

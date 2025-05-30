@@ -24,16 +24,16 @@
  */
 
 // Component-specifieke schaduwen
-$shadow-tooltip: $shadow-md;
-$shadow-modal: 0 10px 20px rgba($neutral-black, 0.3);
-$shadow-dropdown: 0 3px 5px rgba($neutral-black, 0.15);
+$shadow-tooltip:        $shadow-md;
+$shadow-modal:          0 10px 20px rgba($neutral-black, 0.3);
+$shadow-dropdown:       0 3px 5px rgba($neutral-black, 0.15);
 
 // Interactieve schaduwen
-$shadow-button-hover: 0 5px 10px rgba($primary-cognac, 0.2);
-$shadow-button-active: 0 2px 3px rgba($primary-cognac, 0.3);
+$shadow-button-hover:   0 5px 10px rgba($primary-cognac, 0.2);
+$shadow-button-active:  0 2px 3px rgba($primary-cognac, 0.3);
 
 // Poëzievisualisatie schaduwen
-$shadow-poem-text: 0 2px 4px rgba($accent-gold, 0.25);
+$shadow-poem-text:      0 2px 4px rgba($accent-gold, 0.25);
 $shadow-poem-container: 0 8px 16px rgba($neutral-black, 0.25);
 
 /* ------------------------------------------------------- 
@@ -44,11 +44,11 @@ $shadow-poem-container: 0 8px 16px rgba($neutral-black, 0.25);
  */
 
 // Samengestelde transities voor componenten
-$transition-button: $transition-normal $ease-out;
-$transition-hover: $transition-fast $ease-default;
-$transition-fade: opacity $transition-normal $ease-default;
-$transition-transform: transform $transition-normal $ease-in-out-expo;
-$transition-color: color $transition-fast $ease-default;
+$transition-button:     $transition-normal $ease-out;
+$transition-hover:      $transition-fast $ease-default;
+$transition-fade:       opacity $transition-normal $ease-default;
+$transition-transform:  transform $transition-normal $ease-in-out-expo;
+$transition-color:      color $transition-fast $ease-default;
 $transition-background: background-color $transition-normal $ease-default;
 
 /* ------------------------------------------------------- 
@@ -62,58 +62,58 @@ $transition-background: background-color $transition-normal $ease-default;
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
+  }
 
 @keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; }
-}
+  }
 
 // Bewegingsanimaties
 @keyframes slideInUp {
   from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
+	transform: translateY(20px);
+	opacity:   0;
+	}
   to {
-    transform: translateY(0);
-    opacity: 1;
+	transform: translateY(0);
+	opacity:   1;
+	}
   }
-}
 
 @keyframes slideOutDown {
   from {
-    transform: translateY(0);
-    opacity: 1;
-  }
+	transform: translateY(0);
+	opacity:   1;
+	}
   to {
-    transform: translateY(20px);
-    opacity: 0;
+	transform: translateY(20px);
+	opacity:   0;
+	}
   }
-}
 
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
-}
+  }
 
 // Poëziespecifieke animaties
 @keyframes textReveal {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
-}
+  }
 
 @keyframes inkSpread {
   0% {
-    filter: blur(10px);
-    opacity: 0;
-  }
+	filter:  blur(10px);
+	opacity: 0;
+	}
   100% {
-    filter: blur(0);
-    opacity: 1;
+	filter:  blur(0);
+	opacity: 1;
+	}
   }
-}
 
 /* ------------------------------------------------------- 
  * MIXINS VOOR EFFECTEN
@@ -123,28 +123,28 @@ $transition-background: background-color $transition-normal $ease-default;
  */
 
 // Filter effecten
-@mixin filter-effect($type: 'subtle-blur') {
-  @if $type == 'subtle-blur' {
-    filter: blur(2px);
-  } @else if $type == 'grayscale' {
-    filter: grayscale(100%);
-  } @else if $type == 'sepia' {
-    filter: sepia(50%);
-  } @else if $type == 'poem-glow' {
-    filter: drop-shadow(0 0 10px rgba($accent-gold, 0.5));
+@mixin filter-effect($type: "subtle-blur") {
+  @if $type == "subtle-blur" {
+	filter: blur(2px);
+	} @else if $type == "grayscale" {
+	filter: grayscale(100%);
+	} @else if $type == "sepia" {
+	filter: sepia(50%);
+	} @else if $type == "poem-glow" {
+	filter: drop-shadow(0 0 10px rgba($accent-gold, 0.5));
+	}
   }
-}
 
 // Backdrop filters (voor glas-effecten)
-@mixin backdrop-filter($effect: 'glass') {
-  @if $effect == 'glass' {
-    backdrop-filter: blur(8px);
-    background-color: rgba($background-card, 0.6);
-  } @else if $effect == 'subtle-glass' {
-    backdrop-filter: blur(4px);
-    background-color: rgba($background-card, 0.8);
-  } @else if $effect == 'dark-glass' {
-    backdrop-filter: blur(8px) brightness(0.8);
-    background-color: rgba($background-page, 0.7);
+@mixin backdrop-filter($effect: "glass") {
+  @if $effect == "glass" {
+	backdrop-filter:  blur(8px);
+	background-color: rgba($background-card, 0.6);
+	} @else if $effect == "subtle-glass" {
+	backdrop-filter:  blur(4px);
+	background-color: rgba($background-card, 0.8);
+	} @else if $effect == "dark-glass" {
+	backdrop-filter:  blur(8px) brightness(0.8);
+	background-color: rgba($background-page, 0.7);
+	}
   }
-}

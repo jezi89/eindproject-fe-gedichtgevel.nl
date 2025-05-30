@@ -1,8 +1,3 @@
-import supabaseClient from "@/services/supabase/supabaseClient.js";
-import AuthContext from './AuthContext';
-import {useEffect, useState} from "react";
-
-
 /**
  * AuthProvider Component
  *
@@ -18,8 +13,16 @@ import {useEffect, useState} from "react";
  * The provider maintains the original API (signIn, signUp, signOut) for
  * backward compatibility while internally using the new hook methods.
  *
+ * Conclusie:
+ * De refactor klopt als de context en alle consumers (zoals useAuth) alleen de canonical methoden gebruiken.
+ * Dit houdt de architectuur schoon en consistent met Supabase conventies.
+ * WWe hoeven dus alleen te zorgen dat de context en alle hooks/forms de juiste methoden aanroepen.
+ *
  *  @module context/auth/AuthProvider
  */
+
+import AuthContext from './AuthContext';
+import {useSupabaseAuth} from '../../hooks/useSupabaseAuth';
 
 /**
  * @component
@@ -28,12 +31,10 @@ import {useEffect, useState} from "react";
  * @returns {JSX.Element} The AuthProvider component
  */
 
-
-
 export function AuthProvider({children}) {
     const auth = useSupabaseAuth();
 
-    // Create a context value that maintains backward compatibility
+    // Creating a context value that maintains backward compatibility
     // while using the new auth hook internally
     const value = {
 
@@ -41,38 +42,40 @@ export function AuthProvider({children}) {
         user: auth.user,
         loading: auth.loading,
         error: auth.error,
-        isAuthenticated: auth.isAuthenticated,
+        isAuthenticated: !!auth.user, // Calculate isAuthenticated based on user, because auth.user is null when not authenticated
 
         // Auth methods (maintain original naming for backward compatibility)
-        signUp: auth.signup,
-        signIn: auth.login,
-        signOut: auth.logout,
+        signUp: auth.signUp,
+        signIn: auth.signIn,
+        signOut: auth.signOut,
         checkAuth: async () => {
-            const {user, error} = await auth.getCurrentUser?.() || {};
+            // Using getCurrentUser from useSupabaseAuth which in turn uses authService.getUser
+            const {user: currentUser, error: currentError} = await auth.getCurrentUser?.() || {};
             return {
-                isAuthenticated: !!user,
-                user,
-                error
+                isAuthenticated: !!currentUser,
+                user: currentUser,
+                error: currentError
             };
         },
 
         // Password methods
-        resetPassword: auth.sendPasswordReset,
-        updatePassword: auth.updatePassword,
+        sendPasswordResetEmail: auth.sendPasswordResetEmail,
+        updateUserPassword: auth.updateUserPassword,
 
         // Profile methods
         getUserProfile: auth.getUserProfile,
         updateUserProfile: auth.updateUserProfile,
 
         // Token methods
-        refreshToken: auth.refreshToken,
+        refreshUserSession: auth.refreshUserSession,
 
         // Utility methods
         clearError: auth.clearError,
+        checkUserExists: auth.checkUserExists,
 
         // Form states (additions for form integration)
         loginForm: auth.loginForm,
-        signupForm: auth.signupForm,
+        signupForm: auth.signupForm, // Corrected: was SignupForm, now signupForm
         resetPasswordForm: auth.resetPasswordForm,
         updatePasswordForm: auth.updatePasswordForm,
 
