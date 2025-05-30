@@ -1,128 +1,169 @@
 @use "sass:color";
-@use '@/styles/variables' as *;
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "@/styles/typography" as typo;
 
 .navbar {
+  position:         sticky;
+  z-index:          $z-high;
+  top:              0;
+  border-bottom:    1px solid $border-warm;
   background-color: $navbar-background;
-  border-bottom: 1px solid $border-warm;
-  position: sticky;
-  top: 0;
-  z-index: $z-high;
-}
+  }
 
 .navbarContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  max-width: $container-xl;
+  margin:    0 auto;
+  padding:   $spacing-m $spacing-l;
+  @include mixins.flex-container(row, space-between, center);
+
+  @include mixins.media-up($screen-lg) {
+	padding: $spacing-m $spacing-xl;
+	}
+  }
 
 .logo {
-  font-size: $font-size-xxl;
-  font-weight: $font-weight-bold;
-  font-family: $font-family-title;
+  font-family:     $font-family-title;
+  font-weight:     $font-weight-bold;
+  flex-shrink:     0;
+  transition:      color $transition-fast;
   text-decoration: none;
-  color: $navbar-text;
-  
+  color:           $navbar-text;
+  @include mixins.fluid-type(1.5, 2.25, $screen-xs, $screen-lg);
+
   &:hover {
-    color: $navbar-text-active;
+	color: $navbar-text-active;
+	}
   }
-}
 
 .menuToggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  
-  @media (max-width: 768px) {
-    display: block;
+  @include mixins.button-reset;
+  font-size: $font-size-m;
+  display:   none;
+  padding:   $spacing-xs $spacing-m;
+  color:     $navbar-text;
+
+  @include mixins.media-down($screen-md) {
+	display: block;
+	}
   }
-}
 
 .navLinks {
+  @include mixins.media-up($screen-md) {
+	display:         flex;
+	flex:            1;
+	justify-content: flex-end;
+	}
+
   ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2rem;
+	@include mixins.list-unstyled;
+	@include mixins.flex-container(row, flex-end, center);
+	gap: clamp($spacing-xs, 2vw, $spacing-xl);
+
+	@include mixins.media-between($screen-md, $screen-lg) {
+	  gap: clamp($spacing-xs, 1.5vw, $spacing-l);
+	  }
+	}
+
+  @include mixins.media-down($screen-md) {
+	position:         fixed;
+	z-index:          $z-highest;
+	top:              0;
+	right:            -100%;
+	width:            min(75vw, 300px);
+	height:           100vh;
+	padding-top:      4rem;
+	transition:       right $transition-normal;
+	background-color: $navbar-background;
+	box-shadow:       -2px 0 5px $shadow-base-light;
+
+	&.open {
+	  right: 0;
+	  }
+
+	ul {
+	  align-items:    stretch;
+	  flex-direction: column;
+	  padding:        0 $spacing-xl;
+	  gap:            $spacing-m;
+	  }
+	}
   }
-  
-  @media (max-width: $screen-md) {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 250px;
-    height: 100vh;
-    background-color: $navbar-background;
-    box-shadow: -2px 0 5px $shadow-base-light;
-    transition: right $transition-normal;
-    padding-top: 4rem;
-    
-    &.open {
-      right: 0;
-    }
-    
-    ul {
-      flex-direction: column;
-      padding: 0 2rem;
-      gap: 1.5rem;
-    }
-  }
-}
 
 .navLink {
+  flex-shrink: 0;
+
   a {
-    text-decoration: none;
-    color: $navbar-text;
-    padding: $spacing-xs $spacing-m;
-    border-radius: $border-radius-sm;
-    transition: all $transition-fast;
-    font-family: $font-family-nav-item;
-    font-size: $font-size-l;
-    
-    &:hover {
-      background-color: color.change($navbar-text-active, $alpha: 0.1);
-      color: $navbar-text-active;
-    }
-    
-    &.active {
-      color: $navbar-text-active;
-      font-weight: $font-weight-bold;
-    }
+	font-family:     $font-family-nav-item;
+	display:         inline-block;
+	padding:         $spacing-xs $spacing-m;
+	transition:      all $transition-fast;
+	white-space:     nowrap;
+	text-decoration: none;
+	color:           $navbar-text;
+	border-radius:   $border-radius-sm;
+	@include mixins.fluid-type(0.9375, 1.5, $screen-xs, $screen-xl);
+
+	@include mixins.media-between($screen-md, $screen-lg) {
+	  padding: $spacing-xs $spacing-s;
+	  }
+
+	&:hover {
+	  color:            $navbar-text-active;
+	  background-color: color.change($navbar-text-active, $alpha: 0.1);
+	  }
+
+	&.active {
+	  font-weight: $font-weight-bold;
+	  color:       $navbar-text-active;
+	  }
+
+	@include mixins.media-down($screen-md) {
+	  display: block;
+	  width:   100%;
+	  padding: $spacing-s $spacing-m;
+	  }
+	}
   }
-}
 
 .defaultMenuLink {
+  font-family:     $font-family-nav-item;
+  display:         inline-block;
+  padding:         $spacing-xs $spacing-m;
+  transition:      all $transition-fast;
+  white-space:     nowrap;
   text-decoration: none;
-  color: $navbar-text;
-  padding: $spacing-xs $spacing-m;
-  border-radius: $border-radius-sm;
-  transition: all $transition-fast;
-  font-family: $font-family-nav-item;
-  font-size: $font-size-l;
-  
+  color:           $navbar-text;
+  border-radius:   $border-radius-sm;
+  @include mixins.fluid-type(0.9375, 1.5, $screen-xs, $screen-xl);
+
+  @include mixins.media-between($screen-md, $screen-lg) {
+	padding: $spacing-xs $spacing-s;
+	}
+
   &:hover {
-    background-color: color.change($navbar-text-active, $alpha: 0.1);
-    color: $navbar-text-active;
+	color:            $navbar-text-active;
+	background-color: color.change($navbar-text-active, $alpha: 0.1);
+	}
+
+  @include mixins.media-down($screen-md) {
+	display: block;
+	width:   100%;
+	padding: $spacing-s $spacing-m;
+	}
   }
-}
 
 .menuOverlay {
   display: none;
-  
-  @media (max-width: 768px) {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
+
+  @include mixins.media-down($screen-md) {
+	position:         fixed;
+	z-index:          $z-modal;
+	top:              0;
+	left:             0;
+	display:          block;
+	width:            100%;
+	height:           100vh;
+	background-color: rgba($neutral-black, 0.5);
+	}
   }
-}

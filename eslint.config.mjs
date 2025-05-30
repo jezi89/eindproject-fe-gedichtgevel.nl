@@ -227,5 +227,12 @@ export default [
     {
         files: ['**/*.{ts,tsx}'],
         // Hier kun je TypeScript-specifieke configuraties toevoegen indien nodig
+    },
+    // Specifieke regels voor Vite configuratie bestanden
+    {
+        files: ['vite.config.js'],
+        rules: {
+            'import/default': 'off'
+        }
     }
 ];

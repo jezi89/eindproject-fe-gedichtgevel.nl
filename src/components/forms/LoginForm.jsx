@@ -7,14 +7,14 @@
  * @module components/forms/LoginForm
  */
 
-import {useState} from "react";
-// import {useNavigate} from 'react-router-dom';
-// import {useAuth} from '@/hooks/useAuth.js';
-// import useAuthForm from '@/hooks/useAuthForm.js';
-// import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
-// import FormField from '@/components/forms/FormField.jsx';
-// import styles from './LoginAndSignupForms.module.css';
-// import {post} from "axios";
+import {useNavigate, Link} from 'react-router';
+import {useAuth} from '../../hooks/useAuth';
+import useAuthForm from '../../hooks/useAuthForm';
+import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
+import FormField from '@/components/forms/FormField.jsx';
+import {useNavigationState, usePrefilledEmail} from "@/hooks/useNavigationState.js";
+import styles from './forms.module.scss';
+import {useEffect, useRef, useState} from "react";
 
 /**
  * LoginForm component for user authentication
@@ -22,20 +22,46 @@ import {useState} from "react";
  * @component
  * @returns {JSX.Element} Login form component
  */
-function LoginForm() {
-    // States
-    // - loginAttempted: Tracks if login has been attempted
 
+function LoginForm() {
+    // - loginAttempted: Tracks if login has been attempted
     // Navigation
     // - Use React Router's useNavigate for redirection after login
+
+    const navigate = useNavigate();
+    const passwordRef = useRef(null); // Reference to password input field
+    const [loginAttempted, setLoginAttempted] = useState(false);
+
+    // Get email from navigation state if redirected from Signup
+    const emailFromSignup = usePrefilledEmail();
+    const shouldFocusPassword = useNavigationState('focusPassword', false);
 
     // Form Management
     // - Use useAuthForm for form state management
     // - Handle email and password validation
     // - Track submission state
+    const {
+        values,
+        errors,
+        isSubmitting,
+        handleChange,
+        setErrors,
+        createFormAction
+    } = useAuthForm({
+        email: emailFromSignup || '',
+        password: ''
+    });
+
+    // Focus password field if redirected from Signup
+    useEffect(() => {
+        if (shouldFocusPassword && passwordRef.current) {
+            passwordRef.current.focus();
+        }
+    }, [shouldFocusPassword]);
 
     // Authentication
     // - Use signIn from AuthContext
+    const {signIn} = useAuth();
 
     /**
      * Validates form inputs
@@ -43,12 +69,18 @@ function LoginForm() {
      * @param {FormData} formData - Form data from form submission
      * @returns {boolean} Whether the form is valid
      */
-    function validateForm(formData) {
-        // Validate email (required)
-        // Validate password (required)
-        // Set validation errors
-        // Return validation result
-    }
+    const validateForm = (formData) => {
+        // Validate form
+        const newErrors = {};
+        const email = formData?.get('email') || values.email;
+        const password = formData?.get('password') || values.password;
+
+        if (!email) newErrors.email = 'E-mailadres is verplicht';
+        if (!password) newErrors.password = 'Wachtwoord is verplicht';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     /**
      * Handles form submission
@@ -58,39 +90,67 @@ function LoginForm() {
      */
     const handleFormSubmit = createFormAction(async (formData) => {
         // Validate form
+        if (!validateForm(formData)) return;
         // Set login attempted state
-        // Handle captcha token for production/development environments
-        // Submit login credentials
-        // Handle success (redirect to home page)
-        // Handle errors (display user-friendly messages)
-    });
+        setLoginAttempted(true);
 
+        // Handle captcha token for production/development environments
+
+        try {
+            // Submit login credentials
+            const email = formData?.get('email') || values.email;
+            const password = formData?.get('password') || values.password;
+
+            const result = await signIn(email, password);
+
+            // Handle success (redirect to home page)
+            if (result.success) {
+                navigate('/');
+            } else {
+                // Handle errors (display user-friendly messages)
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    form: result.error || 'Onbekende fout bij inloggen'
+                }));
+
+            }
+        } catch (error) {
+            // Handle errors (display user-friendly messages)
+            console.error("Login error:", error);
+            setErrors({
+                form: typeof error === 'string' ? error :
+                    error.message || 'Inloggen mislukt. Controleer je gegevens.'
+            });
+        }
+    });
     return (
         // Form container
         <div className={styles.formContainer}>
-            {/*Method post is purely semantic here, as we are using a custom action handler, though it could be useful as a fallback if the action handler fails.*/}
-
-            {/*Form with email and password fields*/}
-            <form action={handleFormSubmit} className={styles.form} method={post}>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleFormSubmit(new FormData(e.currentTarget));
+                }}
+                className={styles.form}
+                noValidate
+            >
                 <h2>Inloggen</h2>
 
-                {/*Error message display*/}
                 {errors.form && (
-                    <div className={styles.errorMessage}>{errors.form}</div>
+                    <div className={styles.formError} role="alert">{errors.form}</div>
                 )}
 
-                {/*Login button with loading state*/}
-                {loginAttempted && !errors.form && (
-                    <div className={styles.infoMessage}>
-                        De dichtersgilde haalt haar deuren van het slot... wachtwoord waar?! Dan zijn we vast al klaar!
+                {loginAttempted && !errors.form && !isSubmitting && (
+                    <div className={styles.formInfo}>
+                        Een moment geduld...
                     </div>
                 )}
+
                 <FormField
-                    is="login-email"
-                    label="E-mailadres"
+                    id="login-email"
+                    label="E-mail"
                     name="email"
                     type="email"
-                    placeholder="Voer je e-mailadres in"
                     value={values.email}
                     onChange={handleChange}
                     error={errors.email}
@@ -102,30 +162,31 @@ function LoginForm() {
                     label="Wachtwoord"
                     name="password"
                     type="password"
-                    placeholder="Voer je wachtwoord in"
                     value={values.password}
                     onChange={handleChange}
                     error={errors.password}
                     required
+                    ref={passwordRef}
+                    autoComplete="current-password"
                 />
 
-                <SubmitButton
-                    type="submit"
-                    className={styles.submitButton}
-                    disabled={loading || !validateForm(values)}
-                >
+                <div className={styles.formHelp}>
+                    <Link
+                        to="/password-reset"
+                        state={{email: values.email}}
+                        className={styles.formLink}
+                    >
+                        Wachtwoord vergeten?
+                    </Link>
+                </div>
+
+                <SubmitButton type="submit" disabled={isSubmitting} loading={isSubmitting}>
+                    {isSubmitting ? 'Bezig met inloggen...' : 'Inloggen'}
                 </SubmitButton>
             </form>
-
-            {/*Footer with registration link*/}
-            <div className={styles.formFooter}>
-                <p>
-                    Nog geen account? <a href="/signup">Registreer hier</a>
-                </p>
-            </div>
         </div>
     );
-
 }
 
 export default LoginForm;
+
