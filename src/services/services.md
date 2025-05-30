@@ -7,59 +7,59 @@ This directory contains service modules that handle external interactions and bu
 ### API Services
 
 - **/api/axios.js**: Configured Axios instance for API requests
-  - Base configuration with interceptors
-  - Request/response handling
+    - Base configuration with interceptors
+    - Request/response handling
 
 - **/api/poemService.js**: Basic API calls for poem data
-  - Direct calls to PoetryDB API
-  - Single-responsibility methods
+    - Direct calls to PoetryDB API
+    - Single-responsibility methods
 
 - **/api/poemSearchService.js**: Advanced search functionality
-  - Intelligent search term analysis
-  - Multi-field search and filtering
-  - Search optimization and combination strategies
+    - Intelligent search term analysis
+    - Multi-field search and filtering
+    - Search optimization and combination strategies
 
 ### Authentication
 
 - **/auth/authService.js**: Authentication service methods
-  - Login, register, logout functionality
-  - Token management
+    - Login, register, logout functionality
+    - Token management
 
 ### Storage
 
 - **/storage/audioStorageService.js**: Service for audio storage
-  - Saving recorded audio to Supabase
-  - Retrieving user recordings
-  - Managing audio metadata
+    - Saving recorded audio to Supabase
+    - Retrieving user recordings
+    - Managing audio metadata
 
 ### Data Access
 
 - **/dataAccess/collectionsService.js**: Service for collections data
-  - CRUD operations for user collections
-  - Collection membership management
+    - CRUD operations for user collections
+    - Collection membership management
 
 ### Third-party Integrations
 
-- **/supabase/supabaseclient.js**: Supabase client configuration
-  - Authentication setup
-  - Database and storage access
+- **/supabase/supabase.js**: Supabase client configuration
+    - Authentication setup
+    - Database and storage access
 
 ### Error Handling and Monitoring
 
 - **/error-tracking/errorService.js**: Error tracking service
-  - Centralized error handling
-  - Error logging and reporting
-  - User-friendly error messages
+    - Centralized error handling
+    - Error logging and reporting
+    - User-friendly error messages
 
 - **/monitoring/checkPoetryDbHealth.js**: API health monitoring
-  - Checks availability of PoetryDB API
-  - Provides health status information
+    - Checks availability of PoetryDB API
+    - Provides health status information
 
 ### Caching
 
 - **cacheService.js**: Client-side caching service
-  - In-memory cache for API responses
-  - Cache invalidation and expiry
+    - In-memory cache for API responses
+    - Cache invalidation and expiry
 
 ## Design Principles
 

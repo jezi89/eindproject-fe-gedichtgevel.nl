@@ -208,6 +208,12 @@ export default [
 
             // Configuratie voor import/resolver
             'import/resolver': {
+                alias: {
+                    map: [
+                        ['@', './src']
+                    ],
+                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                },
                 node: {
                     // Ondersteunde bestandsextensies voor imports
                     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
@@ -221,5 +227,12 @@ export default [
     {
         files: ['**/*.{ts,tsx}'],
         // Hier kun je TypeScript-specifieke configuraties toevoegen indien nodig
+    },
+    // Specifieke regels voor Vite configuratie bestanden
+    {
+        files: ['vite.config.js'],
+        rules: {
+            'import/default': 'off'
+        }
     }
 ];
