@@ -27,6 +27,7 @@
 
 import {useCallback, useEffect, useState} from "react";
 import useAuthForm from "@/hooks/useAuthForm.js";
+import authService from "@/services/auth/authService.js";
 
 export function useSupabaseAuth() {
 // Auth state
@@ -48,9 +49,9 @@ export function useSupabaseAuth() {
         const initAuth = async () => {
             try {
                 setLoading(true);
-                const {session: currentSession, error} = await authService.getSession();
+                const {session: currentSession, error: sessionError} = await authService.getSession();
 
-                if (error) throw new Error(error);
+                if (sessionError) throw new Error(sessionError);
 
                 if (currentSession) {
                     setSession(currentSession);
@@ -67,7 +68,8 @@ export function useSupabaseAuth() {
 
         initAuth();
 
-        unsubscribe = authService.subscribeToAuthChanges((newSession) => {
+        // Subscribe to auth state changes
+        unsubscribe = authService.onAuthStateChange((newSession) => {
             setSession(newSession);
             setUser(newSession?.user || null);
         });
@@ -80,16 +82,16 @@ export function useSupabaseAuth() {
 
     // Login handler
     // TODO captchaToken als AdditionalData?? of direct een captcha token implementeren
-    const login = useCallback(async (email, password) => {
+    const signIn = useCallback(async (email, password) => { // Renamed login to signIn
         try {
             setError(null);
-            const {success, data, error} = await authService.login(email, password);
+            const result = await authService.signInWithPassword(email, password); // Use signInWithPassword
             if (!result.success) {
-                throw new Error(error);
+                throw new Error(result.error);
             }
 
             // User state will be updated by the auth change listener
-            lginForm.resetForm();
+            loginForm.resetForm();
             return result;
         } catch (error) {
             setError(error.message);
@@ -101,7 +103,7 @@ export function useSupabaseAuth() {
 
     // Signup handler
     // TODO captchaToken
-    const signup = useCallback(async (email, password, profileData = {}) => {
+    const signUp = useCallback(async (email, password, profileData = {}) => {
         try {
             setError(null);
             const result = await authService.register(email, password, profileData);
@@ -111,16 +113,16 @@ export function useSupabaseAuth() {
                 if (result.error?.includes('User already registered')) {
                     throw new Error('Dit e-mailadres is al in gebruik. Probeer in te loggen of gebruik wachtwoord vergeten.');
                 }
-                throw new Error(result.Error);
+                throw new Error(result.error);
             }
 
 
             // TODO verwijder console.log hier
             // Check if email confirmation is required
-            /*        if (result.data?.user && !result.data.user.confirmed_at) {
-                        // Handle unconfirmed user state
-                        console.log('User needs to confirm email:', result.data.user.email);
-                    }*/
+            if (result.data?.user && !result.data.user.confirmed_at) {
+                // Handle unconfirmed user state
+                console.log('User needs to confirm email:', result.data.user.email);
+            }
 
             signupForm.resetForm();
             return result;
@@ -133,10 +135,10 @@ export function useSupabaseAuth() {
     }, [signupForm]);
 
     // Logout handler
-    const logout = useCallback(async () => {
+    const signOut = useCallback(async () => {
         try {
             setError(null);
-            const result = await authService.logout();
+            const result = await authService.signOut();
             if (!result.success) {
                 throw new Error(result.error);
             }
@@ -152,10 +154,10 @@ export function useSupabaseAuth() {
     }, [loginForm, signupForm]);
 
     // Password reset handler
-    const sendPasswordReset = useCallback(async (email) => {
+    const sendPasswordResetEmail = useCallback(async (email) => {
         try {
             setError(null);
-            const result = await authService.sendPasswordResetEmail(email);
+            const result = await authService.resetPasswordForEmail(email);
 
             if (!result.success) {
                 throw new Error(result.error);
@@ -163,18 +165,20 @@ export function useSupabaseAuth() {
 
             resetPasswordForm.resetForm();
             return result;
-        } catch (err) {
-            setError(err.message);
-            resetPasswordForm.setErrors({form: err.message});
-            throw err;
+        } catch (error) {
+            setError(error.message);
+            resetPasswordForm.setErrors({form: error.message});
+            throw error;
         }
     }, [resetPasswordForm]);
 
     // Update password handler
-    const updatePassword = useCallback(async (newPassword) => {
+    const updateUserPassword = useCallback(async (newPassword) => {
         try {
             setError(null);
-            const result = await authService.updatePassword(newPassword);
+            // TODO Checken of comment waar is
+            // Instead of using updatePassword, we use updateUser, because this gives us more flexibility to update other user fields if needed
+            const result = await authService.updateUser({password: newPassword});
 
             if (!result.success) {
                 throw new Error(result.error);
@@ -206,8 +210,8 @@ export function useSupabaseAuth() {
     }, [user]);
 
     // Token refresh
-    const refreshToken = useCallback(async () => {
-        const result = await authService.refreshToken();
+    const refreshUserSession = useCallback(async () => {
+        const result = await authService.refreshSession();
 
         if (result.success && result.session) {
             setSession(result.session);
@@ -219,21 +223,21 @@ export function useSupabaseAuth() {
 
     // TODO Checken wat dit doet
     // Create form actions for use with form action attribute
-    const createLoginAction = useCallback(() => {
+    const createSignInAction = useCallback(() => {
         return loginForm.createFormAction(async (formData) => {
             const email = formData.get ? formData.get('email') : formData.email;
             const password = formData.get ? formData.get('password') : formData.password;
-            return await login(email, password);
+            return await signIn(email, password);
         });
-    }, [loginForm, login]);
+    }, [loginForm, signIn]);
 
-    const createSignupAction = useCallback(() => {
+    const createSignUpAction = useCallback(() => {
         return signupForm.createFormAction(async (formData) => {
             const email = formData.get ? formData.get('email') : formData.email;
             const password = formData.get ? formData.get('password') : formData.password;
-            return await signup(email, password);
+            return await signUp(email, password);
         });
-    }, [signupForm, signup]);
+    }, [signupForm, signUp]);
 
     return {
         // Auth state
@@ -243,18 +247,18 @@ export function useSupabaseAuth() {
         error,
 
         // Auth methods
-        login,
-        signup,
-        logout,
-        sendPasswordReset,
-        updatePassword,
+        signIn,
+        signUp,
+        signOut,
+        sendPasswordResetEmail,
+        updateUserPassword,
 
         // Profile methods
         getUserProfile,
         updateUserProfile,
 
         // Token methods
-        refreshToken,
+        refreshUserSession, // Renamed from refreshToken
 
         // Form states
         loginForm,
@@ -263,12 +267,13 @@ export function useSupabaseAuth() {
         updatePasswordForm,
 
         // Form actions for progressive enhancement
-        createLoginAction,
-        createSignupAction,
+        createSignInAction,
+        createSignUpAction,
 
         // Utility methods
         clearError: () => setError(null),
         checkUserExists: authService.checkUserExists,
+        getCurrentUser: authService.getUser, // Added for checkAuth in AuthProvider
     };
 }
 

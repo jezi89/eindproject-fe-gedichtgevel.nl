@@ -78,9 +78,9 @@
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 2. LAYOUT & POSITIONERING
- * ------------------------------------------------------- 
+ * -------------------------------------------------------
  * De structuur waarop alles rust,
  * Flexbox en Grid, met parameters bewust;
  * Containers en sections, in balans gebracht,
@@ -143,7 +143,7 @@
   height:   100%;
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 3. FLEXBOX & GRID
  * ------------------------------------------------------- */
 
@@ -207,9 +207,9 @@
   gap:                   $gap;
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 4. RESPONSIVE DESIGN
- * ------------------------------------------------------- 
+ * -------------------------------------------------------
  * Van mobiel tot desktop, elk scherm omarmd,
  * Responsive patronen die ons ontwerp beschermd;
  * Media queries als verzen, vlot en klaar,
@@ -266,9 +266,9 @@
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 5. EFFECTEN
- * ------------------------------------------------------- 
+ * -------------------------------------------------------
  * Visuele illusies, subtiel maar sterk,
  * Schaduwen en transities, een meesterwerk;
  * Animaties die het oog verwennen,
@@ -337,7 +337,7 @@
   border:                  1px solid color.change($background, $alpha: $border-opacity);
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 6. COMPONENTEN
  * ------------------------------------------------------- */
 
@@ -372,6 +372,27 @@
   &:disabled {
 	opacity: 0.6;
 	cursor:  not-allowed;
+	}
+  }
+
+@mixin button-variant($background, $color, $border-color: null) {
+  background-color: $background;
+  color:            $color;
+  border-color:     if($border-color, $border-color, $background);
+
+  &:hover {
+	background-color: color.adjust($background, $lightness: -10%);
+	border-color:     if($border-color, color.adjust($border-color, $lightness: -10%), color.adjust($background, $lightness: -10%));
+	}
+
+  &:active {
+	background-color: color.adjust($background, $lightness: -15%);
+	border-color:     if($border-color, color.adjust($border-color, $lightness: -15%), color.adjust($background, $lightness: -15%));
+	}
+
+  &:focus {
+	//outline: 2px solid $focus-ring-color; // Ensure $focus-ring-color is defined and accessible
+	outline-offset: 2px;
 	}
   }
 
@@ -414,7 +435,7 @@
 	}
   }
 
-/* ------------------------------------------------------- 
+/* -------------------------------------------------------
  * 7. UTILITIES
  * ------------------------------------------------------- */
 
