@@ -6,10 +6,13 @@
  * - Content areas
  * - Grid systems
  * - Container utilities
+ * 
+ * NOTE: This file is deprecated. All layout styles have been consolidated
+ * into /src/styles/_layout.scss. Please use that file instead.
  */
 
-@import "../styles/variables";
-@import "../styles/mixins";
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
 
 // Main app layout
 .app-layout {

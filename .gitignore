@@ -59,3 +59,6 @@ pnpm-debug.log*
 
 # Claude AI
 .claude
+
+# Template files
+src/styles/_module-template.scss

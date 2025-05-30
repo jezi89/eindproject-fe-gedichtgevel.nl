@@ -8,9 +8,8 @@
  * - Email Verification
  */
 
-// Temporarily comment out imports until we have the files
-// @import '../styles/variables';
-// @import '../styles/mixins';
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
 
 // Het gebruik van underscores voor _auth-layout.scss duidt op een Sass-partial, wat een goede praktijk is. Het globale index.scss-bestand importeert doorgaans deze partials en definieert echt globale stijlen.
 

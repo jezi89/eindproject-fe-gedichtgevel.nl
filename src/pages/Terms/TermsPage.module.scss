@@ -1,7 +1,7 @@
 @use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
-.page-contact {
+.page-terms {
   padding: $spacing-xl;
   max-width: 800px;
   margin: 0 auto;
@@ -17,7 +17,7 @@
     font-size: $font-size-lg;
   }
 
-  .contact-section {
+  .terms-section {
     margin-bottom: $spacing-xl;
     padding: $spacing-lg;
     background-color: $color-surface;
@@ -35,15 +35,13 @@
       margin-bottom: $spacing-md;
     }
     
-    .contact-info {
-      margin-top: $spacing-lg;
+    ul {
+      margin-left: $spacing-lg;
+      color: $color-text;
       
-      p {
+      li {
         margin-bottom: $spacing-sm;
-        
-        strong {
-          color: $color-primary;
-        }
+        line-height: 1.6;
       }
     }
   }

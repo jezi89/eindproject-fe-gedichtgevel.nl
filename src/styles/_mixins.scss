@@ -55,7 +55,7 @@
   font-size: #{$min-size}rem;
 
   @media screen and (min-width: $min-width) {
-	font-size: calc(#{$min-size}rem + #{($max-size - $min-size)} * ((100vw - #{$min-width}) / #{($max-width - $min-width)}));
+	font-size: calc(#{$min-size}rem + #{$max-size - $min-size} * (100vw - #{$min-width}) / #{math.div($max-width - $min-width, 1px)});
 	}
 
   @media screen and (min-width: $max-width) {

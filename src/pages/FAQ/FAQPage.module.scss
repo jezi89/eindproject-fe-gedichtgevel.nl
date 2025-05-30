@@ -1,7 +1,7 @@
 @use '@/styles/variables' as *;
 @use '@/styles/mixins' as *;
 
-.page-contact {
+.page-faq {
   padding: $spacing-xl;
   max-width: 800px;
   margin: 0 auto;
@@ -17,7 +17,7 @@
     font-size: $font-size-lg;
   }
 
-  .contact-section {
+  .faq-section {
     margin-bottom: $spacing-xl;
     padding: $spacing-lg;
     background-color: $color-surface;
@@ -32,19 +32,6 @@
     p {
       color: $color-text;
       line-height: 1.6;
-      margin-bottom: $spacing-md;
-    }
-    
-    .contact-info {
-      margin-top: $spacing-lg;
-      
-      p {
-        margin-bottom: $spacing-sm;
-        
-        strong {
-          color: $color-primary;
-        }
-      }
     }
   }
 }

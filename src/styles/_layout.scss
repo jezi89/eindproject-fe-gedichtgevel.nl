@@ -89,6 +89,21 @@
   }
 }
 
+// Container varianten uit main-layout
+.container {
+  &--fluid {
+    max-width: 100%;
+  }
+
+  &--narrow {
+    max-width: 800px;
+  }
+
+  &--wide {
+    max-width: 1400px;
+  }
+}
+
 /* ------------------------------------------------------- 
  * GRID LAYOUT
  * ------------------------------------------------------- 
@@ -165,6 +180,37 @@
   }
 }
 
+// Grid varianten uit main-layout (met responsive breakpoints)
+.grid {
+  &--2 {
+    grid-template-columns: repeat(2, 1fr);
+
+    @include media-down($screen-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--3 {
+    grid-template-columns: repeat(3, 1fr);
+
+    @include media-down($screen-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--4 {
+    grid-template-columns: repeat(4, 1fr);
+
+    @include media-down($screen-lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-down($screen-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
 /* ------------------------------------------------------- 
  * FLEX LAYOUTS
  * ------------------------------------------------------- 
@@ -230,6 +276,13 @@
   gap: $spacing-s;
 }
 
+// Extra flex utilities uit main-layout
+.flex {
+  &--wrap {
+    flex-wrap: wrap;
+  }
+}
+
 /* ------------------------------------------------------- 
  * SPECIFIC LAYOUTS
  * ------------------------------------------------------- 
@@ -238,6 +291,13 @@
  * Van header tot footer, elk gebied bedacht,
  * Met zorgvuldige planning en ontwerperachtige kracht.
  */
+
+// App layout - hoofdstructuur voor de applicatie
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 // Header layout
 .layout-header {
@@ -259,6 +319,16 @@
   
   &-no-padding {
     padding: 0;
+  }
+}
+
+// Main content area (alternatieve naming)
+.main-content {
+  flex: 1;
+  padding-top: var(--header-height, 60px);
+
+  &--no-header {
+    padding-top: 0;
   }
 }
 
@@ -344,5 +414,36 @@
     padding: $spacing-l;
     box-shadow: $shadow-lg;
     z-index: $z-toast;
+  }
+}
+
+/* ------------------------------------------------------- 
+ * SECTION UTILITIES
+ * ------------------------------------------------------- 
+ * Herbruikbare sectiestijlen voor consistente spacing
+ * en structuur door de hele applicatie.
+ */
+
+.section {
+  padding: var(--spacing-2xl, $spacing-xl) 0;
+
+  @include media-down($screen-md) {
+    padding: var(--spacing-xl, $spacing-l) 0;
+  }
+
+  &--small {
+    padding: var(--spacing-xl, $spacing-l) 0;
+
+    @include media-down($screen-md) {
+      padding: var(--spacing-lg, $spacing-m) 0;
+    }
+  }
+
+  &--large {
+    padding: var(--spacing-3xl, $spacing-xxl) 0;
+
+    @include media-down($screen-md) {
+      padding: var(--spacing-2xl, $spacing-xl) 0;
+    }
   }
 }

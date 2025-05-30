@@ -8,8 +8,8 @@
  * - Success/Confirmation
  */
 
-@import "../styles/variables";
-@import "../styles/mixins";
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
 
 // Base utility layout
 .utility-layout {
