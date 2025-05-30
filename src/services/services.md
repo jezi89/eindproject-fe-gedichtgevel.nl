@@ -40,7 +40,7 @@ This directory contains service modules that handle external interactions and bu
 
 ### Third-party Integrations
 
-- **/supabase/supabaseClient.js**: Supabase client configuration
+- **/supabase/supabase.js**: Supabase client configuration
     - Authentication setup
     - Database and storage access
 
