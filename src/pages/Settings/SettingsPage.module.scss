@@ -3,10 +3,10 @@
 // Gebruik de gedeelde styles uit de styles folder:
 // 
 // 1. Import de benodigde modules:
-//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@styles/layout';        // Voor layout utilities
-//    @import '@styles/effects';       // Voor shadows, transitions
+//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@/styles/layout';        // Voor layout utilities
+//    @import '@/styles/effects';       // Voor shadows, transitions
 //
 // 2. Settings-specifieke layouts:
 //    - Sidebar navigatie
@@ -22,36 +22,36 @@
 
 .settings-container {
   // Main settings wrapper
-}
+  }
 
 .settings-layout {
   // Flex layout voor sidebar + content
-}
+  }
 
 .settings-sidebar {
   // Navigatie sidebar
-}
+  }
 
 .settings-nav-item {
   // Individual nav items
-}
+  }
 
 .settings-content {
   // Main settings area
-}
+  }
 
 .settings-section {
   // Individual settings groep
-}
+  }
 
 .setting-row {
   // Single setting item
-}
+  }
 
 .toggle-switch {
   // Custom toggle component
-}
+  }
 
 .settings-actions {
   // Save/cancel buttons
-}
+  }

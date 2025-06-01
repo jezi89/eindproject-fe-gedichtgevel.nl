@@ -1,0 +1,37 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page-faq {
+  max-width: 800px;
+  margin:    0 auto;
+  padding:   $spacing-xl;
+
+  .page-title {
+	margin-bottom: $spacing-md;
+	color:         $color-primary;
+	}
+
+  .page-subtitle {
+	font-size:     $font-size-lg;
+	margin-bottom: $spacing-xl;
+	color:         $color-text-secondary;
+	}
+
+  .faq-section {
+	margin-bottom:    $spacing-xl;
+	padding:          $spacing-lg;
+	border-radius:    $border-radius-md;
+	background-color: $color-surface;
+
+	h2 {
+	  font-size:     $font-size-xl;
+	  margin-bottom: $spacing-md;
+	  color:         $color-primary;
+	  }
+
+	p {
+	  line-height: 1.6;
+	  color:       $color-text;
+	  }
+	}
+  }

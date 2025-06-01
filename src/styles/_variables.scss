@@ -47,142 +47,142 @@ Van vlamrood naar oceaangroen,
 Tot zachte tinten die ons werk begroet'n. */
 
 // --- PRIMAIRE KLEUREN ---
-$primary-cognac: #943512;
-$primary-flame: #e35712;
-$primary-dark: #3b1608;
-$primary-darker: #68270d;
-$primary-muted: #953813;
-$primary-light: #c24919;
-$primary-lighter: #e3602b;
-$primary-vibrant: #e35712;
+$primary-cognac:                      #943512;
+$primary-flame:                       #e35712;
+$primary-dark:                        #3b1608;
+$primary-darker:                      #68270d;
+$primary-muted:                       #953813;
+$primary-light:                       #c24919;
+$primary-lighter:                     #e3602b;
+$primary-vibrant:                     #e35712;
 
 // --- SECUNDAIRE KLEUREN ---
-$secondary-carribean-current: #156064;
-$secondary-dark: #061d1e;
-$secondary-muted: #0f4648;
-$secondary-light: #156366;
-$secondary-lighter: #1b8083;
-$secondary-vibrant: #219da1;
-$secondary-brightest: #29c2c7;
-$secondary-pale: #62dbdf;
-$secondary-pastel: #b3edef;
+$secondary-carribean-current:         #156064;
+$secondary-dark:                      #061d1e;
+$secondary-muted:                     #0f4648;
+$secondary-light:                     #156366;
+$secondary-lighter:                   #1b8083;
+$secondary-vibrant:                   #219da1;
+$secondary-brightest:                 #29c2c7;
+$secondary-pale:                      #62dbdf;
+$secondary-pastel:                    #b3edef;
 
 // --- NEUTRAL KLEUREN ---
-$neutral-white: #ffffff;
-$neutral-off-white: #f9f4ed;
-$neutral-cream: #fff5e1;
-$neutral-light: #efefef;
-$neutral-mid: #5f6477;
-$neutral-mid-light: #dadce2;
-$neutral-mid-dark: #747990;
-$neutral-dark: #4d5061;
-$neutral-darker: #2b2d36;
-$neutral-warm-grey: #a99489;
-$neutral-black: #000000;
-$neutral-soft-black: #141204;
-$neutral-rich-black: #2b140b;
+$neutral-white:                       #ffffff;
+$neutral-off-white:                   #f9f4ed;
+$neutral-cream:                       #fff5e1;
+$neutral-light:                       #efefef;
+$neutral-mid:                         #5f6477;
+$neutral-mid-light:                   #dadce2;
+$neutral-mid-dark:                    #747990;
+$neutral-dark:                        #4d5061;
+$neutral-darker:                      #2b2d36;
+$neutral-warm-grey:                   #a99489;
+$neutral-black:                       #000000;
+$neutral-soft-black:                  #141204;
+$neutral-rich-black:                  #2b140b;
 
 // --- ACCENT KLEUREN ---
-$accent-gold: #d09a47;
-$accent-brown: #856d61;
-$accent-sage: #c8e9a0;
-$accent-moss: #ccd698;
-$accent-greyish: #b2b5c2;
+$accent-gold:                         #d09a47;
+$accent-brown:                        #856d61;
+$accent-sage:                         #c8e9a0;
+$accent-moss:                         #ccd698;
+$accent-greyish:                      #b2b5c2;
 
 // --- FEEDBACK KLEUREN ---
-$feedback-success: #28a745;
-$feedback-warning: #ffc107;
-$feedback-error: #dc3545;
-$feedback-info: #17a2b8;
+$feedback-success:                    #28a745;
+$feedback-warning:                    #ffc107;
+$feedback-error:                      #dc3545;
+$feedback-info:                       #17a2b8;
 
 // --- EFFECTEN (SHADOWS & OVERLAYS) ---
-$shadow-light: rgba(0, 0, 0, 0.15);
-$shadow-base-light: rgba(0, 0, 0, 0.2);
-$shadow-base-darker: rgba(0, 0, 0, 0.3);
-$shadow-dark: rgba(1, 22, 14, 0.6);
-$shadow-subtle: rgba(26, 26, 26, 0.08);
-$overlay-subtle: rgba(169, 148, 137, 0.2);
-$overlay-medium: rgba(169, 148, 137, 0.45);
-$overlay-dark: rgba(169, 148, 137, 0.8);
+$shadow-light:                        rgba(0, 0, 0, 0.15);
+$shadow-base-light:                   rgba(0, 0, 0, 0.2);
+$shadow-base-darker:                  rgba(0, 0, 0, 0.3);
+$shadow-dark:                         rgba(1, 22, 14, 0.6);
+$shadow-subtle:                       rgba(26, 26, 26, 0.08);
+$overlay-subtle:                      rgba(169, 148, 137, 0.2);
+$overlay-medium:                      rgba(169, 148, 137, 0.45);
+$overlay-dark:                        rgba(169, 148, 137, 0.8);
 
 // --- SEMANTIC COLORS ---
 // Semantic text colors
-$text-primary: $neutral-soft-black;
-$text-secondary: $neutral-darker;
-$text-tertiary: $secondary-dark;
-$text-inverse: $neutral-off-white;
-$text-heading: $accent-gold;
-$text-heading-alt: $primary-lighter;
-$text-heading-alt-outline: $secondary-muted;
-$text-link: $primary-light;
-$text-link-inverse: $neutral-cream;
+$text-primary:                        $neutral-off-white;
+$text-secondary:                      $neutral-cream;
+$text-tertiary:                       $neutral-light;
+$text-inverse:                        $neutral-soft-black;
+$text-heading:                        $accent-gold;
+$text-heading-alt:                    $primary-lighter;
+$text-heading-alt-outline:            $secondary-muted;
+$text-link:                           $primary-light;
+$text-link-inverse:                   $neutral-cream;
 
 // Semantic background colors
-$background-page: $secondary-dark;
-$background-card: $neutral-white;
-$background-card-alt: $neutral-cream;
-$background-popup: $neutral-off-white;
-$background-inverse: $neutral-soft-black;
+$background-page:                     $secondary-dark;
+$background-card:                     $neutral-white;
+$background-card-alt:                 $neutral-cream;
+$background-popup:                    $neutral-off-white;
+$background-inverse:                  $neutral-soft-black;
 
 // Semantic border colors
-$border-default: $neutral-mid-dark;
-$border-subtle: $neutral-mid-light;
-$border-warm: $accent-brown;
-$border-focus: $primary-light;
-$border-accent: $accent-gold;
-$border-divider: $neutral-mid;
+$border-default:                      $neutral-mid-dark;
+$border-subtle:                       $neutral-mid-light;
+$border-warm:                         $accent-brown;
+$border-focus:                        $primary-light;
+$border-accent:                       $accent-gold;
+$border-divider:                      $neutral-mid;
 
 // Semantic icon colors
-$icon-primary: $primary-cognac;
-$icon-secondary: $secondary-carribean-current;
-$icon-accent: $accent-gold;
-$icon-inverse: $neutral-cream;
+$icon-primary:                        $primary-cognac;
+$icon-secondary:                      $secondary-carribean-current;
+$icon-accent:                         $accent-gold;
+$icon-inverse:                        $neutral-cream;
 
 // --- COMPONENT-SPECIFIEKE KLEUREN ---
 // Navbar
-$navbar-background: $primary-cognac;
-$navbar-text: $neutral-off-white;
-$navbar-text-active: $accent-gold;
-$navbar-alt-background: $primary-light;
+$navbar-background:                   $primary-cognac;
+$navbar-text:                         $neutral-off-white;
+$navbar-text-active:                  $accent-gold;
+$navbar-alt-background:               $primary-light;
 
 // Button
-$button-primary-background: $primary-light;
-$button-primary-background-alt: $primary-cognac;
-$button-primary-text: $neutral-white;
-$button-primary-border: $neutral-mid;
-$button-primary-shadow: $shadow-base-light;
+$button-primary-background:           $primary-light;
+$button-primary-background-alt:       $primary-cognac;
+$button-primary-text:                 $neutral-white;
+$button-primary-border:               $neutral-mid;
+$button-primary-shadow:               $shadow-base-light;
 
-$button-secondary-background: $neutral-black;
-$button-secondary-text: $neutral-light;
-$button-secondary-border: $neutral-cream;
+$button-secondary-background:         $neutral-black;
+$button-secondary-text:               $neutral-light;
+$button-secondary-border:             $neutral-cream;
 
-$button-tertiary-background: $secondary-carribean-current;
+$button-tertiary-background:          $secondary-carribean-current;
 
 // Search
-$search-background: $neutral-off-white;
-$search-placeholder: $neutral-mid-dark;
-$search-text: $neutral-darker;
-$search-border: $secondary-muted;
-$search-icon: $neutral-dark;
+$search-background:                   $neutral-off-white;
+$search-placeholder:                  $neutral-mid-dark;
+$search-text:                         $neutral-darker;
+$search-border:                       $secondary-muted;
+$search-icon:                         $neutral-dark;
 
 // Card
-$card-background: $background-card;
-$card-border: $border-subtle;
-$card-shadow: $shadow-base-light;
+$card-background:                     $background-card;
+$card-border:                         $border-subtle;
+$card-shadow:                         $shadow-base-light;
 
 // Logo
-$logo-text: $neutral-cream;
+$logo-text:                           $neutral-cream;
 
 // Poem styling
-$poem-text: $neutral-darker;
-$poem-text-inverse: $neutral-cream;
-$poem-background: $neutral-cream;
-$poem-background-inverse: $neutral-darker;
+$poem-text:                           $neutral-darker;
+$poem-text-inverse:                   $neutral-cream;
+$poem-background:                     $neutral-cream;
+$poem-background-inverse:             $neutral-darker;
 
 // Canvas Controls
-$canvas-control-overlay: $neutral-warm-grey;
-$canvas-control-border: $accent-brown;
-$canvas-control-items: $neutral-dark;
+$canvas-control-overlay:              $neutral-warm-grey;
+$canvas-control-border:               $accent-brown;
+$canvas-control-items:                $neutral-dark;
 $canvas-control-overlay-shinethrough: $overlay-subtle;
 
 
@@ -197,100 +197,100 @@ Van serieuze statements tot zachte vraag,
 Onze typografie draagt elk verhaal met graag. */
 
 // --- FONT FAMILIES ---
-$font-family-title: "Quilty", serif;
-$font-family-section-heading: "Bitter", serif;
-$font-family-nav-item: "Work Sans", sans-serif;
-$font-family-body: "Bitter", serif;
-$font-family-button: "Quilty", serif;
-$font-family-footer: "Bitter", serif;
-$font-family-callout-heading: "Work Sans", sans-serif;
-$font-family-searchbar: "Work Sans", sans-serif;
-$font-family-bigger-body-special: "Quilty", serif;
+$font-family-title:                   "Quilty", serif;
+$font-family-section-heading:         "Bitter", serif;
+$font-family-nav-item:                "Work Sans", sans-serif;
+$font-family-body:                    "Bitter", serif;
+$font-family-button:                  "Quilty", serif;
+$font-family-footer:                  "Bitter", serif;
+$font-family-callout-heading:         "Work Sans", sans-serif;
+$font-family-searchbar:               "Work Sans", sans-serif;
+$font-family-bigger-body-special:     "Quilty", serif;
 
 // --- FONT SIZES ---
-$font-size-xxs: 0.875rem;  // 14px
-$font-size-xs: 0.9375rem;  // 15px
-$font-size-s: 1rem;        // 16px
-$font-size-m: 1.25rem;     // 20px
-$font-size-l: 1.5rem;      // 24px
-$font-size-xl: 2rem;       // 32px
-$font-size-xxl: 2.25rem;   // 36px
-$font-size-xxxl: 3rem;     // 48px
+$font-size-xxs:                       0.875rem; // 14px
+$font-size-xs:                        0.9375rem; // 15px
+$font-size-s:                         1rem; // 16px
+$font-size-m:                         1.25rem; // 20px
+$font-size-l:                         1.5rem; // 24px
+$font-size-xl:                        2rem; // 32px
+$font-size-xxl:                       2.25rem; // 36px
+$font-size-xxxl:                      3rem; // 48px
 
 // --- FONT WEIGHTS ---
-$font-weight-regular: 400;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
-$font-weight-extrabold: 800;
-$font-weight-extra-bold-special: 400;
-$font-weight-regular-italic: 400;
-$font-weight-bold-italic: 500;
+$font-weight-regular:                 400;
+$font-weight-semibold:                600;
+$font-weight-bold:                    700;
+$font-weight-extrabold:               800;
+$font-weight-extra-bold-special:      400;
+$font-weight-regular-italic:          400;
+$font-weight-bold-italic:             500;
 
 // --- LINE HEIGHTS ---
-$line-height-normal: 1.5rem;    // 24px
-$line-height-bigger: 2.8125rem;  // 45px
-$line-height-dislectic: 2.5rem;  // 40px
+$line-height-normal:                  1.5rem; // 24px
+$line-height-bigger:                  2.8125rem; // 45px
+$line-height-dislectic:               2.5rem; // 40px
 
 // --- LETTERSPACING ---
-$letter-spacing-navbar-filter: 0.1563rem; // 2.5px
+$letter-spacing-navbar-filter:        0.1563rem; // 2.5px
 
 // --- SEMANTIC TYPOGRAPHY ---
 // Text styles voor specifieke componenten
-$title-site: (
-        font-family: $font-family-title,
-        font-size: $font-size-xxl,
-        font-weight: $font-weight-bold,
-        line-height: $line-height-bigger
-);
+$title-site:                          (
+											  font-family: $font-family-title,
+											  font-size: $font-size-xxl,
+											  font-weight: $font-weight-bold,
+											  line-height: $line-height-bigger
+									  );
 
-$heading-section: (
-        font-family: $font-family-section-heading,
-        font-size: $font-size-xl,
-        font-weight: $font-weight-bold,
-        line-height: $line-height-normal
-);
+$heading-section:                     (
+											  font-family: $font-family-section-heading,
+											  font-size: $font-size-xl,
+											  font-weight: $font-weight-bold,
+											  line-height: $line-height-normal
+									  );
 
-$navbar-item-active: (
-        font-family: $font-family-nav-item,
-        font-size: $font-size-l,
-        font-weight: $font-weight-bold,
-        line-height: $line-height-normal
-);
+$navbar-item-active:                  (
+											  font-family: $font-family-nav-item,
+											  font-size: $font-size-l,
+											  font-weight: $font-weight-bold,
+											  line-height: $line-height-normal
+									  );
 
-$navbar-item-inactive: (
-        font-family: $font-family-nav-item,
-        font-size: $font-size-l,
-        font-weight: $font-weight-regular,
-        line-height: $line-height-normal
-);
+$navbar-item-inactive:                (
+											  font-family: $font-family-nav-item,
+											  font-size: $font-size-l,
+											  font-weight: $font-weight-regular,
+											  line-height: $line-height-normal
+									  );
 
-$body-text-normal: (
-        font-family: $font-family-body,
-        font-size: $font-size-s,
-        font-weight: $font-weight-regular,
-        line-height: $line-height-normal
-);
+$body-text-normal:                    (
+											  font-family: $font-family-body,
+											  font-size: $font-size-s,
+											  font-weight: $font-weight-regular,
+											  line-height: $line-height-normal
+									  );
 
-$body-text-bigger: (
-        font-family: $font-family-body,
-        font-size: $font-size-m,
-        font-weight: $font-weight-regular,
-        line-height: $line-height-normal
-);
+$body-text-bigger:                    (
+											  font-family: $font-family-body,
+											  font-size: $font-size-m,
+											  font-weight: $font-weight-regular,
+											  line-height: $line-height-normal
+									  );
 
-$button-medium: (
-        font-family: $font-family-button,
-        font-size: $font-size-m,
-        font-weight: $font-weight-semibold,
-        line-height: $line-height-normal
-);
+$button-medium:                       (
+											  font-family: $font-family-button,
+											  font-size: $font-size-m,
+											  font-weight: $font-weight-semibold,
+											  line-height: $line-height-normal
+									  );
 
-$searchbar-placeholder: (
-        font-family: $font-family-searchbar,
-        font-size: $font-size-xl,
-        font-weight: $font-weight-regular,
-        line-height: $line-height-normal
-);
+$searchbar-placeholder:               (
+											  font-family: $font-family-searchbar,
+											  font-size: $font-size-xl,
+											  font-weight: $font-weight-regular,
+											  line-height: $line-height-normal
+									  );
 // Font Families $font-family-title: "Quilty", serif; $font-family-section-heading: "Bitter", serif; $font-family-nav-item: "Work Sans", sans-serif; $font-family-body: "Bitter", serif; $font-family-button: "Quilty", serif; $font-family-footer: "Bitter", serif; $font-family-callout-heading: "Work Sans", sans-serif; $font-family-searchbar: "Work Sans", sans-serif; $font-family-bigger-body-special: "Quilty", serif;
 
 // Font Sizes - Base value: 1rem = 16px $font-size-xxs: 0.875rem; // 14px $font-size-xs: 0.9375rem; // 15px $font-size-s: 1rem; // 16px $font-size-m: 1.25rem; // 20px $font-size-l: 1.5rem; // 24px $font-size-xl: 2rem; // 32px $font-size-xxl: 2.25rem; // 36px $font-size-xxxl: 3rem; // 48px
@@ -313,37 +313,37 @@ Consistente waarden geven rust en kracht,
 In elke pixel zit betekenis, met zorg bedacht. */
 
 // --- SIZING ---
-$width-medium-poem-showcase: 35.625rem; // 570px
-$height-medium-poem-showcase: 28.5rem; // 456px
-$width-small-poem-showcase: 34.375rem; // 550px
-$height-small-poem-showcase: 27.5rem; // 440px
+$width-medium-poem-showcase:          35.625rem; // 570px
+$height-medium-poem-showcase:         28.5rem; // 456px
+$width-small-poem-showcase:           34.375rem; // 550px
+$height-small-poem-showcase:          27.5rem; // 440px
 
 // --- SPACING ---
-$spacing-xxs: 0.25rem;   // 4px
-$spacing-xs: 0.5rem;     // 8px
-$spacing-s: 0.75rem;     // 12px
-$spacing-m: 1rem;        // 16px
-$spacing-l: 1.5rem;      // 24px
-$spacing-xl: 2rem;       // 32px
-$spacing-xxl: 3rem;      // 48px
-$spacing-xxxl: 4rem;     // 64px
+$spacing-xxs:                         0.25rem; // 4px
+$spacing-xs:                          0.5rem; // 8px
+$spacing-s:                           0.75rem; // 12px
+$spacing-m:                           1rem; // 16px
+$spacing-l:                           1.5rem; // 24px
+$spacing-xl:                          2rem; // 32px
+$spacing-xxl:                         3rem; // 48px
+$spacing-xxxl:                        4rem; // 64px
 
 // --- CONTAINERS ---
-$container-sm: 540px;    // small container
-$container-md: 720px;    // medium container
-$container-lg: 960px;    // large container
-$container-xl: 1140px;   // extra large container
-$container-xxl: 1320px;  // extra extra large container
+$container-sm:                        540px; // small container
+$container-md:                        720px; // medium container
+$container-lg:                        960px; // large container
+$container-xl:                        1140px; // extra large container
+$container-xxl:                       1320px; // extra extra large container
 
 // --- BORDERS ---
-$border-radius-sm: 4px;
-$border-radius-md: 8px;
-$border-radius-lg: 12px;
-$border-radius-xl: 16px;
-$border-radius-pill: 9999px;
-$border-width-thin: 1px;
-$border-width-regular: 2px;
-$border-width-thick: 4px;
+$border-radius-sm:                    4px;
+$border-radius-md:                    8px;
+$border-radius-lg:                    12px;
+$border-radius-xl:                    16px;
+$border-radius-pill:                  9999px;
+$border-width-thin:                   1px;
+$border-width-regular:                2px;
+$border-width-thick:                  4px;
 
 // Spacing Variables $spacing-xxxs: 0.125rem; // 2px $spacing-xxs: 0.25rem; // 4px $spacing-xs: 0.5rem; // 8px $spacing-sm: 0.75rem; // 12px $spacing-md: 1rem; // 16px $spacing-lg: 1.5rem; // 24px $spacing-xl: 2rem; // 32px $spacing-xxl: 3rem; // 48px $spacing-xxxl: 4rem; // 64px
 
@@ -363,25 +363,25 @@ Schaduwen die diepte geven, zachte overgang,
 Elke animatie wekt een visuele zang. */
 
 // --- BOX SHADOWS ---
-$shadow-sm: 0 1px 2px rgba($neutral-black, 0.05);
-$shadow-md: 0 4px 6px rgba($neutral-black, 0.1);
-$shadow-lg: 0 10px 15px rgba($neutral-black, 0.1);
-$shadow-xl: 0 20px 25px rgba($neutral-black, 0.15);
-$shadow-inner: inset 0 2px 4px rgba($neutral-black, 0.05);
-$shadow-none: none;
+$shadow-sm:                           0 1px 2px rgba($neutral-black, 0.05);
+$shadow-md:                           0 4px 6px rgba($neutral-black, 0.1);
+$shadow-lg:                           0 10px 15px rgba($neutral-black, 0.1);
+$shadow-xl:                           0 20px 25px rgba($neutral-black, 0.15);
+$shadow-inner:                        inset 0 2px 4px rgba($neutral-black, 0.05);
+$shadow-none:                         none;
 
 // --- TEXT SHADOWS ---
-$text-shadow-sm: 0 1px 2px rgba($neutral-black, 0.1);
-$text-shadow-md: 0 2px 4px rgba($neutral-black, 0.2);
-$text-shadow-lg: 0 4px 8px rgba($neutral-black, 0.25);
-$text-shadow-none: none;
+$text-shadow-sm:                      0 1px 2px rgba($neutral-black, 0.1);
+$text-shadow-md:                      0 2px 4px rgba($neutral-black, 0.2);
+$text-shadow-lg:                      0 4px 8px rgba($neutral-black, 0.25);
+$text-shadow-none:                    none;
 
 // --- GRADIENTS ---
-$gradient-primary: linear-gradient(135deg, $primary-cognac 0%, $primary-vibrant 100%);
-$gradient-secondary: linear-gradient(135deg, $secondary-dark 0%, $secondary-carribean-current 100%);
-$gradient-accent: linear-gradient(135deg, $accent-brown 0%, $accent-gold 100%);
-$gradient-dark: linear-gradient(135deg, $neutral-darker 0%, $neutral-black 100%);
-$gradient-light: linear-gradient(135deg, $neutral-white 0%, $neutral-off-white 100%);
+$gradient-primary:                    linear-gradient(135deg, $primary-cognac 0%, $primary-vibrant 100%);
+$gradient-secondary:                  linear-gradient(135deg, $secondary-dark 0%, $secondary-carribean-current 100%);
+$gradient-accent:                     linear-gradient(135deg, $accent-brown 0%, $accent-gold 100%);
+$gradient-dark:                       linear-gradient(135deg, $neutral-darker 0%, $neutral-black 100%);
+$gradient-light:                      linear-gradient(135deg, $neutral-white 0%, $neutral-off-white 100%);
 
 // Shadows $shadow-1: rgba(0, 0, 0, 0.2); // night-shadow-20 $shadow-2: rgba(1, 22, 14, 0.6); // black-bean-shadow-60
 
@@ -402,12 +402,12 @@ Van kleine schermen tot waar ruimte zich vergrooit;
 Responsief denken in verschillende maten,
 Zodat geen enkel apparaat wordt verlaten. */
 
-$screen-xs: 320px;    // Extra small devices, smartphones
-$screen-sm: 576px;    // Small devices, large smartphones/small tablets
-$screen-md: 768px;    // Medium devices, tablets
-$screen-lg: 992px;    // Large devices, desktops
-$screen-xl: 1200px;   // Extra large devices, large desktops
-$screen-xxl: 1400px;  // Extra extra large devices, very large desktops
+$screen-xs:                           320px; // Extra small devices, smartphones
+$screen-sm:                           576px; // Small devices, large smartphones/small tablets
+$screen-md:                           768px; // Medium devices, tablets
+$screen-lg:                           992px; // Large devices, desktops
+$screen-xl:                           1200px; // Extra large devices, large desktops
+$screen-xxl:                          1400px; // Extra extra large devices, very large desktops
 
 // $breakpoint-xs: 320px; // Extra small devices $breakpoint-sm: 576px; // Small devices $breakpoint-md: 768px; // Medium devices $breakpoint-lg: 992px; // Large devices $breakpoint-xl: 1200px; // Extra large devices $breakpoint-xxl: 1400px; // Extra extra large
 // Breakpoint Map voor mixin gebruik $breakpoints: ( xs: $breakpoint-xs, sm: $breakpoint-sm, md: $breakpoint-md, lg: $breakpoint-lg, xl: $breakpoint-xl, xxl: $breakpoint-xxl );
@@ -423,15 +423,15 @@ Elk element krijgt zijn eigen plaats en werk;
 Modals zweven boven content, tooltips hoger nog,
 Zodat elke interactie verloopt zonder bedrog. */
 
-$z-negative: -1;       // Behind content
-$z-lowest: 1;          // Base level
-$z-low: 10;            // Low elements
-$z-mid: 100;           // Mid-level elements
-$z-high: 1000;         // High priority elements like dropdowns
-$z-highest: 10000;     // Highest priority like modals
-$z-toast: 9000;        // Notifications/toasts
-$z-modal: 9500;        // Modal dialogs
-$z-tooltip: 9900;      // Tooltips/popovers
+$z-negative:                          -1; // Behind content
+$z-lowest:                            1; // Base level
+$z-low:                               10; // Low elements
+$z-mid:                               100; // Mid-level elements
+$z-high:                              1000; // High priority elements like dropdowns
+$z-highest:                           10000; // Highest priority like modals
+$z-toast:                             9000; // Notifications/toasts
+$z-modal:                             9500; // Modal dialogs
+$z-tooltip:                           9900; // Tooltips/popovers
 
 // $z-index-below: -1; // Elementen onder andere $z-index-default: 0; // Standaard z-index $z-index-dropdown: 1000; // Dropdowns $z-index-sticky: 1020; // Sticky elementen $z-index-fixed: 1030; // Fixed elementen zoals navbar $z-index-modal: 1050; // Modal backdrop $z-index-modal-content: 1055; // Modal content $z-index-popover: 1070; // Popovers $z-index-tooltip: 1080; // Tooltips
 
@@ -441,20 +441,20 @@ $z-tooltip: 9900;      // Tooltips/popovers
 // ==========================================================================
 
 // --- TIMING ---
-$transition-fastest: 0.1s;
-$transition-fast: 0.2s;
-$transition-normal: 0.3s;
-$transition-slow: 0.5s;
-$transition-slowest: 0.8s;
+$transition-fastest:                  0.1s;
+$transition-fast:                     0.2s;
+$transition-normal:                   0.3s;
+$transition-slow:                     0.5s;
+$transition-slowest:                  0.8s;
 
 // --- EASING CURVES ---
-$ease-default: ease;
-$ease-in: ease-in;
-$ease-out: ease-out;
-$ease-in-out: ease-in-out;
-$ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
-$ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
-$ease-spring: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+$ease-default:                        ease;
+$ease-in:                             ease-in;
+$ease-out:                            ease-out;
+$ease-in-out:                         ease-in-out;
+$ease-in-out-quart:                   cubic-bezier(0.77, 0, 0.175, 1);
+$ease-in-out-expo:                    cubic-bezier(0.87, 0, 0.13, 1);
+$ease-spring:                         cubic-bezier(0.68, -0.55, 0.27, 1.55);
 
 
 // ==========================================================================
