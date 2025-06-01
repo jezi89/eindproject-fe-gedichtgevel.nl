@@ -1,0 +1,79 @@
+// StatusBanner Layout Component Styles - CSS Modules
+// =================================================
+// Layout-level component for system status display
+// Uses CSS Modules for component-specific styling
+
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as mixins;
+
+// Main status banner container
+.statusBanner {
+  // Container for status information display
+  position:         relative;
+  width:            100%;
+  padding:          vars.$spacing-s vars.$spacing-m;
+  transition:       all vars.$transition-normal;
+  border-bottom:    1px solid vars.$border-warm;
+
+  // Smooth transitions for collapsible behavior
+  background-color: vars.$background-secondary;
+
+  &.collapsed {
+	// Collapsed state styling
+	overflow: hidden;
+	height:   0;
+	padding:  0;
+	opacity:  0;
+	}
+
+  &.expanded {
+	// Expanded state styling
+	opacity: 1;
+	}
+  }
+
+// Status content wrapper
+.statusContent {
+  // Flex container for status cards
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             vars.$spacing-m;
+
+  @media (max-width: vars.$breakpoint-mobile) {
+	// Stack vertically on mobile
+	align-items:    stretch;
+	flex-direction: column;
+	gap:            vars.$spacing-s;
+	}
+  }
+
+// Toggle button for collapsible banner
+.toggleButton {
+  @include mixins.button-reset;
+
+  position:      absolute;
+  top:           50%;
+  right:         vars.$spacing-m;
+  padding:       vars.$spacing-xs;
+
+  transition:    color vars.$transition-fast;
+  transform:     translateY(-50%);
+  color:         vars.$text-secondary;
+  border-radius: vars.$border-radius-sm;
+  background:    transparent;
+
+  &:hover {
+	color:            vars.$text-primary;
+	background-color: vars.$background-hover;
+	}
+
+  // Arrow icon rotation
+  .arrow {
+	transition: transform vars.$transition-fast;
+	}
+
+  &.collapsed .arrow {
+	transform: rotate(180deg);
+	}
+  }
