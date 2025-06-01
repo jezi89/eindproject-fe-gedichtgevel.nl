@@ -1,52 +1,50 @@
-// ContactPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@styles/typography';    // Voor text styling
-//    @import '@styles/layout';        // Voor layout utilities
-//
-// 2. Contact form specifieke styling:
-//    - Form layout (labels, inputs, textarea)
-//    - Validation feedback
-//    - Submit button states
-//    - Contact informatie sectie
-//
-// 3. Gebruik form-gerelateerde mixins/utilities:
-//    - Input field styling
-//    - Error/success messages
-//    - Loading states
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
 
-.contact-container {
-  // Main contact page wrapper
-}
+.page-contact {
+  max-width: 800px;
+  margin:    0 auto;
+  padding:   $spacing-xl;
 
-.contact-header {
-  // Page title en intro text
-}
+  .page-title {
+	margin-bottom: $spacing-md;
+	color:         $color-primary;
+	}
 
-.contact-content {
-  // Flex container voor form en info
-}
+  .page-subtitle {
+	font-size:     $font-size-lg;
+	margin-bottom: $spacing-xl;
+	color:         $color-text-secondary;
+	}
 
-.contact-form {
-  // Contact formulier
-}
+  .contact-section {
+	margin-bottom:    $spacing-xl;
+	padding:          $spacing-lg;
+	border-radius:    $border-radius-md;
+	background-color: $color-surface;
 
-.form-group {
-  // Individual form field wrapper
-}
+	h2 {
+	  font-size:     $font-size-xl;
+	  margin-bottom: $spacing-md;
+	  color:         $color-primary;
+	  }
 
-.contact-info {
-  // Contact informatie sidebar
-}
+	p {
+	  line-height:   1.6;
+	  margin-bottom: $spacing-md;
+	  color:         $color-text;
+	  }
 
-.info-item {
-  // Email, telefoon, adres items
-}
+	.contact-info {
+	  margin-top: $spacing-lg;
 
-.submit-section {
-  // Submit button en feedback
-}
+	  p {
+		margin-bottom: $spacing-sm;
+
+		strong {
+		  color: $color-primary;
+		  }
+		}
+	  }
+	}
+  }

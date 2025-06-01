@@ -1,0 +1,79 @@
+// WaveSurfer Wrapper Component Styles - CSS Modules
+// ===============================================
+// Library wrapper styling for WaveSurfer.js integration
+// Provides consistent styling for audio waveform display
+
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as mixins;
+
+// Main wrapper container
+.wavesurferWrapper {
+  // Container for waveform and controls
+  position:         relative;
+  overflow:         hidden;
+  width:            100%;
+  border-radius:    vars.$border-radius-sm;
+  background-color: vars.$background-primary;
+  }
+
+// Waveform container
+.waveformContainer {
+  // Direct container for WaveSurfer.js canvas
+  width:            100%;
+  min-height:       60px;
+  background-color: vars.$background-secondary;
+
+  // Loading state
+  &.loading {
+	animation:       shimmer 1.5s ease-in-out infinite;
+	background:      linear-gradient(
+									 90deg,
+									 vars.$background-secondary 0%,
+									 vars.$background-hover 50%,
+									 vars.$background-secondary 100%
+					 );
+	background-size: 200% 100%;
+	}
+  }
+
+// Loading indicator
+.loadingIndicator {
+  // Overlay loading message
+  font-size:      vars.$font-size-s;
+  position:       absolute;
+  top:            50%;
+  left:           50%;
+
+  transform:      translate(-50%, -50%);
+  pointer-events: none;
+  color:          vars.$text-secondary;
+  }
+
+// Error message display
+.error {
+  // Error state styling
+  font-size:        vars.$font-size-s;
+  margin-bottom:    vars.$spacing-s;
+  padding:          vars.$spacing-s vars.$spacing-m;
+  color:            vars.$error-text;
+  border:           1px solid vars.$error-border;
+  border-radius:    vars.$border-radius-sm;
+  background-color: vars.$error-background;
+  }
+
+// Shimmer animation for loading state
+@keyframes shimmer {
+  0% {
+	background-position: -200% 0;
+	}
+  100% {
+	background-position: 200% 0;
+	}
+  }
+
+// Responsive adjustments
+@media (max-width: vars.$breakpoint-mobile) {
+  .waveformContainer {
+	min-height: 50px;
+	}
+  }

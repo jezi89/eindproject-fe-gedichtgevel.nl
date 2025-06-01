@@ -3,10 +3,10 @@
 // Gebruik de gedeelde styles uit de styles folder:
 // 
 // 1. Import de benodigde modules:
-//    @import '@styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@styles/typography';    // Voor text styling
-//    @import '@styles/effects';       // Voor shadows, transitions
+//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
+//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
+//    @import '@/styles/typography';    // Voor text styling
+//    @import '@/styles/effects';       // Voor shadows, transitions
 //
 // 2. Auth-specifieke styling:
 //    - Centered form layout
@@ -22,36 +22,36 @@
 
 .auth-container {
   // Full page centered container
-}
+  }
 
 .auth-card {
   // Central card voor forms
-}
+  }
 
 .auth-tabs {
   // Login/Signup tab switcher
-}
+  }
 
 .tab-button {
   // Individual tab buttons
-}
+  }
 
 .auth-form {
   // Form container
-}
+  }
 
 .form-field {
   // Input field wrapper
-}
+  }
 
 .auth-actions {
   // Submit en forgot password
-}
+  }
 
 .social-login {
   // Social media login opties
-}
+  }
 
 .auth-footer {
   // Extra links en info
-}
+  }

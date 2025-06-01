@@ -17,6 +17,9 @@ import PasswordResetPage from './pages/Auth/PasswordResetPage.jsx';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage.jsx';
 import AuthCallback from './pages/Auth/LoginAndSignup/AuthCallback.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import {ContactPage} from './pages/Contact/ContactPage.jsx';
+import {FAQPage} from './pages/FAQ/FAQPage.jsx';
+import {TermsPage} from './pages/Terms/TermsPage.jsx';
 
 const router = createBrowserRouter([
     {
@@ -28,9 +31,11 @@ const router = createBrowserRouter([
             {path: 'spreekgevel', element: <AudioPage/>},
             {path: 'collectiegevel', element: <CollectionPage/>},
             {path: 'overmij', element: <AboutPage/>},
+            {path: 'contact', element: <ContactPage/>},
+            {path: 'hoedan', element: <FAQPage/>},
+            {path: 'voorwaarden', element: <TermsPage/>},
 
-            // Add other child routes here
-
+            // Auth routes
             {
                 path: 'account',
                 element: <ProtectedRoute><AccountPage/></ProtectedRoute>

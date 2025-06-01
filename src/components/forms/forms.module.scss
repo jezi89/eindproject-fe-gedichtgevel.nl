@@ -1,6 +1,6 @@
-@use "@styles/variables" as *;
-@use "@styles/mixins" as *;
-@use "@styles/typography" as *;
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "@/styles/typography" as *;
 @use "sass:color";
 
 .formContainer {
@@ -40,7 +40,7 @@
   }
 
 .formInput {
-  @include input-base;
+  @include mixins.input-base;
   box-sizing: border-box; // Include padding and border in the element's total width and height
   width:      100%; // Ensure input takes full width of its container
   }
@@ -91,6 +91,6 @@
   }
 
 .cancelButton {
-  @include button-base($button-secondary-background, $button-secondary-text);
+  @include mixins.button-base($button-secondary-background, $button-secondary-text);
   margin-top: $spacing-xs;
   }
