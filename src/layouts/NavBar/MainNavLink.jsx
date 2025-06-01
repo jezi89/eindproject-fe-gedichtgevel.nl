@@ -28,6 +28,7 @@ const MainNavLink = ({to, children, onClick, className = '', prefetch = 'intent'
     // Return NavLink with active/inactive styling based on current route
     // Uses React Router v7 features like prefetch
     return (
+
         <NavLink
             to={to}
             prefetch={prefetch}
@@ -40,6 +41,7 @@ const MainNavLink = ({to, children, onClick, className = '', prefetch = 'intent'
         >
             {children}
         </NavLink>
+
     );
 };
 

@@ -3,11 +3,11 @@
 // Gebruik de gedeelde styles uit de styles folder:
 // 
 // 1. Import de benodigde modules:
-@import "@styles/variables";
+@use "@/styles/variables" as *;
 // Voor kleuren, spacing, breakpoints
-@import "@styles/mixins";
+@use "@/styles/mixins" as mixins;
 // Voor herbruikbare style patronen
-@import "@styles/effects"; // Voor shadows, transitions
+@use "@/styles/effects" as *; // Voor shadows, transitions
 //
 // 2. SearchBar specifieke elementen:
 //    - Search input field
@@ -21,22 +21,28 @@
 //    - Active search state
 //    - No results state
 
-.search-bar {
-  // Main search container
+.searchContainer {
+  // Main search section container
   }
 
-.search-input-wrapper {
-  // Input + buttons container
+.searchBar {
+  // Search input + button wrapper
   }
 
-.search-input {
-  // Search text input
+.searchInput {
+  // Search text input field
   }
 
-.search-icon {
-  // Magnifying glass icon
+.searchButton {
+  // Search submit button
   }
 
+.error {
+  // Error message display
+  }
+
+// TODO checken of deze classes nodig zijn
+/*
 .clear-button {
   // Clear search button
   }
@@ -64,3 +70,4 @@
 .no-results {
   // No results message
   }
+*/
