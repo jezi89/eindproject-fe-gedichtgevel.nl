@@ -11,7 +11,7 @@
 @use "sass:color";
 @use "sass:map";
 @use "sass:math";
-@use "./variables" as *;
+@use "./variables" as vars;
 
 /* ======================================================= 
  * MIXINS
@@ -178,8 +178,8 @@
 /// Mixin voor een grid container
 /// @param {String} $columns [repeat(12, 1fr)] - Grid-template-columns
 /// @param {String} $rows [auto] - Grid-template-rows
-/// @param {String} $gap [$spacing-m] - Grid-gap
-@mixin grid-container($columns: repeat(12, 1fr), $rows: auto, $gap: $spacing-m) {
+/// @param {String} $gap [vars.$spacing-m] - Grid-gap
+@mixin grid-container($columns: repeat(12, 1fr), $rows: auto, $gap: vars.$spacing-m) {
   display:               grid;
   grid-template-columns: $columns;
   grid-template-rows: $rows;
@@ -200,8 +200,8 @@
 
 /// Mixin voor responsieve grid met auto-fill
 /// @param {Number} $min-width [250px] - Minimale breedte van een grid item
-/// @param {String} $gap [$spacing-m] - Grid-gap
-@mixin responsive-grid($min-width: 250px, $gap: $spacing-m) {
+/// @param {String} $gap [vars.$spacing-m] - Grid-gap
+@mixin responsive-grid($min-width: 250px, $gap: vars.$spacing-m) {
   display:               grid;
   grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
   gap:                   $gap;
@@ -243,25 +243,25 @@
 
 /// Presets voor veelgebruikte media queries
 @mixin mobile-only {
-  @include media-down($screen-sm) {
+  @include media-down(vars.$screen-sm) {
 	@content;
 	}
   }
 
 @mixin tablet-up {
-  @include media-up($screen-md) {
+  @include media-up(vars.$screen-md) {
 	@content;
 	}
   }
 
 @mixin desktop-up {
-  @include media-up($screen-lg) {
+  @include media-up(vars.$screen-lg) {
 	@content;
 	}
   }
 
 @mixin large-desktop-up {
-  @include media-up($screen-xl) {
+  @include media-up(vars.$screen-xl) {
 	@content;
 	}
   }
@@ -279,17 +279,17 @@
 /// @param {String} $level [md] - Shadow niveau: sm, md, lg, xl, inner of none
 @mixin box-shadow($level: md) {
   @if $level == sm {
-	box-shadow: $shadow-sm;
+	box-shadow: vars.$shadow-sm;
 	} @else if $level == md {
-	box-shadow: $shadow-md;
+	box-shadow: vars.$shadow-md;
 	} @else if $level == lg {
-	box-shadow: $shadow-lg;
+	box-shadow: vars.$shadow-lg;
 	} @else if $level == xl {
-	box-shadow: $shadow-xl;
+	box-shadow: vars.$shadow-xl;
 	} @else if $level == inner {
-	box-shadow: $shadow-inner;
+	box-shadow: vars.$shadow-inner;
 	} @else if $level == none {
-	box-shadow: $shadow-none;
+	box-shadow: vars.$shadow-none;
 	}
   }
 
@@ -297,22 +297,22 @@
 /// @param {String} $level [sm] - Shadow niveau: sm, md, lg of none
 @mixin text-shadow($level: sm) {
   @if $level == sm {
-	text-shadow: $text-shadow-sm;
+	text-shadow: vars.$text-shadow-sm;
 	} @else if $level == md {
-	text-shadow: $text-shadow-md;
+	text-shadow: vars.$text-shadow-md;
 	} @else if $level == lg {
-	text-shadow: $text-shadow-lg;
+	text-shadow: vars.$text-shadow-lg;
 	} @else if $level == none {
-	text-shadow: $text-shadow-none;
+	text-shadow: vars.$text-shadow-none;
 	}
   }
 
 /// Mixin voor transitie
 /// @param {String} $property [all] - CSS property om te animeren
-/// @param {String} $duration [$transition-normal] - Duur van de transitie
-/// @param {String} $timing [$ease-default] - Timing functie
+/// @param {String} $duration [vars.$transition-normal] - Duur van de transitie
+/// @param {String} $timing [vars.$ease-default] - Timing functie
 /// @param {String} $delay [0s] - Vertraging
-@mixin transition($property: all, $duration: $transition-normal, $timing: $ease-default, $delay: 0s) {
+@mixin transition($property: all, $duration: vars.$transition-normal, $timing: vars.$ease-default, $delay: 0s) {
   transition-property:        $property;
   transition-duration:        $duration;
   transition-timing-function: $timing;
@@ -326,11 +326,11 @@
   }
 
 /// Mixin voor glassmorphism effect
-/// @param {Color} $background [$neutral-white] - Achtergrondkleur
+/// @param {Color} $background [vars.$neutral-white] - Achtergrondkleur
 /// @param {Number} $opacity [0.2] - Achtergrond-transparantie
 /// @param {Number} $blur [10px] - Blur radius
 /// @param {Number} $border-opacity [0.1] - Rand-transparantie
-@mixin glassmorphism($background: $neutral-white, $opacity: 0.2, $blur: 10px, $border-opacity: 0.1) {
+@mixin glassmorphism($background: vars.$neutral-white, $opacity: 0.2, $blur: 10px, $border-opacity: 0.1) {
   background:              color.change($background, $alpha: $opacity);
   backdrop-filter:         blur($blur);
   -webkit-backdrop-filter: blur($blur);
@@ -342,23 +342,23 @@
  * ------------------------------------------------------- */
 
 /// Mixin voor basis buttonclass
-/// @param {Color} $bg [$button-primary-background] - Achtergrondkleur
-/// @param {Color} $color [$button-primary-text] - Tekstkleur
-/// @param {Color} $border [$button-primary-border] - Randkleur
-/// @param {Map} $text-style [$button-medium] - Tekststijl
-@mixin button-base($bg: $button-primary-background, $color: $button-primary-text, $border: $button-primary-border, $text-style: $button-medium) {
+/// @param {Color} $bg [vars.$button-primary-background] - Achtergrondkleur
+/// @param {Color} $color [vars.$button-primary-text] - Tekstkleur
+/// @param {Color} $border [vars.$button-primary-border] - Randkleur
+/// @param {Map} $text-style [vars.$button-medium] - Tekststijl
+@mixin button-base($bg: vars.$button-primary-background, $color: vars.$button-primary-text, $border: vars.$button-primary-border, $text-style: vars.$button-medium) {
   display:          inline-flex;
   align-items:      center;
   justify-content:  center;
-  padding:          $spacing-xs $spacing-m;
-  border-radius:    $border-radius-md;
-  border:           $border-width-thin solid $border;
+  padding:          vars.$spacing-xs vars.$spacing-m;
+  border-radius:    vars.$border-radius-md;
+  border:           vars.$border-width-thin solid $border;
   background-color: $bg;
   color:            $color;
   cursor:           pointer;
   text-decoration:  none;
   @include text-style($text-style);
-  @include transition(all, $transition-fast, $ease-out);
+  @include transition(all, vars.$transition-fast, vars.$ease-out);
 
   &:hover {
 	background-color: color.adjust($bg, $lightness: -5%);
@@ -397,31 +397,31 @@
   }
 
 /// Mixin voor een kaart/card component
-/// @param {Color} $bg [$card-background] - Achtergrondkleur
-/// @param {Color} $border [$card-border] - Randkleur
+/// @param {Color} $bg [vars.$card-background] - Achtergrondkleur
+/// @param {Color} $border [vars.$card-border] - Randkleur
 /// @param {String} $shadow [md] - Shadow niveau
-@mixin card($bg: $card-background, $border: $card-border, $shadow: md) {
+@mixin card($bg: vars.$card-background, $border: vars.$card-border, $shadow: md) {
   background-color: $bg;
-  border-radius:    $border-radius-md;
-  border:           $border-width-thin solid $border;
+  border-radius:    vars.$border-radius-md;
+  border:           vars.$border-width-thin solid $border;
   overflow:         hidden;
   @include box-shadow($shadow);
   }
 
 /// Mixin voor input styling
-/// @param {Color} $bg [$search-background] - Achtergrondkleur
-/// @param {Color} $border [$search-border] - Randkleur
-/// @param {Color} $text [$search-text] - Tekstkleur
-/// @param {Color} $placeholder [$search-placeholder] - Placeholderkleur
-@mixin input-base($bg: $search-background, $border: $search-border, $text: $search-text, $placeholder: $search-placeholder) {
+/// @param {Color} $bg [vars.$search-background] - Achtergrondkleur
+/// @param {Color} $border [vars.$search-border] - Randkleur
+/// @param {Color} $text [vars.$search-text] - Tekstkleur
+/// @param {Color} $placeholder [vars.$search-placeholder] - Placeholderkleur
+@mixin input-base($bg: vars.$search-background, $border: vars.$search-border, $text: vars.$search-text, $placeholder: vars.$search-placeholder) {
   display:          block;
   width:            100%;
-  padding:          $spacing-s $spacing-m;
+  padding:          vars.$spacing-s vars.$spacing-m;
   background-color: $bg;
-  border:           $border-width-thin solid $border;
-  border-radius:    $border-radius-sm;
+  border:           vars.$border-width-thin solid $border;
+  border-radius:    vars.$border-radius-sm;
   color:            $text;
-  @include transition(border-color, $transition-fast);
+  @include transition(border-color, vars.$transition-fast);
 
   &::placeholder {
 	color:   $placeholder;
@@ -430,8 +430,8 @@
 
   &:focus {
 	outline:      none;
-	border-color: $border-focus;
-	box-shadow:   0 0 0 3px color.change($border-focus, $alpha: 0.2);
+	border-color: vars.$border-focus;
+	box-shadow:   0 0 0 3px color.change(vars.$border-focus, $alpha: 0.2);
 	}
   }
 
@@ -509,10 +509,10 @@
   }
 
 /// Mixin voor het aanbrengen van een custom scrollbar
-/// @param {Color} $track-color [$neutral-light] - Scrollbar track kleur
-/// @param {Color} $thumb-color [$neutral-mid] - Scrollbar thumb kleur
+/// @param {Color} $track-color [vars.$neutral-light] - Scrollbar track kleur
+/// @param {Color} $thumb-color [vars.$neutral-mid] - Scrollbar thumb kleur
 /// @param {Number} $width [8px] - Scrollbar breedte
-@mixin custom-scrollbar($track-color: $neutral-light, $thumb-color: $neutral-mid, $width: 8px) {
+@mixin custom-scrollbar($track-color: vars.$neutral-light, $thumb-color: vars.$neutral-mid, $width: 8px) {
   &::-webkit-scrollbar {
 	width:  $width;
 	height: $width;

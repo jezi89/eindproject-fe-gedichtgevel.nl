@@ -1,0 +1,79 @@
+// WaveSurfer Wrapper Component Styles - CSS Modules
+// ===============================================
+// Library wrapper styling for WaveSurfer.js integration
+// Provides consistent styling for audio waveform display
+
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mixins;
+
+// Main wrapper container
+.wavesurferWrapper {
+  // Container for waveform and controls
+  position: relative;
+  width: 100%;
+  background-color: vars.$background-primary;
+  border-radius: vars.$border-radius-sm;
+  overflow: hidden;
+}
+
+// Waveform container
+.waveformContainer {
+  // Direct container for WaveSurfer.js canvas
+  width: 100%;
+  min-height: 60px;
+  background-color: vars.$background-secondary;
+  
+  // Loading state
+  &.loading {
+    background: linear-gradient(
+      90deg,
+      vars.$background-secondary 0%,
+      vars.$background-hover 50%,
+      vars.$background-secondary 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+}
+
+// Loading indicator
+.loadingIndicator {
+  // Overlay loading message
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  color: vars.$text-secondary;
+  font-size: vars.$font-size-s;
+  pointer-events: none;
+}
+
+// Error message display
+.error {
+  // Error state styling
+  padding: vars.$spacing-s vars.$spacing-m;
+  color: vars.$error-text;
+  background-color: vars.$error-background;
+  border: 1px solid vars.$error-border;
+  border-radius: vars.$border-radius-sm;
+  font-size: vars.$font-size-s;
+  margin-bottom: vars.$spacing-s;
+}
+
+// Shimmer animation for loading state
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: vars.$breakpoint-mobile) {
+  .waveformContainer {
+    min-height: 50px;
+  }
+}

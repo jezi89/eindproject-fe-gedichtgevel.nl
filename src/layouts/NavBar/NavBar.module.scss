@@ -1,27 +1,33 @@
 @use "sass:color";
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as mixins;
-@use "@/styles/typography" as typo;
+
 
 // Navbar container - full width sticky header
 .navbar {
   position:         sticky;
-  z-index:          $z-high;
+  //  z-index:          $z-high;
   top:              0;
-  width:            100vw;
+  width:            100%;
   border-bottom:    1px solid $border-warm;
   background-color: $navbar-background;
   }
 
-// Inner container with flexbox layout
+// Inner container: Flex for mobile, Grid for desktop
 .navbarContainer {
-  @include mixins.flex-container(row, space-between, center);
-  max-width: 100%;
-  padding: $spacing-m $spacing-l;
+  display:         flex; // Mobile: Logo | Spacer | MobileControls
+  align-items:     center;
+  justify-content: space-between;
+  max-width:       100%;
+  padding:         $spacing-m $spacing-l; // Mobile padding
 
-  @include mixins.media-up($screen-lg) {
-    padding: $spacing-m $spacing-xl;
-    }
+  @include mixins.media-up($screen-md + 1px) { // Desktop: Logo | Nav | Auth
+	display:               grid;
+	align-items:           center;
+	padding:               $spacing-m $spacing-xl; // Desktop padding
+	grid-template-columns: auto 1fr auto; // Logo | Nav Links | Auth Area
+	gap:                   $spacing-l; // Adjust gap as needed between main sections
+	}
   }
 
 // Logo - left section
@@ -30,178 +36,172 @@
   font-weight:     $font-weight-bold;
   flex-shrink:     0;
   transition:      color $transition-fast;
+  white-space:     nowrap;
   text-decoration: none;
   color:           $navbar-text;
-  white-space:     nowrap;
-  // Reduced size for real logo proportion
   @include mixins.fluid-type(1.125, 1.5, $screen-xs, $screen-lg);
 
   &:hover {
-    color: $navbar-text-active;
-    }
+	color: $navbar-text-active;
+	}
   }
 
-// Desktop nav wrapper - center section
-.desktopNavWrapper {
-  @include mixins.flex-container(row, center, center);
-  flex: 1;
-  gap: $spacing-m;
-  max-width: 100%; // Prevent overflow
-  position: relative; // For centering nav
-  
-  @include mixins.media-down($screen-md) {
-    display: none;
-    }
-  }
+// Desktop navigation wrapper - center section in grid
+.desktopNav {
+  display: none; // Hidden on mobile
 
-// Navigation links - centered
-.navLinks {
-  display: flex;
-  align-items: center;
-  
-  ul {
-    @include mixins.list-unstyled;
-    @include mixins.flex-container(row, center, center);
-    gap: clamp($spacing-s, 3vw, $spacing-xl);
-    height: 100%; // Ensure full height
-    align-items: center; // Ensure all items align vertically
-    
-    // Responsive font scaling with zoom
-    @include mixins.media-between($screen-md, $screen-lg) {
-      zoom: 0.85;
-      gap: clamp($spacing-xs, 2vw, $spacing-l);
-      }
-    
-    @include mixins.media-between($screen-lg, $screen-xl) {
-      zoom: 0.92;
-      }
-    }
-  }
-
-// Individual nav link styling
-.navLink {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center; // Ensure vertical alignment
-
-  a {
-    font-family:     $font-family-nav-item;
-    display:         inline-flex; // Changed to inline-flex for better alignment
-    align-items:     center; // Center content vertically
-    padding:         $spacing-xs $spacing-m;
-    transition:      all $transition-fast;
-    white-space:     nowrap;
-    text-decoration: none;
-    color:           $navbar-text;
-    border-radius:   $border-radius-sm;
-    font-size:       $font-size-m;
-    height:          100%; // Take full height of parent
-
-    &:hover {
-      color:            $navbar-text-active;
-      background-color: color.change($navbar-text-active, $alpha: 0.1);
-      }
-
-    &.active {
-      font-weight: $font-weight-bold;
-      color:       $navbar-text-active;
-      }
-    }
-  }
-
-// Auth button - always visible
-.authButton {
-  position: absolute;
-  right: 0;
-  flex-shrink: 0;
-  white-space: nowrap;
-  
-  // Ensure button stays visible on all screen sizes
-  min-width: max-content;
-  
-  // Adjust button size for navbar
-  font-size: $font-size-s !important; // Smaller size for navbar
-  padding: $spacing-xs $spacing-m !important;
-  
-  @include mixins.media-down($screen-md) {
-    position: static;
-    font-size: $font-size-m !important; // Normal size on mobile
-    margin-left: $spacing-s; // Less margin on mobile
-    }
-  }
-
-// Mobile controls - right section on mobile
-.mobileControls {
-  @include mixins.flex-container(row, flex-end, center);
-  gap: $spacing-s;
-  
   @include mixins.media-up($screen-md + 1px) {
-    display: none;
-    }
+	display:         flex; // Use flex to center the UL inside this grid cell
+	align-items:     center;
+	justify-content: center;
+	width:           100%; // Take full width of the grid cell
+	}
   }
+
+// Navigation links UL element
+.navLinks {
+  @include mixins.list-unstyled;
+  display:     flex; // UL is a flex container for LIs
+  align-items: center; // Vertically align LIs
+  gap:         clamp($spacing-s, 2.5vw, $spacing-l); // Gap between LIs, adjusted clamp
+
+  // Consider removing or replacing 'zoom' for better cross-browser compatibility
+  // and accessibility. Adjust font-size/padding in media queries instead if needed.
+  @include mixins.media-between($screen-md, $screen-lg) {
+	// zoom: 0.85;
+	// gap: clamp($spacing-xs, 2vw, $spacing-l);
+	}
+  @include mixins.media-between($screen-lg, $screen-xl) {
+	// zoom: 0.92;
+	}
+  }
+
+// Individual nav link LI item
+.navLink {
+  display:     flex; // LI is flex to align its content (<a> or <button>)
+  align-items: center; // Vertically center content within LI
+  flex-shrink: 0;
+  margin:      0; // Reset any browser default margins
+  padding:     0; // Reset any browser default padding
+
+  // Common styling for <a> and .dropdownToggle inside .navLink
+  a,
+  .dropdownToggle {
+	font-family:     $font-family-nav-item;
+	font-size:       $font-size-m;
+	display:         inline-flex; // Ensures proper alignment of text/icons
+	align-items:     center;
+	padding:         $spacing-xs $spacing-m; // Consistent padding (0.5rem top/bottom)
+	cursor:          pointer; // Ensure button also has pointer
+	transition:      all $transition-fast;
+	white-space:     nowrap;
+	text-decoration: none;
+	color:           $navbar-text;
+	border-radius:   $border-radius-sm;
+
+	&:hover {
+	  color:            $navbar-text-active;
+	  background-color: color.change($navbar-text-active, $alpha: 0.1);
+	  }
+	}
+
+  a.active {
+	font-weight: $font-weight-bold;
+	color:       $navbar-text-active;
+	// No margin needed here, padding and flex alignment should handle it
+	}
+  }
+
+// Desktop Auth Button Area - right section in grid
+.desktopAuth {
+  display: none; // Hidden on mobile
+
+  @include mixins.media-up($screen-md + 1px) {
+	display:         flex;
+	justify-content: flex-end; // Aligns button to the right of this cell
+	}
+  }
+
+// Auth button - specific styling for navbar context
+.authButton {
+  // These overrides might be for desktop version in navbar
+  font-size:   $font-size-s !important;
+  min-width:   max-content; // Good for ensuring text visibility
+  padding:     $spacing-xs $spacing-m !important;
+  white-space: nowrap;
+
+  // On mobile, it's part of .mobileControls flow.
+  // The !important might be needed if base button styles are too strong.
+  // Consider if these can be less specific.
+  }
+
+// Mobile controls - right section on mobile (replaces .desktopNav and .desktopAuth)
+.mobileControls {
+  display:     flex; // Shown on mobile by default
+  align-items: center;
+  gap:         $spacing-s;
+
+  @include mixins.media-up($screen-md + 1px) {
+	display: none; // Hidden on desktop
+	}
+  // The AuthButton component inside mobileControls will use .authButton styles.
+  // If different sizing is needed for mobile auth button, adjust AuthButton.jsx
+  // or add a more specific selector here.
+  }
+
 
 // Hamburger menu toggle
 .menuToggle {
   @include mixins.button-reset;
-  padding:   $spacing-xs;
-  color:     $navbar-text;
-  width:     40px;
-  height:    40px;
-  position:  relative;
-  display: flex;
-  align-items: center;
+  // ... (rest of .menuToggle styles remain the same) ...
+  position:        relative;
+  display:         flex;
+  align-items:     center;
   justify-content: center;
-  
-  // Hamburger icon
+  width:           40px;
+  height:          40px;
+  padding:         $spacing-xs;
+  color:           $navbar-text;
+
   span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background-color: currentColor;
-    position: relative;
-    transition: background-color $transition-fast;
-    
-    &::before,
-    &::after {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background-color: currentColor;
-      position: absolute;
-      left: 0;
-      transition: all $transition-fast;
-      }
-    
-    &::before {
-      top: -8px;
-      }
-    
-    &::after {
-      bottom: -8px;
-      }
-    }
-  
-  // Animate to X when open
+	position:         relative;
+	display:          block;
+	width:            24px;
+	height:           2px;
+	transition:       background-color $transition-fast;
+	background-color: currentColor;
+
+	&::before,
+	&::after {
+	  position:         absolute;
+	  left:             0;
+	  display:          block;
+	  width:            24px;
+	  height:           2px;
+	  content:          "";
+	  transition:       all $transition-fast;
+	  background-color: currentColor;
+	  }
+
+	&::before { top: -8px; }
+
+	&::after { bottom: -8px; }
+	}
+
   &.isOpen span {
-    background-color: transparent;
-    
-    &::before {
-      top: 0;
-      transform: rotate(45deg);
-      }
-    
-    &::after {
-      bottom: 0;
-      transform: rotate(-45deg);
-      }
-    }
+	background-color: transparent;
+
+	&::before { top: 0; transform: rotate(45deg); }
+
+	&::after { bottom: 0; transform: rotate(-45deg); }
+	}
   }
 
 // Mobile menu
 .mobileMenu {
+  // ... (rest of .mobileMenu styles remain the same) ...
   position:         fixed;
-  z-index:          $z-highest;
+  z-index:          $z-highest; // e.g., 10000
   top:              0;
   right:            -100%;
   width:            min(85vw, 320px);
@@ -210,117 +210,116 @@
   transition:       right $transition-normal;
   background-color: $navbar-background;
   box-shadow:       -2px 0 8px rgba($neutral-black, 0.2);
-  
-  @include mixins.media-up($screen-md + 1px) {
-    display: none;
-    }
 
-  &.open {
-    right: 0;
-    }
+  @include mixins.media-up($screen-md + 1px) { display: none; }
+
+  &.open { right: 0; }
 
   ul {
-    @include mixins.list-unstyled;
-    @include mixins.flex-container(column, flex-start, stretch);
-    gap: $spacing-s;
-    }
-  
-  .navLink a {
-    display: block;
-    width: 100%;
-    padding: $spacing-m;
-    font-size: $font-size-l;
-    }
+	@include mixins.list-unstyled;
+	@include mixins.flex-container(column, flex-start, stretch);
+	gap: $spacing-s;
+	
+	// Ensure mobile menu li items don't have margins
+	li {
+	  margin:  0;
+	  padding: 0;
+	  }
+	}
+
+  // .navLink a styling is inherited, but mobile might need overrides
+  .navLink a, .navLink .dropdownToggle { // Ensure toggle also gets mobile styling if it were in mobile menu
+	font-size: $font-size-l; // Larger for mobile menu items
+	display:   block; // Full width taps
+	width:     100%;
+	padding:   $spacing-m; // Larger padding for mobile
+	}
   }
 
 // Mobile menu overlay
 .menuOverlay {
+  // ... (rest of .menuOverlay styles remain the same) ...
   position:         fixed;
-  z-index:          $z-modal;
+  z-index:          $z-modal; // e.g., 9500 (below mobileMenu)
   top:              0;
   left:             0;
+  visibility:       hidden;
   width:            100%;
   height:           100vh;
-  background-color: rgba($neutral-black, 0.5);
-  opacity:          0;
-  visibility:       hidden;
   transition:       opacity $transition-normal, visibility $transition-normal;
-  
-  @include mixins.media-up($screen-md + 1px) {
-    display: none;
-    }
-  
-  &.open {
-    opacity: 1;
-    visibility: visible;
-    }
+  opacity:          0;
+  background-color: rgba($neutral-black, 0.5);
+
+  @include mixins.media-up($screen-md + 1px) { display: none; }
+
+  &.open { visibility: visible; opacity: 1; }
   }
 
-// Dropdown menu styles
-.dropdown {
-  position: relative;
-  
+// Dropdown menu styles (for "Meer" button)
+.dropdown { // This is an li.navLink
+  position: relative; // Crucial for fallback absolute positioning of .dropdownMenu
+
   .dropdownToggle {
-    @include mixins.button-reset;
-    font-family:     $font-family-nav-item;
-    display:         inline-flex;
-    align-items:     center;
-    gap:             $spacing-xs;
-    padding:         $spacing-xs $spacing-m;
-    transition:      all $transition-fast;
-    white-space:     nowrap;
-    text-decoration: none;
-    color:           $navbar-text;
-    border-radius:   $border-radius-sm;
-    font-size:       $font-size-m;
-    cursor:          pointer;
-    
-    .arrow {
-      font-size: 0.75em;
-      transition: transform $transition-fast;
-    }
-    
-    &:hover {
-      color:            $navbar-text-active;
-      background-color: color.change($navbar-text-active, $alpha: 0.1);
-    }
-    
-    &[aria-expanded="true"] .arrow {
-      transform: rotate(180deg);
-    }
-  }
-  
+	// Reset button-specific styles to match links
+	gap:         $spacing-xs; // Space between "Meer" text and arrow
+	border:      none;
+	background:  transparent; // Match other links
+	anchor-name: --dropdown-anchor; // Modern CSS anchor positioning
+
+	.arrow {
+	  font-size:  0.75em;
+	  transition: transform $transition-fast;
+	  }
+
+	&[aria-expanded="true"] .arrow {
+	  transform: rotate(180deg);
+	  }
+	}
+
   .dropdownMenu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: $spacing-xs;
-    background-color: $navbar-background;
-    border: 1px solid $border-warm;
-    border-radius: $border-radius-sm;
-    box-shadow: $shadow-md;
-    min-width: 200px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all $transition-fast;
-    
-    &.open {
-      opacity: 1;
-      visibility: visible;
-      }
-    
-    a {
-      display: block;
-      padding: $spacing-s $spacing-m;
-      color: $navbar-text;
-      text-decoration: none;
-      transition: all $transition-fast;
-      
-      &:hover {
-        color: $navbar-text-active;
-        background-color: color.change($navbar-text-active, $alpha: 0.1);
-        }
-      }
-    }
+	// CSS Anchor Positioning (Chrome 125+, Edge 125+) - 93% browser coverage progressive enhancement
+	position:            absolute;
+	z-index:             ($z-high + 10);
+	min-width:           200px;
+	visibility:          hidden;
+	opacity:             0;
+	transition:          opacity $transition-fast, visibility $transition-fast 0s $transition-fast;
+	border:              1px solid $border-warm;
+	border-radius:       $border-radius-sm;
+	background-color:    $navbar-background;
+	box-shadow:          $shadow-md;
+	
+	// Fallback positioning for non-anchor supporting browsers
+	top:                 calc(100% + #{$spacing-xs});
+	left:                50%;
+	transform:           translateX(-50%);
+
+	// CSS Anchor Positioning for modern browsers (Chrome 125+, Edge 125+)
+	@supports (top: anchor(bottom)) {
+	  position-anchor:   --dropdown-anchor;
+	  top:               anchor(bottom, calc(100% + #{$spacing-xs}));
+	  left:              anchor(center);
+	  transform:         translateX(-50%);
+	  position-try:      flip-block, flip-inline;
+	  }
+
+	&.open {
+	  visibility:       visible;
+	  transition-delay: 0s;
+	  opacity:          1;
+	  }
+
+	a {
+	  display:         block;
+	  padding:         $spacing-s $spacing-m;
+	  transition:      all $transition-fast;
+	  text-decoration: none;
+	  color:           $navbar-text;
+
+	  &:hover {
+		color:            $navbar-text-active;
+		background-color: color.change($navbar-text-active, $alpha: 0.1);
+		}
+	  }
+	}
   }

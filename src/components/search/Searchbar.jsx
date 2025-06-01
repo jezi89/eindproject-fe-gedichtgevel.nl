@@ -1,5 +1,5 @@
 import {useState} from 'react';
-// import styles from './SearchBar.module.css';
+import styles from './SearchBar.module.scss';
 import SearchResults from "./searchResults.jsx";
 // import {searchPoemsGeneral} from "@/services/poetryApi.js";
 

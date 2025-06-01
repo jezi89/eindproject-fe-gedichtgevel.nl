@@ -1,12 +1,12 @@
-@use "@styles/variables" as *;
-@use "@styles/mixins" as *;
-@use "@styles/effects" as *;
-@use "@styles/typography" as *;
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "@/styles/effects" as *;
+@use "@/styles/typography" as *;
 // Add this line to import typography variables
 @use "sass:color"; // Add this line
 
 .button {
-  @include button-base; // Base styles from mixin
+  @include mixins.button-base; // Base styles from mixin
   font-size:     $font-size-m; // Default font size
   width:         auto; // Default width
   padding:       $spacing-s $spacing-m; // Default padding
@@ -17,12 +17,12 @@
   }
 
 .buttonPrimary {
-  @include button-variant($button-primary-background, $button-primary-text);
+  @include mixins.button-variant($button-primary-background, $button-primary-text);
 
   }
 
 .buttonSecondary {
-  @include button-variant($button-secondary-background, $button-secondary-text, $button-secondary-border);
+  @include mixins.button-variant($button-secondary-background, $button-secondary-text, $button-secondary-border);
   }
 
 .buttonTertiary {
@@ -39,11 +39,11 @@
   }
 
 .buttonDanger {
-  @include button-variant($feedback-error, $button-primary-text);
+  @include mixins.button-variant($feedback-error, $button-primary-text);
   }
 
 .buttonSuccess {
-  @include button-variant($feedback-success, $button-primary-text);
+  @include mixins.button-variant($feedback-success, $button-primary-text);
   }
 
 .buttonSmall {

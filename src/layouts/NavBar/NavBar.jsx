@@ -36,7 +36,7 @@ function NavBar() {
                 setIsDropdownOpen(false);
             }
         }
-        
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
@@ -93,98 +93,106 @@ function NavBar() {
                 </Link>
 
                 {/* Desktop navigation wrapper */}
-                <div className={styles.desktopNavWrapper}>
-                    <nav className={styles.navLinks}>
-                        <ul>
-                            <li className={styles.navLink}>
-                                <MainNavLink to="/designgevel">Designgevel</MainNavLink>
-                            </li>
-                            <li className={styles.navLink}>
-                                <MainNavLink to="/spreekgevel">Spreekgevel</MainNavLink>
-                            </li>
-                            <li className={styles.navLink}>
-                                <MainNavLink to="/collectiegevel">Collectiegevel</MainNavLink>
-                            </li>
-                            {/* Account link when logged in */}
-                            {user && (
-                                <li className={styles.navLink}>
-                                    <MainNavLink to="/account">Mijn Account</MainNavLink>
-                                </li>
-                            )}
-                            {/* Dropdown menu */}
-                            <li className={`${styles.navLink} ${styles.dropdown}`} ref={dropdownRef}>
-                                <button 
-                                    className={styles.dropdownToggle}
-                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    aria-expanded={isDropdownOpen}
-                                >
-                                    Meer <span className={styles.arrow}>▼</span>
-                                </button>
-                                <div className={`${styles.dropdownMenu} ${isDropdownOpen ? styles.open : ''}`}>
-                                    <Link to="/hoedan" onClick={() => setIsDropdownOpen(false)}>Hoe dan?</Link>
-                                    <Link to="/voorwaarden" onClick={() => setIsDropdownOpen(false)}>Voorwaarden</Link>
-                                    <Link to="/contact" onClick={() => setIsDropdownOpen(false)}>Over ons</Link>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                    
-                    {/* Desktop auth button */}
-                    <AuthButton />
-                </div>
-
-                {/* Mobile controls */}
-                <div className={styles.mobileControls}>
-                    {/* Mobile auth button - always visible */}
-                    <AuthButton />
-                    
-                    {/* Hamburger menu toggle */}
-                    <button 
-                        className={`${styles.menuToggle} ${isMenuOpen ? styles.isOpen : ''}`} 
-                        onClick={toggleMenu}
-                        aria-label={isMenuOpen ? 'Sluit menu' : 'Open menu'}
-                    >
-                        <span></span>
-                    </button>
-                </div>
-
-                {/* Mobile menu */}
-                <nav className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
-                    <ul>
+                <nav className={styles.desktopNav}> {/* Changed from div, use <nav> for semantics */}
+                    <ul className={styles.navLinks}> {/* This is the <ul> */}
                         <li className={styles.navLink}>
-                            <MainNavLink to="/designgevel" onClick={toggleMenu}>Designgevel</MainNavLink>
+                            <MainNavLink to="/designgevel">Designgevel</MainNavLink>
                         </li>
                         <li className={styles.navLink}>
-                            <MainNavLink to="/spreekgevel" onClick={toggleMenu}>Spreekgevel</MainNavLink>
+                            <MainNavLink to="/spreekgevel">Spreekgevel</MainNavLink>
                         </li>
                         <li className={styles.navLink}>
-                            <MainNavLink to="/collectiegevel" onClick={toggleMenu}>Collectiegevel</MainNavLink>
+                            <MainNavLink to="/collectiegevel">Collectiegevel</MainNavLink>
                         </li>
-                        {/* Account link when logged in */}
                         {user && (
                             <li className={styles.navLink}>
-                                <MainNavLink to="/account" onClick={toggleMenu}>Mijn Account</MainNavLink>
+                                <MainNavLink to="/account">Mijn Account</MainNavLink>
                             </li>
                         )}
-                        {/* Dropdown items in mobile menu */}
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/hoedan" onClick={toggleMenu}>Hoe dan?</MainNavLink>
-                        </li>
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/voorwaarden" onClick={toggleMenu}>Voorwaarden</MainNavLink>
-                        </li>
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/contact" onClick={toggleMenu}>Over ons</MainNavLink>
+                        {/* Dropdown menu */}
+                        <li className={`${styles.navLink} ${styles.dropdown}`} ref={dropdownRef}>
+                            <button
+                                className={styles.dropdownToggle} // This button has anchor-name via SCSS
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                aria-expanded={isDropdownOpen}
+                                aria-controls="meer-dropdown-menu" // Good for accessibility
+                            >
+                                Meer <span className={styles.arrow} aria-hidden="true">▼</span>
+                            </button>
+                            <div
+                                id="meer-dropdown-menu" // For aria-controls
+                                className={`${styles.dropdownMenu} ${isDropdownOpen ? styles.open : ''}`}
+                            >
+                                <Link to="/hoedan" onClick={() => setIsDropdownOpen(false)}>Hoe dan?</Link>
+                                <Link to="/voorwaarden" onClick={() => setIsDropdownOpen(false)}>Voorwaarden</Link>
+                                <Link to="/contact" onClick={() => setIsDropdownOpen(false)}>Over ons</Link>
+                            </div>
                         </li>
                     </ul>
                 </nav>
+
+                {/* Desktop Auth Button Area */}
+                <div className={styles.desktopAuth}>
+                    <AuthButton/> {/* AuthButton component already applies .authButton */}
+                </div>
+
+                {/* Mobile controls: AuthButton and MenuToggle */}
+                <div className={styles.mobileControls}>
+                    <AuthButton/> {/* Mobile Auth Button */}
+                    <button
+                        className={`${styles.menuToggle} ${isMenuOpen ? styles.isOpen : ''}`}
+                        onClick={toggleMenu}
+                        aria-label={isMenuOpen ? 'Sluit menu' : 'Open menu'}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-menu-nav" // Good for accessibility
+                    >
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
-            
+            {/* End of navbarContainer */}
+
+            {/* Mobile menu (ensure it has an id for aria-controls) */}
+            <nav
+                id="mobile-menu-nav"
+                className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}
+                aria-hidden={!isMenuOpen}
+            >
+                <ul>
+                    <li className={styles.navLink}>
+                        <MainNavLink to="/designgevel" onClick={toggleMenu}>Designgevel</MainNavLink>
+                    </li>
+                    <li className={styles.navLink}>
+                        <MainNavLink to="/spreekgevel" onClick={toggleMenu}>Spreekgevel</MainNavLink>
+                    </li>
+                    <li className={styles.navLink}>
+                        <MainNavLink to="/collectiegevel" onClick={toggleMenu}>Collectiegevel</MainNavLink>
+                    </li>
+                    {user && (
+                        <li className={styles.navLink}>
+                            <MainNavLink to="/account" onClick={toggleMenu}>Mijn Account</MainNavLink>
+                        </li>
+                    )}
+                    <li className={styles.navLink}>
+                        <Link to="/hoedan" onClick={toggleMenu}>Hoe dan?</Link>
+                    </li>
+                    <li className={styles.navLink}>
+                        <Link to="/voorwaarden" onClick={toggleMenu}>Voorwaarden</Link>
+                    </li>
+                    <li className={styles.navLink}>
+                        <Link to="/contact" onClick={toggleMenu}>Over ons</Link>
+                    </li>
+                </ul>
+            </nav>
+
             {/* Mobile menu overlay */}
-            <div 
-                className={`${styles.menuOverlay} ${isMenuOpen ? styles.open : ''}`} 
-                onClick={toggleMenu}
-            ></div>
+            {isMenuOpen && ( // Conditionally render overlay or use class for visibility
+                <div
+                    className={`${styles.menuOverlay} ${isMenuOpen ? styles.open : ''}`}
+                    onClick={toggleMenu}
+                    aria-hidden="true"
+                ></div>
+            )}
         </div>
     );
 }

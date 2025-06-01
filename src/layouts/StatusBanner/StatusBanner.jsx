@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {ServicesStatusCard} from '@/components/system/ServicesStatusCard.jsx';
-import styles from './StatusBanner.module.css';
+import styles from './StatusBanner.module.scss';
 
 /**
  * StatusBanner component that acts as a container for ServicesStatusCard

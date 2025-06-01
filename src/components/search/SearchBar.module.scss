@@ -3,11 +3,11 @@
 // Gebruik de gedeelde styles uit de styles folder:
 // 
 // 1. Import de benodigde modules:
-@import "@styles/variables";
+@use "@/styles/variables" as *;
 // Voor kleuren, spacing, breakpoints
-@import "@styles/mixins";
+@use "@/styles/mixins" as mixins;
 // Voor herbruikbare style patronen
-@import "@styles/effects"; // Voor shadows, transitions
+@use "@/styles/effects" as *; // Voor shadows, transitions
 //
 // 2. SearchBar specifieke elementen:
 //    - Search input field
@@ -21,46 +21,23 @@
 //    - Active search state
 //    - No results state
 
-.search-bar {
-  // Main search container
+// CSS Modules uses camelCase for class names in JS
+.searchContainer {
+  // Main search section container
   }
 
-.search-input-wrapper {
-  // Input + buttons container
+.searchBar {
+  // Search input + button wrapper
   }
 
-.search-input {
-  // Search text input
+.searchInput {
+  // Search text input field
   }
 
-.search-icon {
-  // Magnifying glass icon
+.searchButton {
+  // Search submit button
   }
 
-.clear-button {
-  // Clear search button
-  }
-
-.search-suggestions {
-  // Dropdown suggestions
-  }
-
-.suggestion-item {
-  // Individual suggestion
-
-  &:hover {
-	// Hover state
-	}
-
-  &.highlighted {
-	// Keyboard navigation
-	}
-  }
-
-.search-loading {
-  // Loading spinner
-  }
-
-.no-results {
-  // No results message
+.error {
+  // Error message display
   }

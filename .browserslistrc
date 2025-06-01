@@ -1,0 +1,25 @@
+# Browserslist Configuration for Gedichtgevel.nl
+# Targets 93% browser coverage per NFE-33
+# Used by PostCSS Autoprefixer and postcss-preset-env
+
+# Core target: 93% of modern browsers
+last 2 versions and > 7%
+not dead
+
+# Minimum support levels (ensures 93% coverage)
+Chrome >= 90
+Firefox >= 90  
+Safari >= 14
+Edge >= 90
+
+# Modern browsers for CSS Anchor Positioning (progressive enhancement)
+Chrome >= 125
+Edge >= 125
+
+# Explicitly exclude old browsers to maintain 93% target
+not IE 11
+not Chrome < 90
+not Firefox < 90
+not Safari < 14
+not Edge < 90
+not Opera < 76

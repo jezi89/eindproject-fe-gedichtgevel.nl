@@ -14,7 +14,7 @@
  * die de gebruikerservaring verrijken en een coherente visuele hiërarchie creëren.
  */
 
-@use "./variables" as *;
+@use "./variables" as vars;
 
 /* ------------------------------------------------------- 
  * SCHADUWEN
@@ -24,17 +24,17 @@
  */
 
 // Component-specifieke schaduwen
-$shadow-tooltip:        $shadow-md;
-$shadow-modal:          0 10px 20px rgba($neutral-black, 0.3);
-$shadow-dropdown:       0 3px 5px rgba($neutral-black, 0.15);
+$shadow-tooltip:        vars.$shadow-md;
+$shadow-modal:          0 10px 20px rgba(vars.$neutral-black, 0.3);
+$shadow-dropdown:       0 3px 5px rgba(vars.$neutral-black, 0.15);
 
 // Interactieve schaduwen
-$shadow-button-hover:   0 5px 10px rgba($primary-cognac, 0.2);
-$shadow-button-active:  0 2px 3px rgba($primary-cognac, 0.3);
+$shadow-button-hover:   0 5px 10px rgba(vars.$primary-cognac, 0.2);
+$shadow-button-active:  0 2px 3px rgba(vars.$primary-cognac, 0.3);
 
 // Poëzievisualisatie schaduwen
-$shadow-poem-text:      0 2px 4px rgba($accent-gold, 0.25);
-$shadow-poem-container: 0 8px 16px rgba($neutral-black, 0.25);
+$shadow-poem-text:      0 2px 4px rgba(vars.$accent-gold, 0.25);
+$shadow-poem-container: 0 8px 16px rgba(vars.$neutral-black, 0.25);
 
 /* ------------------------------------------------------- 
  * TRANSITIES
@@ -44,12 +44,12 @@ $shadow-poem-container: 0 8px 16px rgba($neutral-black, 0.25);
  */
 
 // Samengestelde transities voor componenten
-$transition-button:     $transition-normal $ease-out;
-$transition-hover:      $transition-fast $ease-default;
-$transition-fade:       opacity $transition-normal $ease-default;
-$transition-transform:  transform $transition-normal $ease-in-out-expo;
-$transition-color:      color $transition-fast $ease-default;
-$transition-background: background-color $transition-normal $ease-default;
+$transition-button:     vars.$transition-normal vars.$ease-out;
+$transition-hover:      vars.$transition-fast vars.$ease-default;
+$transition-fade:       opacity vars.$transition-normal vars.$ease-default;
+$transition-transform:  transform vars.$transition-normal vars.$ease-in-out-expo;
+$transition-color:      color vars.$transition-fast vars.$ease-default;
+$transition-background: background-color vars.$transition-normal vars.$ease-default;
 
 /* ------------------------------------------------------- 
  * ANIMATIES
@@ -131,7 +131,7 @@ $transition-background: background-color $transition-normal $ease-default;
 	} @else if $type == "sepia" {
 	filter: sepia(50%);
 	} @else if $type == "poem-glow" {
-	filter: drop-shadow(0 0 10px rgba($accent-gold, 0.5));
+	filter: drop-shadow(0 0 10px rgba(vars.$accent-gold, 0.5));
 	}
   }
 
@@ -139,12 +139,12 @@ $transition-background: background-color $transition-normal $ease-default;
 @mixin backdrop-filter($effect: "glass") {
   @if $effect == "glass" {
 	backdrop-filter:  blur(8px);
-	background-color: rgba($background-card, 0.6);
+	background-color: rgba(vars.$background-card, 0.6);
 	} @else if $effect == "subtle-glass" {
 	backdrop-filter:  blur(4px);
-	background-color: rgba($background-card, 0.8);
+	background-color: rgba(vars.$background-card, 0.8);
 	} @else if $effect == "dark-glass" {
 	backdrop-filter:  blur(8px) brightness(0.8);
-	background-color: rgba($background-page, 0.7);
+	background-color: rgba(vars.$background-page, 0.7);
 	}
   }
