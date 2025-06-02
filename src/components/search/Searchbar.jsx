@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import styles from './Searchbar.module.scss';
-import SearchResults from "./searchResults.jsx";
+// import SearchResults from "./searchResults.jsx";
 // import {searchPoemsGeneral} from "@/services/poetryApi.js";
 
 /**
@@ -19,44 +19,30 @@ import SearchResults from "./searchResults.jsx";
  * @returns {JSX.Element} Search bar with results display
  */
 
-export function SearchBar() {
+export function SearchBar({onSearch}) {
     const [searchTerm, setSearchTerm] = useState(''); // Current search query
-    const [results, setResults] = useState([]); // Array of search results
-    const [loading, setLoading] = useState(false); // Whether search is in progress
-    const [error, setError] = useState(''); // Error message if search fails
+    // const [results, setResults] = useState([]); // Array of search results
+    // const [loading, setLoading] = useState(false); // Whether search is in progress
+    // const [error, setError] = useState(''); // Error message if search fails
 
+    const cleanSearchTerm = searchTerm.replace(/\s*[^a-zA-Z]\s*|\n|\r/g, ' ').trim(); // Clean search term by removing non-alphabetic characters and line breaks
 
-    // States
-    // - searchTerm: Current search query
-    // - results: Array of search results
-    // - loading: Whether search is in progress
-    // - error: Error message if search fails
+    const handleInputChange = (e) => {
+        const searchValue = e.target.value;
+        setSearchTerm(searchValue);
+    };
 
-    /**
-     * Handles search submission
-     *
-     * @async
-     * @function
-     * @returns {Promise<void>}
-     */
-    async function handleSearch() {
-        // Validate search term
-        // Set loading state
-        // Clear previous results
-        // Perform search API request
-        // Handle success (set results)
-        // Handle errors (set error message)
-        // Reset loading state
-
-        if (!searchTerm.trim()) {
-            setError('Voer een zoekterm in');
-            setResults([]); // Clear results for empty search term
-            return;
+    const handleKeyDown = (e) => {
+        // Handle Enter key to trigger search
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default form submission
+            if (onSearch && searchTerm.trim() !== '') {
+                // Clean search term before sending (remove any line breaks)
+                handleInputChange(); // Trigger search
+                onSearch(cleanSearchTerm); // Clean search term before sending
+            }
         }
-        setLoading(true);
-        setError('');
-        setResults([]); // Clear previous results on new search
-    }
+    };
 
 
     /**
@@ -64,45 +50,50 @@ export function SearchBar() {
      *
      * @param {React.KeyboardEvent} e - Keyboard event
      */
-    function handleKeyPress(e) {
-        // Check for Enter key
-        // Trigger search
-    }
+    const handleSearchClick = () => {
+        // TODO checken of hier nogmaals een regex clean nodig is
+        if (onSearch && searchTerm.trim() !== '') {
+            handleInputChange(); // Trigger search
+            onSearch(cleanSearchTerm); // Clean search term before sending
+        }
+    };
+
 
     return (
-        <section>
-            {/*Search container*/}
+        <div className={styles.searchSection}>
+            {/* Main Search Bar */}
             <div className={styles.searchContainer}>
-                <div className={styles.searchBar}>
-
-                    {/*Search input and button*/}
-                    <input
-                        type="text"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                        placeholder="Zoek op titel en/of auteur..."
-                        className={styles.searchInput}
-                    />
-                    <button
-                        onClick={handleSearch}
-                        className={styles.searchButton}
-                        disabled={loading} // Disable button while loading
-                    >
-                        // Loading indicator
-                        {loading ? 'Zoeken...' : 'Zoek'}
-                    </button>
+                <div className={`${styles.searchBar} ${searchTerm.trim() ? styles.searchBarActive : ''} `}>
+                    {/*${isInputTall ? styles.searchBarTall : ''}*/} // TODO conditional styling voor tall input
+                    <div className={styles.searchInputContainer}>
+                        <textarea
+                            // ref={textareaRef}
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
+                            placeholder="Shakespeare: The Phoenix and Turtle"
+                            className={styles.searchInput}
+                            /*{`${styles.searchInput} ${isInputTall ? styles.searchInputTall : ''}`}*/ // TODO conditional styling voor tall input
+                            aria-label="Zoek naar gedichten"
+                            rows={1}
+                            style={{resize: 'none', overflow: 'hidden'}}
+                        />
+                    </div>
+                    <div className={styles.searchButtonContainer}>
+                        <button
+                            onClick={handleSearchClick}
+                            disabled={!searchTerm.trim()}
+                            className={styles.searchButton}
+                            aria-label="Zoeken"
+                        >
+                            ZOEK
+                        </button>
+                    </div>
                 </div>
-
-                {/*Error message display*/}
-                {error && <p className={styles.error}>{error}</p>}
-                // Search results component
-                {results.length > 0 && <SearchResults results={results}/>}
             </div>
-            );
-        </section>
-
+        </div>
     );
 }
+
 
 export default SearchBar;
