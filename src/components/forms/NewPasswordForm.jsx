@@ -10,7 +10,7 @@ export default function NewPasswordForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
-    const {resetPassword} = useAuth();
+    const {updateUserPasswordAfterReset} = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -39,7 +39,7 @@ export default function NewPasswordForm() {
             return;
         }
 
-        const result = await resetPassword(password);
+        const result = await updateUserPasswordAfterReset(password);
 
         if (result.success) {
             // Redirect to login page after successful password reset

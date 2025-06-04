@@ -10,7 +10,7 @@ export default function PasswordResetForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-    const {requestPasswordReset} = useAuth();
+    const {requestPasswordResetEmail} = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ export default function PasswordResetForm() {
             return;
         }
 
-        const result = await requestPasswordReset(email);
+        const result = await requestPasswordResetEmail(email);
 
         if (result.success) {
             setSuccess(true);
