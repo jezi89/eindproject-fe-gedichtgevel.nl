@@ -21,7 +21,152 @@
 //    - Active search state
 //    - No results state
 
+searchSection {
+  // Main search section container
+  width:   100%;
+  padding: $spacing-m;; // Corrected: Was variables.spacing.md
+  gap:     $spacing-l; // Corrected: Was variables.spacing.lg
+  }
+
+
+/* Zoeken Container - exact Figma CSS */
 .searchContainer {
+  position: relative;
+  width:    100%;
+  height:   100%;
+  }
+
+/* Search Bar - responsive flexbox layout */
+.searchBar {
+  position:    relative; /* Van absolute naar relative */
+  display:     flex;
+  align-items: center;
+  order:       1; /* Tweede in flexbox volgorde (na filter bar) */
+  width:       min(951px, 90vw); /* Responsive width */
+  height:      auto; /* Flexibele hoogte */
+  min-height:  4rem; /* Compacte minimale hoogte */
+  margin:      0 auto; /* Center horizontaal */
+
+  transition:  border-color 0.3s ease;
+  border:      6px solid #943512; // Consider using $primary-cognac variable
+  background:  #F9F4ED; // Consider using $neutral-off-white variable
+  }
+
+/* Active state - blauwe border wanneer er tekst is ingevoerd */
+.searchBarActive {
+  border-color: $secondary-muted; /* #0f4648 - Figma design kleur, using variable */
+  }
+
+/* Tall state - auto-scale voor lange input */
+.searchBarTall {
+  align-items: stretch; /* Stretch items to fill height */
+  height:      auto;
+  min-height:  8rem;
+  padding:     1rem 0; // Consider using $spacing-m for padding
+  }
+
+/* Responsive Design - flexible sizing */
+@media (max-width: 1400px) {
+  .searchBar {
+	width: min(85vw, 800px); /* Flexibele responsive width */
+	}
+
+  .searchInput {
+	font-size: clamp(28px, 4vw, 36px); /* Responsive font size */
+	}
+
+  .searchButton {
+	font-size: clamp(18px, 2vw, 20px);
+	width:     clamp(80px, 8vw, 104px); /* Responsive button width */
+	}
+  }
+
+@media (max-width: 1024px) {
+  .searchBar {
+	width:      min(90vw, 700px);
+	min-height: 3.5rem; /* Flexibele hoogte */
+	}
+
+  .searchInput {
+	font-size: clamp(24px, 4vw, 28px);
+	}
+
+  .searchButton {
+	font-size:  clamp(16px, 2vw, 18px);
+	width:      clamp(70px, 10vw, 80px);
+	min-height: 2.5rem;
+	}
+  }
+
+@media (max-width: 768px) {
+  .searchBar {
+	flex-direction: column;
+	width:          min(95vw, 600px);
+	min-height:     auto;
+	padding:        0.75rem;
+	border-radius:  0.5rem;
+	gap:            0.75rem;
+	}
+
+  .searchInputContainer {
+	margin-left: 0; /* Reset margin voor mobile */
+	padding:     0;
+	}
+
+  .searchInput {
+	font-size:     clamp(16px, 4vw, 20px);
+	line-height:   1.4; /* Better line spacing on mobile */
+	min-height:    3rem;
+	padding:       0.75rem;
+	text-align:    center;
+	border:        1px solid #ccc;
+	border-radius: 0.25rem;
+	}
+
+  .searchInputTall {
+	padding:    0.75rem;
+	text-align: left; /* Left align for better mobile readability */
+	}
+
+  .searchButton {
+	font-size:     clamp(14px, 3vw, 16px);
+	width:         100%;
+	min-height:    3rem;
+	border-radius: 0.25rem;
+	}
+  }
+
+@media (max-width: 480px) {
+  .searchInput {
+	font-size: var(--font-size-base);
+
+	}
+
+  .searchButton {
+
+	font-size: var(--font-size-sm);
+	}
+
+  .searchHistory {
+	padding: var(--spacing-md);
+	}
+
+  .historyItems {
+	justify-content: center;
+	}
+
+  .historyItem {
+	font-size: var(--font-size-xs);
+	padding:   0.4rem 0.8rem;
+	}
+
+  .errorMessage {
+	padding: var(--spacing-md);
+	}
+  }
+
+
+/*.searchContainer {
   // Main search section container
   }
 
@@ -39,7 +184,7 @@
 
 .error {
   // Error message display
-  }
+  }*/
 
 // TODO checken of deze classes nodig zijn
 /*
