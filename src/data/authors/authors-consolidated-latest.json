@@ -1,0 +1,2081 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generated": "2025-06-04T20:28:41.988Z",
+    "sources": [
+      {
+        "name": "poetryDB",
+        "file": "poetryDbAuthors_2025-05-16.js",
+        "count": 129,
+        "lastUpdated": null
+      }
+    ],
+    "totalAuthors": 129
+  },
+  "authors": [
+    {
+      "id": "adam-lindsay-gordon",
+      "name": "Adam Lindsay Gordon",
+      "normalizedName": "adam lindsay gordon",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "alan-seeger",
+      "name": "Alan Seeger",
+      "normalizedName": "alan seeger",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "alexander-pope",
+      "name": "Alexander Pope",
+      "normalizedName": "alexander pope",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "algernon-charles-swinburne",
+      "name": "Algernon Charles Swinburne",
+      "normalizedName": "algernon charles swinburne",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "ambrose-bierce",
+      "name": "Ambrose Bierce",
+      "normalizedName": "ambrose bierce",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "amy-levy",
+      "name": "Amy Levy",
+      "normalizedName": "amy levy",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "andrew-marvell",
+      "name": "Andrew Marvell",
+      "normalizedName": "andrew marvell",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "ann-taylor",
+      "name": "Ann Taylor",
+      "normalizedName": "ann taylor",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "anne-bradstreet",
+      "name": "Anne Bradstreet",
+      "normalizedName": "anne bradstreet",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "anne-bronte",
+      "name": "Anne Bronte",
+      "normalizedName": "anne bronte",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "anne-killigrew",
+      "name": "Anne Killigrew",
+      "normalizedName": "anne killigrew",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "anne-kingsmill-finch",
+      "name": "Anne Kingsmill Finch",
+      "normalizedName": "anne kingsmill finch",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "annie-louisa-walker",
+      "name": "Annie Louisa Walker",
+      "normalizedName": "annie louisa walker",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "arthur-hugh-clough",
+      "name": "Arthur Hugh Clough",
+      "normalizedName": "arthur hugh clough",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "ben-jonson",
+      "name": "Ben Jonson",
+      "normalizedName": "ben jonson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "charles-kingsley",
+      "name": "Charles Kingsley",
+      "normalizedName": "charles kingsley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "charles-sorley",
+      "name": "Charles Sorley",
+      "normalizedName": "charles sorley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "charlotte-bronte",
+      "name": "Charlotte Bronte",
+      "normalizedName": "charlotte bronte",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "charlotte-smith",
+      "name": "Charlotte Smith",
+      "normalizedName": "charlotte smith",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "christina-rossetti",
+      "name": "Christina Rossetti",
+      "normalizedName": "christina rossetti",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "christopher-marlowe",
+      "name": "Christopher Marlowe",
+      "normalizedName": "christopher marlowe",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "christopher-smart",
+      "name": "Christopher Smart",
+      "normalizedName": "christopher smart",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "coventry-patmore",
+      "name": "Coventry Patmore",
+      "normalizedName": "coventry patmore",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edgar-allan-poe",
+      "name": "Edgar Allan Poe",
+      "normalizedName": "edgar allan poe",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edmund-spenser",
+      "name": "Edmund Spenser",
+      "normalizedName": "edmund spenser",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edward-fitzgerald",
+      "name": "Edward Fitzgerald",
+      "normalizedName": "edward fitzgerald",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edward-lear",
+      "name": "Edward Lear",
+      "normalizedName": "edward lear",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edward-taylor",
+      "name": "Edward Taylor",
+      "normalizedName": "edward taylor",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "edward-thomas",
+      "name": "Edward Thomas",
+      "normalizedName": "edward thomas",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "eliza-cook",
+      "name": "Eliza Cook",
+      "normalizedName": "eliza cook",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "elizabeth-barrett-browning",
+      "name": "Elizabeth Barrett Browning",
+      "normalizedName": "elizabeth barrett browning",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "emily-bronte",
+      "name": "Emily Bronte",
+      "normalizedName": "emily bronte",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "emily-dickinson",
+      "name": "Emily Dickinson",
+      "normalizedName": "emily dickinson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "emma-lazarus",
+      "name": "Emma Lazarus",
+      "normalizedName": "emma lazarus",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "ernest-dowson",
+      "name": "Ernest Dowson",
+      "normalizedName": "ernest dowson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "eugene-field",
+      "name": "Eugene Field",
+      "normalizedName": "eugene field",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "francis-thompson",
+      "name": "Francis Thompson",
+      "normalizedName": "francis thompson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "geoffrey-chaucer",
+      "name": "Geoffrey Chaucer",
+      "normalizedName": "geoffrey chaucer",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "george-eliot",
+      "name": "George Eliot",
+      "normalizedName": "george eliot",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "george-gordon-lord-byron",
+      "name": "George Gordon, Lord Byron",
+      "normalizedName": "george gordon, lord byron",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "george-herbert",
+      "name": "George Herbert",
+      "normalizedName": "george herbert",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "george-meredith",
+      "name": "George Meredith",
+      "normalizedName": "george meredith",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "gerard-manley-hopkins",
+      "name": "Gerard Manley Hopkins",
+      "normalizedName": "gerard manley hopkins",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "helen-hunt-jackson",
+      "name": "Helen Hunt Jackson",
+      "normalizedName": "helen hunt jackson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "henry-david-thoreau",
+      "name": "Henry David Thoreau",
+      "normalizedName": "henry david thoreau",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "henry-vaughan",
+      "name": "Henry Vaughan",
+      "normalizedName": "henry vaughan",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "henry-wadsworth-longfellow",
+      "name": "Henry Wadsworth Longfellow",
+      "normalizedName": "henry wadsworth longfellow",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "hugh-henry-brackenridge",
+      "name": "Hugh Henry Brackenridge",
+      "normalizedName": "hugh henry brackenridge",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "isaac-watts",
+      "name": "Isaac Watts",
+      "normalizedName": "isaac watts",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "james-henry-leigh-hunt",
+      "name": "James Henry Leigh Hunt",
+      "normalizedName": "james henry leigh hunt",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "james-thomson",
+      "name": "James Thomson",
+      "normalizedName": "james thomson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "james-whitcomb-riley",
+      "name": "James Whitcomb Riley",
+      "normalizedName": "james whitcomb riley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "jane-austen",
+      "name": "Jane Austen",
+      "normalizedName": "jane austen",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "jane-taylor",
+      "name": "Jane Taylor",
+      "normalizedName": "jane taylor",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-clare",
+      "name": "John Clare",
+      "normalizedName": "john clare",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-donne",
+      "name": "John Donne",
+      "normalizedName": "john donne",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-dryden",
+      "name": "John Dryden",
+      "normalizedName": "john dryden",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-greenleaf-whittier",
+      "name": "John Greenleaf Whittier",
+      "normalizedName": "john greenleaf whittier",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-keats",
+      "name": "John Keats",
+      "normalizedName": "john keats",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-mccrae",
+      "name": "John McCrae",
+      "normalizedName": "john mccrae",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-milton",
+      "name": "John Milton",
+      "normalizedName": "john milton",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-trumbull",
+      "name": "John Trumbull",
+      "normalizedName": "john trumbull",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "john-wilmot",
+      "name": "John Wilmot",
+      "normalizedName": "john wilmot",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "jonathan-swift",
+      "name": "Jonathan Swift",
+      "normalizedName": "jonathan swift",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "joseph-warton",
+      "name": "Joseph Warton",
+      "normalizedName": "joseph warton",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "joyce-kilmer",
+      "name": "Joyce Kilmer",
+      "normalizedName": "joyce kilmer",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "julia-ward-howe",
+      "name": "Julia Ward Howe",
+      "normalizedName": "julia ward howe",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "jupiter-hammon",
+      "name": "Jupiter Hammon",
+      "normalizedName": "jupiter hammon",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "katherine-philips",
+      "name": "Katherine Philips",
+      "normalizedName": "katherine philips",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "lady-mary-chudleigh",
+      "name": "Lady Mary Chudleigh",
+      "normalizedName": "lady mary chudleigh",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "lewis-carroll",
+      "name": "Lewis Carroll",
+      "normalizedName": "lewis carroll",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "lord-alfred-tennyson",
+      "name": "Lord Alfred Tennyson",
+      "normalizedName": "lord alfred tennyson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "louisa-may-alcott",
+      "name": "Louisa May Alcott",
+      "normalizedName": "louisa may alcott",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "major-henry-livingston-jr",
+      "name": "Major Henry Livingston, Jr.",
+      "normalizedName": "major henry livingston, jr.",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "mark-twain",
+      "name": "Mark Twain",
+      "normalizedName": "mark twain",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "mary-elizabeth-coleridge",
+      "name": "Mary Elizabeth Coleridge",
+      "normalizedName": "mary elizabeth coleridge",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "matthew-arnold",
+      "name": "Matthew Arnold",
+      "normalizedName": "matthew arnold",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "matthew-prior",
+      "name": "Matthew Prior",
+      "normalizedName": "matthew prior",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "michael-drayton",
+      "name": "Michael Drayton",
+      "normalizedName": "michael drayton",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "oliver-goldsmith",
+      "name": "Oliver Goldsmith",
+      "normalizedName": "oliver goldsmith",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "oliver-wendell-holmes",
+      "name": "Oliver Wendell Holmes",
+      "normalizedName": "oliver wendell holmes",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "oscar-wilde",
+      "name": "Oscar Wilde",
+      "normalizedName": "oscar wilde",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "paul-laurence-dunbar",
+      "name": "Paul Laurence Dunbar",
+      "normalizedName": "paul laurence dunbar",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "percy-bysshe-shelley",
+      "name": "Percy Bysshe Shelley",
+      "normalizedName": "percy bysshe shelley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "philip-freneau",
+      "name": "Philip Freneau",
+      "normalizedName": "philip freneau",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "phillis-wheatley",
+      "name": "Phillis Wheatley",
+      "normalizedName": "phillis wheatley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "ralph-waldo-emerson",
+      "name": "Ralph Waldo Emerson",
+      "normalizedName": "ralph waldo emerson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "richard-crashaw",
+      "name": "Richard Crashaw",
+      "normalizedName": "richard crashaw",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "richard-lovelace",
+      "name": "Richard Lovelace",
+      "normalizedName": "richard lovelace",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robert-browning",
+      "name": "Robert Browning",
+      "normalizedName": "robert browning",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robert-burns",
+      "name": "Robert Burns",
+      "normalizedName": "robert burns",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robert-herrick",
+      "name": "Robert Herrick",
+      "normalizedName": "robert herrick",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robert-louis-stevenson",
+      "name": "Robert Louis Stevenson",
+      "normalizedName": "robert louis stevenson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robert-southey",
+      "name": "Robert Southey",
+      "normalizedName": "robert southey",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "robinson",
+      "name": "Robinson",
+      "normalizedName": "robinson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "rupert-brooke",
+      "name": "Rupert Brooke",
+      "normalizedName": "rupert brooke",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "samuel-coleridge",
+      "name": "Samuel Coleridge",
+      "normalizedName": "samuel coleridge",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "samuel-johnson",
+      "name": "Samuel Johnson",
+      "normalizedName": "samuel johnson",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sarah-flower-adams",
+      "name": "Sarah Flower Adams",
+      "normalizedName": "sarah flower adams",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sidney-lanier",
+      "name": "Sidney Lanier",
+      "normalizedName": "sidney lanier",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sir-john-suckling",
+      "name": "Sir John Suckling",
+      "normalizedName": "sir john suckling",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sir-philip-sidney",
+      "name": "Sir Philip Sidney",
+      "normalizedName": "sir philip sidney",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sir-thomas-wyatt",
+      "name": "Sir Thomas Wyatt",
+      "normalizedName": "sir thomas wyatt",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sir-walter-raleigh",
+      "name": "Sir Walter Raleigh",
+      "normalizedName": "sir walter raleigh",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "sir-walter-scott",
+      "name": "Sir Walter Scott",
+      "normalizedName": "sir walter scott",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "stephen-crane",
+      "name": "Stephen Crane",
+      "normalizedName": "stephen crane",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-campbell",
+      "name": "Thomas Campbell",
+      "normalizedName": "thomas campbell",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-chatterton",
+      "name": "Thomas Chatterton",
+      "normalizedName": "thomas chatterton",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-flatman",
+      "name": "Thomas Flatman",
+      "normalizedName": "thomas flatman",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-gray",
+      "name": "Thomas Gray",
+      "normalizedName": "thomas gray",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-hood",
+      "name": "Thomas Hood",
+      "normalizedName": "thomas hood",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-moore",
+      "name": "Thomas Moore",
+      "normalizedName": "thomas moore",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "thomas-warton",
+      "name": "Thomas Warton",
+      "normalizedName": "thomas warton",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "walt-whitman",
+      "name": "Walt Whitman",
+      "normalizedName": "walt whitman",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "walter-savage-landor",
+      "name": "Walter Savage Landor",
+      "normalizedName": "walter savage landor",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "wilfred-owen",
+      "name": "Wilfred Owen",
+      "normalizedName": "wilfred owen",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-allingham",
+      "name": "William Allingham",
+      "normalizedName": "william allingham",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-barnes",
+      "name": "William Barnes",
+      "normalizedName": "william barnes",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-blake",
+      "name": "William Blake",
+      "normalizedName": "william blake",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-browne",
+      "name": "William Browne",
+      "normalizedName": "william browne",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-cowper",
+      "name": "William Cowper",
+      "normalizedName": "william cowper",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-cullen-bryant",
+      "name": "William Cullen Bryant",
+      "normalizedName": "william cullen bryant",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-ernest-henley",
+      "name": "William Ernest Henley",
+      "normalizedName": "william ernest henley",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-lisle-bowles",
+      "name": "William Lisle Bowles",
+      "normalizedName": "william lisle bowles",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-morris",
+      "name": "William Morris",
+      "normalizedName": "william morris",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-shakespeare",
+      "name": "William Shakespeare",
+      "normalizedName": "william shakespeare",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-topaz-mcgonagall",
+      "name": "William Topaz McGonagall",
+      "normalizedName": "william topaz mcgonagall",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-vaughn-moody",
+      "name": "William Vaughn Moody",
+      "normalizedName": "william vaughn moody",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    },
+    {
+      "id": "william-wordsworth",
+      "name": "William Wordsworth",
+      "normalizedName": "william wordsworth",
+      "sources": [
+        "poetryDB"
+      ],
+      "metadata": {
+        "hasPoems": true,
+        "aliases": [],
+        "birthYear": null,
+        "deathYear": null,
+        "nationality": null,
+        "wikipediaUrl": null
+      }
+    }
+  ]
+}

@@ -1,10 +1,19 @@
-import {useCallback, useMemo, useState} from "react";
+import {useState, useCallback, useMemo} from 'react';
+import {searchPoemsGeneral} from '../services/poetryApi.js';
+
+/**
+ * Clean search hook without redundant operations
+ * - Single source of truth for search term cleaning
+ * - No redundant trim operations
+ * - Simple caching mechanism
+ */
 
 export function useSearchPoems() {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState('[]');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [searchHistory, setSearchHistory] = useState([]);
 
 
 // TODO Checken hoe de cache precies werkt in de context van deze hook
@@ -13,12 +22,18 @@ export function useSearchPoems() {
 
     const [cache] = useState(new Map());
 
-    const clearResults = useCallback(async (term = searchTerm) => {
-        //clean once st the beginning by trimming the search term
+    const clearResults = useCallback(async () => {
+        setResults([]);
+        setError('');
+    }, []);
+
+    const handleSearch = useCallback(async (term = searchTerm) => {
+        // TODO Checken war de trim nu plaatsvind
         if (!term) {
             setError('Voer een zoekterm in');
-            setResults([]);
+            clearResults();
             return;
+
         }
 
         // Check cache first
