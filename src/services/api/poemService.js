@@ -3,29 +3,21 @@
 // Service voor interactie met PoetryDB API en lokale poëziedatabase via Supabase
 // ==========================================================================
 
-
 /**
- * poemService.js
- * Basis API services voor het ophalen van gedichten.
+ * PoetryDB API Service Module
+ *
  * Verantwoordelijkheden:
  * - API-interacties met PoetryDB (externe gedichtendatabase)
  * - Integratie met Supabase voor gebruikersgedichten
  * - Gecombineerde zoekopdrachten over beide databronnen
  * - Error handling en transformatie van resultaten
- *
- * @description Basic API services for retrieving poems.
- * @module poemService
  */
 
 import {poetryDbApi} from './axios'; // Import voor de geconfigureerde axios instantie
 
-/**
- * Haalt gedichten op van PoetryDB op basis van een veld en zoekterm.
- *
- * @param {string} query - De zoekterm.
- * @param {string} field - Het veld waarop gezocht moet worden ('title', 'author', etc.).
- * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
- */
+// ==========================================================================
+// SECTIE 1: BASIS API-FUNCTIES (INTERNE HELPERS)
+// ==========================================================================
 
 async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
     try {
@@ -51,85 +43,82 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
 /**
  * Cache duration in seconds
  */
+
+// TODO Checken of deze chaching tijd bepaling  nu door Dexie kan worden gedaan of dat we dit nog zelf moeten implementeren
 const CACHE_DURATION = 3600; // 1 hour
 
-/**
- * Helper function to format a title for API requests
- *
- * @param {string} title Title to format
- * @returns {string} Formatted title
- */
-function formatTitle(title) {
-    // Implementation
-    // - Trim and encode title for URL
-}
+
+// ==========================================================================
+// SECTIE 2: EXPORTEERBARE API-FUNCTIES (PUBLIEKE INTERFACE)
+// ==========================================================================
+
 
 /**
- * Helper function to format an author for API requests
+ * Haalt één specifiek gedicht op basis van exacte titel en auteur.
  *
- * @param {string} author Author to format
- * @returns {string} Formatted author
+ * @param {string} title - De exacte titel van het gedicht.
+ * @param {string} author - De exacte auteur van het gedicht.
+ * @returns {Promise<object|null>} - Het gevonden gedicht of null bij niet gevonden.
  */
-function formatAuthor(author) {
-    // Implementation
-    // - Trim and encode author for URL
-}
+
+// TODO nog implementeren
 
 /**
- * Zoek gedichten op basis van titel.
+ * Zoekt gedichten op basis van titel, met gecombineerde resultaten uit Supabase en PoetryDB.
  *
- * @description Search poems by title.
- * @param {string} title De titel om op te zoeken.
- * @returns {Promise<Array<object>>} Een array van gevonden gedichten.
+ * @param {string} title - De titel om op te zoeken.
+ * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
  */
-export async function searchPoemsByTitle(title) {
-    // Implementation
-    // - Check if title is empty
-    // - Format title for API
-    // - Check cache
-    // - Make API request
-    // - Handle response
-    // - Cache results
-    // - Handle errors
-}
+
+// Implementation
+// - Check if title is empty
+// - Format title for API
+// - Check cache
+// - Make API request
+// - Handle response
+// - Cache results
+// - Handle errors
+
+// TODO nog implementeren
 
 /**
- * Zoek gedichten op basis van auteur.
+ * Zoekt gedichten op basis van auteur, met gecombineerde resultaten uit Supabase en PoetryDB.
  *
- * @description Search poems by author.
- * @param {string} author De auteur om op te zoeken.
- * @returns {Promise<Array<object>>} Een array van gevonden gedichten.
+ * @param {string} author - De auteur om op te zoeken.
+ * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
  */
-export async function searchPoemsByAuthor(author) {
-    // Implementation
-    // - Check if author is empty
-    // - Format author for API
-    // - Check cache
-    // - Make API request
-    // - Handle response
-    // - Cache results
-    // - Handle errors
-}
+
+// Implementation
+// - Check if author is empty
+// - Format author for API
+// - Check cache
+// - Make API request
+// - Handle response
+// - Cache results
+// - Handle errors
+
+// TODO nog implementeren
 
 /**
- * Haal gedichten op die overeenkomen met zowel auteur als titel
+ * Zoekt gedichten op basis van zowel auteur als titel.
+ * Combineert resultaten uit Supabase en PoetryDB.
  *
- * @description Fetch poems that match both author and title
- * @param {string} author Author to search for
- * @param {string} title Title to search for
- * @returns {Promise<Array<object>>} Array of matching poems
+ * @param {string} author - De auteur om op te zoeken.
+ * @param {string} title - De titel om op te zoeken.
+ * @returns {Promise<Array<object>>} - Een array van unieke gedichten die aan beide criteria voldoen.
  */
-export async function fetchPoemsFromPoetryDBByAuthorAndTitle(author, title) {
-    // Implementation
-    // - Check if author or title is empty
-    // - Format author and title for API
-    // - Create cache key
-    // - Check cache
-    // - Make API request
-    // - Handle response
-    // - Cache results
-    // - Handle errors
-}
+
+// Implementation
+// - Check if author or title is empty
+// - Format author and title for API
+// - Create cache key
+// - Check cache
+// - Make API request
+// - Handle response
+// - Cache results
+// - Handle errors
+
+// TODO nog implementeren
 
 /**
  * Haalt willekeurige gedichten op
@@ -138,7 +127,7 @@ export async function fetchPoemsFromPoetryDBByAuthorAndTitle(author, title) {
  * @param {number} count Number of poems to fetch (default: 5)
  * @returns {Promise<Array<object>>} Array of random poems
  */
-export async function fetchRandomPoems(count = 5) {
+/*export async function fetchRandomPoems(count = 5) {
     // Implementation
     // - Create cache key
     // - Use shorter cache duration for random poems
@@ -147,7 +136,36 @@ export async function fetchRandomPoems(count = 5) {
     // - Handle response
     // - Cache results
     // - Handle errors
-}
+}*/
+
+// TODO nog implementeren
+
+
+// ==========================================================================
+// SECTIE 3: HULPFUNCTIES
+// ==========================================================================
+
+// TODO Implementeren en checken of deze niet in de utlility map moeten komen.
+
+/**
+ * Verwijdert duplicaten uit een array van gedichten op basis van titel+auteur combinatie.
+ *
+ * @param {Array<object>} poems - Array van gedichten mogelijk met duplicaten.
+ * @returns {Array<object>} - Array van unieke gedichten.
+ */
+
+
+// ==========================================================================
+// SECTIE 4: EXPORT VOOR PUBLIEKE API
+// ==========================================================================
+
+
+export {
+    fetchPoemsFromPoetryDBByTitle,
+    fetchPoemsFromPoetryDBByAuthor,
+    fetchPoemsFromPoetryDBByAuthorAndTitle
+};
+
 
 // TODO: Toekomstige functionaliteit
 // - Implementatie van full-text zoeken in gedichtenregels
