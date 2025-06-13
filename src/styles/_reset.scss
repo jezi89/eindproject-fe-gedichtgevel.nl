@@ -7,6 +7,22 @@
  * @exports Basis CSS reset/normalize regels
  */
 
+/*
+✅ Good Parts of the Reset
+
+1. Universal box-sizing: Line 26-28 correctly sets box-sizing: border-box for all elements
+2. Comprehensive margin/padding reset: Removes default spacing from all common elements
+3. Text rendering optimization: Improves font display across browsers
+4. Media elements: Makes images and videos responsive by default
+5. Form normalization: Ensures consistent form styling across browsers
+6. HTML5 element support: Proper display for semantic elements
+
+ 🔧 For the Horizontal Scrollbar Issue
+
+ Since you already have box-sizing: border-box in your reset, we should remove the individual box-sizing declarations I was adding and instead focus on the
+actual cause of the horizontal scrollbar.
+*/
+
 /* ======================================================= 
  * CSS RESET
  * ======================================================= 
