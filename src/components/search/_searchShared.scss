@@ -1,0 +1,13 @@
+// Alleen variabelen, mixins, en placeholders
+$search-radius:  8px;
+$search-spacing: 16px;
+
+@mixin search-shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+// Placeholder selectors (worden niet gecompileerd tenzij extended)
+%search-base {
+  transition:    all 0.2s;
+  border-radius: $search-radius;
+  }
