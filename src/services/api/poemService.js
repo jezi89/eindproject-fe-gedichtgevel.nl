@@ -14,6 +14,7 @@
  */
 
 import {poetryDbApi} from './axios'; // Import voor de geconfigureerde axios instantie
+import apiCacheService from '../cache/apiCacheService'; // Import enhanced cache service
 
 // ==========================================================================
 // SECTIE 1: BASIS API-FUNCTIES (INTERNE HELPERS)
@@ -41,12 +42,51 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
 }
 
 /**
- * Cache duration in seconds
+ * Haalt gedichten op van PoetryDB op basis van titel.
+ *
+ * @param {string} titleQuery - De titel om op te zoeken.
+ * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
+ */
+async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
+    return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
+}
+
+
+/**
+ * Haalt gedichten op van PoetryDB op basis van auteur.
+ *
+ * @param {string} authorQuery - De auteur om op te zoeken.
+ * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
+ */
+async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
+    return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
+}
+
+/**
+ * Haalt gedichten op van PoetryDB die overeenkomen met zowel auteur als titel.
+ * Gebruikt de AND operator van PoetryDB API.
+ *
+ * @param {string} authorTerm - De auteur om op te zoeken.
+ * @param {string} titleTerm - De titel om op te zoeken.
+ * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
  */
 
-// TODO Checken of deze chaching tijd bepaling  nu door Dexie kan worden gedaan of dat we dit nog zelf moeten implementeren
+
+// TODO Checken of deze caching tijd bepaling  nu door Dexie kan worden gedaan of dat we dit nog zelf moeten implementeren
+/**
+ * Cache duration in seconds
+ */
 const CACHE_DURATION = 3600; // 1 hour
 
+
+/**
+ * Haalt overeenkomstige titel/auteur combinaties op uit Supabase.
+ *
+ * @param {string} query - De zoekterm.
+ * @param {string} field - Het veld waarop gezocht moet worden ('title' of 'author').
+ * @returns {Promise<Array<{title: string, author: string}>>} - Array van titel/auteur combinaties.
+ */
+// TODO nog implementeren
 
 // ==========================================================================
 // SECTIE 2: EXPORTEERBARE API-FUNCTIES (PUBLIEKE INTERFACE)
@@ -163,7 +203,7 @@ const CACHE_DURATION = 3600; // 1 hour
 export {
     fetchPoemsFromPoetryDBByTitle,
     fetchPoemsFromPoetryDBByAuthor,
-    fetchPoemsFromPoetryDBByAuthorAndTitle
+
 };
 
 
