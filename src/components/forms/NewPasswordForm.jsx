@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
-import {useAuth} from '@/hooks/useAuth.js';
+import {useAuth} from '@/hooks/auth/useAuth.js';
 import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
 import FormField from './FormField';
 import styles from './forms.module.scss';
