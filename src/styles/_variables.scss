@@ -47,53 +47,56 @@ Van vlamrood naar oceaangroen,
 Tot zachte tinten die ons werk begroet'n. */
 
 // --- PRIMAIRE KLEUREN ---
-$primary-cognac:                      #943512;
-$primary-flame:                       #e35712;
-$primary-dark:                        #3b1608;
-$primary-darker:                      #68270d;
-$primary-muted:                       #953813;
-$primary-light:                       #c24919;
-$primary-lighter:                     #e3602b;
-$primary-vibrant:                     #e35712;
+$primary-cognac:                      #943512; // primary-cognac
+$primary-flame:                       #e35712; // primary-flame
+$primary-dark:                        #3b1608; // primary-100
+$primary-darker:                      #68270d; // primary-200
+$primary-muted:                       #953813; // primary-300
+$primary-light:                       #c24919; // primary-400
+$primary-lighter:                     #e3602b; // primary-500
+$primary-vibrant:                     #e35712; // primary-flame
 
 // --- SECUNDAIRE KLEUREN ---
-$secondary-carribean-current:         #156064;
-$secondary-dark:                      #061d1e;
-$secondary-muted:                     #0f4648;
-$secondary-light:                     #156366;
-$secondary-lighter:                   #1b8083;
-$secondary-vibrant:                   #219da1;
-$secondary-brightest:                 #29c2c7;
-$secondary-pale:                      #62dbdf;
-$secondary-pastel:                    #b3edef;
+$secondary-carribean-current:         #156064; // secondary-carribean-current
+$secondary-dark:                      #061d1e; // secondary-100
+$secondary-muted:                     #0f4648; // secondary-300
+$secondary-light:                     #156366; // secondary-400
+$secondary-lighter:                   #1b8083; // secondary-500
+$secondary-vibrant:                   #219da1; // secondary-600
+$secondary-brightest:                 #29c2c7; // secondary-700
+$secondary-pale:                      #62dbdf; // secondary-800
+$secondary-pastel:                    #b3edef; // secondary-900
 
 // --- NEUTRAL KLEUREN ---
-$neutral-white:                       #ffffff;
-$neutral-off-white:                   #f9f4ed;
-$neutral-cream:                       #fff5e1;
-$neutral-light:                       #efefef;
-$neutral-mid:                         #5f6477;
-$neutral-mid-light:                   #dadce2;
-$neutral-mid-dark:                    #747990;
-$neutral-dark:                        #4d5061;
-$neutral-darker:                      #2b2d36;
-$neutral-warm-grey:                   #a99489;
-$neutral-black:                       #000000;
-$neutral-soft-black:                  #141204;
-$neutral-rich-black:                  #2b140b;
+$neutral-white:                       #ffffff; // white
+$neutral-off-white:                   #f9f4ed; // white-smoke
+$neutral-cream:                       #fff5e1; // half-dutch-white
+$neutral-light:                       #efefef; // porcelain
+$neutral-mid:                         #5f6477; // grey-500
+$neutral-mid-light:                   #dadce2; // grey-900
+$neutral-mid-dark:                    #747990; // grey-600
+$neutral-dark:                        #4d5061; // davey-grey
+$neutral-darker:                      #2b2d36; // grey-200
+$neutral-warm-grey:                   #a99489; // dusty-grey
+$neutral-black:                       #000000; // night
+$neutral-soft-black:                  #141204; // smoky-black
+$neutral-rich-black:                  #2b140b; // zinnwaldite-brown
+$neutral-grey-figma:                  #C4C4C4; // Added: Specific grey from Figma design (SearchProgress)
+$neutral-dark-brown-figma:            #5D3A29; // Added: Dark brown color from Figma overview (SearchResults)
 
 // --- ACCENT KLEUREN ---
-$accent-gold:                         #d09a47;
+$accent-gold:                         #d09a47; // camel
 $accent-brown:                        #856d61;
-$accent-sage:                         #c8e9a0;
-$accent-moss:                         #ccd698;
-$accent-greyish:                      #b2b5c2;
+$accent-sage:                         #c8e9a0; // light-sage
+$accent-moss:                         #ccd698; // green-mist
+$accent-greyish:                      #b2b5c2; // grey-800
+$accent-golden-highlight:             #E6B17A; // Added: Golden highlight color from Figma (SearchResults)
 
 // --- FEEDBACK KLEUREN ---
-$feedback-success:                    #28a745;
-$feedback-warning:                    #ffc107;
-$feedback-error:                      #dc3545;
-$feedback-info:                       #17a2b8;
+$feedback-success:                    #28a745; // apple
+$feedback-warning:                    #ffc107; // mikado-yellow
+$feedback-error:                      #dc3545; // amaranth
+$feedback-info:                       #17a2b8; // pacific-blue
 
 // --- EFFECTEN (SHADOWS & OVERLAYS) ---
 $shadow-light:                        rgba(0, 0, 0, 0.15);
@@ -206,16 +209,21 @@ $font-family-footer:                  "Bitter", serif;
 $font-family-callout-heading:         "Work Sans", sans-serif;
 $font-family-searchbar:               "Work Sans", sans-serif;
 $font-family-bigger-body-special:     "Quilty", serif;
+$font-family-monospace:               "Courier New", monospace; // Added: Monospace font stack
 
 // --- FONT SIZES ---
+$font-size-xxxs:                      0.75rem; // Added: 12px extra extra small size
 $font-size-xxs:                       0.875rem; // 14px
 $font-size-xs:                        0.9375rem; // 15px
 $font-size-s:                         1rem; // 16px
+$font-size-sm-md:                     1.125rem; // Added: 18px intermediate font size
 $font-size-m:                         1.25rem; // 20px
 $font-size-l:                         1.5rem; // 24px
 $font-size-xl:                        2rem; // 32px
 $font-size-xxl:                       2.25rem; // 36px
 $font-size-xxxl:                      3rem; // 48px
+$font-size-4xl:                       4rem; // Added: for large icons/text
+$font-size-5xl:                       5rem; // Added: for very large icons/text
 
 // --- FONT WEIGHTS ---
 $font-weight-regular:                 400;
@@ -227,6 +235,11 @@ $font-weight-regular-italic:          400;
 $font-weight-bold-italic:             500;
 
 // --- LINE HEIGHTS ---
+$line-height-tight:                   1.1; // Added: unitless tight line height
+$line-height-snug:                    1.2; // Added: unitless snug line height
+$line-height-normal-plus:             1.4; // Added: unitless slightly more than normal line height
+$line-height-normal-unitless:         1.5; // Added: unitless normal line height
+$line-height-relaxed:                 1.6; // Added: unitless relaxed line height
 $line-height-normal:                  1.5rem; // 24px
 $line-height-bigger:                  2.8125rem; // 45px
 $line-height-dislectic:               2.5rem; // 40px
@@ -317,6 +330,19 @@ $width-medium-poem-showcase:          35.625rem; // 570px
 $height-medium-poem-showcase:         28.5rem; // 456px
 $width-small-poem-showcase:           34.375rem; // 550px
 $height-small-poem-showcase:          27.5rem; // 440px
+$height-progress-container:           25rem; // Added: 400px min height for progress container (SearchProgress)
+$width-error-container:               31.25rem; // Added: 500px max width for error container (SearchProgress)
+$height-max-error-stack:              12.5rem; // Added: 200px max height for error stack (SearchProgress)
+$size-loading-spinner:                12.5rem; // Added: 200px size for loading spinner (SearchProgress)
+$height-min-text-area:                7.5rem; // Added: 120px min height for text areas (SearchResults)
+$size-icon-container:                 1.125rem; // Added: 18px size for icon containers (SearchResults)
+$size-icon:                           1rem; // Added: 16px size for icons (SearchResults)
+$height-min-button:                   2.5rem; // Added: 40px min height for buttons (SearchResults)
+$height-min-card-header-mobile:       6.25rem; // Added: 100px min height for card header on mobile (SearchResults)
+$size-overview-circle:                12.5rem; // Added: 200px size for overview circle (SearchResults)
+$width-overview-lines:                3.75rem; // Added: 60px width for overview lines (SearchResults)
+$width-min-toast:                     11.25rem; // Added: 180px min-width for toast message (SearchResults)
+$width-max-toast:                     16.25rem; // Added: 260px max-width for toast message (SearchResults)
 
 // --- SPACING ---
 $spacing-xxs:                         0.25rem; // 4px
@@ -344,6 +370,8 @@ $border-radius-pill:                  9999px;
 $border-width-thin:                   1px;
 $border-width-regular:                2px;
 $border-width-thick:                  4px;
+$border-width-custom-thick:           3px; // Added: custom thick border/line (SearchResults)
+$border-width-extrathick:             8px; // Added: for extra thick borders (SearchProgress)
 
 // Spacing Variables $spacing-xxxs: 0.125rem; // 2px $spacing-xxs: 0.25rem; // 4px $spacing-xs: 0.5rem; // 8px $spacing-sm: 0.75rem; // 12px $spacing-md: 1rem; // 16px $spacing-lg: 1.5rem; // 24px $spacing-xl: 2rem; // 32px $spacing-xxl: 3rem; // 48px $spacing-xxxl: 4rem; // 64px
 

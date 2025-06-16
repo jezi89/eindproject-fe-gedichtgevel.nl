@@ -5,10 +5,12 @@ This directory contains React Context providers and consumers for managing appli
 ## Authentication Context
 
 ### /auth/AuthContext.jsx
+
 - Defines the authentication context and associated hook
 - Provides default values and type definitions
 
 ### /auth/AuthProvider.jsx
+
 - Implements the authentication provider with Supabase
 - Manages user sessions, login, registration, and logout
 - Handles authentication state changes
@@ -18,20 +20,20 @@ This directory contains React Context providers and consumers for managing appli
 The context implementation follows these principles:
 
 1. **Separation of Definition and Implementation**:
-   - Context definitions are separate from their providers
-   - This allows for easier testing and mocking
+    - Context definitions are separate from their providers
+    - This allows for easier testing and mocking
 
 2. **Custom Hooks for Consumption**:
-   - Each context has an associated custom hook (e.g., `useAuthContext`)
-   - Provides type safety and error checking for context consumption
+    - Each context has an associated custom hook (e.g., `useAuthContext`)
+    - Provides type safety and error checking for context consumption
 
 3. **Error Handling**:
-   - Contexts include error states and handling
-   - Proper error propagation and user feedback
+    - Contexts include error states and handling
+    - Proper error propagation and user feedback
 
 4. **Performance Optimization**:
-   - Contexts are designed to minimize unnecessary re-renders
-   - State is properly memoized where needed
+    - Contexts are designed to minimize unnecessary re-renders
+    - State is properly memoized where needed
 
 ## Usage Examples
 
@@ -39,21 +41,21 @@ The context implementation follows these principles:
 
 ```jsx
 // In a component:
-import { useAuth } from '../hooks/useAuth';
+import {useAuth} from './useAuth';
 
 function ProfilePage() {
-  const { user, loading, error, signOut } = useAuth();
+    const {user, loading, error, signOut} = useAuth();
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorMessage message={error} />;
-  if (!user) return <Redirect to="/login" />;
+    if (loading) return <LoadingSpinner/>;
+    if (error) return <ErrorMessage message={error}/>;
+    if (!user) return <Redirect to="/login"/>;
 
-  return (
-    <div>
-      <h1>Welcome, {user.email}</h1>
-      <button onClick={signOut}>Log Out</button>
-    </div>
-  );
+    return (
+        <div>
+            <h1>Welcome, {user.email}</h1>
+            <button onClick={signOut}>Log Out</button>
+        </div>
+    );
 }
 ```
 
