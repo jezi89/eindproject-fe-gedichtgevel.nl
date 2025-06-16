@@ -8,8 +8,8 @@
  */
 
 import {useNavigate, Link} from 'react-router';
-import {useAuth} from '../../hooks/useAuth';
-import useAuthForm from '../../hooks/useAuthForm';
+import {useAuth} from '../../hooks/auth/useAuth.js';
+import useAuthForm from '../../hooks/auth/useAuthForm.js';
 import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
 import FormField from '@/components/forms/FormField.jsx';
 import {useNavigationState, usePrefilledEmail} from "@/hooks/useNavigationState.js";

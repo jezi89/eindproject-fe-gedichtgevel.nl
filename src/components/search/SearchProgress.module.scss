@@ -1,0 +1,303 @@
+/**
+ * SearchProgress SCSS - Loading and Error State Styling
+ * Consolidated from SearchErrorBoundary and SearchLoadingState
+ */
+
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+// ==============================================
+// SHARED PROGRESS CONTAINER STYLES
+// ==============================================
+
+%progressContainer {
+  @include flex-center;
+  min-height:       $height-progress-container; // Was 400px
+  background-color: $secondary-100;
+  }
+
+// ==============================================
+// ERROR BOUNDARY STYLES
+// ==============================================
+
+.errorBoundary {
+  @extend %progressContainer;
+  padding: $spacing-xxl $spacing-xl;
+  }
+
+.errorContainer {
+  max-width:        $width-error-container; // Was 500px
+  padding:          $spacing-xl;
+  text-align:       center;
+  border:           $border-width-regular solid rgba($amaranth, 0.3); // Was 2px
+  border-radius:    $border-radius-xl;
+  background-color: rgba($amaranth, 0.1);
+  backdrop-filter:  blur(10px);
+  }
+
+.errorIcon {
+  font-size:     $font-size-4xl; // Was 4rem
+  display:       block;
+  margin-bottom: $spacing-m; // Was $spacing-md
+  }
+
+.errorTitle {
+  font-family: $font-family-section-heading; // Was $font-family-primary
+  font-size:   $font-size-xxl;
+  font-weight: $font-weight-bold; // Was 700
+  margin:      0 0 $spacing-m 0; // Was $spacing-md
+  color:       $neutral-light; // Was $porcelain
+  }
+
+.errorMessage {
+  font-family: $font-family-body; // Was $font-family-secondary
+  font-size:   $font-size-s;
+  line-height: $line-height-normal-unitless; // Was 1.5
+  margin:      0 0 $spacing-xl 0;
+  color:       rgba($neutral-light, 0.8); // Was $porcelain
+  }
+
+.errorActions {
+  display:         flex;
+  flex-wrap:       wrap;
+  justify-content: center;
+  gap:             $spacing-m; // Was $spacing-md
+  }
+
+.retryButton,
+.reloadButton {
+  @include button-base;
+  font-family:   $font-family-button; // Was $font-family-primary
+  font-weight:   $font-weight-semibold; // Was 600
+  padding:       $spacing-s $spacing-l; // Was 0.75rem
+  border-radius: $border-radius-md;
+  }
+
+.retryButton {
+  color:            $neutral-off-white; // Was $white-medium
+  background-color: $primary-lighter; // Was $primary-500
+
+  &:hover:not(:disabled) {
+	transform:        translateY(-1px);
+	background-color: $primary-light; // Was $primary-400
+	}
+  }
+
+.reloadButton {
+  color:            $neutral-light; // Was $porcelain
+  border:           $border-width-regular solid $neutral-light; // Was 2px, $porcelain
+  background-color: transparent;
+
+  &:hover:not(:disabled) {
+	color:            $secondary-dark; // Was $secondary-100
+	background-color: $neutral-light; // Was $porcelain
+	}
+  }
+
+.errorDetails {
+  margin-top:       $spacing-xl;
+  padding:          $spacing-m; // Was $spacing-md
+  text-align:       left;
+  border-radius:    $border-radius-md;
+  background-color: rgba($neutral-darker, 0.1); // Was $grey-200
+
+  summary {
+	font-family:   $font-family-section-heading; // Was $font-family-primary
+	font-weight:   $font-weight-semibold; // Was 600
+	margin-bottom: $spacing-s; // Was $spacing-sm
+	cursor:        pointer;
+	color:         $neutral-light; // Was $porcelain
+
+	&:hover {
+	  color: $primary-lighter; // Was $primary-500
+	  }
+	}
+  }
+
+.errorStack {
+  font-family:      $font-family-monospace; // Was "Courier New", monospace
+  font-size:        $font-size-xs;
+  overflow-x:       auto;
+  overflow-y:       auto;
+  max-height:       $height-max-error-stack; // Was 200px
+  margin:           0;
+  padding:          $spacing-s; // Was $spacing-sm
+  white-space:      pre-wrap;
+  color:            rgba($neutral-light, 0.7); // Was $porcelain
+  border-radius:    $border-radius-sm;
+  background-color: rgba($neutral-darker, 0.5); // Was $grey-100 (assuming $grey-100 is darker than $grey-200)
+  }
+
+// ==============================================
+// LOADING STATE STYLES
+// ==============================================
+
+.loadingContainer {
+  @extend %progressContainer;
+  position:       relative;
+  flex-direction: column;
+  width:          $width-medium-poem-showcase; // Exact Figma width
+  height:         $height-medium-poem-showcase; // Exact Figma height
+  margin:         0 auto;
+  background:     $neutral-grey-figma; // Was #C4C4C4; Exact Figma grey background
+  }
+
+.loadingSpinner {
+  position:      relative;
+  width:         $size-loading-spinner; // Was 200px; Exact Figma width
+  height:        $size-loading-spinner; // Was 200px; Exact Figma height
+  margin-bottom: 0;
+  }
+
+.spinnerRing {
+  position:      relative;
+  width:         100%;
+  height:        100%;
+  animation:     spin 1.5s linear infinite;
+  border:        $border-width-extrathick solid rgba($neutral-white, 0.3); // Was 8px, $white
+  border-top:    $border-width-extrathick solid $primary-lighter; // Was $primary-500; Primary orange from Figma #e3602b
+  border-right:  $border-width-extrathick solid $secondary-carribean-current; // Was 8px; Teal accent from Figma #156064
+  border-radius: $border-radius-pill; // Was $border-radius-full
+
+  // Center circle with image icon
+  &::before {
+	position:         absolute;
+	top:              50%;
+	left:             50%;
+	width:            $spacing-xxxl; // Was 64px
+	height:           $spacing-xxxl; // Was 64px
+	content:          "";
+	transform:        translate(-50%, -50%);
+	border-radius:    $border-radius-pill; // Was $border-radius-full
+	background-color: $neutral-white; // Was $white
+	@include flex-center;
+	}
+
+  // Mountain/Image icon in center - matching Figma
+  &::after {
+	font-size: $font-size-xl; // Was 32px
+	position:  absolute;
+	z-index:   2;
+	top:       50%;
+	left:      50%;
+	content:   "🏔️";
+	transform: translate(-50%, -50%);
+	}
+  }
+
+.loadingText {
+  display: none; // Hidden to match Figma exactly
+  }
+
+@keyframes spin {
+  0% {
+	transform: rotate(0deg);
+	}
+  100% {
+	transform: rotate(360deg);
+	}
+  }
+
+// ==============================================
+// RESPONSIVE DESIGN
+// ==============================================
+
+@include respond-to("tablet") {
+  .loadingContainer {
+	max-width: 90%;
+	height:    $height-progress-container; // Was 400px
+	}
+
+  .loadingSpinner {
+	width:  100px; // No direct variable, keeping specific for now or could add $size-loading-spinner-tablet
+	height: 100px; // No direct variable
+	}
+
+  .spinnerRing {
+	border-width: 6px; // No direct variable, could add $border-width-large: 6px;
+
+	&::before {
+	  width:  50px; // No direct variable
+	  height: 50px; // No direct variable
+	  }
+
+	&::after {
+	  font-size: $font-size-l; // Was 24px
+	  }
+	}
+  }
+
+@include respond-to("mobile") {
+  .errorBoundary {
+	min-height: 300px; // No direct variable
+	padding:    $spacing-xl $spacing-m; // Was $spacing-md
+	}
+
+  .errorContainer {
+	padding: $spacing-l; // Was $spacing-lg
+	}
+
+  .errorIcon {
+	font-size: $font-size-5xl;
+	}
+
+  .errorTitle {
+	font-size: $font-size-xl;
+	}
+
+  .errorActions {
+	flex-direction: column;
+	gap:            $spacing-s;
+	}
+
+  .retryButton,
+  .reloadButton {
+	width: 100%;
+	}
+
+  .loadingContainer {
+	height: 300px; // No direct variable
+	margin: $spacing-l $spacing-m; // Was $spacing-lg $spacing-md
+	}
+
+  .loadingSpinner {
+	width:  80px; // No direct variable
+	height: 80px; // No direct variable
+	}
+
+  .spinnerRing {
+	border-width: $spacing-xxs; // Was 4px
+
+	&::before {
+	  width:  40px; // No direct variable, $height-min-button
+	  height: 40px; // No direct variable, $height-min-button
+	  }
+
+	&::after {
+	  font-size: $font-size-m; // Was 20px
+	  }
+	}
+  }
+
+@media (max-width: 480px) {
+  .loadingContainer {
+	height: 250px; // No direct variable
+	}
+
+  .loadingSpinner {
+	width:  60px; // No direct variable
+	height: 60px; // No direct variable
+	}
+
+  .spinnerRing {
+	&::before {
+	  width:  30px; // No direct variable
+	  height: 30px; // No direct variable
+	  }
+
+	&::after {
+	  font-size: $font-size-s; // Was 16px
+	  }
+	}
+  }

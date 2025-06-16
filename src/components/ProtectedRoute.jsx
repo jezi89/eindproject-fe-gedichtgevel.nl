@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {Navigate, useLocation} from 'react-router';
-import {useAuth} from '@/hooks/useAuth.js';
+import {useAuth} from '@/hooks/auth/useAuth.js';
 
 //
 /**
