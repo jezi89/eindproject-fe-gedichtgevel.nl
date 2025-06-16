@@ -1,5 +1,5 @@
 import apiCacheService from '@/services/cache/apiCacheService.js';
-import searchCacheService from '@/services/cache/searchCacheService';
+import searchCacheService from '@/services/cache/searchCacheService.js';
 
 /**
  * Cache Utilities

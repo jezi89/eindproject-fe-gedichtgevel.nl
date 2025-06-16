@@ -1,4 +1,7 @@
+// TODO Util nakijken en checken hoe cleanSearchInput gebruikt wordt in SearchResults
+
 export function cleanSearchInput(searchTerm) {
+
     // Bewaar de originele zoekterm voor vergelijking
     const originalSearchTerm = searchTerm;
 

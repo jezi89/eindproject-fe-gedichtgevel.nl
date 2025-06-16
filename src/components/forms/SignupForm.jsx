@@ -9,11 +9,11 @@
 
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router";
-import useAuthForm from "@/hooks/useAuthForm.js";
+import useAuthForm from "@/hooks/auth/useAuthForm.js";
 import FormField from "@/components/forms/FormField.jsx";
 import {SubmitButton} from "@/components/ui/button/ActionButton.jsx"; // Correct import
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx"; // For cancel button
-import {useAuth} from "@/hooks/useAuth.js";
+import {useAuth} from "@/hooks/auth/useAuth.js";
 import styles from './forms.module.scss';
 
 /**

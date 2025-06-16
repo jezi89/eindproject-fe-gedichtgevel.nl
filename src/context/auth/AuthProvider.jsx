@@ -22,7 +22,7 @@
  */
 
 import AuthContext from './AuthContext';
-import {useSupabaseAuth} from '../../hooks/useSupabaseAuth';
+import {useSupabaseAuth} from '../../hooks/auth/useSupabaseAuth.js';
 
 /**
  * @component

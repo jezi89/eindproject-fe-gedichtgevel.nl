@@ -1,13 +1,304 @@
-// Alleen variabelen, mixins, en placeholders
-$search-radius:  8px;
-$search-spacing: 16px;
+/**
+ * Search Shared SCSS - Common patterns and utilities for search components
+ * Extracted from SearchResults, SearchBar, and other search components
+ */
 
-@mixin search-shadow {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+// TODO Checken of we niet dubbele button styling hebben, aangezien we ook buttons stylen in ui map.
+
+// ==============================================
+// SHARED CONTAINER PATTERNS
+// ==============================================
+
+%search-section-base {
+  width:            100%;
+  background-color: transparent;
+  container-type:   inline-size;
   }
 
-// Placeholder selectors (worden niet gecompileerd tenzij extended)
-%search-base {
-  transition:    all 0.2s;
-  border-radius: $search-radius;
+%search-centered-container {
+  @include flex-center;
+  flex-direction: column;
+  width:          100%;
+  }
+
+%search-responsive-width {
+  width:  min(90vw, 600px);
+  margin: 0 auto;
+  }
+
+// ==============================================
+// SHARED CARD PATTERNS
+// ==============================================
+
+%search-card-base {
+  transition:       all $transition-normal;
+  border-radius:    $border-radius-lg;
+  background-color: $neutral-off-white; // Was $white-medium
+  box-shadow:       $shadow-md;
+  }
+
+%search-card-hover {
+  transform:  translateY(-2px);
+  box-shadow: $shadow-lg;
+  }
+
+// ==============================================
+// SHARED BUTTON PATTERNS
+// ==============================================
+
+%search-button-base {
+  @include button-base;
+  font-family:   $font-family-button;
+  font-weight:   $font-weight-semibold; // Was 600
+  transition:    all $transition-normal;
+  border-radius: $border-radius-md;
+  }
+
+%search-button-primary {
+  @extend %search-button-base;
+  color:            $neutral-off-white;
+  background-color: $primary-lighter;
+
+  &:hover:not(:disabled) {
+	transform:        translateY(-1px);
+	background-color: $primary-light;
+	}
+  }
+
+%search-button-secondary {
+  @extend %search-button-base;
+  color:            $secondary-light;
+  border:           $border-width-regular solid $secondary-muted; // Was 2px
+  background-color: transparent;
+
+  &:hover:not(:disabled) {
+	border-color:     $secondary-light;
+	background-color: rgba($secondary-muted, 0.1);
+	}
+  }
+
+// ==============================================
+// SHARED LAYOUT MIXINS
+// ==============================================
+
+@mixin search-container($padding: $spacing-xl) {
+  @extend %search-section-base;
+  @extend %search-centered-container;
+  padding: $padding 0;
+  gap:     $spacing-xl;
+  }
+
+@mixin search-card($hover: true) {
+  @extend %search-card-base;
+
+  @if $hover {
+	&:hover {
+	  @extend %search-card-hover;
+	  }
+	}
+  }
+
+@mixin search-responsive-grid($columns: 3, $gap: $spacing-l) {
+  display:               grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap:                   $gap;
+  width:                 100%;
+
+  @include media-down($screen-lg) { // Vervangt @include respond-to("tablet") (was max-width: 1024px, nu max-width: $screen-lg - 1px = 991px)
+	grid-template-columns: repeat(min($columns, 2), 1fr);
+	}
+
+  @include media-down($screen-md) { // Vervangt @include respond-to("mobile") (was max-width: 768px, nu max-width: $screen-md - 1px = 767px)
+	grid-template-columns: 1fr;
+	}
+  }
+
+// ==============================================
+// SHARED ANIMATION PATTERNS
+// ==============================================
+
+@mixin search-fade-in($delay: 0s) {
+  animation: searchFadeIn $transition-normal ease-out $delay;
+  }
+
+@mixin search-slide-in($direction: "up", $delay: 0s) {
+  @if $direction == "up" {
+	animation: searchSlideInUp $transition-normal ease-out $delay;
+	} @else if $direction == "down" {
+	animation: searchSlideInDown $transition-normal ease-out $delay;
+	} @else if $direction == "left" {
+	animation: searchSlideInLeft $transition-normal ease-out $delay;
+	} @else if $direction == "right" {
+	animation: searchSlideInRight $transition-normal ease-out $delay;
+	}
+  }
+
+@mixin search-expand-animation {
+  animation: searchExpand $transition-slow ease-out;
+  }
+
+// ==============================================
+// SHARED KEYFRAMES
+// ==============================================
+
+@keyframes searchFadeIn {
+  from {
+	opacity: 0;
+	}
+  to {
+	opacity: 1;
+	}
+  }
+
+@keyframes searchSlideInUp {
+  from {
+	opacity:   0;
+	transform: translateY(20px);
+	}
+  to {
+	opacity:   1;
+	transform: translateY(0);
+	}
+  }
+
+@keyframes searchSlideInDown {
+  from {
+	opacity:   0;
+	transform: translateY(-20px);
+	}
+  to {
+	opacity:   1;
+	transform: translateY(0);
+	}
+  }
+
+@keyframes searchSlideInLeft {
+  from {
+	opacity:   0;
+	transform: translateX(-20px);
+	}
+  to {
+	opacity:   1;
+	transform: translateX(0);
+	}
+  }
+
+@keyframes searchSlideInRight {
+  from {
+	opacity:   0;
+	transform: translateX(20px);
+	}
+  to {
+	opacity:   1;
+	transform: translateX(0);
+	}
+  }
+
+@keyframes searchExpand {
+  from {
+	max-height: 0;
+	opacity:    0;
+	}
+  to {
+	max-height: 1000px;
+	opacity:    1;
+	}
+  }
+
+// ==============================================
+// SHARED TEXT PATTERNS
+// ==============================================
+
+%search-title {
+  font-family: $font-family-section-heading;
+  font-size:   $font-size-xl;
+  font-weight: $font-weight-bold; // Was 700
+  color:       $secondary-light;
+  }
+
+%search-subtitle {
+  font-family: $font-family-body;
+  font-size:   $font-size-s;
+  font-weight: $font-weight-regular; // Was 500
+  color:       $neutral-mid-dark;
+  }
+
+%search-body {
+  font-family: $font-family-body;
+  font-size:   $font-size-xs;
+  line-height: $line-height-relaxed; // Was 1.6
+  color:       $neutral-dark; // Was $grey-700 / $neutral-mid-dark
+  }
+
+// ==============================================
+// SHARED SPACING UTILITIES
+// ==============================================
+
+.search-spacing {
+  &-xs { gap: $spacing-xs; }
+
+  &-sm { gap: $spacing-s; }
+
+  // Was $spacing-sm
+
+  &-md { gap: $spacing-m; }
+
+  // Was $spacing-md
+
+  &-lg { gap: $spacing-l; }
+
+  // Was $spacing-lg
+
+  &-xl { gap: $spacing-xl; }
+
+  &-2xl { gap: $spacing-xxl; }
+
+  // Was $spacing-2xl
+  }
+
+.search-padding {
+  &-xs { padding: $spacing-xs; }
+
+  &-sm { padding: $spacing-s; }
+
+  // Was $spacing-sm
+
+  &-md { padding: $spacing-m; }
+
+  // Was $spacing-md
+
+  &-lg { padding: $spacing-l; }
+
+  // Was $spacing-lg
+
+  &-xl { padding: $spacing-xl; }
+
+  &-2xl { padding: $spacing-xxl; }
+
+  // Was $spacing-2xl
+  }
+
+.search-margin {
+  &-xs { margin: $spacing-xs; }
+
+  &-sm { margin: $spacing-s; }
+
+  // Was $spacing-sm
+
+  &-md { margin: $spacing-m; }
+
+  // Was $spacing-md
+
+  &-lg { margin: $spacing-l; }
+
+  // Was $spacing-lg
+
+  &-xl { margin: $spacing-xl; }
+
+  &-2xl { margin: $spacing-xxl; }
+
+  // Was $spacing-2xl
   }

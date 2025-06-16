@@ -12,7 +12,7 @@ import {Link} from "react-router";
 import MainNavLink from "./MainNavLink.jsx";
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 import styles from "./NavBar.module.scss"
-import {useAuth} from "@/hooks/useAuth.js";
+import {useAuth} from "@/hooks/auth/useAuth.js";
 
 /**
  * NavBar component for main site navigation

@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router';
-import {useAuth} from '../../hooks/useAuth.js';
+import {useAuth} from '../../hooks/auth/useAuth.js';
 import NewPasswordForm from '../../components/forms/NewPasswordForm.jsx';
 import '../../layouts/_auth-layout.scss';
 
