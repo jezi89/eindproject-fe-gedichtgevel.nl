@@ -13,24 +13,22 @@
   flex-direction:   column;
   justify-content:  center; // Added for proper vertical centering
   width:            100%;
-  padding:          $spacing-s 0; // Was spacing-sm
+  padding:          $spacing-s 0;
   background-color: transparent; // Inherit from parent
-  gap:              $spacing-s; // Was spacing-sm
+  gap:              $spacing-s;
   container-type:   inline-size;
   container-name:   search-results;
 
   // Compacte spacing voor canvas mode
   &.canvasMode {
 	padding: $spacing-xs 0;
-	gap:     $spacing-s; // Was spacing-sm
+	gap:     $spacing-s;
 
 	.resultsList {
-	  gap: $spacing-m; // Was spacing-md
-	  }
+	  gap: $spacing-m; }
 
 	.resultCard {
-	  margin-bottom: $spacing-s; // Was spacing-sm
-	  }
+	  margin-bottom: $spacing-s; }
 	}
   }
 
@@ -40,14 +38,12 @@
   box-sizing:    border-box;
   width:         100%;
   margin-bottom: $spacing-s; // Was spacing-sm (Reduced from md to sm)
-  padding:       0 $spacing-m; // Was spacing-md
-  }
+  padding:       0 $spacing-m; }
 
 .globalToggleButton {
   @include flex-center;
   font-family:      $font-family-nav-item; // Was $font-family-primary
-  font-size:        $font-size-s; // Was $font-size-sm
-  font-weight:      $font-weight-semibold; // Was 600
+  font-size:        $font-size-s; font-weight: $font-weight-semibold; // Was 600
   padding:          $spacing-s $spacing-l; // Was $spacing-sm $spacing-lg
   cursor:           pointer;
   transition:       all $transition-normal;
@@ -55,7 +51,7 @@
   border:           $border-width-regular solid $neutral-off-white; // Was 2px, $white-medium
   border-radius:    $border-radius-sm;
   background-color: $secondary-carribean-current;
-  gap:              $spacing-s; // Was spacing-sm
+  gap:              $spacing-s;
 
   &:hover {
 	transform:        translateY(-1px);
@@ -70,8 +66,8 @@
 	}
 
   &[aria-expanded="true"] {
-	border-color:     $apple;
-	background-color: $apple;
+	border-color:     $feedback-success;
+	background-color: $feedback-success;
 	}
   }
 
@@ -139,7 +135,7 @@
   justify-content:  center;
   height:           $height-min-text-area; // Was 120px;
   padding:          $spacing-xl;
-  padding-bottom:   $spacing-lg;
+  padding-bottom:   $spacing-l;
   text-align:       center;
   border-bottom:    1px solid rgba($neutral-mid, 0.2); // Was $grey-500
   background-color: $neutral-cream; // Was $half-dutch-white;
@@ -223,8 +219,7 @@
 // Ellipsis section - clean separation from preview
 .ellipsisSection {
   flex-shrink: 0;
-  margin:      $spacing-s 0; // Was spacing-sm
-  text-align:  center;
+  margin:      $spacing-s 0; text-align: center;
   }
 
 .previewEllipsis {
@@ -265,6 +260,54 @@
   height:         auto; // Allow natural height
   min-height:     fit-content;
   padding-top:    $spacing-xs; // Was $spacing-sm; // 8px - matches height calculation
+  padding-bottom: $spacing-m; // Space for separator
+  }
+
+// Visual separator at bottom of expanded content
+.poemSeparator {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           100%;
+  margin-top:      $spacing-m;
+  margin-bottom:   $spacing-s;
+  padding:         $spacing-s 0;
+  cursor:          default;
+  gap:             $spacing-s;
+  // Prevent layout shift
+  contain:         layout;
+
+  .separatorDingbat {
+	font-size:   1.2rem;
+	line-height: 1;
+	display:     inline-block;
+	width:       1.2em;
+	height:      1.2em;
+	// Use will-change for performance
+	transition:  color $transition-normal, opacity $transition-normal;
+	// Fixed dimensions to prevent shift
+	transform:   rotate(90deg);
+	text-align:  center;
+	opacity:     0.5;
+	color:       $neutral-mid; // Softer, more subtle color
+	will-change: opacity;
+
+	&:nth-child(2) {
+	  opacity: 0.7; // Middle slightly more visible
+	  // No scale transform to prevent shift
+	  }
+
+	&:nth-child(3) {
+	  opacity: 0.5;
+	  }
+	}
+
+  // Subtle hover effect without layout shift
+  &:hover .separatorDingbat {
+	opacity: 0.8; // Not fully opaque, more subtle
+	color:   $primary-light; // Softer cognac shade
+	// No transform changes on hover
+	}
   }
 
 // Button container - used for expand button in ellipsis section
@@ -274,16 +317,13 @@
   flex-shrink:     0;
   justify-content: center;
   width:           100%;
-  margin-top:      $spacing-m; // Was spacing-md
-  padding-top:     $spacing-m; // Was spacing-md
-  border-top:      1px solid rgba($neutral-mid, 0.1); // Was $grey-500
+  margin-top:      $spacing-m; padding-top: $spacing-m; border-top: 1px solid rgba($neutral-mid, 0.1); // Was $grey-500
   gap:             $spacing-s; // Was spacing-sm;
   }
 
 // Collapse button - naturally positioned within expanded content
 .collapseButton {
-  margin-top:       $spacing-m; // Was spacing-md
-  background-color: color.adjust($primary-cognac, $lightness: -5%); // Darker for collapse action
+  margin-top: $spacing-m; background-color: color.adjust($primary-cognac, $lightness: -5%); // Darker for collapse action
   // Positioned naturally at end of expanded content flow
   }
 
@@ -299,7 +339,7 @@
 	margin:        0 0 $spacing-xs 0; // Was 0.5rem
 	padding:       0;
 	word-wrap:     break-word;
-	color:         $neutral-soft-black; // Was $smoky-black; // Same dark color as poemTitle
+	color:         $text-primary;
 	overflow-wrap: break-word;
 	}
   }
@@ -324,9 +364,7 @@
   align-items:     center;
   flex-shrink:     0;
   justify-content: space-between;
-  margin-top:      $spacing-m; // Was spacing-md
-  padding-top:     $spacing-m; // Was spacing-md
-  border-top:      $border-width-thin solid $accent-greyish; // Was $grey-800
+  margin-top:      $spacing-m; padding-top: $spacing-m; border-top: $border-width-thin solid $accent-greyish; // Was $grey-800
   gap:             $spacing-s; // Was spacing-sm;
   }
 
@@ -368,12 +406,11 @@
 
 .expandButton {
   @include button-base;
-  font-size:        $font-size-s; // Was $font-size-sm
-  font-weight:      $font-weight-semibold; // Was 600;
+  font-size:        $font-size-s; font-weight: $font-weight-semibold; // Was 600;
   position:         relative;
   z-index:          1;
   min-height:       $height-min-button; // Was 40px;
-  padding:          $spacing-sm $spacing-lg;
+  padding:          $spacing-s $spacing-l;
   transition:       all $transition-fast;
   color:            $neutral-white; // Was $white;
   border:           $border-width-regular solid transparent; // Was 2px
@@ -401,9 +438,7 @@
   align-items:     center;
   justify-content: center;
   width:           100%;
-  margin-top:      $spacing-m; // Was spacing-md
-  gap:             $spacing-m; // Was spacing-md
-
+  margin-top:      $spacing-m; gap: $spacing-m;
   @include respond-to("mobile") {
 	flex-direction: column;
 	gap:            $spacing-s; // Was spacing-sm;
@@ -601,7 +636,7 @@
 
   .navButton {
 	@include button-base;
-	font-size:        $font-size-lg;
+	font-size:        $font-size-l;
 	width:            $height-min-button; // Was 40px;
 	height:           $height-min-button; // Was 40px;
 	color:            $neutral-white; // Was $white;
@@ -645,8 +680,8 @@
 // Mobile-specific improvements
 @include respond-to("mobile") {
   .searchResultsSection {
-	padding: $spacing-l 0; // Was $spacing-lg
-	gap:     $spacing-l; // Was $spacing-lg
+	padding: $spacing-l 0;
+	gap:     $spacing-l;
 	}
 
   .globalToggleContainer {
@@ -665,7 +700,7 @@
   .cardHeader {
 	height:     auto;
 	min-height: $height-min-card-header-mobile; // Was 100px;
-	padding:    $spacing-m; // Was spacing-md
+	padding:    $spacing-m;
 
 	.poemTitle {
 	  font-size: $font-size-s; // Was 16px;
@@ -677,8 +712,7 @@
 	}
 
   .poemContent {
-	padding: $spacing-m; // Was spacing-md
-	}
+	padding: $spacing-m; }
 
   .poemText {
 	font-size:   $font-size-xxs; // Was 14px;
@@ -724,7 +758,7 @@
   flex-direction: column;
   width:          100%;
   padding:        0 $spacing-s; // Was $spacing-sm
-  gap:            $spacing-l; // Was $spacing-lg
+  gap:            $spacing-l;
   }
 
 // poemAuthor and poemTitle are already defined in the cardHeader section above
@@ -877,8 +911,7 @@
   display:         flex;
   align-items:     center;
   justify-content: center;
-  margin-top:      $spacing-m; // Was spacing-md
-  gap:             $spacing-xs;
+  margin-top:      $spacing-m; gap: $spacing-xs;
   }
 
 // Animation classes
@@ -918,12 +951,12 @@
   flex-direction: column;
   padding:        $spacing-xxl; // Was $spacing-2xl
   text-align:     center;
-  color:          $amaranth;
+  color:          $feedback-error;
   gap:            $spacing-m; // Was spacing-md;
 
   .errorIcon {
 	font-size:     $font-size-4xl;
-	margin-bottom: $spacing-md;
+	margin-bottom: $spacing-m;
 	}
 
   .errorMessage {
@@ -960,7 +993,7 @@
   justify-content:  center;
   width:            fit-content; // Alleen zo breed als nodig
   margin:           0 auto $spacing-xs auto; // Horizontaal gecentreerd
-  padding:          $spacing-xs $spacing-sm;
+  padding:          $spacing-xs $spacing-s;
   cursor:           pointer;
   transition:       all $transition-fast;
   color:            $neutral-soft-black; // Was $smoky-black
@@ -976,8 +1009,7 @@
 	}
 
   .focusIcon {
-	font-size: $font-size-s; // Was $font-size-sm
-	}
+	font-size: $font-size-s; }
   }
 
 
@@ -1005,10 +1037,9 @@
 // Toast hint for double-click functionality (overlay version)
 .doubleClickToastInline {
   // Absolute positioning within card - overlaps button area
-  font-size:       $font-size-s; // Was $font-size-sm
-  font-weight:     $font-weight-semibold; // Was 600;
+  font-size:       $font-size-s; font-weight: $font-weight-semibold; // Was 600;
   position:        absolute;
-  z-index:         $z-toast; // Was 10; Ensure it appears above buttons
+  z-index:         $z-toast; // Ensure it appears above buttons
 
   // Responsive sizing optimized for button overlap
   bottom:          $spacing-xxs; // Was 4px; // Overlap the button area
