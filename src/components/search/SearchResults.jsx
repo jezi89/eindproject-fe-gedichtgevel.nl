@@ -11,7 +11,7 @@ import {motion, LayoutGroup} from 'framer-motion';
 import styles from './SearchResults.module.scss';
 // import carrouselDots from './carrouselDots';
 import carrouselArrows from './CarrouselArrows';
-import SearchResultItem from './SearchResultItem';
+import PoemResultItem from '../poem/SearchResultItem.jsx';
 import ResultsOverview from './ResultsOverview';
 import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
 
@@ -80,7 +80,8 @@ const SearchResults = memo(({
                 </div>
             )}
 
-            {/* Focus Studio Button - alleen als we niet al in focus mode zijn en NIET in canvas mode */}
+            {/* Focus Studio Button - should only show when not in Focus Studio, currently also checking if we are using CanvasMode */}
+            {/*// TODO Checken of check of we in CanvasMode zijn overbodig is*/}
             {!focusMode && onOpenFocusStudio && searchTerm && !canvasMode && (
 
                 <div
@@ -96,7 +97,8 @@ const SearchResults = memo(({
                     </button>
                 </div>
             )}
-            {/* Global Expand/Collapse Toggle - alleen bij expandable gedichten en NIET in canvas/focus mode */}
+            {/* Global Expand/Collapse Toggle - only for expandable poems and NOT in canvas/focus mode */}
+            {/*// TODO Checken of CanvasMode Check nodig is en hoe de orchestration hier precies werkt*/}
             {updatedLayout.hasMultiple && !canvasMode && !focusMode && orchestration.getGlobalToggleState().totalCount > 0 && (
                 <div
                     className={styles.globalToggleContainer}
@@ -132,7 +134,8 @@ const SearchResults = memo(({
                 </div>
             )}
 
-            {/* carrousel dots indicator voor 4+ gedichten - alleen op homepage (niet in focus mode) */}
+            {/* carrousel dots indicator for  4+ poems  - only on homepage (not in focus mode) */}
+            // TODO Test if visible and hidden dots indicator works correctly
             {updatedLayout.isDesktop && !canvasMode && !focusMode && (
                 <carrouselDots
                     totalCount={updatedLayout.resultCount}
@@ -192,7 +195,7 @@ const SearchResults = memo(({
                                         delay: displayIndex * 0.1
                                     }}
                                 >
-                                    <SearchResultItem
+                                    <PoemResultItem
                                         poem={poem}
                                         index={safeActualIndex}
                                         allPoems={results}

@@ -58,6 +58,7 @@ function Button({
             disabled={disabled || loading}
             {...rest} // Spread any other props like 'aria-label', 'href' (if 'as' is 'a')
         >
+            {/*// TODO improve basic loading text with a spinner or similar*/}
             {loading ? 'Laden...' : children} {/* Basic loading text, can be improved with a spinner */}
         </Component>
     );

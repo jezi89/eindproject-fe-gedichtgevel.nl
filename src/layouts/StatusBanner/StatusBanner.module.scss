@@ -1,0 +1,128 @@
+/**
+ * Footer SCSS - Consistent with design system
+ * Converted to use SCSS variables and mixins
+ */
+
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+.footer {
+  width:            100%;
+  margin-top:       $spacing-xxl;
+  padding:          $spacing-xl 0;
+  border-top:       1px solid $neutral-mid;
+  background-color: $secondary-dark;
+  }
+
+.footerContainer {
+  @include container-constrained(1200px);
+  }
+
+.footerContent {
+  display:               grid;
+  margin-bottom:         $spacing-xl;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap:                   $spacing-xl;
+  }
+
+.footerSection {
+  display:        flex;
+  flex-direction: column;
+  gap:            $spacing-m;
+  }
+
+.footerTitle {
+  @include heading-secondary;
+  font-size: $font-size-xxl;
+  margin:    0;
+  color:     $accent-gold;
+  }
+
+.footerDescription {
+  @include body-text;
+  font-size:   $font-size-s;
+  line-height: 1.6;
+  margin:      0;
+  color:       $neutral-off-white;
+  }
+
+.footerSubtitle {
+  font-family: $font-family-section-heading;
+  font-size:   $font-size-l;
+  font-weight: 600;
+  margin:      0;
+  color:       $neutral-off-white;
+  }
+
+.footerLinks {
+  display:        flex;
+  flex-direction: column;
+  margin:         0;
+  padding:        0;
+  list-style:     none;
+  gap:            $spacing-s;
+  }
+
+.footerLink {
+  font-family:     $font-family-section-heading;
+  font-size:       $font-size-s;
+  transition:      color $transition-normal;
+  text-decoration: none;
+  color:           $neutral-mid-dark;
+
+  &:hover {
+	color: $accent-gold; // Using consistent heading color for hover
+	}
+  }
+
+.footerBottom {
+  padding-top: $spacing-l;
+  text-align:  center;
+  border-top:  1px solid $neutral-mid;
+  }
+
+.footerCopyright {
+  font-family: $font-family-section-heading;
+  font-size:   $font-size-xs;
+  margin:      0;
+  color:       $neutral-mid-dark;
+  }
+
+// Responsive Design
+@include respond-to("tablet") {
+  .footerContent {
+	grid-template-columns: 1fr 1fr;
+	gap:                   $spacing-l;
+	}
+  }
+
+@include respond-to("mobile") {
+  .footerContent {
+	text-align:            center;
+	grid-template-columns: 1fr;
+	gap:                   $spacing-l;
+	}
+
+  .footerContainer {
+	padding: 0 $spacing-l;
+	}
+
+  .footer {
+	margin-top: $spacing-xxl;
+	padding:    $spacing-l 0;
+	}
+  }
+
+@media (max-width: 480px) {
+  .footerContainer {
+	padding: 0 $spacing-m;
+	}
+
+  .footerContent {
+	gap: $spacing-m;
+	}
+
+  .footer {
+	margin-top: $spacing-xl; // Nog kleiner op kleine schermen
+	}
+  }
