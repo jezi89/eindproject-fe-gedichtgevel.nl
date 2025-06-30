@@ -1,0 +1,209 @@
+/* src/components/ApiStatus/ApiStatusCard.module.css */
+/* (Dit is dezelfde inhoud als voorheen ApiStatusBanner.module.css,
+   maar nu specifiek voor de Card component die de visualisatie doet) */
+
+/* Hoofdcontainer voor de kaart/banner-achtige weergave */
+.statusCardContainer { /* Naam aangepast van statusBannerContainer */
+  position:        relative;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  box-sizing:      border-box;
+  width:           100%;
+  min-height:      40px;
+  margin-bottom:   16px;
+  padding:         8px 16px;
+  transition:      background-color 0.3s ease, border-left-color 0.3s ease;
+  border-radius:   5px;
+  box-shadow:      0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+/* Stijlen voor verschillende statussen */
+.statusCardHealthy { /* Naam aangepast */
+  color:            #065f46;
+  border-left:      5px solid #34d399;
+  background-color: #e6ffed;
+  }
+
+.statusCardError { /* Naam aangepast */
+  color:            #991b1b;
+  border-left:      5px solid #f87171;
+  background-color: #fff1f2;
+  }
+
+.statusCardChecking { /* Naam aangepast */
+  color:            #1e40af;
+  border-left:      5px solid #60a5fa;
+  background-color: #eff6ff;
+  }
+
+.statusCardNeutral { /* Naam aangepast */
+  color:            #374151;
+  border-left:      5px solid #9ca3af;
+  background-color: #f3f4f6;
+  }
+
+/* Container voor de hoofdcontent */
+.statusContent {
+  display:         flex;
+  flex-direction:  column;
+  flex-grow:       1;
+  justify-content: center;
+  }
+
+/* Berichten voor 'gezond' of 'controleren' */
+.healthyMessage,
+.checkingMessage {
+  font-weight: 500;
+  display:     flex;
+  align-items: center;
+  }
+
+.checkmark {
+  font-size:    1.1em;
+  margin-right: 8px;
+  color:        #34d399;
+  }
+
+.warningIcon {
+  font-size:    1.1em;
+  margin-right: 8px;
+  }
+
+/* In statusCardError krijgt .warningIcon zijn kleur van de .statusCardError text color */
+
+
+/* Lijst voor het tonen van meerdere API errors */
+.statusList {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  }
+
+.statusHeader {
+  font-weight:   600;
+  display:       flex;
+  align-items:   center;
+  margin-bottom: 8px;
+  }
+
+/* Details per API (als er problemen zijn) */
+.apiStatusDetails {
+  font-size:      0.9em;
+  display:        flex;
+  flex-direction: column;
+  margin-bottom:  10px;
+  padding-left:   20px;
+  gap:            6px;
+  }
+
+.apiStatusItem {
+  line-height: 1.4;
+  display:     flex;
+  align-items: flex-start;
+  }
+
+.apiStatusItem strong {
+  font-weight:  500;
+  min-width:    130px;
+  margin-right: 6px;
+  }
+
+.apiStatusItem span {
+  flex-grow: 1;
+  }
+
+/* Knop om status te vernieuwen */
+.refreshButton {
+  font-size:        0.9em;
+  align-self:       flex-start;
+  /* Achtergrondkleur wordt nu beter bepaald door de context (error state) */
+  margin-top:       4px;
+  padding:          6px 12px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease;
+  color:            white;
+  border:           none;
+  border-radius:    4px;
+  background-color: var(--refresh-button-bg-color, #dc2626); /* Standaard rood, kan overschreven worden */
+  }
+
+.statusCardError .refreshButton { /* Specifieke styling als de kaart in error state is */
+  background-color: #ef4444; /* Rood voor error state */
+  }
+
+.refreshButton:hover:not(:disabled) {
+  background-color: #b91c1c; /* Donkerder rood bij hover */
+  }
+
+.refreshButton:disabled {
+  cursor:           not-allowed;
+  background-color: #fca5a5; /* Lichtrood als disabled */
+  }
+
+
+/* Knop om de kaart in/uit te klappen */
+.collapseButton {
+  font-size:       1.4em;
+  line-height:     1;
+  display:         flex; /* Behoud display flex voor align/justify center */
+  align-items:     center;
+  align-self:      center;
+  justify-content: center;
+  margin-left:     12px;
+  padding:         0 8px;
+  cursor:          pointer;
+  color:           inherit;
+  border:          none;
+  background:      transparent;
+  }
+
+/* Minimale indicator (stip) wanneer de kaart is ingeklapt en alles gezond is */
+.statusIndicator {
+  position:         fixed;
+  z-index:          1000;
+  right:            20px;
+  bottom:           20px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            36px;
+  height:           36px;
+  cursor:           pointer;
+  transition:       transform 0.2s ease;
+  border:           2px solid #34d399; /* Rand in de gezonde kleur */
+  border-radius:    50%;
+  background-color: #e6ffed; /* Lichte groene achtergrond */
+  box-shadow:       0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+
+.statusIndicator:hover {
+  transform: scale(1.1);
+  }
+
+.healthyDot {
+  width:            12px;
+  height:           12px;
+  border-radius:    50%;
+  background-color: #34d399;
+  }
+
+/* Laadspinner animatie */
+.spinner {
+  width:            16px;
+  height:           16px;
+  margin-right:     10px;
+  animation:        spin 0.8s linear infinite;
+  border:           3px solid currentColor; /* Spinner kleur gebaseerd op tekstkleur van de kaart */
+  border-top-color: transparent;
+  border-radius:    50%;
+  }
+
+@keyframes spin {
+  0% {
+	transform: rotate(0deg);
+	}
+  100% {
+	transform: rotate(360deg);
+	}
+  }

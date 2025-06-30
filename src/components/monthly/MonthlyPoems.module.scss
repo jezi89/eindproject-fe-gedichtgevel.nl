@@ -1,0 +1,149 @@
+/**
+ * MonthlyPoems Component Styles
+ *
+ * Compact styling that reuses SearchResults styling but with monthly-specific adjustments
+ */
+
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+/// TODO Checken of er zo'n groot apart scss bestand nodig is, of dat we searchResults.module.scss verder kunnen hergebruiken
+
+// Main section container
+.monthlyPoemsSection {
+  width:            100%;
+  margin-top:       $spacing-xl;
+  padding:          $spacing-xl 0;
+  color:            $text-inverse;
+  border-top:       2px solid $secondary-muted;
+  background-color: $secondary-dark;
+  }
+
+// Section header
+.sectionHeader {
+  margin-bottom: $spacing-xl;
+  text-align:    center;
+  }
+
+.sectionTitle {
+  @include heading-primary;
+  font-size: $font-size-xl;
+  margin:    0 0 $spacing-s 0;
+  color:     $text-heading;
+  }
+
+.sectionSubtitle {
+  @include body-text;
+  font-size: $font-size-m;
+  margin:    0;
+  color:     $text--secondary-inverse;
+  }
+
+// Grid for exactly 3 poems
+.poemsGrid {
+  display:               grid;
+  max-width:             80vw;
+  margin:                0 auto;
+  padding:               0 $spacing-l;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   $spacing-xl; // Increased from $spacing-l to $spacing-xl
+
+  // Responsive behavior
+  @media (max-width: $screen-lg) {
+	max-width:             700px; // Increased from 600px
+	grid-template-columns: 1fr;
+	gap:                   $spacing-xxl; // Increased from $spacing-xl
+	}
+
+  @media (min-width: $screen-lg + 1px) and (max-width: $screen-xl) {
+	grid-template-columns: repeat(2, 1fr);
+	gap:                   $spacing-xl; // Increased from $spacing-l
+
+	// Third item spans full width on 2-column layout
+	.monthlyPoemCard:nth-child(3) {
+	  max-width:   0%; //
+	  margin:      0 auto;
+	  grid-column: 1 / -1;
+	  }
+	}
+  }
+
+// Individual poem card container
+.monthlyPoemCard {
+  // Maak monthly poems kleiner via CSS sizing (geen transforms!)
+  // Dit behoudt text clarity en voorkomt browser rendering issues
+
+  // Override SearchResults spacing for monthly display
+  :global(.resultCard) {
+	max-width:     90%; // Kleinere container via width
+	margin-right:  auto;
+	margin-bottom: $spacing-s; // More compact than search results
+	margin-left:   auto;
+	}
+
+  // Kleinere proportional header sizing
+  :global(.cardHeader) {
+	padding: $spacing-s; // Compacter padding
+
+	:global(.poemTitle) {
+	  font-size: $font-size-m; // Kleinere title size
+	  }
+
+	:global(.poemAuthor) {
+	  font-size: $font-size-s; // Kleinere author text
+	  }
+	}
+
+  // Compactere content spacing
+  :global(.poemContent) {
+	padding: $spacing-s; // Kleinere content padding
+	}
+
+  // Kleinere poem lines
+  :global(.poemLine) {
+	font-size:   $font-size-s; // Kleinere text
+	line-height: $line-height-normal; // Compacter line height
+	}
+
+  // Hide global toggle buttons and focus studio features
+  :global(.globalToggleContainer),
+  :global(.focusStudioButton) {
+	display: none !important;
+	}
+
+  // Ensure only individual expand/collapse and canvas buttons show
+  :global(.cardActions) {
+	justify-content: center; // Center the canvas button
+	margin-top:      $spacing-s;
+	padding-top:     $spacing-s; // More compact spacing
+	}
+
+  // Style buttons to be more compact and visible
+  :global(.expandButton),
+  :global(.canvasButton) {
+	font-size: $font-size-s;
+	min-width: auto; // Allow buttons to be smaller
+	padding:   $spacing-xs $spacing-m; // More compact button
+	}
+
+  // Button containers meer compact
+  :global(.buttonContainer) {
+	margin-bottom: $spacing-xs; // Smaller spacing tussen buttons
+	}
+
+  // Ellipsis section meer compact
+  :global(.ellipsisSection) {
+	margin: $spacing-xs 0; // Tighter spacing
+	}
+
+  // Compact expanded content
+  :global(.expandedContent) {
+	padding-bottom: $spacing-s; // Less bottom padding
+	}
+
+  // Compact action buttons in expanded state
+  :global(.expandedContent) :global(.cardActions) {
+	margin-top:  $spacing-s;
+	padding-top: $spacing-s;
+	}
+  }
