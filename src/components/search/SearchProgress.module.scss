@@ -11,10 +11,11 @@
 // SHARED PROGRESS CONTAINER STYLES
 // ==============================================
 
+// TODO Checken of dit niet naar het _searchShared bestand moet
+
 %progressContainer {
   @include flex-center;
-  min-height:       $height-progress-container; // Was 400px
-  background-color: $secondary-100;
+  min-height: $height-progress-container; background-color: $secondary-dark;
   }
 
 // ==============================================
@@ -27,106 +28,105 @@
   }
 
 .errorContainer {
-  max-width:        $width-error-container; // Was 500px
-  padding:          $spacing-xl;
+  max-width:        $width-error-container; padding: $spacing-xl;
   text-align:       center;
-  border:           $border-width-regular solid rgba($amaranth, 0.3); // Was 2px
+  border:           $border-width-regular solid rgba($feedback-error, 0.3);
   border-radius:    $border-radius-xl;
-  background-color: rgba($amaranth, 0.1);
+  background-color: rgba($feedback-error, 0.1);
   backdrop-filter:  blur(10px);
   }
 
 .errorIcon {
-  font-size:     $font-size-4xl; // Was 4rem
+  font-size:     $font-size-4xl;
   display:       block;
-  margin-bottom: $spacing-m; // Was $spacing-md
+  margin-bottom: $spacing-m;
   }
 
 .errorTitle {
-  font-family: $font-family-section-heading; // Was $font-family-primary
+  font-family: $font-family-section-heading;
   font-size:   $font-size-xxl;
-  font-weight: $font-weight-bold; // Was 700
-  margin:      0 0 $spacing-m 0; // Was $spacing-md
-  color:       $neutral-light; // Was $porcelain
+  font-weight: $font-weight-bold;
+  margin:      0 0 $spacing-m 0;
+  color:       $neutral-light;
   }
 
 .errorMessage {
-  font-family: $font-family-body; // Was $font-family-secondary
+  font-family: $font-family-body;
   font-size:   $font-size-s;
-  line-height: $line-height-normal-unitless; // Was 1.5
+  line-height: $line-height-normal-unitless;
   margin:      0 0 $spacing-xl 0;
-  color:       rgba($neutral-light, 0.8); // Was $porcelain
+  color:       rgba($neutral-light, 0.8);
   }
 
 .errorActions {
   display:         flex;
   flex-wrap:       wrap;
   justify-content: center;
-  gap:             $spacing-m; // Was $spacing-md
+  gap:             $spacing-m;
   }
 
 .retryButton,
 .reloadButton {
   @include button-base;
-  font-family:   $font-family-button; // Was $font-family-primary
-  font-weight:   $font-weight-semibold; // Was 600
-  padding:       $spacing-s $spacing-l; // Was 0.75rem
+  font-family:   $font-family-button;
+  font-weight:   $font-weight-semibold;
+  padding:       $spacing-s $spacing-l;
   border-radius: $border-radius-md;
   }
 
 .retryButton {
-  color:            $neutral-off-white; // Was $white-medium
-  background-color: $primary-lighter; // Was $primary-500
+  color:            $neutral-off-white;
+  background-color: $primary-lighter;
 
   &:hover:not(:disabled) {
 	transform:        translateY(-1px);
-	background-color: $primary-light; // Was $primary-400
+	background-color: $primary-light;
 	}
   }
 
 .reloadButton {
-  color:            $neutral-light; // Was $porcelain
-  border:           $border-width-regular solid $neutral-light; // Was 2px, $porcelain
+  color:            $neutral-light;
+  border:           $border-width-regular solid $neutral-light;
   background-color: transparent;
 
   &:hover:not(:disabled) {
-	color:            $secondary-dark; // Was $secondary-100
-	background-color: $neutral-light; // Was $porcelain
+	color:            $secondary-dark;
+	background-color: $neutral-light;
 	}
   }
 
 .errorDetails {
   margin-top:       $spacing-xl;
-  padding:          $spacing-m; // Was $spacing-md
+  padding:          $spacing-m;
   text-align:       left;
   border-radius:    $border-radius-md;
-  background-color: rgba($neutral-darker, 0.1); // Was $grey-200
+  background-color: rgba($neutral-darker, 0.1);
 
   summary {
-	font-family:   $font-family-section-heading; // Was $font-family-primary
-	font-weight:   $font-weight-semibold; // Was 600
-	margin-bottom: $spacing-s; // Was $spacing-sm
+	font-family:   $font-family-section-heading;
+	font-weight:   $font-weight-semibold;
+	margin-bottom: $spacing-s;
 	cursor:        pointer;
-	color:         $neutral-light; // Was $porcelain
+	color:         $neutral-light;
 
 	&:hover {
-	  color: $primary-lighter; // Was $primary-500
+	  color: $primary-lighter;
 	  }
 	}
   }
 
 .errorStack {
-  font-family:      $font-family-monospace; // Was "Courier New", monospace
+  font-family:      $font-family-monospace;
   font-size:        $font-size-xs;
   overflow-x:       auto;
   overflow-y:       auto;
-  max-height:       $height-max-error-stack; // Was 200px
+  max-height:       $height-max-error-stack;
   margin:           0;
-  padding:          $spacing-s; // Was $spacing-sm
+  padding:          $spacing-s;
   white-space:      pre-wrap;
-  color:            rgba($neutral-light, 0.7); // Was $porcelain
+  color:            rgba($neutral-light, 0.7);
   border-radius:    $border-radius-sm;
-  background-color: rgba($neutral-darker, 0.5); // Was $grey-100 (assuming $grey-100 is darker than $grey-200)
+  background-color: rgba($neutral-darker, 0.5);
   }
 
 // ==============================================
@@ -137,16 +137,16 @@
   @extend %progressContainer;
   position:       relative;
   flex-direction: column;
-  width:          $width-medium-poem-showcase; // Exact Figma width
-  height:         $height-medium-poem-showcase; // Exact Figma height
-  margin:         0 auto;
-  background:     $neutral-grey-figma; // Was #C4C4C4; Exact Figma grey background
+  width:          $width-medium-poem-showcase; height: $height-medium-poem-showcase; margin: 0 auto;
+  background:     $neutral-grey-figma;
   }
+
+// TODO variabele css namen met figma in de naam checken en beter specificeren
 
 .loadingSpinner {
   position:      relative;
-  width:         $size-loading-spinner; // Was 200px; Exact Figma width
-  height:        $size-loading-spinner; // Was 200px; Exact Figma height
+  width:         $size-loading-spinner;
+  height:        $size-loading-spinner;
   margin-bottom: 0;
   }
 
@@ -155,33 +155,34 @@
   width:         100%;
   height:        100%;
   animation:     spin 1.5s linear infinite;
-  border:        $border-width-extrathick solid rgba($neutral-white, 0.3); // Was 8px, $white
-  border-top:    $border-width-extrathick solid $primary-lighter; // Was $primary-500; Primary orange from Figma #e3602b
-  border-right:  $border-width-extrathick solid $secondary-carribean-current; // Was 8px; Teal accent from Figma #156064
-  border-radius: $border-radius-pill; // Was $border-radius-full
+  border:        $border-width-extrathick solid rgba($neutral-white, 0.3);
+  border-top:    $border-width-extrathick solid $primary-lighter;
+  border-right:  $border-width-extrathick solid $secondary-carribean-current;
+  border-radius: $border-radius-pill;
 
   // Center circle with image icon
   &::before {
 	position:         absolute;
 	top:              50%;
 	left:             50%;
-	width:            $spacing-xxxl; // Was 64px
-	height:           $spacing-xxxl; // Was 64px
+	width:            $spacing-xxxl;
+	height:           $spacing-xxxl;
 	content:          "";
 	transform:        translate(-50%, -50%);
-	border-radius:    $border-radius-pill; // Was $border-radius-full
-	background-color: $neutral-white; // Was $white
+	border-radius:    $border-radius-pill;
+	background-color: $neutral-white;
 	@include flex-center;
 	}
 
-  // Mountain/Image icon in center - matching Figma
+  /// TODO mooiere loading state bouwen met svgof in content zelf met url()
+  // Pencil/Image icon in center - matching Figma
   &::after {
-	font-size: $font-size-xl; // Was 32px
+	font-size: $font-size-xl;
 	position:  absolute;
 	z-index:   2;
 	top:       50%;
 	left:      50%;
-	content:   "🏔️";
+	content:   "✒️";
 	transform: translate(-50%, -50%);
 	}
   }
@@ -206,8 +207,7 @@
 @include respond-to("tablet") {
   .loadingContainer {
 	max-width: 90%;
-	height:    $height-progress-container; // Was 400px
-	}
+	height:    $height-progress-container; }
 
   .loadingSpinner {
 	width:  100px; // No direct variable, keeping specific for now or could add $size-loading-spinner-tablet
@@ -223,7 +223,7 @@
 	  }
 
 	&::after {
-	  font-size: $font-size-l; // Was 24px
+	  font-size: $font-size-l;
 	  }
 	}
   }
@@ -231,11 +231,11 @@
 @include respond-to("mobile") {
   .errorBoundary {
 	min-height: 300px; // No direct variable
-	padding:    $spacing-xl $spacing-m; // Was $spacing-md
+	padding:    $spacing-xl $spacing-m;
 	}
 
   .errorContainer {
-	padding: $spacing-l; // Was $spacing-lg
+	padding: $spacing-l;
 	}
 
   .errorIcon {
@@ -258,7 +258,7 @@
 
   .loadingContainer {
 	height: 300px; // No direct variable
-	margin: $spacing-l $spacing-m; // Was $spacing-lg $spacing-md
+	margin: $spacing-l $spacing-m;
 	}
 
   .loadingSpinner {
@@ -267,7 +267,7 @@
 	}
 
   .spinnerRing {
-	border-width: $spacing-xxs; // Was 4px
+	border-width: $spacing-xxs;
 
 	&::before {
 	  width:  40px; // No direct variable, $height-min-button
@@ -275,7 +275,7 @@
 	  }
 
 	&::after {
-	  font-size: $font-size-m; // Was 20px
+	  font-size: $font-size-m;
 	  }
 	}
   }
@@ -297,7 +297,7 @@
 	  }
 
 	&::after {
-	  font-size: $font-size-s; // Was 16px
+	  font-size: $font-size-s;
 	  }
 	}
   }

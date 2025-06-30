@@ -1,3 +1,5 @@
+// TODO checken hoe dit nu gebruikt wordt en of er geen redundancy en css/framer conflicten optreden
+
 /**
  * Animation Variants for SearchResultItem
  * Centralized Framer Motion animation configurations
