@@ -11,10 +11,8 @@ export default function App() {
 
     return (
         <div className="app">
-            <div className="layout-header">
-                <NavBar/>
-            </div>
-            <div className="layout-main">
+            <NavBar/>
+            <div className="app-content">
                 <Outlet/> {/* Placeholder required to let React Router know where to render the child routes */}
             </div>
             {/*{isHomePage && <StatusBanner/>}*/}
