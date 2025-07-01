@@ -2,20 +2,23 @@
 
 ## ⚠️ BELANGRIJKE ONTDEKKING
 
-Er bestaat al een **"Refactor SearchResultItem.md"** document in de DOCS folder! Dit document beschrijft een eerdere poging tot refactoring waarbij:
-- SearchResultItem werd omgedoopt naar PoemResultItem 
+Er bestaat al een **"Refactor PoemResultItem.md"** document in de DOCS folder! Dit document beschrijft een eerdere poging tot refactoring waarbij:
+
+- PoemResultItem werd omgedoopt naar PoemResultItem
 - Het component werd opgesplitst in sub-componenten
 - Custom hooks werden gecreëerd
 
 **Status**: Deze refactor lijkt slechts DEELS geïmplementeerd:
+
 - ✅ Sub-componenten zijn aangemaakt (in search/poem/)
 - ✅ Hooks zijn gecreëerd (useHeightCalculation, useCanvasMode)
-- ❌ SearchResultItem heet nog steeds SearchResultItem (niet PoemResultItem)
+- ❌ PoemResultItem heet nog steeds PoemResultItem (niet PoemResultItem)
 - ❌ Hybride folder structuur niet geïmplementeerd
 
 ## Huidige Situatie vs Gewenste Structuur
 
 ### Huidige Structuur (Afgeweken van Plan)
+
 ```
 src/
 ├── components/
@@ -26,7 +29,7 @@ src/
 │   │   │   ├── PoemExpansionControls.jsx
 │   │   │   ├── ExpandedContent.jsx
 │   │   │   └── CanvasToast.jsx
-│   │   ├── SearchResultItem.jsx  # Te hernoemen naar PoemResultItem
+│   │   ├── PoemResultItem.jsx  # Te hernoemen naar PoemResultItem
 │   │   ├── SearchBar.jsx
 │   │   └── SearchResults.jsx
 │   └── common/
@@ -40,6 +43,7 @@ src/
 ```
 
 ### Gewenste Hybride Structuur
+
 ```
 src/
 ├── pages/
@@ -77,10 +81,11 @@ src/
 
 ## Reorganisatie Plan
 
-### Fase 1: Hernoemen SearchResultItem
+### Fase 1: Hernoemen PoemResultItem
+
 ```bash
-# Hernoem SearchResultItem naar PoemResultItem
-mv src/components/search/SearchResultItem.jsx src/components/search/PoemResultItem.jsx
+# Hernoem PoemResultItem naar PoemResultItem
+mv src/components/search/PoemResultItem.jsx src/components/search/PoemResultItem.jsx
 
 # Update alle imports
 # In SearchResults.jsx:
@@ -91,6 +96,7 @@ mv src/components/search/SearchResultItem.jsx src/components/search/PoemResultIt
 ```
 
 ### Fase 2: Verplaats Poem Sub-componenten
+
 ```bash
 # Maak nieuwe folder structuur
 mkdir -p src/components/poem
@@ -111,6 +117,7 @@ rm -rf src/components/search/poem
 ```
 
 ### Fase 3: Creëer Feature-based Structure (Optioneel)
+
 ```bash
 # Als je volledig wilt committen aan feature-based:
 mkdir -p src/pages/Core/Search/components
@@ -124,6 +131,7 @@ mv src/components/search/PoemResultItem.jsx src/pages/Core/Search/components/
 ## Import Updates
 
 ### Voor PoemResultItem
+
 ```javascript
 // OLD imports
 import PoemCard from './poem/PoemCard';
@@ -147,16 +155,19 @@ import PoemActionButtons from '@/components/poem/PoemActionButtons';
 ## Voordelen van Deze Structuur
 
 ### 1. **Duidelijke Scheiding**
+
 - Feature-specifieke code bij de feature (Search components bij Search)
 - Generieke componenten centraal beschikbaar
 - Hooks netjes georganiseerd per domein
 
 ### 2. **Betere Schaalbaarheid**
+
 - Nieuwe features kunnen eigen component folders krijgen
 - Generieke componenten makkelijk te vinden voor hergebruik
 - Geen verwarring over waar nieuwe componenten horen
 
 ### 3. **Team Collaboration**
+
 - Teams kunnen aan features werken zonder elkaar te storen
 - Duidelijke ownership van code delen
 - Makkelijker te navigeren voor nieuwe developers
@@ -165,7 +176,7 @@ import PoemActionButtons from '@/components/poem/PoemActionButtons';
 
 Als een grote reorganisatie te veel werk is, kun je ook kiezen voor:
 
-1. **Alleen hernoemen**: SearchResultItem → PoemResultItem
+1. **Alleen hernoemen**: PoemResultItem → PoemResultItem
 2. **Poem folder flatten**: Verplaats poem sub-componenten naar components/poem
 3. **Behoud huidige search structuur**: Laat SearchBar en SearchResults waar ze zijn
 
@@ -178,7 +189,7 @@ Dit geeft je al veel van de voordelen zonder grote breaking changes.
 git checkout -b refactor/hybrid-architecture
 
 # Doe reorganisatie in kleine commits
-git add -A && git commit -m "refactor: rename SearchResultItem to PoemResultItem"
+git add -A && git commit -m "refactor: rename PoemResultItem to PoemResultItem"
 git add -A && git commit -m "refactor: move poem components to components/poem"
 git add -A && git commit -m "refactor: move CanvasToast to ui folder"
 git add -A && git commit -m "refactor: update all imports for new structure"
@@ -197,7 +208,8 @@ git merge refactor/hybrid-architecture
 **De pages/Core structuur bestaat nog niet!** Dit betekent dat de oorspronkelijke hybride architectuur nooit volledig is geïmplementeerd. Je hebt nu de keuze:
 
 ### Optie A: Minimale Refactor (Aanbevolen voor nu)
-1. Hernoem SearchResultItem → PoemResultItem
+
+1. Hernoem PoemResultItem → PoemResultItem
 2. Reorganiseer poem componenten naar components/poem/
 3. Behoud verder de huidige structuur
 
@@ -205,6 +217,7 @@ git merge refactor/hybrid-architecture
 **Nadeel**: Nog steeds niet je ideale architectuur
 
 ### Optie B: Volledige Hybride Implementatie
+
 1. Creëer pages/Core structuur
 2. Verplaats alle feature-specifieke componenten
 3. Implementeer echte feature-based modules
@@ -219,7 +232,7 @@ Gezien je NOVI bootcamp deadline, zou ik **Optie A** aanraden:
 1. **Quick Wins** (30 min):
    ```bash
    # Hernoem component
-   mv src/components/search/SearchResultItem.jsx src/components/search/PoemResultItem.jsx
+   mv src/components/search/PoemResultItem.jsx src/components/search/PoemResultItem.jsx
    
    # Flatten poem structure
    mv src/components/search/poem/* src/components/poem/

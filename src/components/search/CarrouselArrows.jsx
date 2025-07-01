@@ -1,6 +1,6 @@
 /**
- * carrouselArrows Component
- * Intelligent carrousel navigation arrows with dynamic positioning
+ * CarouselArrows Component
+ * Intelligent carousel navigation arrows with dynamic positioning
  * Handles complex scroll boundaries and collapse reset behavior
  * Extracted from SearchResults for better separation of concerns
  */
@@ -8,16 +8,16 @@
 import {memo, useMemo, useState, useEffect, useCallback, useRef} from 'react';
 import styles from './Carrousel.module.scss';
 
-const carrouselArrows = memo(({
-                                  onPrevious,
-                                  onNext,
-                                  hasMultiple,
-                                  allowDynamicPositioning = false,
-                                  hasAnyExpanded = false,
-                                  searchResultsRef = null,
-                                  onCollapseEvent = null,
-                                  canvasMode = false
-                              }) => {
+const CarouselArrows = memo(({
+                                 onPrevious,
+                                 onNext,
+                                 hasMultiple,
+                                 allowDynamicPositioning = false,
+                                 hasAnyExpanded = false,
+                                 searchResultsRef = null,
+                                 onCollapseEvent = null,
+                                 canvasMode = false
+                             }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [dynamicPosition, setDynamicPosition] = useState(0);
     const [positioningMode, setPositioningMode] = useState('static'); // 'static', 'dynamic', 'hanging'
@@ -268,6 +268,6 @@ const carrouselArrows = memo(({
     );
 });
 
-carrouselArrows.displayName = 'carrouselArrows';
+CarouselArrows.displayName = 'CarouselArrows';
 
-export default carrouselArrows;
+export default CarouselArrows;

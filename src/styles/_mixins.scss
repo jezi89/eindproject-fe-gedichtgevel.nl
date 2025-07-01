@@ -531,3 +531,100 @@
   scrollbar-width: thin;
   scrollbar-color: $thumb-color $track-color;
   }
+
+
+/// Mixin voor tekst afkappen met ellipsis (multi-line support)
+/// @param {Number} $lines - Aantal regels voordat tekst wordt afgekort
+@mixin text-clamp($lines: 2) {
+  display:            -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow:           hidden;
+  text-overflow:      ellipsis;
+  }
+
+/// Mixin voor responsive media queries - vervanger voor respond-to
+/// @param {String} $breakpoint - Breakpoint naam (mobile, tablet, desktop)
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "mobile" {
+	@include media-down(vars.$screen-sm) {
+	  @content;
+	  }
+	} @else if $breakpoint == "tablet" {
+	@include media-down(vars.$screen-lg) {
+	  @content;
+	  }
+	} @else if $breakpoint == "desktop" {
+	@include media-up(vars.$screen-lg) {
+	  @content;
+	  }
+	}
+  }
+
+/// Mixin voor fade-in animatie
+/// @param {String} $duration [vars.$transition-normal] - Animatie duur
+/// @param {String} $delay [0s] - Animatie vertraging
+@mixin fade-in($duration: vars.$transition-normal, $delay: 0s) {
+  animation: fadeIn $duration ease-out $delay;
+  }
+
+/// Mixin voor slide-up animatie
+/// @param {String} $duration [vars.$transition-normal] - Animatie duur
+/// @param {String} $delay [0s] - Animatie vertraging
+@mixin slide-up($duration: vars.$transition-normal, $delay: 0s) {
+  animation: slideInUp $duration ease-out $delay;
+  }
+
+/// Mixin voor container met max-width en center
+/// @param {String} $max-width [1200px] - Maximum breedte van container
+@mixin container-constrained($max-width: 1200px) {
+  max-width: $max-width;
+  margin:    0 auto;
+  padding:   0 vars.$spacing-m;
+  }
+
+/// Mixin voor heading-secondary styling
+@mixin heading-secondary {
+  font-family: vars.$font-family-section-heading;
+  font-weight: vars.$font-weight-bold;
+  line-height: vars.$line-height-tight;
+  }
+
+/// Mixin voor body-text styling
+@mixin body-text {
+  font-family: vars.$font-family-body;
+  font-weight: vars.$font-weight-regular;
+  line-height: vars.$line-height-normal-unitless;
+  }
+
+/// Mixin voor heading-primary styling
+@mixin heading-primary {
+  font-family: vars.$font-family-title;
+  font-weight: vars.$font-weight-bold;
+  line-height: vars.$line-height-tight;
+  }
+
+/// Mixin voor card-base styling
+@mixin card-base {
+  border-radius:    vars.$border-radius-md;
+  border:           1px solid vars.$secondary-muted;
+  background-color: vars.$neutral-white;
+  @include box-shadow(sm);
+  }
+
+/// Mixin voor card-hover effect
+@mixin card-hover {
+  transition: all vars.$transition-fast;
+
+  &:hover {
+	transform: translateY(-2px);
+	@include box-shadow(md);
+	}
+  }
+
+/// Mixin voor flex-between layout (justify-content: space-between + align-items: center)
+@mixin flex-between {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  }

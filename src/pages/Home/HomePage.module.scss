@@ -19,6 +19,7 @@
 //    - Parallax scrolling
 //    - Fade-in animaties
 //    - Hover effecten op cards
+/*
 
 .home-container {
   // Main homepage wrapper
@@ -54,4 +55,854 @@
 
 .action-cards {
   // Cards voor verschillende acties
+  }*/
+
+/**
+ * HomePage SCSS - Exact Figma Design Implementation
+ * Converted to use SCSS variables and mixins while preserving all styling
+ */
+
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+
+
+.homePage {
+  font-family:      $font-family-body;
+  color:            $neutral-off-white;
+  background-color: transparent; // Inherit from parent
+  }
+
+// Hero Section - simple fixed height
+.heroSection {
+  position:         relative;
+  width:            100%;
+  padding:          2rem 0;
+  background-color: $secondary-dark;
+  @include flex-center;
+  }
+
+.heroContainer {
+  display:         flex;
+  align-items:     center;
+  flex-direction:  column;
+  justify-content: center;
+  width:           791px; // Exact Figma width
+  height:          170px;
+  gap:             25px;
+  }
+
+.heroHeading {
+  @include heading-primary;
+  font-size:      $font-size-5xl; // 48px exact Figma
+  line-height:    57.6px; // Exact Figma
+  margin:         0;
+  text-align:     center;
+  letter-spacing: 0;
+  color:          $primary-flame; // Exact Figma color
+  }
+
+.heroParagraph {
+  @include body-text;
+  font-size:      $font-size-l; // 24px exact Figma
+  line-height:    28.8px; // Exact Figma
+  margin:         0;
+  text-align:     center;
+  letter-spacing: 0;
+  color:          $neutral-off-white; // Exact Figma color
+  }
+
+// Main Search Section
+.searchSection {
+  position:         relative;
+  width:            100%;
+  background-color: transparent;
+  }
+
+// ZOEK GEDICHTEN CTA Container - Figma exact positioning
+.searchCTAContainer {
+  position:   relative;
+  width:      100%;
+  height:     66px; // 2px + 62px + 2px border
+  @include flex-center;
+  margin-top: 20px;
+  }
+
+.searchCTA {
+  position:     relative;
+  width:        auto;
+  height:       62px;
+  padding:      0 30px;
+  white-space:  nowrap;
+  border-width: 2px 0px;
+  @include flex-center;
+  border-style: solid;
+  border-color: $secondary-muted; // Exact Figma color #0f4648
+  gap:          16px;
+
+  @media (max-width: 768px) {
+	padding: 0 20px;
+	gap:     12px;
+	}
+
+  @media (max-width: 480px) {
+	height:  50px;
+	padding: 0 16px;
+	gap:     10px;
+	}
+  }
+
+.searchCTATagline {
+  font-family:    $font-family-body;
+  font-size:      $font-size-xxxl;
+  font-weight:    800;
+  font-style:     normal;
+  line-height:    56.304px;
+  margin:         0;
+  text-align:     center;
+  white-space:    nowrap;
+  letter-spacing: 0;
+  color:          $primary-flame; // Exact Figma color #e3602b
+
+  @media (max-width: 768px) {
+	font-size:   $font-size-xxxl;
+	line-height: 1.2;
+	}
+
+  @media (max-width: 480px) {
+	font-size:   $font-size-xxl;
+	line-height: 1.1;
+	}
+  }
+
+.searchIcon {
+  flex-shrink: 0;
+  width:       48px;
+  height:      48px;
+  color:       $primary-flame;
+
+  @media (max-width: 768px) {
+	width:  36px;
+	height: 36px;
+	}
+
+  @media (max-width: 480px) {
+	width:  28px;
+	height: 28px;
+	}
+  }
+
+.searchEmojiFrame {
+  @include flex-center;
+  flex-shrink: 0;
+  width:       62px;
+  height:      61px;
+
+  @include respond-to("tablet") {
+	width:  48px;
+	height: 48px;
+	}
+
+  @include respond-to("mobile") {
+	width:  36px;
+	height: 36px;
+	}
+  }
+
+.searchEmoji {
+  font-family:    $font-family-title;
+  font-size:      $font-size-5xl;
+  font-weight:    800;
+  font-style:     normal;
+  line-height:    56.304px;
+  text-align:     center;
+  letter-spacing: 0;
+  color:          $primary-flame;
+
+  @include respond-to("tablet") {
+	font-size:   $font-size-xxxl;
+	line-height: 1;
+	}
+
+  @include respond-to("mobile") {
+	font-size:   $font-size-xxl;
+	line-height: 1;
+	}
+  }
+
+// Search Container - Balanced responsive layout
+.searchContainer {
+  position:       relative;
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  max-width:      min(1800px, 95vw);
+  height:         auto;
+  margin:         $spacing-m auto $spacing-m auto; // Reduced bottom margin from xl to md
+  padding:        $spacing-s 0;
+  gap:            $spacing-m; // Reduced gap from xl to md
+  }
+
+// Filter Bar Container - Responsive flexbox layout
+.filterBarContainer {
+  position:    relative;
+  order:       0;
+  width:       100vw;
+  height:      auto;
+  min-height:  4rem;
+  margin-left: calc(-50vw + 50%);
+  padding:     0.75rem 0;
+  background:  $primary-dark; // #c24919
+
+  @include respond-to("tablet") {
+	min-height: 3.5rem;
+	padding:    0.5rem 0;
+	}
+
+  @include respond-to("mobile") {
+	min-height: 3rem;
+	}
+  }
+
+.filterBar {
+  width:  100%;
+  height: 100%;
+  }
+
+.filterContainer {
+  position:   relative;
+  @include flex-between;
+  width:      min(1500px, 90vw);
+  height:     auto;
+  min-height: 2.5rem;
+  margin:     0 auto;
+  padding:    $spacing-s $spacing-m;
+  gap:        $spacing-l;
+
+  @include respond-to("tablet") {
+	padding: $spacing-s;
+	gap:     $spacing-m;
+	}
+
+  @include respond-to("mobile") {
+	flex-wrap:       wrap;
+	justify-content: center;
+	padding:         $spacing-xs;
+	gap:             $spacing-s;
+	}
+  }
+
+// Filter Items - Figma exact styling
+.filterItem {
+  position: relative;
+  @include flex-center;
+  cursor:   pointer;
+  }
+
+.filterText {
+  font-family:    $font-family-title;
+  font-size:      32px; // Exact Figma font size
+  font-weight:    600;
+  font-style:     normal;
+  line-height:    37.536px;
+  @include flex-center;
+  text-align:     center;
+  letter-spacing: 2.5px;
+  color:          $neutral-off-white; // Exact Figma color #f9f4ed
+
+  @include respond-to("tablet") {
+	font-size:      24px;
+	line-height:    1.2;
+	letter-spacing: 2px;
+	}
+
+  @include respond-to("mobile") {
+	font-size:      18px;
+	line-height:    1.1;
+	letter-spacing: 1.5px;
+	}
+  }
+
+.dropdownArrow {
+  position: absolute;
+  top:      calc(50% - 16px / 2 + 4px);
+  right:    -30px;
+  width:    21px;
+  height:   16px;
+  }
+
+.arrowVector {
+  box-sizing:   border-box;
+  width:        100%;
+  height:       100%;
+  fill:         $neutral-off-white;
+  stroke:       $neutral-off-white;
+  stroke-width: 0.75px;
+  }
+
+.filterItemAdvanced {
+  position: relative;
+  }
+
+.filterTextAdvanced {
+  font-family:          $font-family-title;
+  font-size:            32px; // Exact Figma font size
+  font-weight:          600;
+  font-style:           normal;
+  line-height:          37.536px;
+  @include flex-center;
+  cursor:               pointer;
+  text-align:           center;
+  letter-spacing:       2.5px;
+  color:                $neutral-off-white; // Exact Figma color #efefef
+  text-decoration-line: underline;
+  }
+
+// Search Results Area - simple container without height constraints
+.searchResultsArea {
+  width:            100%;
+  margin-top:       10px;
+  padding:          0;
+  background-color: $secondary-dark;
+  }
+
+// Search Error
+.searchError {
+  font-family: $font-family-title;
+  font-size:   $font-size-l;
+  padding:     $spacing-xxl;
+  text-align:  center;
+  color:       $primary-flame;
+  }
+
+// Gedichten van de Maand Showcase
+.monthlyPoemsShowcase {
+  width:            100%;
+  margin-top:       $spacing-xl;
+  padding:          $spacing-xl 0;
+  color:            $text-primary;
+  border-top:       2px solid $secondary-muted;
+  background-color: $secondary-dark;
+  }
+
+.showcaseContainer {
+  @include container-constrained(1200px);
+  }
+
+.showcaseHeader {
+  margin-bottom: $spacing-xxl;
+  text-align:    center;
+  }
+
+.showcaseTitle {
+  @include heading-primary;
+  font-size:   40px;
+  line-height: 1.2;
+  margin:      0 0 $spacing-m 0;
+  color:       $primary-flame;
+  }
+
+.showcaseSubtitle {
+  @include body-text;
+  font-size:   20px;
+  line-height: 1.4;
+  margin:      0;
+  color:       $neutral-off-white;
+  }
+
+.showcaseGrid {
+  display:               grid;
+  margin-top:            $spacing-xxl;
+  grid-template-columns: repeat(3, 1fr); // Exact 3 kolommen zoals Figma
+  gap:                   $spacing-xxl;
+  }
+
+.showcaseCard {
+  @include card-base;
+  background-color: $neutral-cream;
+
+  @include card-hover;
+  }
+
+.showcaseCardHeader {
+  padding:          $spacing-l;
+  text-align:       center;
+  border-bottom:    1px solid $secondary-muted;
+  background-color: $neutral-cream;
+  }
+
+a
+.showcaseCardTitle {
+  font-family: $font-family-body;
+  font-size:   22px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin:      0 0 $spacing-xs 0;
+  color:       $text-primary; // Dark color for better contrast
+  }
+
+.showcaseCardAuthor {
+  font-family: $font-family-body;
+  font-size:   16px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin:      0;
+  color:       $text-secondary; // Dark grey for better contrast
+  }
+
+.showcaseCardPreview {
+  padding: $spacing-l;
+  }
+
+.showcaseCardLine {
+  font-family: $font-family-body;
+  font-size:   16px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin:      0 0 $spacing-xs 0;
+  color:       $text-primary; // Dark color for better readability
+  }
+
+.showcaseCardEllipsis {
+  font-family: $font-family-body;
+  font-size:   16px;
+  margin:      $spacing-s 0 0 0;
+  text-align:  center;
+  color:       $text-secondary; // Dark grey for better contrast
+  }
+
+// USP Section - simple spacing
+.uspSection {
+  width:            100%;
+  margin-top:       30px;
+  padding:          $spacing-xl 0;
+  background-color: $secondary-dark;
+  }
+
+.uspContainer {
+  display:   flex;
+  max-width: 1600px;
+  margin:    0 auto;
+  padding:   0 $spacing-l;
+  gap:       $spacing-l;
+  }
+
+.uspColumn {
+  display:        flex;
+  align-items:    center;
+  flex:           1;
+  flex-direction: column;
+  }
+
+.uspContent {
+  display:        flex;
+  align-items:    center;
+  flex-direction: column;
+  width:          100%;
+  text-align:     center;
+  }
+
+// USP Heading - horizontale lijnen style zoals ZOEK GEDICHTEN
+.uspHeading {
+  position:      relative;
+  width:         auto;
+  min-width:     300px;
+  height:        40px;
+  margin-bottom: $spacing-s;
+  padding:       0 16px;
+  border-width:  2px 0px;
+  @include flex-center;
+  border-style:  solid;
+  border-color:  $secondary-muted;
+
+  h3 {
+	font-family:    $font-family-title;
+	font-size:      20px;
+	font-weight:    700;
+	font-style:     normal;
+	line-height:    24px;
+	margin:         0;
+	text-align:     center;
+	white-space:    nowrap;
+	letter-spacing: 1px;
+	color:          $primary-flame;
+	}
+  }
+
+.uspContent p {
+  font-family:    $font-family-title;
+  font-size:      14px;
+  font-weight:    400;
+  line-height:    1.4;
+  max-width:      280px;
+  margin:         0;
+  text-align:     center;
+  letter-spacing: 0;
+  color:          $neutral-off-white;
+  }
+
+// Responsive Design
+@include respond-to("large") {
+  .searchContainer {
+	max-width: 1200px;
+	padding:   0 $spacing-xxl;
+	}
+
+  .searchCTA {
+	width: 400px;
+	}
+
+  .searchCTATagline {
+	font-size:   40px;
+	line-height: 48px;
+	width:       340px;
+	}
+
+  .filterContainer {
+	left:      50%;
+	width:     90%;
+	transform: translateX(-50%);
+	}
+
+  .filterText,
+  .filterTextAdvanced {
+	font-size:      28px;
+	line-height:    34px;
+	letter-spacing: 2px;
+	}
+
+  .showcaseContainer {
+	max-width: 1000px;
+	}
+
+  .showcaseGrid {
+	gap: $spacing-l;
+	}
+
+  .uspContainer {
+	max-width: 1200px;
+	}
+  }
+
+@include respond-to("tablet") {
+  .searchContainer {
+	margin:  0.75rem auto $spacing-xxl auto;
+	padding: 0.25rem 0;
+	gap:     1.25rem;
+	}
+
+  .filterBarContainer {
+	height:     auto;
+	min-height: 3.5rem;
+	padding:    0.6rem 0;
+	}
+
+  .filterContainer {
+	position:        absolute;
+	top:             50%;
+	left:            50%;
+	display:         flex;
+	align-content:   space-around;
+	align-items:     center;
+	flex-wrap:       wrap;
+	justify-content: space-around;
+	width:           85%;
+	min-height:      4rem;
+	padding:         0.75rem;
+	transform:       translate(-50%, -50%);
+	gap:             $spacing-m $spacing-xxl;
+	}
+
+  .filterText,
+  .filterTextAdvanced {
+	font-size:      clamp(20px, 3vw, 24px);
+	line-height:    1.3;
+	letter-spacing: 1.5px;
+	}
+
+  .searchResultsArea,
+  .uspSection {
+	margin-top: $spacing-xxl;
+	}
+
+  .showcaseGrid {
+	grid-template-columns: repeat(3, 1fr);
+	gap:                   $spacing-m;
+	}
+
+  .showcaseContainer {
+	padding: 0 $spacing-l;
+	}
+
+  .uspContainer {
+	flex-direction: column;
+	gap:            $spacing-xxl;
+	}
+  }
+
+@include respond-to("mobile") {
+  .searchCTA {
+	flex-direction: column;
+	width:          90%;
+	max-width:      400px;
+	height:         auto;
+	padding:        $spacing-m;
+	}
+
+  .searchCTATagline {
+	font-size:     32px;
+	line-height:   40px;
+	position:      relative;
+	top:           0;
+	left:          0;
+	width:         100%;
+	margin-bottom: $spacing-s;
+	}
+
+  .searchEmojiFrame {
+	position: relative;
+	top:      0;
+	left:     0;
+	width:    auto;
+	height:   auto;
+	}
+
+  .searchEmoji {
+	font-size:   32px;
+	line-height: 40px;
+	position:    relative;
+	top:         0;
+	left:        0;
+	width:       auto;
+	height:      auto;
+	}
+
+  .searchContainer {
+	margin:  $spacing-s auto $spacing-xxl auto;
+	padding: 0.25rem 0;
+	gap:     $spacing-m;
+	}
+
+  .filterBarContainer {
+	height:     auto;
+	min-height: 5rem;
+	padding:    $spacing-s 0;
+	}
+
+  .filterContainer {
+	position:        absolute;
+	left:            50%;
+	display:         flex;
+	align-content:   space-around;
+	align-items:     center;
+	flex-wrap:       wrap;
+	justify-content: space-around;
+	width:           90%;
+	min-height:      5rem;
+	padding:         $spacing-s;
+	transform:       translate(-50%, -50%);
+	gap:             $spacing-s $spacing-m;
+	}
+
+  .filterText,
+  .filterTextAdvanced {
+	font-size:      clamp(16px, 4vw, 20px);
+	line-height:    26px;
+	letter-spacing: 1px;
+	}
+
+  .showcaseGrid {
+	grid-template-columns: 1fr;
+	gap:                   $spacing-m;
+	}
+
+  .showcaseContainer {
+	padding: 0 $spacing-m;
+	}
+
+  .showcaseCardTitle {
+	font-size: 20px;
+	}
+
+  .showcaseCardAuthor {
+	font-size: 14px;
+	}
+
+  .showcaseCardLine {
+	font-size: 15px;
+	}
+
+  .uspContainer {
+	flex-direction: column;
+	gap:            $spacing-l;
+	}
+
+  .uspHeading {
+	min-width: 250px;
+	height:    35px;
+
+	h3 {
+	  font-size:   16px;
+	  line-height: 20px;
+	  }
+	}
+
+  .uspContent p {
+	font-size: 12px;
+	max-width: 250px;
+	}
+  }
+
+@media (max-width: 480px) {
+  .searchCTATagline {
+	font-size:   24px;
+	line-height: 32px;
+	}
+
+  .searchEmoji {
+	font-size:   24px;
+	line-height: 32px;
+	}
+
+  .filterText,
+  .filterTextAdvanced {
+	font-size:   16px;
+	line-height: 22px;
+	}
+
+  .showcaseTitle {
+	font-size: 32px;
+	}
+
+  .showcaseSubtitle {
+	font-size: 16px;
+	}
+
+  .showcaseCardTitle {
+	font-size: 18px;
+	}
+
+  .showcaseCardAuthor {
+	font-size: 13px;
+	}
+
+  .showcaseCardLine {
+	font-size: 14px;
+	}
+
+  .uspContainer {
+	gap: $spacing-m;
+	}
+
+  .uspHeading {
+	min-width: 200px;
+	height:    30px;
+
+	h3 {
+	  font-size:   14px;
+	  line-height: 18px;
+	  }
+	}
+
+  .uspContent p {
+	font-size: 11px;
+	max-width: 200px;
+	}
+  }
+
+// Focus Studio (Zen Mode) Overlay
+.focusStudioOverlay {
+  position:         fixed;
+  z-index:          1000;
+  top:              0;
+  right:            0;
+  bottom:           0;
+  left:             0;
+  display:          flex;
+  overflow:         hidden; // Keep overlay from scrolling
+  align-items:      center;
+  flex-direction:   column;
+  justify-content:  flex-start;
+  box-sizing:       border-box; // Ensure padding is included in width calculations
+  padding:          $spacing-m; // Reduced padding to prevent horizontal overflow
+  background-color: rgba($secondary-dark, 0.95);
+  backdrop-filter:  blur(8px);
+
+  @include respond-to("mobile") {
+	padding: $spacing-m;
+	}
+  }
+
+.focusStudioHeader {
+  position:        relative;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  width:           100%;
+  max-width:       1200px;
+  margin-bottom:   $spacing-xxl;
+
+  .focusTitle {
+	font-family: $font-family-title;
+	font-size:   $font-size-xxxl;
+	font-weight: 700;
+	margin:      0;
+	color:       $primary-flame;
+
+	@include respond-to("mobile") {
+	  font-size: $font-size-xxl;
+	  }
+	}
+
+  .closeButton {
+	@include button-base;
+	font-size:        24px;
+	display:          flex;
+	align-items:      center;
+	justify-content:  center;
+	width:            48px;
+	height:           48px;
+	cursor:           pointer;
+	transition:       all $transition-fast;
+	color:            $primary-flame;
+	border:           2px solid $primary-flame;
+	border-radius:    $border-radius-pill;
+	background-color: transparent;
+
+	&:hover {
+	  transform:        scale(1.05);
+	  color:            $neutral-white;
+	  background-color: $primary-flame;
+	  }
+
+	@include respond-to("mobile") {
+	  font-size: 20px;
+	  width:     40px;
+	  height:    40px;
+	  }
+	}
+  }
+
+.focusStudioContent {
+  display:        flex;
+  overflow:       hidden; // No scrolling at this level - let background page handle it
+  flex:           1;
+  flex-direction: column;
+  width:          calc(100% - 32px); // Account for padding to prevent horizontal overflow
+  max-width:      95vw; // Ensure it never exceeds viewport width
+
+  .focusSearchSection {
+	flex-shrink:   0; // Keep search section stable
+	box-sizing:    border-box;
+	width:         100%;
+	margin-bottom: $spacing-m; // Reduced spacing
+	}
+
+  .focusResultsArea {
+	overflow:         visible; // Allow natural content flow
+	flex:             1;
+	box-sizing:       border-box;
+	width:            100%;
+	background-color: transparent;
+	// Content fits within viewport, background page scrolls
+	}
   }

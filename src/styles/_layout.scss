@@ -302,13 +302,13 @@
 // Header layout
 .layout-header {
   position:         fixed;
-  z-index:          $z-high;
+  z-index:          $z-highest; // Verhoogd naar highest om zeker te zijn
   top:              0;
   left:             0;
+  right:            0; // Toegevoegd voor betere browser support
   width:            100%;
-  padding:          $spacing-s 0;
-  border-bottom:    2px solid var(--color-accent);
-  background-color: var(--color-background);
+  background-color: $navbar-background;
+  box-shadow:       0 2px 4px rgba(0, 0, 0, 0.1); // Toegevoegd voor visuele scheiding
   }
 
 // Main content layout
