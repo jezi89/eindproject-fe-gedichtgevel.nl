@@ -3,7 +3,7 @@
 import {useState, useCallback, useEffect} from 'react';
 import {searchPoemsGeneral} from '@/services/poetryApi.js';
 import searchCacheService from '@/services/cache/searchCacheService';
-import searchContextService from '@/services/context/searchContextService';
+import searchContextService from '@/services/context/searchContextService.js';
 
 
 /**

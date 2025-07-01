@@ -2,6 +2,7 @@ import styles from './SearchResults.module.scss';
 
 // ResultsOverview component - Simple or Circle variant
 const ResultsOverview = ({resultCount, variant = 'circle'}) => {
+    // simple variant: just a count and label, for DesignPage
     if (variant === 'simple') {
         return (
             <div className={styles.resultsOverviewSimple}>
@@ -18,7 +19,7 @@ const ResultsOverview = ({resultCount, variant = 'circle'}) => {
             <div className={styles.overviewCircle}>
                 <div className={styles.overviewContent}>
                     <div className={styles.overviewTopHalf}>
-                        <div className={styles.overviewLabel}>Ga naar overzicht:</div>
+                        <div className={styles.overviewLabel}>sla zoekresultaat op</div>
                         <div className={styles.overviewIcon}>♡</div>
                     </div>
                     <div className={styles.overviewBottomHalf}>
@@ -30,3 +31,7 @@ const ResultsOverview = ({resultCount, variant = 'circle'}) => {
         </div>
     );
 };
+
+ResultsOverview.displayName = 'ResultsOverview';
+
+export default ResultsOverview;

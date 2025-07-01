@@ -1,6 +1,6 @@
 /**
  * PoemPreview Component
- * Extracted text rendering logic from SearchResultItem
+ * Extracted text rendering logic from PoemResultItem
  * Handles poem line display with animations
  */
 

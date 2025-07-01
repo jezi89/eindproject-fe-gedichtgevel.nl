@@ -9,9 +9,9 @@
 import {memo, useRef, useCallback, useState} from 'react';
 import {motion, LayoutGroup} from 'framer-motion';
 import styles from './SearchResults.module.scss';
-// import carrouselDots from './carrouselDots';
-import carrouselArrows from './CarrouselArrows';
-import PoemResultItem from '../poem/SearchResultItem.jsx';
+import CarrouselDots from './CarrouselDots.jsx';
+import CarrouselArrows from './CarrouselArrows';
+import PoemResultItem from '../poem/PoemResultItem.jsx';
 import ResultsOverview from './ResultsOverview';
 import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
 
@@ -55,11 +55,6 @@ const SearchResults = memo(({
     }, []);
 
     // Early return for empty results AFTER all hooks
-    if (!results || results.length === 0) {
-        return null;
-    }
-
-    // Early return for empty results
     if (!results || results.length === 0) {
         return null;
     }
@@ -134,10 +129,11 @@ const SearchResults = memo(({
                 </div>
             )}
 
+            {/* TODO Test if visible and hidden dots indicator works correctly */}
             {/* carrousel dots indicator for  4+ poems  - only on homepage (not in focus mode) */}
-            // TODO Test if visible and hidden dots indicator works correctly
+
             {updatedLayout.isDesktop && !canvasMode && !focusMode && (
-                <carrouselDots
+                <CarrouselDots
                     totalCount={updatedLayout.resultCount}
                     currentIndex={orchestration.currentIndex}
                     onNavigate={orchestration.handleNavigateToIndex}
@@ -160,7 +156,7 @@ const SearchResults = memo(({
                     >
                         {/* carrousel Navigation Arrows - static positioning only */}
                         {updatedLayout.iscarrousel && updatedLayout.isDesktop && (
-                            <carrouselArrows
+                            <CarrouselArrows
                                 onPrevious={orchestration.handlePrevious}
                                 onNext={orchestration.handleNext}
                                 hasMultiple={updatedLayout.hasMultiple}
@@ -169,7 +165,7 @@ const SearchResults = memo(({
                             />
                         )}
 
-                        // TODO Checken of dit allemaal nodig is
+                        {/* TODO Checken of dit allemaal nodig is */}
                         {updatedLayout.visibleResults.map((poem, displayIndex) => {
                             const actualIndex = updatedLayout.getActualIndexFromDisplay(displayIndex);
 

@@ -3,12 +3,8 @@
 @use "@/styles/mixins" as mixins;
 
 
-// Navbar container - full width sticky header
+// Navbar container
 .navbar {
-  position:         sticky;
-  //  z-index:          $z-high;
-  top:              0;
-  width:            100%;
   border-bottom:    1px solid $border-warm;
   background-color: $navbar-background;
   }

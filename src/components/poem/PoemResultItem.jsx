@@ -11,7 +11,7 @@ import styles from '../search/SearchResults.module.scss';
 // Custom hooks
 import useExpandablePoem from '@/hooks/useExpandablePoem.js';
 import useHeightCalculation from '@/hooks/poem/useHeightCalculation.js';
-import useCanvasMode from '@/hooks/poem/useCanvasMode.js';
+// import useCanvasMode from '@/hooks/poem/useCanvasMode.js';
 
 // Sub-components
 import PoemCard from './PoemCard.jsx';
@@ -67,17 +67,17 @@ const PoemResultItem = memo(({
         expandablePreview,
         preCalculatedHeight
     );
-
-    // Use canvas mode hook
-    const {
-        navigateToCanvas,
-        handleLoadInCanvas,
-        handleDoubleClick,
-        handleCardClick,
-        showToast,
-        handleMouseEnter,
-        handleMouseLeave
-    } = useCanvasMode(poem, canvasMode, onPoemSelect, onLoadInCanvas);
+    /*
+        // Use canvas mode hook
+        const {
+            navigateToCanvas,
+            handleLoadInCanvas,
+            handleDoubleClick,
+            handleCardClick,
+            showToast,
+            handleMouseEnter,
+            handleMouseLeave
+        } = useCanvasMode(poem, canvasMode, onPoemSelect, onLoadInCanvas);*/
 
     // Determine if poem can expand
     const canExpand = useMemo(() => {
@@ -151,10 +151,10 @@ const PoemResultItem = memo(({
             ref={cardRef}
             isExpanded={isExpanded}
             canvasMode={canvasMode}
-            onClick={handleCardClick}
-            onDoubleClick={canvasMode ? handleDoubleClick : undefined}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            // onClick={handleCardClick}
+            // onDoubleClick={canvasMode ? handleDoubleClick : undefined}
+            // onMouseEnter={handleMouseEnter}
+            // onMouseLeave={handleMouseLeave}
             styles={styles}
             // Monthly sizing via CSS in plaats van displayMode prop
         >
@@ -181,8 +181,8 @@ const PoemResultItem = memo(({
                     canvasMode={canvasMode}
                     canExpand={canExpand}
                     displayMode={displayMode}
-                    onLoadInCanvas={handleLoadInCanvas}
-                    onNavigateToCanvas={navigateToCanvas}
+                    // onLoadInCanvas={handleLoadInCanvas}
+                    // onNavigateToCanvas={navigateToCanvas}
                     onToggle={handleIndividualToggle}
                     styles={styles}
                 />
@@ -241,8 +241,8 @@ const PoemResultItem = memo(({
                                 animationPhase={animationPhase}
                                 isSmallPoem={isSmallPoemValue}
                                 displayMode={displayMode}
-                                onLoadInCanvas={handleLoadInCanvas}
-                                onNavigateToCanvas={navigateToCanvas}
+                                // onLoadInCanvas={handleLoadInCanvas}
+                                // onNavigateToCanvas={navigateToCanvas}
                                 onToggle={handleIndividualToggle}
                                 styles={styles}
                             />
@@ -262,8 +262,8 @@ const PoemResultItem = memo(({
                             canExpand={false}
                             animationPhase={animationPhase}
                             displayMode={displayMode}
-                            onLoadInCanvas={handleLoadInCanvas}
-                            onNavigateToCanvas={navigateToCanvas}
+                            // onLoadInCanvas={handleLoadInCanvas}
+                            // onNavigateToCanvas={navigateToCanvas}
                             onToggle={handleIndividualToggle}
                             styles={styles}
                             className={styles.nonExpandableActions}
@@ -273,9 +273,9 @@ const PoemResultItem = memo(({
             </div>
 
             {/* Canvas mode toast */}
-            {canvasMode && (
+            {/* {canvasMode && (
                 <CanvasToast show={showToast} styles={styles}/>
-            )}
+            )}*/}
         </PoemCard>
     );
 });
