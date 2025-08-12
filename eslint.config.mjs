@@ -198,25 +198,25 @@ export default [
             ...viteRules,
 
             // Basis JavaScript regels
-            'no-unused-vars': 'warn'
-        },
+            'no-unused-vars': ['warn', {"varsIgnorePattern": "motion|React"}], // Warn for unused vars, except for motion and React
 
-        // Extra settings voor plugins
-        settings: {
-            // Automatisch detecteren welke React versie wordt gebruikt
-            react: {version: 'detect'},
+            // Extra settings voor plugins
+            settings: {
+                // Automatisch detecteren welke React versie wordt gebruikt
+                react: {version: 'detect'},
 
-            // Configuratie voor import/resolver
-            'import/resolver': {
-                alias: {
-                    map: [
-                        ['@', './src']
-                    ],
-                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-                },
-                node: {
-                    // Ondersteunde bestandsextensies voor imports
-                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                // Configuratie voor import/resolver
+                'import/resolver': {
+                    alias: {
+                        map: [
+                            ['@', './src']
+                        ],
+                        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                    },
+                    node: {
+                        // Ondersteunde bestandsextensies voor imports
+                        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                    }
                 }
             }
         }
