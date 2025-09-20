@@ -1,0 +1,179 @@
+.navContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    background-color: transparent;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.navItem:hover {
+    background-color: #4a5a6d;
+}
+
+.navItem:active {
+    background-color: #5a6a7d;
+}
+
+.syncSection {
+    padding-top: 16px;
+    border-top: 1px solid #4a5a6d;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: margin-top 0.3s ease; /* Smooth positioning transitions */
+}
+
+/* Smart positioning based on XY sliders visibility */
+.syncSection.withXySlidersHidden {
+    margin-top: 2px; /* Near top when XY sliders not visible */
+}
+
+.syncSection.withXySlidersVisible {
+    margin-top: 290px; /* Push down when XY sliders are visible - leaves room for positioning */
+}
+
+.buttonGroup {
+    padding: 12px;
+    border-top: 1px solid #3d4a5c;
+    background-color: rgba(45, 55, 72, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.syncLabel {
+    font-size: 11px;
+    color: #a0a9b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.syncButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #3d4a5c;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: inherit;
+}
+
+.syncButton:hover {
+    background-color: #4a5a6d;
+}
+
+.syncButton:active {
+    background-color: #5a6a7d;
+}
+
+.syncButton.toggledOff {
+    background-color: #2a2a2a;
+    opacity: 0.6;
+}
+
+.syncButton.toggledOff:hover {
+    background-color: #3a3a3a;
+}
+
+/* --- Added for consistency with Controls.jsx --- */
+.panelHeader {
+    position: relative; /* For absolute positioning of the button */
+    padding: 16px;
+    padding-top: 28px; /* Extra padding on top for the button */
+    border-bottom: 1px solid #3d4a5c;
+}
+
+.panelHeader h2, .panelHeader h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: none;
+    border: none;
+    color: #a0a9b8;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    user-select: none; /* Prevents caret on click */
+}
+
+.closeButton:hover {
+    color: white;
+}
+
+/* Selection Indicator */
+.selectionIndicator {
+    padding: 12px 16px;
+    border-bottom: 1px solid #3d4a5c;
+    background-color: rgba(45, 55, 72, 0.3);
+}
+
+.selectionLabel {
+    font-size: 11px;
+    color: #a0a9b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.selectionStatus {
+    font-size: 12px;
+    color: #e2e8f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: rgba(74, 90, 109, 0.3);
+    border-left: 3px solid #4a5a6d;
+    transition: all 0.2s ease;
+}
+
+/* Selection type indicators */
+.selectionStatus.none {
+    color: #a0a9b8;
+    border-left-color: #64748b;
+}
+
+.selectionStatus.lines-only {
+    color: #93c5fd;
+    border-left-color: #3b82f6;
+}
+
+.selectionStatus.all {
+    color: #fbbf24;
+    border-left-color: #f59e0b;
+}
+
+.selectionStatus.lines-title,
+.selectionStatus.lines-author {
+    color: #a78bfa;
+    border-left-color: #8b5cf6;
+}
+
+.selectionStatus.title-only,
+.selectionStatus.author-only,
+.selectionStatus.title-author {
+    color: #fb7185;
+    border-left-color: #f43f5e;
+}
+
+/* Anchor for XY sliders popover */
+.xyAnchor {
+    position: relative;
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}

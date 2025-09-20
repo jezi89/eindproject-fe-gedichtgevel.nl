@@ -1,0 +1,78 @@
+.layoutContainer {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.controlsPanel, .navPanel {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  background-color: #2a3441;
+  color: #cfd4db;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  height: 100%;
+  z-index: 10;
+}
+
+.controlsPanel {
+  border-right: 1px solid #3d4a5c;
+  overflow-y: auto;
+}
+
+.navPanel {
+  border-left: 1px solid #3d4a5c;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.controlsPanel.collapsed {
+  transform: translateX(-100%);
+}
+
+.navPanel.collapsed {
+  transform: translateX(100%);
+}
+
+.canvasWrapper {
+  position: relative;
+  flex: 1;
+  background-color: #1d2230;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.openButton {
+  position: absolute;
+  top: 16px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(42, 52, 65, 0.8);
+  backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid #4a5a6d;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.openButton:hover {
+  background-color: #3d4a5c;
+}
+
+.openControlsButton {
+  left: 16px;
+}
+
+.openNavButton {
+  right: 16px;
+}

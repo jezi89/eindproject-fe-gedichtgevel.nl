@@ -40,7 +40,7 @@ export const calculateHiddenContent = (poem, expandablePreview) => {
  */
 export const isShortPoem = (poem) => {
     return poem && poem.lines && poem.lines.length <= 4;
-// };
+};
 
 /**
  * Bepaalt of een kort gedicht expandable is (meer dan 1 regel)
@@ -49,7 +49,7 @@ export const isShortPoem = (poem) => {
  */
 export const isShortPoemExpandable = (poem) => {
     return isShortPoem(poem) && poem.lines && poem.lines.length > 1;
-// };
+};
 
 /**
  * Helper functie om lege of insignificante regels te filteren
@@ -216,7 +216,7 @@ export const calculateFixedPreviewHeight = (lineHeight = 29.25, extraPadding = 6
 export const calculateShortPoemMinHeight = (lineHeight = 30, baseHeight = 120) => {
     // Gebruik nieuwe vaste preview hoogte
     return Math.max(baseHeight, calculateFixedPreviewHeight());
-// };
+};
 
 /**
  * Bepaalt of kort gedicht moet kunnen expanderen in global toggle
