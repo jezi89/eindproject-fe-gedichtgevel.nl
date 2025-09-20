@@ -1,0 +1,93 @@
+/* ShortcutFeedback.module.css */
+
+.feedbackContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 20px; /* Offset from the left edge of the screen */
+  z-index: 9998; /* Below FloatingShortcutPanel but above canvas */
+  pointer-events: none; /* Don't interfere with interactions */
+}
+
+.feedbackCard {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: slideInFeedback 0.4s ease-out;
+  min-width: 200px;
+}
+
+.feedbackIcon {
+  font-size: 18px;
+  animation: pulseIcon 0.8s ease-in-out;
+}
+
+.feedbackText {
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@keyframes slideInFeedback {
+  0% {
+    transform: translateY(100%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseIcon {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .feedbackContainer {
+    left: 20px;
+    bottom: 20px;
+  }
+  
+  .feedbackCard {
+    min-width: 180px;
+    padding: 10px 14px;
+  }
+  
+  .feedbackIcon {
+    font-size: 16px;
+  }
+  
+  .feedbackText {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedbackContainer {
+    left: 10px;
+    bottom: 15px;
+  }
+  
+  .feedbackCard {
+    min-width: 160px;
+    padding: 8px 12px;
+  }
+  
+  .feedbackText {
+    font-size: 12px;
+  }
+}

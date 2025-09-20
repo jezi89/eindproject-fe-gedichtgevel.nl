@@ -1,29 +1,9 @@
-// Canvas Component Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-//
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//
-// 2. Canvas-specifieke overwegingen:
-//    - Canvas element sizing en positioning
-//    - Overlay controls (zoom, tools)
-//    - Selection indicators
-//    - Grid/ruler overlays
-//    - Cursor states voor verschillende tools
-//
-// 3. Performance tips:
-//    - Gebruik transform voor element beweging
-//    - Hardware acceleration waar mogelijk
-//    - Minimaliseer repaints/reflows
 // Canvas Integration Styles - Converted from Canvas-Project
 // Aangepast voor gedichtgevel.nl project layout met NavBar
 
-/* Import project variables using modern @use syntax */
-@use '../../../styles/variables' as vars;
-@use '../../../styles/mixins' as mix;
+/* Import project variables */
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 /* Canvas theme variables */
 $canvas-bg-dark: #1d2230;
@@ -103,8 +83,8 @@ $canvas-border: #4a5568;
     width: 100vw;
     height: calc(100vh - 80px); // Account for NavBar height
     background: $canvas-bg-dark;
-
-    @include mix.respond-to('mobile') {
+    
+    @include respond-to('mobile') {
         flex-direction: column;
         height: calc(100vh - 80px); // Adjust for mobile NavBar
     }
@@ -407,7 +387,7 @@ $canvas-border: #4a5568;
 }
 
 /* Responsive adjustments for color controls */
-@include mix.respond-to('mobile') {
+@include respond-to('mobile') {
     .colorControls {
         flex-direction: column;
         align-items: stretch;
@@ -980,19 +960,19 @@ $canvas-border: #4a5568;
 }
 
 /* Mobile responsive aanpassingen */
-@include mix.respond-to('tablet') {
+@include respond-to('tablet') {
     .canvasContainer {
         flex-direction: column;
         height: calc(100vh - 60px); // Smaller mobile NavBar
     }
-
+    
     .floatingPhotoGrid {
         width: 90vw;
         max-width: none;
     }
 }
 
-@include mix.respond-to('mobile') {
+@include respond-to('mobile') {
     .controlsWrapper {
         padding: 0.5rem;
         gap: 8px;

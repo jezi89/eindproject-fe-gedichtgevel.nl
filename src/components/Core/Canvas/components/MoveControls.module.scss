@@ -1,0 +1,77 @@
+/* src/components/Core/Canvas/components/MoveControls.module.css */
+.moveControlsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.moveLabel {
+  font-size: 11px;
+  color: #a0a9b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.buttonGroup {
+  display: flex;
+  border: 1px solid #4a5568;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  flex-direction: column;
+}
+
+.buttonGroup button {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  color: #a0aec0;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.buttonGroup button:first-child {
+  border-right: 1px solid #4a5568;
+}
+
+.buttonGroup button:hover {
+  background-color: #4a5568;
+}
+
+.buttonGroup button.active {
+  background-color: #4299e1; /* Blauwe actieve kleur */
+  color: white;
+}
+
+/* Disabled button styling */
+.buttonGroup button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #2d3748;
+  color: #4a5568;
+}
+
+.buttonGroup button:disabled:hover {
+  background-color: #2d3748; /* No hover effect when disabled */
+}
+
+.status {
+  font-size: 11px;
+  color: #a0a9b8;
+  text-align: center;
+  min-height: 14px;
+}
+
+/* Status indicators */
+.status.ready {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.status.waiting {
+  color: #f59e0b;
+  font-style: italic;
+}
