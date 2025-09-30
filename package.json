@@ -42,8 +42,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
-    "playwright": "^1.53.1",
     "knip": "^5.63.1",
+    "playwright": "^1.53.1",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.2.4",
     "prop-types": "^15.8.1",
@@ -54,5 +54,8 @@
     "vite": "^6.3.5",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^3.2.4"
+  },
+  "optionalDependencies": {
+    "sass-embedded-win32-x64": "^1.93.2"
   }
 }
