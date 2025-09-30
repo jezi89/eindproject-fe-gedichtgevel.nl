@@ -40,24 +40,22 @@ export const calculateHiddenContent = (poem, expandablePreview) => {
  */
 export const isShortPoem = (poem) => {
     return poem && poem.lines && poem.lines.length <= 4;
-}
+// };
 
 /**
  * Bepaalt of een kort gedicht expandable is (meer dan 1 regel)
  * @param {Object} poem - Gedicht object met lines array
  * @returns {boolean} True als kort gedicht expandable is
  */
-
 export const isShortPoemExpandable = (poem) => {
     return isShortPoem(poem) && poem.lines && poem.lines.length > 1;
-}
+// };
 
 /**
  * Helper functie om lege of insignificante regels te filteren
  * @param {string} line - Regel tekst
  * @returns {boolean} True als regel significante content heeft
  */
-
 const hasSignificantContent = (line) => {
     return line && typeof line === 'string' && line.trim().length > 0;
 };
@@ -85,8 +83,6 @@ const validateMinimumPreview = (previewLines, allLines) => {
  * @param {Object} poem - Gedicht object met lines array
  * @returns {Object} { previewLines, hiddenContent, isExpandable }
  */
-
-
 export const createExpandablePreview = (poem) => {
     if (!poem || !poem.lines || poem.lines.length === 0) {
         return {previewLines: [], hiddenContent: [], isExpandable: false};
@@ -108,14 +104,14 @@ export const createExpandablePreview = (poem) => {
         hiddenContent: [],
         isExpandable: false
     };
-}
+};
 
 /**
  * Intelligente preview logica: eerste frase (max 5 regels) of vul aan tot 6 line-heights
  * @param {Object} poem - Gedicht object met lines array
  * @returns {Array} Array van preview regels
  */
-export const getIntelligentPreviewLines = (poem) => {
+// UNUSED: export const getIntelligentPreviewLines = (poem) => {
 //     if (!poem || !poem.lines || poem.lines.length <= 1) {
 //         return poem?.lines || [];
 //     }
@@ -151,7 +147,7 @@ export const getIntelligentPreviewLines = (poem) => {
 //
 //     // Geen frase einde gevonden, gebruik max 6 line-heights of alle regels
 //     return lines.slice(0, Math.min(maxPreviewLineHeights, lines.length));
-};
+// };
 
 /**
  * Haalt preview regels op voor korte gedichten (legacy functie)
@@ -220,16 +216,16 @@ export const calculateFixedPreviewHeight = (lineHeight = 29.25, extraPadding = 6
 export const calculateShortPoemMinHeight = (lineHeight = 30, baseHeight = 120) => {
     // Gebruik nieuwe vaste preview hoogte
     return Math.max(baseHeight, calculateFixedPreviewHeight());
-};
+// };
 
 /**
  * Bepaalt of kort gedicht moet kunnen expanderen in global toggle
  * @param {Object} poem - Gedicht object
  * @returns {boolean} True als gedicht mee moet doen met global toggle
  */
-export const shouldShortPoemParticipateInGlobalToggle = (poem) => {
+// UNUSED: export const shouldShortPoemParticipateInGlobalToggle = (poem) => {
 //     return isShortPoemExpandable(poem);
-};
+// };
 
 /**
  * Formatteert button tekst voor korte gedichten

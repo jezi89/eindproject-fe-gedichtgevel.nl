@@ -78,31 +78,27 @@ const PoemResultItem = memo(
             handleMouseLeave
         } = useCanvasMode(poem, canvasMode, onPoemSelect, onLoadInCanvas);*/
 
-    // Determine if poem can expand
-    const canExpand = useMemo(() => {
-        // In canvas mode, never allow expansion
-        if (canvasMode) return false;
-        // Only poems > 4 lines can expand
-        return expandablePreview.isExpandable;
-    }, [expandablePreview.isExpandable, canvasMode]);
+        // Determine if poem can expand
+        const canExpand = useMemo(() => {
+            // In canvas mode, never allow expansion
+            if (canvasMode) return false;
+            // Only poems > 4 lines can expand
+            return expandablePreview.isExpandable;
+        }, [expandablePreview.isExpandable, canvasMode]);
 
-    // Use expandable poem hook
-    const {
-        animationPhase,
-        isExpanded,
-        cardRef,
-        handleIndividualToggle
-    } = useExpandablePoem(
-        poem,
-        index,
-        poemState,
-        onPoemStateChange,
-        finalHeightInfo,
-        expandablePreview,
-        allPoems,
-        styles,
-        onCollapseEvent
-    );
+        // Use expandable poem hook
+        const {animationPhase, isExpanded, cardRef, handleIndividualToggle} =
+            useExpandablePoem(
+                poem,
+                index,
+                poemState,
+                onPoemStateChange,
+                finalHeightInfo,
+                expandablePreview,
+                allPoems,
+                styles,
+                onCollapseEvent
+            );
 
     // Calculate hidden content for preview indicator
     const hiddenContentInfo = useMemo(() => {
