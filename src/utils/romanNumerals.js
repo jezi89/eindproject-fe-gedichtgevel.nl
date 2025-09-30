@@ -54,22 +54,22 @@ export const toRoman = (num) => {
  * @param {string} roman - Roman numeral string
  * @returns {number} The numeric value
  */
-export const fromRoman = (roman) => {
-    if (!roman || typeof roman !== 'string') return 0;
+// UNUSED: export const fromRoman = (roman) => {
+//     if (!roman || typeof roman !== 'string') return 0;
 
-    const cleanRoman = roman.toUpperCase().trim();
-    let result = 0;
-    let i = 0;
+//     const cleanRoman = roman.toUpperCase().trim();
+//     let result = 0;
+//     let i = 0;
 
-    for (const {value, numeral} of ROMAN_NUMERALS) {
-        while (cleanRoman.substring(i, i + numeral.length) === numeral) {
-            result += value;
-            i += numeral.length;
-        }
-    }
+//     for (const {value, numeral} of ROMAN_NUMERALS) {
+//         while (cleanRoman.substring(i, i + numeral.length) === numeral) {
+//             result += value;
+//             i += numeral.length;
+//         }
+//     }
 
-    return result;
-};
+//     return result;
+// };
 
 /**
  * Get the Roman numeral for a decade (multiple of 10)
@@ -88,16 +88,16 @@ export const getDecadeRoman = (decadeNumber) => {
  * @param {number} decadeNumber - The decade number (0, 1, 2, etc.)
  * @returns {string} Roman numeral for dropdown display
  */
-export const getDropdownDecadeRoman = (decadeNumber) => {
-    if (decadeNumber === 0) return 'X'; // 1-10
-    if (decadeNumber === 1) return 'XX'; // 11-20
-    if (decadeNumber === 2) return 'XXX'; // 21-30
+// UNUSED: export const getDropdownDecadeRoman = (decadeNumber) => {
+//     if (decadeNumber === 0) return 'X'; // 1-10
+//     if (decadeNumber === 1) return 'XX'; // 11-20
+//     if (decadeNumber === 2) return 'XXX'; // 21-30
 
-    // For decade 3 and higher, use proper Roman numerals
-    // Decade 3 = 31-40 = XL, Decade 4 = 41-50 = L, etc.
-    const decadeStart = (decadeNumber + 1) * 10; // +1 because we want the start of next decade range
-    return toRoman(decadeStart);
-};
+//     // For decade 3 and higher, use proper Roman numerals
+//     // Decade 3 = 31-40 = XL, Decade 4 = 41-50 = L, etc.
+//     const decadeStart = (decadeNumber + 1) * 10; // +1 because we want the start of next decade range
+//     return toRoman(decadeStart);
+// };
 
 /**
  * Format a range display with Roman numerals for decades
@@ -107,26 +107,26 @@ export const getDropdownDecadeRoman = (decadeNumber) => {
  * @param {boolean} useDropdownFormat - Whether to use simplified dropdown format (X, XX, XXX)
  * @returns {Object} Formatted range information
  */
-export const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
-    const startDecade = Math.floor(startIndex / 10);
-    const endDecade = Math.floor(endIndex / 10);
+// UNUSED: export const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
+//     const startDecade = Math.floor(startIndex / 10);
+//     const endDecade = Math.floor(endIndex / 10);
 
-    // Choose Roman numeral format based on usage
-    const romanNumeral = useDropdownFormat
-        ? getDropdownDecadeRoman(startDecade)
-        : (startDecade === 0 ? 'I-X' : getDecadeRoman(startDecade));
+//     // Choose Roman numeral format based on usage
+//     const romanNumeral = useDropdownFormat
+//         ? getDropdownDecadeRoman(startDecade)
+//         : (startDecade === 0 ? 'I-X' : getDecadeRoman(startDecade));
 
-    const displayStart = startIndex + 1; // Convert to 1-based
-    const displayEnd = endIndex + 1; // Convert to 1-based
+//     const displayStart = startIndex + 1; // Convert to 1-based
+//     const displayEnd = endIndex + 1; // Convert to 1-based
 
-    return {
-        romanNumeral,
-        displayName: `${displayStart}-${displayEnd}`,
-        startIndex,
-        endIndex,
-        isFirstDecade: startDecade === 0
-    };
-};
+//     return {
+//         romanNumeral,
+//         displayName: `${displayStart}-${displayEnd}`,
+//         startIndex,
+//         endIndex,
+//         isFirstDecade: startDecade === 0
+//     };
+// };
 
 /**
  * Generate all available decades for a given total count
@@ -199,44 +199,44 @@ export const generateDropdownDecades = (totalCount) => {
  * @param {number} totalCount - Total number of items
  * @returns {Object} Roman numeral display information
  */
-export const getCarouselRomanDisplay = (currentIndex, totalCount) => {
-    const currentDecade = Math.floor(currentIndex / 10);
+// UNUSED: export const getCarouselRomanDisplay = (currentIndex, totalCount) => {
+//     const currentDecade = Math.floor(currentIndex / 10);
 
-    if (currentDecade === 0) {
-        return {
-            showRoman: false,
-            romanNumeral: '',
-            decadeStart: 0,
-            decadeEnd: Math.min(9, totalCount - 1)
-        };
-    }
+//     if (currentDecade === 0) {
+//         return {
+//             showRoman: false,
+//             romanNumeral: '',
+//             decadeStart: 0,
+//             decadeEnd: Math.min(9, totalCount - 1)
+//         };
+//     }
 
-    const romanNumeral = getDecadeRoman(currentDecade);
-    const decadeStart = currentDecade * 10;
-    const decadeEnd = Math.min((currentDecade + 1) * 10 - 1, totalCount - 1);
+//     const romanNumeral = getDecadeRoman(currentDecade);
+//     const decadeStart = currentDecade * 10;
+//     const decadeEnd = Math.min((currentDecade + 1) * 10 - 1, totalCount - 1);
 
-    return {
-        showRoman: true,
-        romanNumeral,
-        decadeStart,
-        decadeEnd,
-        currentDecade
-    };
-};
+//     return {
+//         showRoman: true,
+//         romanNumeral,
+//         decadeStart,
+//         decadeEnd,
+//         currentDecade
+//     };
+// };
 
 /**
  * Validate Roman numeral string
  * @param {string} roman - Roman numeral to validate
  * @returns {boolean} True if valid Roman numeral
  */
-export const isValidRoman = (roman) => {
-    if (!roman || typeof roman !== 'string') return false;
+// UNUSED: export const isValidRoman = (roman) => {
+//     if (!roman || typeof roman !== 'string') return false;
 
-    const cleanRoman = roman.toUpperCase().trim();
-    const validPattern = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+//     const cleanRoman = roman.toUpperCase().trim();
+//     const validPattern = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
 
-    return validPattern.test(cleanRoman);
-};
+//     return validPattern.test(cleanRoman);
+// };
 
 /**
  * Get ordinal suffix for numbers (1st, 2nd, 3rd, etc.)
@@ -244,16 +244,16 @@ export const isValidRoman = (roman) => {
  * @param {number} num - The number
  * @returns {string} Number with ordinal suffix
  */
-export const getOrdinal = (num) => {
-    const j = num % 10;
-    const k = num % 100;
+// UNUSED: export const getOrdinal = (num) => {
+//     const j = num % 10;
+//     const k = num % 100;
 
-    if (j === 1 && k !== 11) return num + 'st';
-    if (j === 2 && k !== 12) return num + 'nd';
-    if (j === 3 && k !== 13) return num + 'rd';
+//     if (j === 1 && k !== 11) return num + 'st';
+//     if (j === 2 && k !== 12) return num + 'nd';
+//     if (j === 3 && k !== 13) return num + 'rd';
 
-    return num + 'th';
-};
+//     return num + 'th';
+// };
 
 // Export constants for external use
-export {ROMAN_NUMERALS};
+// UNUSED: export {ROMAN_NUMERALS};
