@@ -28,46 +28,45 @@ import {createExpandablePreview, calculateHiddenContent} from '@/utils/shortPoem
 import {calculateStaggeredDelays, calculateMinimumExpandedHeight, isSmallPoem} from '@/utils/poemHeightCalculator.js';
 import {nonExpandableVariants} from '@/utils/animationVariants.js';
 
-const PoemResultItem = memo(({
-                                 poem,
-                                 index,
-                                 allPoems,
-                                 navigationDirection,
-                                 poemState,
-                                 onPoemStateChange,
-                                 preCalculatedHeight,
-                                 canvasMode = false,
-                                 displayMode = 'search', // 'search' or 'monthly'
-                                 onPoemSelect,
-                                 onLoadInCanvas,
-                                 onCollapseEvent
-                             }) => {
-    // Calling hooks before any other logic
-    const contentContainerRef = useRef(null);
-    const [, setSynchronizedHeight] = useState(null);
+const PoemResultItem = memo(
+    ({
+         poem,
+         index,
+         allPoems,
+         navigationDirection,
+         poemState,
+         onPoemStateChange,
+         preCalculatedHeight,
+         canvasMode = false,
+         displayMode = "search", // 'search' or 'monthly'
+         onPoemSelect,
+         onLoadInCanvas,
+         onNavigateToCanvas,
+         onCollapseEvent,
+     }) => {
+        // Calling hooks before any other logic
+        const contentContainerRef = useRef(null);
+        const [, setSynchronizedHeight] = useState(null);
 
-    // Create expandable preview - with fallback for invalid poems
-    const expandablePreview = useMemo(() => {
-        if (!poem || !poem.lines) {
-            return {isExpandable: false, previewLines: [], hiddenContent: []};
-        }
-        return createExpandablePreview(poem);
-    }, [poem]);
+        // Create expandable preview - with fallback for invalid poems
+        const expandablePreview = useMemo(() => {
+            if (!poem || !poem.lines) {
+                return {isExpandable: false, previewLines: [], hiddenContent: []};
+            }
+            return createExpandablePreview(poem);
+        }, [poem]);
 
-    // Use height calculation hook
-    const {
-        screenLayout,
-        finalHeightInfo,
-        isLoadingHeight
-    } = useHeightCalculation(
-        poem,
-        index,
-        allPoems,
-        navigationDirection,
-        expandablePreview,
-        preCalculatedHeight
-    );
-    /*
+        // Use height calculation hook
+        const {screenLayout, finalHeightInfo, isLoadingHeight} =
+            useHeightCalculation(
+                poem,
+                index,
+                allPoems,
+                navigationDirection,
+                expandablePreview,
+                preCalculatedHeight
+            );
+        /*
         // Use canvas mode hook
         const {
             navigateToCanvas,

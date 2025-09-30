@@ -1,17 +1,18 @@
 // TODO useSearchOrchestration.js hook werking checken en testen
-
 /**
  * useSearchOrchestration Hook
- * Manages complex state orchestration for search results
- * Handles poem states, navigation, global toggles, and height calculations
+ * Unified search state management combining layout, navigation, and poem state
+ * Controls carousel navigation, poem expand/collapse, and global operations
  * Extracted from SearchResults for better separation of concerns
  */
 
+// OPTIMIZED IMPORTS - alleen wat nodig is
 import {useState, useCallback, useEffect, useTransition, useDeferredValue, startTransition} from 'react';
 import {getCarouselPoemHeight, calculateCollapseScroll} from '@/utils/poemHeightCalculator';
-import {analyzeExpandablePoems} from '@/utils/shortPoemUtils';
+import {analyzeExpandablePoems} from '@/utils/shortPoemUtils.js';
 import searchContextService from '@/services/context/searchContextService';
 
+// Navigation handler for carousel dots
 export const useSearchOrchestration = (results, layout) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [navigationDirection, setNavigationDirection] = useState('initial');
@@ -342,7 +343,6 @@ export const useSearchOrchestration = (results, layout) => {
         };
     }, [poemStates, layout.visibleIndices, results]);
 
-    // Navigation handler for carousel dots
     const handleNavigateToIndex = useCallback(async (targetIndex, options = {}) => {
         // Validate targetIndex is a valid number
         const validIndex = typeof targetIndex === 'number' ? targetIndex : parseInt(targetIndex, 10);

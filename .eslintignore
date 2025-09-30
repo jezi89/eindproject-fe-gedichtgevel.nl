@@ -1,0 +1,15 @@
+# Build directories
+dist/
+build/
+node_modules/
+
+# LEGACY code (reference only)
+**/LEGACY/**
+
+# Generated files
+*.min.js
+*.bundle.js
+
+# Temporary files
+.tmp/
+.temp/

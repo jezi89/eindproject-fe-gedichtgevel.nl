@@ -462,11 +462,11 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
  * @param {string} title De titel om op te zoeken. / The title to search for.
  * @returns {Promise<Array<object>>} Found poems
  */
-export async function searchPoemsByTitle(title) {
-    // This function can continue to exist if you want explicit "search by title only"
-    // functionality, otherwise it can be removed if searchPoemsGeneral is sufficient.
-    return searchByTitleInService(title);
-}
+// UNUSED: export async function searchPoemsByTitle(title) {
+//     // This function can continue to exist if you want explicit "search by title only"
+//     // functionality, otherwise it can be removed if searchPoemsGeneral is sufficient.
+//     return searchByTitleInService(title);
+// }
 
 
 /**
@@ -476,9 +476,9 @@ export async function searchPoemsByTitle(title) {
  * @param {string} author De auteur om op te zoeken. / The author to search for.
  * @returns {Promise<Array<object>>} Found poems
  */
-export async function searchPoemsByAuthor(author) {
-    return searchByAuthorInService(author);
-}
+// UNUSED: export async function searchPoemsByAuthor(author) {
+//     return searchByAuthorInService(author);
+// }
 
 
 /**

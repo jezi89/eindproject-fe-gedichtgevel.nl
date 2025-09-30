@@ -337,20 +337,20 @@ export const getUserProfile = async (userId) => {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 
-export const updateUserProfile = async (userId, updates) => {
-    try {
-        const {error} = await supabase
-            .from('profile')
-            .update(updates)
-            .eq('id', userId);
-
-        if (error) throw error;
-
-        return handleAuthSuccess();
-    } catch (error) {
-        return handleAuthError('Profile update', error);
-    }
-};
+// UNUSED: export const updateUserProfile = async (userId, updates) => {
+//     try {
+//         const {error} = await supabase
+//             .from('profile')
+//             .update(updates)
+//             .eq('id', userId);
+//
+//         if (error) throw error;
+//
+//         return handleAuthSuccess();
+//     } catch (error) {
+//         return handleAuthError('Profile update', error);
+//     }
+// };
 
 
 /**
@@ -385,6 +385,6 @@ export default {
         return updatePassword(updates.password);
     },
     createUserProfile,
-    getUserProfile,
-    updateUserProfile
+    getUserProfile
+    // updateUserProfile (commented out as UNUSED)
 };

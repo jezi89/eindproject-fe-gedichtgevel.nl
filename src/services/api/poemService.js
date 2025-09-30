@@ -180,7 +180,7 @@ async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
  * @param {string} author - De exacte auteur van het gedicht.
  * @returns {Promise<object|null>} - Het gevonden gedicht of null bij niet gevonden.
  */
-export async function fetchPoem(title, author) {
+async function fetchPoem(title, author) {
     if (!title || !author) {
         console.warn("fetchPoem vereist zowel titel als auteur.");
         return null;
@@ -348,29 +348,28 @@ export async function searchPoemsByAuthor(author) {
  * @param {string} title - De titel om op te zoeken.
  * @returns {Promise<Array<object>>} - Een array van unieke gedichten die aan beide criteria voldoen.
  */
-export async function searchPoemsByAuthorAndTitle(author, title) {
-    if (!author || !title) {
-        throw new Error("Zowel auteur als titel zijn vereist voor deze zoekopdracht.");
-    }
-
-    let poemsForDisplay = [];
-
-    // Stap 1: Directe zoekopdracht met AND operator in PoetryDB
-    try {
-        const poetryDbResults = await fetchPoemsFromPoetryDBByAuthorAndTitle(author, title);
-        poetryDbResults.forEach(poem => {
-            poemsForDisplay.push({...poem, source: 'poetrydb_direct_author_and_title'});
-        });
-    } catch (error) {
-        console.error(`Fout bij gecombineerde zoekopdracht (auteur: "${author}", titel: "${title}"):`, error.message);
-    }
-
-    // Stap 2: Aanvullende geavanceerde implementatie...
-    // TODO: Implementeer eventueel aanvullende logica met Supabase, fuzzy matching, etc.
-
-    // Stap 3: Zorg voor unieke resultaten
-    return removeDuplicatePoems(poemsForDisplay);
-}
+// UNUSED: export async function searchPoemsByAuthorAndTitle(author, title) {
+//     if (!author || !title) {
+//         throw new Error("Zowel auteur als titel zijn vereist voor deze zoekopdracht.");
+//     }
+//
+//     let poemsForDisplay = [];
+//
+//     // Stap 1: Directe zoekopdracht met AND operator in PoetryDB
+//     try {
+//         const poetryDbResults = await fetchPoemsFromPoetryDBByAuthorAndTitle(author, title);
+//         poetryDbResults.forEach(poem => {
+//             poemsForDisplay.push({...poem, source: 'poetrydb_direct_author_and_title'});
+//         });
+//     } catch (error) {
+//         console.error(`Fout bij gecombineerde zoekopdracht (auteur: "${author}", titel: "${title}"):`, error.message);
+//     }
+//
+//     // Stap 2: Aanvullende geavanceerde implementatie...
+//     // TODO: Implementeer eventueel aanvullende logica met Supabase, fuzzy matching, etc.
+//
+//     return removeDuplicatePoems(poemsForDisplay);
+// }
 
 /**
  * Haalt één specifiek gedicht op basis van exacte titel en auteur.
