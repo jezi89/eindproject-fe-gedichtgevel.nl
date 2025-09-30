@@ -524,7 +524,7 @@
 
   &::-webkit-scrollbar-thumb {
 	background-color: $thumb-color;
-	border-radius:    $width / 2;
+	border-radius:    math.div($width, 2);
 	border:           2px solid $track-color;
 	}
 

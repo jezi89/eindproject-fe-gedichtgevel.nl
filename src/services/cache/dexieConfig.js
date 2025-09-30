@@ -78,6 +78,7 @@ export async function initializeDatabase() {
     } catch (error) {
         console.error('Failed to initialize database:', error);
     }
+
 }
 
 /**
