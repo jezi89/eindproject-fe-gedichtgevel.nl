@@ -16,6 +16,7 @@ import SearchErrorBoundary from "@/components/search/SearchErrorBoundary.jsx";
 import Footer from "@/layouts/Footer/Footer.jsx";
 import MonthlyPoems from "@/components/monthly/MonthlyPoems.jsx";
 import {useSearchPoems} from "@/hooks/search/useSearchPoems.js";
+import {useCanvasNavigation} from "@/hooks/canvas/useCanvasNavigation.js";
 import {scrollToSearchResults} from "@/utils/poemHeightCalculator.js";
 import searchContextService from "@/services/context/searchContextService";
 import styles from './HomePage.module.scss';
@@ -30,6 +31,9 @@ export function HomePage() {
     const [searchParams] = useSearchParams();
     const [focusStudioOpen, setFocusStudioOpen] = useState(false);
     const [focusSearchTerm, setFocusSearchTerm] = useState('');
+
+    // Canvas navigation hook
+    const { navigateToCanvas } = useCanvasNavigation();
 
     // Render welcome message and search bar
     // Handle any error states
@@ -54,6 +58,29 @@ export function HomePage() {
     };
 
     const searchState = getSearchState();
+
+    // Handle canvas navigation from search results
+    const handleNavigateToCanvas = (poemData) => {
+        try {
+            console.log('🎨 HomePage: Navigating to canvas with poem:', poemData?.title);
+
+            // Validate that we have the navigation function
+            if (!navigateToCanvas) {
+                throw new Error('Navigation function not available');
+            }
+
+            navigateToCanvas(poemData, { source: 'search' });
+        } catch (error) {
+            console.error('❌ Failed to navigate to canvas:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                poemData: poemData,
+            });
+            // TODO: Show user-friendly error message (toast/notification)
+            alert('Er ging iets mis bij het openen van het gedicht in de canvas. Probeer het opnieuw.');
+        }
+    };
 
     // Handle URL parameters for Focus Studio auto-open
     useEffect(() => {
@@ -186,6 +213,7 @@ export function HomePage() {
                                     searchTerm={searchTerm}
                                     hideSeriesNavigation={false}
                                     initialIndex={carouselPosition}
+                                    onNavigateToCanvas={handleNavigateToCanvas}
                                 />
                             </SearchErrorBoundary>
                         )}
