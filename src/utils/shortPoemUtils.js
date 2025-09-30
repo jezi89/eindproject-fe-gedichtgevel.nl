@@ -40,22 +40,24 @@ export const calculateHiddenContent = (poem, expandablePreview) => {
  */
 export const isShortPoem = (poem) => {
     return poem && poem.lines && poem.lines.length <= 4;
-};
+}
 
 /**
  * Bepaalt of een kort gedicht expandable is (meer dan 1 regel)
  * @param {Object} poem - Gedicht object met lines array
  * @returns {boolean} True als kort gedicht expandable is
  */
+
 export const isShortPoemExpandable = (poem) => {
     return isShortPoem(poem) && poem.lines && poem.lines.length > 1;
-};
+}
 
 /**
  * Helper functie om lege of insignificante regels te filteren
  * @param {string} line - Regel tekst
  * @returns {boolean} True als regel significante content heeft
  */
+
 const hasSignificantContent = (line) => {
     return line && typeof line === 'string' && line.trim().length > 0;
 };
@@ -83,6 +85,8 @@ const validateMinimumPreview = (previewLines, allLines) => {
  * @param {Object} poem - Gedicht object met lines array
  * @returns {Object} { previewLines, hiddenContent, isExpandable }
  */
+
+
 export const createExpandablePreview = (poem) => {
     if (!poem || !poem.lines || poem.lines.length === 0) {
         return {previewLines: [], hiddenContent: [], isExpandable: false};
@@ -104,7 +108,7 @@ export const createExpandablePreview = (poem) => {
         hiddenContent: [],
         isExpandable: false
     };
-};
+}
 
 /**
  * Intelligente preview logica: eerste frase (max 5 regels) of vul aan tot 6 line-heights
@@ -112,41 +116,41 @@ export const createExpandablePreview = (poem) => {
  * @returns {Array} Array van preview regels
  */
 export const getIntelligentPreviewLines = (poem) => {
-    if (!poem || !poem.lines || poem.lines.length <= 1) {
-        return poem?.lines || [];
-    }
-
-    const lines = poem.lines;
-    const maxPreviewLineHeights = 6;
-    const maxFirstPhraseLines = 5;
-
-    // Zoek einde van eerste frase (tot punt, uitroepteken, vraagteken, of dubbele punt)
-    let firstPhraseEnd = -1;
-    const phraseEndPattern = /[.!?:]\s*$/;
-
-    for (let i = 0; i < Math.min(lines.length, maxFirstPhraseLines); i++) {
-        if (lines[i] && phraseEndPattern.test(lines[i].trim())) {
-            firstPhraseEnd = i;
-            break;
-        }
-    }
-
-    // Als we een frase einde hebben gevonden binnen max eerste frase regels
-    if (firstPhraseEnd >= 0) {
-        const phraseLines = firstPhraseEnd + 1;
-
-        // Als eerste frase minder dan 6 line-heights gebruikt, vul aan
-        if (phraseLines < maxPreviewLineHeights && phraseLines < lines.length) {
-            const remainingLineHeights = maxPreviewLineHeights - phraseLines;
-            const additionalLines = Math.min(remainingLineHeights, lines.length - phraseLines);
-            return lines.slice(0, phraseLines + additionalLines);
-        }
-
-        return lines.slice(0, phraseLines);
-    }
-
-    // Geen frase einde gevonden, gebruik max 6 line-heights of alle regels
-    return lines.slice(0, Math.min(maxPreviewLineHeights, lines.length));
+//     if (!poem || !poem.lines || poem.lines.length <= 1) {
+//         return poem?.lines || [];
+//     }
+//
+//     const lines = poem.lines;
+//     const maxPreviewLineHeights = 6;
+//     const maxFirstPhraseLines = 5;
+//
+//     // Zoek einde van eerste frase (tot punt, uitroepteken, vraagteken, of dubbele punt)
+//     let firstPhraseEnd = -1;
+//     const phraseEndPattern = /[.!?:]\s*$/;
+//
+//     for (let i = 0; i < Math.min(lines.length, maxFirstPhraseLines); i++) {
+//         if (lines[i] && phraseEndPattern.test(lines[i].trim())) {
+//             firstPhraseEnd = i;
+//             break;
+//         }
+//     }
+//
+//     // Als we een frase einde hebben gevonden binnen max eerste frase regels
+//     if (firstPhraseEnd >= 0) {
+//         const phraseLines = firstPhraseEnd + 1;
+//
+//         // Als eerste frase minder dan 6 line-heights gebruikt, vul aan
+//         if (phraseLines < maxPreviewLineHeights && phraseLines < lines.length) {
+//             const remainingLineHeights = maxPreviewLineHeights - phraseLines;
+//             const additionalLines = Math.min(remainingLineHeights, lines.length - phraseLines);
+//             return lines.slice(0, phraseLines + additionalLines);
+//         }
+//
+//         return lines.slice(0, phraseLines);
+//     }
+//
+//     // Geen frase einde gevonden, gebruik max 6 line-heights of alle regels
+//     return lines.slice(0, Math.min(maxPreviewLineHeights, lines.length));
 };
 
 /**
@@ -165,8 +169,8 @@ export const getShortPoemPreviewLines = (poem) => {
         return poem.lines.slice(0, -1);
     }
 
-    // Voor normale gedichten: gebruik intelligente preview
-    return getIntelligentPreviewLines(poem);
+    // Voor normale gedichten: gebruik eenvoudige preview (eerste 3 regels)
+    return poem.lines.slice(0, 3);
 };
 
 /**
@@ -179,14 +183,14 @@ export const getShortPoemHiddenLines = (poem) => {
         return [];
     }
 
+
     if (isShortPoem(poem)) {
         // Voor korte gedichten: alleen laatste regel
         return poem.lines.slice(-1);
     }
 
-    // Voor normale gedichten: alles na intelligente preview
-    const previewLines = getIntelligentPreviewLines(poem);
-    const previewLength = previewLines.length;
+    // Voor normale gedichten: alles na eenvoudige preview (na eerste 3 regels)
+    const previewLength = 3;
 
     if (previewLength >= poem.lines.length) {
         return []; // Geen verborgen regels
@@ -224,7 +228,7 @@ export const calculateShortPoemMinHeight = (lineHeight = 30, baseHeight = 120) =
  * @returns {boolean} True als gedicht mee moet doen met global toggle
  */
 export const shouldShortPoemParticipateInGlobalToggle = (poem) => {
-    return isShortPoemExpandable(poem);
+//     return isShortPoemExpandable(poem);
 };
 
 /**
@@ -272,6 +276,7 @@ export const getExpandablePoems = (poems) => {
  * @param {Array} visibleIndices - Indices van zichtbare gedichten
  * @returns {Object} Object met expandable info
  */
+
 export const analyzeExpandablePoems = (poems, visibleIndices) => {
     if (!poems || !visibleIndices) {
         return {

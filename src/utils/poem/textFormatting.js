@@ -42,13 +42,13 @@ export const formatPoemTitle = (title, maxLength = 60) => {
  * @param {number} maxLength - Maximum display length
  * @returns {Object} Formatted author object
  */
-export const formatAuthorName = (author, maxLength = 30) => {
-    const formatted = getTitleWithTooltip(author, maxLength);
-    return {
-        ...formatted,
-        displayWithPrefix: formatted.display ? `By ${formatted.display}` : 'Unknown Author'
-    };
-};
+// UNUSED: export const formatAuthorName = (author, maxLength = 30) => {
+//     const formatted = getTitleWithTooltip(author, maxLength);
+//     return {
+//         ...formatted,
+//         displayWithPrefix: formatted.display ? `By ${formatted.display}` : 'Unknown Author'
+//     };
+// };
 
 /**
  * Validate poem object has required properties
@@ -83,7 +83,7 @@ export const getPoemDisplayProps = (poem) => {
 
     return {
         title: formatPoemTitle(poem.title || 'Untitled'),
-        author: formatAuthorName(poem.author || 'Unknown'),
+        author: {display: poem.author || 'Unknown', displayWithPrefix: `By ${poem.author || 'Unknown'}`},
         lineCount: poem.lines?.length || 0,
         isShort: !poem.lines || poem.lines.length <= 4,
         isValid: isValidPoem(poem)

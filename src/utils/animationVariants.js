@@ -6,11 +6,11 @@
  */
 
 // Poem card animations
-export const poemCardVariants = {
-    initial: {opacity: 0, y: 20},
-    animate: {opacity: 1, y: 0},
-    exit: {opacity: 0, y: -20}
-};
+// UNUSED: export const poemCardVariants = {
+//     initial: {opacity: 0, y: 20},
+//     animate: {opacity: 1, y: 0},
+//     exit: {opacity: 0, y: -20}
+// };
 
 // Poem line animations
 export const poemLineVariants = {
@@ -94,43 +94,43 @@ export const nonExpandableVariants = {
 };
 
 // Layout animations
-export const layoutVariants = {
-    card: {
-        layout: true,
-        transition: {
-            layout: {
-                duration: 0.4,
-                ease: [0.25, 0.46, 0.45, 0.94]
-            }
-        }
-    },
-    content: {
-        layout: true,
-        transition: {
-            layout: {
-                duration: 0.4,
-                ease: [0.25, 0.46, 0.45, 0.94]
-            }
-        }
-    }
-};
+// UNUSED: export const layoutVariants = {
+//     card: {
+//         layout: true,
+//         transition: {
+//             layout: {
+//                 duration: 0.4,
+//                 ease: [0.25, 0.46, 0.45, 0.94]
+//             }
+//         }
+//     },
+//     content: {
+//         layout: true,
+//         transition: {
+//             layout: {
+//                 duration: 0.4,
+//                 ease: [0.25, 0.46, 0.45, 0.94]
+//             }
+//         }
+//     }
+// };
 
 // Expansion container animations (for expand controls)
-export const expansionVariants = {
-    initial: {height: 0},
-    expand: (totalHeight) => ({
-        height: totalHeight,
-        transition: {
-            duration: 0.6,
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "tween"
-        }
-    }),
-    collapse: {
-        height: 0,
-        transition: {
-            duration: 0.4,
-            ease: [0.25, 0.46, 0.45, 0.94]
-        }
-    }
-};
+// UNUSED: export const expansionVariants = {
+//     initial: {height: 0},
+//     expand: (totalHeight) => ({
+//         height: totalHeight,
+//         transition: {
+//             duration: 0.6,
+//             ease: [0.25, 0.46, 0.45, 0.94],
+//             type: "tween"
+//         }
+//     }),
+//     collapse: {
+//         height: 0,
+//         transition: {
+//             duration: 0.4,
+//             ease: [0.25, 0.46, 0.45, 0.94]
+//         }
+//     }
+// };

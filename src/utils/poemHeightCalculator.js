@@ -455,9 +455,9 @@ export const clearCarouselCache = () => {
 /**
  * Get carousel cache stats voor debugging
  */
-export const getCarouselCacheStats = () => {
-    return globalCarouselCache.getCacheStats();
-};
+// UNUSED: export const getCarouselCacheStats = () => {
+//     return globalCarouselCache.getCacheStats();
+// };
 
 /**
  * Responsive utility om te detecteren wanneer layout aanpassingen nodig zijn

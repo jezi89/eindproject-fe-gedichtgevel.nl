@@ -23,32 +23,39 @@ import {TermsPage} from './pages/Terms/TermsPage.jsx';
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: <App/>,
         children: [
             {index: true, element: <HomePage/>},
-            {path: 'designgevel', element: <DesignPage/>},
-            {path: 'spreekgevel', element: <AudioPage/>},
-            {path: 'collectiegevel', element: <CollectionPage/>},
-            {path: 'overmij', element: <AboutPage/>},
-            {path: 'contact', element: <ContactPage/>},
-            {path: 'hoedan', element: <FAQPage/>},
-            {path: 'voorwaarden', element: <TermsPage/>},
+            {path: "designgevel", element: <DesignPage/>},
+            {path: "designgevel/:poemId", element: <DesignPage/>}, // Canvas route with poem ID
+            {path: "canvas", element: <DesignPage/>}, // Legacy canvas route for compatibility
+            {path: "canvas/:poemId", element: <DesignPage/>}, // Legacy canvas route with poem ID
+            {path: "spreekgevel", element: <AudioPage/>},
+            {path: "collectiegevel", element: <CollectionPage/>},
+            {path: "overmij", element: <AboutPage/>},
+            {path: "contact", element: <ContactPage/>},
+            {path: "hoedan", element: <FAQPage/>},
+            {path: "voorwaarden", element: <TermsPage/>},
 
             // Auth routes
             {
-                path: 'account',
-                element: <ProtectedRoute><AccountPage/></ProtectedRoute>
+                path: "account",
+                element: (
+                    <ProtectedRoute>
+                        <AccountPage/>
+                    </ProtectedRoute>
+                ),
             },
-            {path: 'welkom', element: <LoginAndSignupPage/>},
-            {path: 'login', element: <LoginAndSignupPage/>},
-            {path: 'password-reset', element: <PasswordResetPage/>},
-            {path: 'reset-password', element: <ResetPasswordPage/>},
-        ]
+            {path: "welkom", element: <LoginAndSignupPage/>},
+            {path: "login", element: <LoginAndSignupPage/>},
+            {path: "password-reset", element: <PasswordResetPage/>},
+            {path: "reset-password", element: <ResetPasswordPage/>},
+        ],
         // I can define other top-level routes here if App shouldn't be their layout
     },
     // AuthCallback outside the main layout
-    {path: 'auth/callback', element: <AuthCallback/>},
+    {path: "auth/callback", element: <AuthCallback/>},
 ]);
 // TODO checken of dit React 18+ of React 19 syntax specifiek is
 // Create the root element for React 18+

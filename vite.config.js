@@ -19,5 +19,15 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
             '@styles': path.resolve(__dirname, 'src/styles')
         }
+    },
+    // Exclude LEGACY directory from build
+    build: {
+        rollupOptions: {
+            external: (id) => id.includes('/LEGACY/')
+        }
+    },
+    define: {
+        // PIXI.js optimalisatie
+        __PIXI_DEVTOOLS__: process.env.NODE_ENV === 'development',
     }
 })

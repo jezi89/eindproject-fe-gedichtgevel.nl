@@ -142,7 +142,7 @@ const viteRules = {
 // De volledige configuratie exporteren als array van config objecten
 export default [
     // Globale ignores - deze bestanden/mappen worden volledig overgeslagen
-    {ignores: ['dist', 'node_modules', 'build']},
+    {ignores: ['dist', 'node_modules', 'build', '**/LEGACY/**']},
 
     // Algemene ESLint opties - werken op root niveau
     {
