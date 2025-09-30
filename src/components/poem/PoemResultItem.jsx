@@ -176,8 +176,8 @@ const PoemResultItem = memo(
                     canvasMode={canvasMode}
                     canExpand={canExpand}
                     displayMode={displayMode}
-                    // onLoadInCanvas={handleLoadInCanvas}
-                    // onNavigateToCanvas={navigateToCanvas}
+                    onLoadInCanvas={onLoadInCanvas}
+                    onNavigateToCanvas={() => onNavigateToCanvas?.(poem)}
                     onToggle={handleIndividualToggle}
                     styles={styles}
                 />
@@ -236,8 +236,8 @@ const PoemResultItem = memo(
                                 animationPhase={animationPhase}
                                 isSmallPoem={isSmallPoemValue}
                                 displayMode={displayMode}
-                                // onLoadInCanvas={handleLoadInCanvas}
-                                // onNavigateToCanvas={navigateToCanvas}
+                                onLoadInCanvas={onLoadInCanvas}
+                                onNavigateToCanvas={() => onNavigateToCanvas?.(poem)}
                                 onToggle={handleIndividualToggle}
                                 styles={styles}
                             />
@@ -257,8 +257,8 @@ const PoemResultItem = memo(
                             canExpand={false}
                             animationPhase={animationPhase}
                             displayMode={displayMode}
-                            // onLoadInCanvas={handleLoadInCanvas}
-                            // onNavigateToCanvas={navigateToCanvas}
+                            onLoadInCanvas={onLoadInCanvas}
+                            onNavigateToCanvas={() => onNavigateToCanvas?.(poem)}
                             onToggle={handleIndividualToggle}
                             styles={styles}
                             className={styles.nonExpandableActions}
