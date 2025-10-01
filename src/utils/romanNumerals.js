@@ -88,16 +88,16 @@ export const getDecadeRoman = (decadeNumber) => {
  * @param {number} decadeNumber - The decade number (0, 1, 2, etc.)
  * @returns {string} Roman numeral for dropdown display
  */
-// UNUSED: export const getDropdownDecadeRoman = (decadeNumber) => {
-//     if (decadeNumber === 0) return 'X'; // 1-10
-//     if (decadeNumber === 1) return 'XX'; // 11-20
-//     if (decadeNumber === 2) return 'XXX'; // 21-30
+export const getDropdownDecadeRoman = (decadeNumber) => {
+    if (decadeNumber === 0) return 'X'; // 1-10
+    if (decadeNumber === 1) return 'XX'; // 11-20
+    if (decadeNumber === 2) return 'XXX'; // 21-30
 
-//     // For decade 3 and higher, use proper Roman numerals
-//     // Decade 3 = 31-40 = XL, Decade 4 = 41-50 = L, etc.
-//     const decadeStart = (decadeNumber + 1) * 10; // +1 because we want the start of next decade range
-//     return toRoman(decadeStart);
-// };
+    // For decade 3 and higher, use proper Roman numerals
+    // Decade 3 = 31-40 = XL, Decade 4 = 41-50 = L, etc.
+    const decadeStart = (decadeNumber + 1) * 10; // +1 because we want the start of next decade range
+    return toRoman(decadeStart);
+};
 
 /**
  * Format a range display with Roman numerals for decades
@@ -107,26 +107,27 @@ export const getDecadeRoman = (decadeNumber) => {
  * @param {boolean} useDropdownFormat - Whether to use simplified dropdown format (X, XX, XXX)
  * @returns {Object} Formatted range information
  */
-// UNUSED: export const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
-//     const startDecade = Math.floor(startIndex / 10);
-//     const endDecade = Math.floor(endIndex / 10);
 
-//     // Choose Roman numeral format based on usage
-//     const romanNumeral = useDropdownFormat
-//         ? getDropdownDecadeRoman(startDecade)
-//         : (startDecade === 0 ? 'I-X' : getDecadeRoman(startDecade));
+export const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
+    const startDecade = Math.floor(startIndex / 10);
+    const endDecade = Math.floor(endIndex / 10);
 
-//     const displayStart = startIndex + 1; // Convert to 1-based
-//     const displayEnd = endIndex + 1; // Convert to 1-based
+    // Choose Roman numeral format based on usage
+    const romanNumeral = useDropdownFormat
+        ? getDropdownDecadeRoman(startDecade)
+        : (startDecade === 0 ? 'I-X' : getDecadeRoman(startDecade));
 
-//     return {
-//         romanNumeral,
-//         displayName: `${displayStart}-${displayEnd}`,
-//         startIndex,
-//         endIndex,
-//         isFirstDecade: startDecade === 0
-//     };
-// };
+    const displayStart = startIndex + 1; // Convert to 1-based
+    const displayEnd = endIndex + 1; // Convert to 1-based
+
+    return {
+        romanNumeral,
+        displayName: `${displayStart}-${displayEnd}`,
+        startIndex,
+        endIndex,
+        isFirstDecade: startDecade === 0
+    };
+};
 
 /**
  * Generate all available decades for a given total count

@@ -3,23 +3,23 @@
 /**
  * Compute initial line-height based on a base font size and multiplier.
  */
-// UNUSED: export function getInitialLineHeight(baseFontSize = 22, multiplier = 1.4) {
-// 	return baseFontSize * multiplier;
-// }
+export function getInitialLineHeight(baseFontSize = 22, multiplier = 1.4) {
+	return baseFontSize * multiplier;
+}
 
 /**
  * Compute line-height synced to a given font size with the current multiplier.
  */
-// UNUSED: export function syncLineHeightWithFontSize(fontSize, multiplier) {
-//   return fontSize * multiplier;
-// }
+export function syncLineHeightWithFontSize(fontSize, multiplier) {
+  return fontSize * multiplier;
+}
 
 /**
  * Compute multiplier from a given line-height and font size.
  */
-// UNUSED: export function computeMultiplierFromLineHeight(lineHeight, fontSize) {
-//   return fontSize ? lineHeight / fontSize : 0;
-// }
+export function computeMultiplierFromLineHeight(lineHeight, fontSize) {
+  return fontSize ? lineHeight / fontSize : 0;
+}
 
 /**
  * Handler util to process font size change.

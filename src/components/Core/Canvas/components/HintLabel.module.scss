@@ -1,0 +1,28 @@
+@use "../../../../styles/variables" as *;
+
+.hintLabel {
+  font-family:      $font-family-callout-heading;
+  font-size:        $font-size-xxs;
+  font-weight:      $font-weight-semibold;
+  z-index:          10001; // Above everything (navbar is 10000)
+  white-space:      nowrap;
+  color:            $primary-flame;
+  background-color: rgba(42, 52, 65, 0.95);
+  padding:          6px 12px;
+  border-radius:    6px;
+  box-shadow:       0 2px 8px rgba(0, 0, 0, 0.4);
+  border:           1px solid $primary-flame;
+  pointer-events:   none; // Don't block interactions
+  animation:        slideInFade 2s ease-in-out 3; // 3 cycles = 6 seconds
+}
+
+@keyframes slideInFade {
+  0%, 100% {
+    opacity:   0;
+    transform: translateY(-50%) translateX(10px);
+  }
+  50% {
+    opacity:   1;
+    transform: translateY(-50%) translateX(0);
+  }
+}

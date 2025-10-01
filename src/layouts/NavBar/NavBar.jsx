@@ -8,7 +8,7 @@
  */
 
 import {useState, useRef, useEffect} from "react";
-import {Link} from "react-router";
+import {Link, useLocation, useNavigate} from "react-router";
 import MainNavLink from "./MainNavLink.jsx";
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 import styles from "./NavBar.module.scss"
@@ -20,11 +20,17 @@ import {useAuth} from "@/hooks/auth/useAuth.js";
  * @component
  * @returns {JSX.Element} Navigation bar component
  */
-function NavBar() {
+function NavBar({isOverlayOpen, onOverlayClose}) {
     // States
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    // Route detection
+    const location = useLocation();
+    const isDesignPage = location.pathname.startsWith("/designgevel");
+
+    const navigate = useNavigate();
 
     // Authentication
     const {user, signOut} = useAuth();
@@ -56,7 +62,7 @@ function NavBar() {
         e.preventDefault();
         try {
             await signOut();
-            // Navigation is handled by auth state change
+            navigate('/'); // Navigate to homepage after logout
         } catch (error) {
             console.error('Logout error:', error);
         }
@@ -85,12 +91,23 @@ function NavBar() {
     );
 
     return (
-        <div className={styles.navbar}>
+        <div className={`${styles.navbar} ${isDesignPage ? styles.fixedOverlay : ''} ${isDesignPage && isOverlayOpen ? styles.open : ''}`}>
             <div className={styles.navbarContainer}>
                 {/* Logo - always visible */}
                 <Link to="/" className={styles.logo}>
                     GedichtGevel
                 </Link>
+
+                {/* Close button for overlay mode on DesignPage */}
+                {isDesignPage && isOverlayOpen && (
+                    <button
+                        className={styles.overlayCloseButton}
+                        onClick={onOverlayClose}
+                        aria-label="Sluit navigatie"
+                    >
+                        ✕
+                    </button>
+                )}
 
                 {/* Desktop navigation wrapper */}
                 <nav className={styles.desktopNav}> {/* Changed from div, use <nav> for semantics */}

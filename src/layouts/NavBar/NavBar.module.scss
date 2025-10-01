@@ -11,6 +11,55 @@
   width:            100%;
   border-bottom:    1px solid $border-warm;
   background-color: $navbar-background;
+
+  // DesignPage: Fixed overlay navbar - toggled on/off with button
+  &.fixedOverlay {
+	position:                fixed;
+	z-index:                 $z-highest; // Above canvas panels
+	top:                     0;
+	left:                    0;
+	width:                   100%;
+	transition:              transform $transition-normal ease-in-out;
+	transform:               translateY(-100%); // Hidden above viewport
+	background-color:        rgba($navbar-background, 0.98);
+	box-shadow:              $shadow-lg;
+	backdrop-filter:         blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+
+	// Show when open
+	&.open {
+	  transform: translateY(0);
+	  }
+
+	// Adjust authButton position in overlay mode
+	.authButton {
+	  margin-right: $spacing-xl; // Push away from close button
+	  }
+	}
+  }
+
+// Close button for overlay mode
+.overlayCloseButton {
+  @include mixins.button-reset;
+  font-size:        1.5rem;
+  position:         absolute;
+  top:              $spacing-m;
+  right:            $spacing-m;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            40px;
+  height:           40px;
+  cursor:           pointer;
+  transition:       all $transition-fast;
+  color:            $navbar-text;
+  border-radius:    $border-radius-sm;
+  background-color: rgba($neutral-black, 0.2);
+
+  &:hover {
+	color:            $navbar-text-active;
+	background-color: rgba($neutral-black, 0.4);
+	}
   }
 
 // Inner container: Flex for mobile, Grid for desktop

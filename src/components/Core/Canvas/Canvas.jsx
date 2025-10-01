@@ -21,16 +21,20 @@ import ShortcutFeedback from "./components/ShortcutFeedback";
 import styles from "./Canvas.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";
+import {clearAllPersistedState} from "../../../hooks/canvas/usePersistedState";
 
 // Main component that manages state
-export default function Canvas({ 
-    poemData, 
-    backgroundUrl, 
-    onSave, 
-    onBack 
-}) {
+export default function Canvas({
+                                   poemData,
+                                   backgroundUrl,
+                                   onSave,
+                                   onBack,
+                                   onToggleNavbarOverlay,
+                                   savedCanvasState,
+                                   currentDesignId
+                               }) {
     const navigate = useNavigate();
-    
+
     // Use provided poem data or fallback
     const currentPoem = poemData || {
         title: "Geen gedicht geselecteerd",
@@ -41,6 +45,47 @@ export default function Canvas({
     // Use custom hooks for state and handlers
     const canvasState = useCanvasState();
     const handlers = useCanvasHandlers(canvasState, currentPoem);
+
+    // Restore canvas state from loaded design (destructive override)
+    useEffect(() => {
+        if (savedCanvasState) {
+            console.log("🔄 Canvas: DESTRUCTIVE restore of saved canvas state");
+
+            // CRITICAL: Clear ALL persisted state first to ensure clean slate
+            clearAllPersistedState();
+
+            // Small delay to ensure localStorage is cleared before state updates
+            setTimeout(() => {
+                // Restore all serialized state properties
+                if (savedCanvasState.backgroundImage !== undefined) {
+                    console.log("🖼️ Canvas: Setting saved background:", savedCanvasState.backgroundImage);
+                    canvasState.setBackgroundImage(savedCanvasState.backgroundImage);
+                }
+                if (savedCanvasState.poemOffset) canvasState.setPoemOffset(savedCanvasState.poemOffset);
+                if (savedCanvasState.fontSize) canvasState.setFontSize(savedCanvasState.fontSize);
+                if (savedCanvasState.fillColor) canvasState.setFillColor(savedCanvasState.fillColor);
+                if (savedCanvasState.letterSpacing !== undefined) canvasState.setLetterSpacing(savedCanvasState.letterSpacing);
+                if (savedCanvasState.lineHeight) canvasState.setLineHeight(savedCanvasState.lineHeight);
+                if (savedCanvasState.lineHeightMultiplier) canvasState.setLineHeightMultiplier(savedCanvasState.lineHeightMultiplier);
+                if (savedCanvasState.textAlign) canvasState.setTextAlign(savedCanvasState.textAlign);
+                if (savedCanvasState.fontWeight) canvasState.setFontWeight(savedCanvasState.fontWeight);
+                if (savedCanvasState.fontStyle) canvasState.setFontStyle(savedCanvasState.fontStyle);
+                if (savedCanvasState.currentFontFamily) canvasState.setCurrentFontFamily(savedCanvasState.currentFontFamily);
+                if (savedCanvasState.lineOverrides) canvasState.setLineOverrides(savedCanvasState.lineOverrides);
+                if (savedCanvasState.titleColorOverride !== undefined) canvasState.setTitleColorOverride(savedCanvasState.titleColorOverride);
+                if (savedCanvasState.authorColorOverride !== undefined) canvasState.setAuthorColorOverride(savedCanvasState.authorColorOverride);
+                if (savedCanvasState.skewX !== undefined) canvasState.setSkewX(savedCanvasState.skewX);
+                if (savedCanvasState.skewY !== undefined) canvasState.setSkewY(savedCanvasState.skewY);
+                if (savedCanvasState.skewZ !== undefined) canvasState.setSkewZ(savedCanvasState.skewZ);
+                if (savedCanvasState.lineTransforms) canvasState.setLineTransforms(savedCanvasState.lineTransforms);
+                if (savedCanvasState.global3DSettings) canvasState.setGlobal3DSettings(savedCanvasState.global3DSettings);
+                if (savedCanvasState.isOptimizationEnabled !== undefined) canvasState.setIsOptimizationEnabled(savedCanvasState.isOptimizationEnabled);
+                if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
+
+                console.log("✅ Canvas: State restored successfully");
+            }, 50); // Small delay to ensure localStorage is cleared
+        }
+    }, [savedCanvasState]); // Only run when savedCanvasState changes
 
     // Photo preview state management
     const [previewState, setPreviewState] = useState('normal'); // 'normal' | 'dimmed' | 'preview'
@@ -190,18 +235,18 @@ export default function Canvas({
     // Photo grid data ready for rendering
 
     const textPosition = useResponsiveTextPosition(
-      layout.canvasWidth,
-      layout.canvasHeight,
-      canvasState.fontSize,
-      canvasState.lineHeight,
-      currentPoem?.lines ?? []
+        layout.canvasWidth,
+        layout.canvasHeight,
+        canvasState.fontSize,
+        canvasState.lineHeight,
+        currentPoem?.lines ?? []
     );
 
     const handleResetViewport = useCallback(() => {
         const viewport = canvasState.viewportRef.current;
         if (viewport) {
             viewport.animate({
-                position: { x: layout.canvasWidth / 2, y: layout.canvasHeight / 2 },
+                position: {x: layout.canvasWidth / 2, y: layout.canvasHeight / 2},
                 scale: 1,
                 time: 800,
                 ease: 'easeInOutCubic',
@@ -295,6 +340,7 @@ export default function Canvas({
                         error={canvasState.error}
                         onSearch={handlers.handleSearchBackground} // De bestaande voor vrij zoeken
                         onCitySearch={handlers.handleCitySearch}
+                        onPremiumSearch={handlers.handlePremiumSearch} // NEW: Premium Flickr text search
                         onSetBackground={handlers.handleSetBackground}
                         onNextPage={handlers.handleNextPage}
                         onPrevPage={handlers.handlePrevPage}
@@ -365,6 +411,7 @@ export default function Canvas({
                             hasPrevPage={canvasState.hasPrevPage}
                             onSearch={handlers.handleSearchBackground} // De bestaande voor vrij zoeken
                             onCitySearch={handlers.handleCitySearch} // De nieuwe voor de dropdowns
+                            onPremiumSearch={handlers.handlePremiumSearch} // NEW: Premium Flickr text search
                             poemOffset={canvasState.poemOffset}
                             setPoemOffset={canvasState.setPoemOffset}
                             moveMode={canvasState.moveMode}
@@ -393,12 +440,16 @@ export default function Canvas({
                         setXySlidersVisible={canvasState.setXySlidersVisible}
                         highlightVisible={canvasState.highlightVisible}
                         setHighlightVisible={canvasState.setHighlightVisible}
+                        onToggleNavbarOverlay={onToggleNavbarOverlay}
+                        poemData={currentPoem}
+                        canvasState={canvasState}
+                        currentDesignId={currentDesignId}
                     />
                 }
             />
 
             {/* Canvas Shortcut Feedback */}
-            <ShortcutFeedback activeShortcut={activeShortcut} />
+            <ShortcutFeedback activeShortcut={activeShortcut}/>
 
             {/* Floating Photo Grid */}
             {canvasState.photoGridVisible && (

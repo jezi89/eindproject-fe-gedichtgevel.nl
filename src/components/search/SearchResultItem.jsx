@@ -6,7 +6,7 @@
 
 import {useState, useMemo, memo, useRef, useEffect, useCallback} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router';
 import searchContextService from '@/services/context/SearchContextService.js';
 import styles from './searchResults.module.scss';
 

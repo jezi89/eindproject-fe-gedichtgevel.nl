@@ -7,7 +7,7 @@ const COLLECTION_ID = import.meta.env.VITE_PEXELS_COLLECTION_ID;
 const SEARCH_URL = "https://api.pexels.com/v1/search";
 const COLLECTION_URL = `https://api.pexels.com/v1/collections/${COLLECTION_ID}`;
 
-export function usePexels(onDefaultBackground = null) {
+export function usePexels() {
     const [photos, setPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ export function usePexels(onDefaultBackground = null) {
     // --- NIEUW: Collection paginering state ---
     const [currentPage, setCurrentPage] = useState(1);
     const [isCollectionMode, setIsCollectionMode] = useState(false);
-    const [perPage] = useState(15); // Standaard per_page waarde
+    const [perPage] = useState(16); // 16 foto's per pagina
 
     // --- NIEUW: Vlag om te zorgen dat de collectie maar één keer laadt ---
     const collectionLoadedRef = useRef(false);
@@ -46,6 +46,8 @@ export function usePexels(onDefaultBackground = null) {
                 return;
             }
 
+            // Toon alle foto's die de API teruggeeft (max perPage = 16)
+            // Op laatste pagina kunnen dit minder zijn
             setPhotos(photosData);
 
             // Set mode voor paginering logic
@@ -53,26 +55,23 @@ export function usePexels(onDefaultBackground = null) {
 
             if (isCollection) {
                 // Collection mode: handmatige paginering
-                // hasNextPage = true als we exact perPage foto's hebben (mogelijk meer pagina's)
+                // hasNextPage = true als we exact perPage (16) foto's kregen (mogelijk meer pagina's)
                 // hasNextPage = false als we minder dan perPage hebben (laatste pagina)
                 const hasMore = photosData.length === perPage;
                 setNextPageUrl(hasMore ? 'manual_next' : null);
                 setPrevPageUrl(currentPage > 1 ? 'manual_prev' : null);
 
-                // Auto-set foto 14 (index 13) als default achtergrond bij eerste collection load
-                // ALLEEN als er nog geen achtergrond is gekozen (geen persisted background)
-                if (!collectionLoadedRef.current && onDefaultBackground && photosData.length >= 14) {
-                    // Check of er al een achtergrond in localStorage staat
-                    const existingBackground = localStorage.getItem('canvas_background_image');
-                    if (!existingBackground || existingBackground === 'null') {
-                        const defaultPhoto = photosData[13]; // Foto 14 (13-indexed)
-                        onDefaultBackground(defaultPhoto.src.large2x);
-                    }
-                }
-
                 collectionLoadedRef.current = true;
             } else {
                 // Search mode: gebruik API's next_page/prev_page URLs
+                console.log('🔍 PEXELS SEARCH RESPONSE:', {
+                    total_results: response.data.total_results,
+                    page: response.data.page,
+                    per_page: response.data.per_page,
+                    photos_count: photosData.length,
+                    next_page: response.data.next_page,
+                    prev_page: response.data.prev_page
+                });
                 setNextPageUrl(response.data.next_page || null);
                 setPrevPageUrl(response.data.prev_page || null);
             }
@@ -96,16 +95,19 @@ export function usePexels(onDefaultBackground = null) {
 
     const searchPhotos = useCallback(
         (query) => {
+            setPhotos([]); // Clear oude foto's voor nieuwe search
             setCurrentQuery(query);
             setCurrentPage(1); // Reset page voor nieuwe zoekopdracht
             setIsCollectionMode(false); // Ga uit collection mode
-            const initialUrl = `${SEARCH_URL}?query=${encodeURIComponent(query)}&per_page=15&orientation=landscape`;
+            const initialUrl = `${SEARCH_URL}?query=${encodeURIComponent(query)}&per_page=${perPage}&orientation=landscape`;
+            console.log('🔎 PEXELS SEARCH URL:', initialUrl);
             fetchPexelsData(initialUrl);
         },
-        [fetchPexelsData]
+        [fetchPexelsData, perPage]
     );
 
     const goToNextPage = useCallback(() => {
+        console.log('📄 NEXT PAGE CLICKED:', { nextPageUrl, isCollectionMode, currentPage });
         if (!nextPageUrl) return;
 
         if (isCollectionMode) {

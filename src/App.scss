@@ -12,4 +12,9 @@
   padding-top: 0;
   }
 
+/* DesignPage full-viewport layout - height set dynamically via inline style */
+.app-content.design-page-layout {
+  overflow: hidden;
+  }
+
 // TODO Checken of we styles uit App.scss.old nodig hebben.

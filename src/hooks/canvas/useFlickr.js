@@ -66,7 +66,7 @@ export function useFlickr() {
             extras: 'geo',
             format: 'json',
             nojsoncallback: 1,
-            per_page: 15,
+            per_page: 16,
             page: searchPage,
         };
 
@@ -107,21 +107,96 @@ export function useFlickr() {
         }
     }, [page]);
 
-    // --- DE ONTBREKENDE FUNCTIE ---
-    const goToNextFlickrPage = useCallback(() => {
-        if (page < totalPages) {
-            // We roepen de zoekfunctie aan met de OPGESLAGEN zoekopdracht
-            // en de vlag 'newSearch' op false.
-            searchPhotosByGeo(lastSearchRef.current, false);
+    // Text-only search zonder geo-vereisten (voor premium search)
+    const searchPhotosByText = useCallback(async (query, newSearch = true, targetPage = null) => {
+        setError(null);
+        console.log("🔍 --- STARTING FLICKR TEXT SEARCH --- 🔍");
+
+        const searchPage = targetPage !== null ? targetPage : (newSearch ? 1 : page + 1);
+        setIsLoading(true);
+        if (newSearch) {
+            setPhotos([]);
+            setPage(1);
+            lastSearchRef.current = { query, type: 'text' };
         }
-    }, [page, totalPages, searchPhotosByGeo]);
+
+        if (!FLICKR_API_KEY) {
+            setError("Flickr API sleutel ontbreekt.");
+            setIsLoading(false);
+            return;
+        }
+
+        const twentyYearsAgo = new Date();
+        twentyYearsAgo.setFullYear(twentyYearsAgo.getFullYear() - 20);
+        const minUploadDate = Math.floor(twentyYearsAgo.getTime() / 1000);
+
+        const params = {
+            method: 'flickr.photos.search',
+            api_key: FLICKR_API_KEY,
+            text: query,
+            min_upload_date: minUploadDate,
+            sort: 'interestingness-desc',
+            format: 'json',
+            nojsoncallback: 1,
+            per_page: 16,
+            page: searchPage,
+        };
+
+        console.log("📡 FLICKR TEXT QUERY:", { url: FLICKR_API_URL, params, query });
+
+        try {
+            const response = await axios.get(FLICKR_API_URL, { params });
+            console.log("✅ FLICKR TEXT RESPONSE:", response.data);
+
+            if (response.data.stat === 'ok') {
+                const { photo, page, pages, total } = response.data.photos;
+                console.log(`📸 Resultaten: ${total} foto's in ${pages} pagina's`);
+
+                const photoData = photo.filter(p => p.secret && p.server !== '0').map(p => ({
+                    id: p.id,
+                    alt: p.title,
+                    src: {
+                        large2x: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_b.jpg`,
+                        tiny: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_q.jpg`
+                    }
+                }));
+
+                console.log(`📊 Verwerkte foto's: ${photoData.length}`);
+                setPhotos(photoData);
+                setPage(page);
+                setTotalPages(pages);
+            } else {
+                setError(`Flickr API fout: ${response.data.message}`);
+            }
+        } catch (err) {
+            setError(`Netwerkfout: ${err.message}`);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [page]);
+
+    // --- PAGINERING FUNCTIES ---
+    const goToNextFlickrPage = useCallback(() => {
+        if (page < totalPages && lastSearchRef.current) {
+            // Check of het een text search of geo search was
+            if (lastSearchRef.current.type === 'text') {
+                searchPhotosByText(lastSearchRef.current.query, false);
+            } else {
+                searchPhotosByGeo(lastSearchRef.current, false);
+            }
+        }
+    }, [page, totalPages, searchPhotosByGeo, searchPhotosByText]);
 
     const goToPrevFlickrPage = useCallback(() => {
-        if (page > 1) {
-            // Roep de zoekfunctie aan voor de vorige pagina
-            searchPhotosByGeo(lastSearchRef.current, false, page - 1);
+        if (page > 1 && lastSearchRef.current) {
+            // Check of het een text search of geo search was
+            if (lastSearchRef.current.type === 'text') {
+                searchPhotosByText(lastSearchRef.current.query, false, page - 1);
+            } else {
+                searchPhotosByGeo(lastSearchRef.current, false, page - 1);
+            }
         }
-    }, [page, searchPhotosByGeo]);
+    }, [page, searchPhotosByGeo, searchPhotosByText]);
 
     // Clear function voor reset functionality
     const clearFlickrPhotos = useCallback(() => {
@@ -137,11 +212,11 @@ export function useFlickr() {
         isFlickrLoading: isLoading,
         flickrError: error,
         searchPhotosByGeo,
+        searchPhotosByText, // <-- NEW: Text-only search
         goToNextFlickrPage,
-        // We hebben booleans nodig voor de UI
-        goToPrevFlickrPage, // <-- Nieuwe functie exporteren
+        goToPrevFlickrPage,
         hasNextFlickrPage: page < totalPages,
         hasPrevFlickrPage: page > 1,
-        clearFlickrPhotos, // <-- Nieuwe functie voor reset
+        clearFlickrPhotos,
     };
 }

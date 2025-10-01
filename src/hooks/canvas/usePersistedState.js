@@ -51,21 +51,41 @@ export const PERSISTED_KEYS = {
   LINE_OVERRIDES: 'canvas_line_overrides',
   FONT_FAMILY: 'canvas_font_family',
   SEARCH_CONTEXT: 'canvas_search_context',
-  OPTIMIZATION_ENABLED: 'canvas_optimization_enabled'
+  OPTIMIZATION_ENABLED: 'canvas_optimization_enabled',
+  // New persistent keys for sticky state
+  POEM_OFFSET: 'canvas_poem_offset',
+  FONT_SIZE: 'canvas_font_size',
+  FILL_COLOR: 'canvas_fill_color',
+  LETTER_SPACING: 'canvas_letter_spacing',
+  LINE_HEIGHT: 'canvas_line_height',
+  LINE_HEIGHT_MULTIPLIER: 'canvas_line_height_multiplier',
+  TEXT_ALIGN: 'canvas_text_align',
+  FONT_WEIGHT: 'canvas_font_weight',
+  FONT_STYLE: 'canvas_font_style',
+  TITLE_COLOR_OVERRIDE: 'canvas_title_color_override',
+  AUTHOR_COLOR_OVERRIDE: 'canvas_author_color_override',
+  SKEW_X: 'canvas_skew_x',
+  SKEW_Y: 'canvas_skew_y',
+  SKEW_Z: 'canvas_skew_z',
+  LINE_TRANSFORMS: 'canvas_line_transforms',
+  GLOBAL_3D_SETTINGS: 'canvas_global_3d_settings',
+  MOVE_MODE: 'canvas_move_mode'
 };
 
 /**
  * Clear all persisted canvas state (except camera position)
+ * Used when loading a saved design to ensure destructive override
  */
-// UNUSED: export function clearAllPersistedState() {
-//   Object.values(PERSISTED_KEYS).forEach(key => {
-//     try {
-//       localStorage.removeItem(key);
-//     } catch (error) {
-//       console.warn(`Failed to clear ${key}:`, error);
-//     }
-//   });
-// }
+export function clearAllPersistedState() {
+  Object.values(PERSISTED_KEYS).forEach(key => {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.warn(`Failed to clear ${key}:`, error);
+    }
+  });
+  console.log('🧹 Cleared all persisted canvas state from localStorage');
+}
 
 /**
  * Get overview of current persisted state for debugging

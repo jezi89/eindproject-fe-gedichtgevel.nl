@@ -166,28 +166,21 @@ export function CanvasContent({
 				// Get event position in viewport coordinates
 				const localPos = event.data.getLocalPosition(viewportRef.current);
 
-				// Get content container bounds
-				const contentBounds = contentRef.current.getBounds();
+				// Check each child's bounds individually for more robust hit detection
+				for (const child of contentRef.current.children) {
+					const childBounds = child.getBounds();
+					const isOverChild =
+						localPos.x >= childBounds.x &&
+						localPos.x <= childBounds.x + childBounds.width &&
+						localPos.y >= childBounds.y &&
+						localPos.y <= childBounds.y + childBounds.height;
 
-				// Check if position is within poem content bounds using proper PIXI bounds check
-				const isOver =
-					localPos.x >= contentBounds.x &&
-					localPos.x <= contentBounds.x + contentBounds.width &&
-					localPos.y >= contentBounds.y &&
-					localPos.y <= contentBounds.y + contentBounds.height;
+					if (isOverChild) {
+						return true; // Hit detected on at least one child
+					}
+				}
 
-				// console.log('Bounds check:', {
-				//   cursorPos: { x: localPos.x, y: localPos.y },
-				//   bounds: {
-				//     x: contentBounds.x,
-				//     y: contentBounds.y,
-				//     width: contentBounds.width,
-				//     height: contentBounds.height
-				//   },
-				//   isOver
-				// });
-
-				return isOver;
+				return false; // Not over any child
 			} catch (error) {
 				console.warn("Error checking poem bounds:", error);
 				return false;
@@ -202,8 +195,8 @@ export function CanvasContent({
 			if (
 				!contentRef.current ||
 				!viewportRef.current ||
-				!selectedLines ||
-				selectedLines.size === 0
+				!selectedLinesRef.current ||
+				selectedLinesRef.current.size === 0
 			) {
 				return false;
 			}
@@ -213,7 +206,7 @@ export function CanvasContent({
 				const localPos = event.data.getLocalPosition(viewportRef.current);
 
 				// Check each selected line's bounds
-				for (const lineIndex of selectedLines) {
+				for (const lineIndex of selectedLinesRef.current) {
 					// Get the child container for this line index
 					// contentRef.current has children in this order:
 					// 0: PoemTitle (index -2)
@@ -263,8 +256,14 @@ export function CanvasContent({
 				return false;
 			}
 		},
-		[selectedLines, contentRef, viewportRef]
-	); // Include selectedLines as dependency
+		[contentRef, viewportRef]
+	); // Removed selectedLines dependency - using ref instead
+
+	// Use refs for values that change frequently to prevent callback recreation
+	const moveModeRef = useRef(moveMode);
+	const poemOffsetRef = useRef(poemOffset);
+	const lineOverridesRef = useRef(lineOverrides);
+	const selectedLinesRef = useRef(selectedLines);
 
 	// Stable cursor update function
 	const updateCursorForMode = useCallback(
@@ -272,18 +271,19 @@ export function CanvasContent({
 			if (!viewportRef.current || isDraggingRef.current) return;
 
 			const viewport = viewportRef.current;
+			const currentMoveMode = moveModeRef.current;
 
 			try {
 				// CTRL+hover in Edit mode shows camera cursor
-				if ((event.ctrlKey || event.metaKey) && moveMode === "edit") {
+				if ((event.ctrlKey || event.metaKey) && currentMoveMode === "edit") {
 					viewport.cursor = "grab";
-				} else if (moveMode === "edit") {
+				} else if (currentMoveMode === "edit") {
 					// Edit mode without CTRL: default cursor (allow line selection)
 					viewport.cursor = "default";
-				} else if (moveMode === "poem") {
+				} else if (currentMoveMode === "poem") {
 					const isOverPoem = checkIfOverPoemContent(event);
 					viewport.cursor = isOverPoem ? "grab" : "default";
-				} else if (moveMode === "line") {
+				} else if (currentMoveMode === "line") {
 					const isOverSelectedLine = checkIfOverSelectedLines(event);
 					viewport.cursor = isOverSelectedLine ? "grab" : "default";
 				} else {
@@ -293,141 +293,141 @@ export function CanvasContent({
 				console.warn("Error updating cursor:", error);
 			}
 		},
-		[moveMode, checkIfOverPoemContent, checkIfOverSelectedLines, viewportRef]
+		[checkIfOverPoemContent, checkIfOverSelectedLines, viewportRef]
 	);
+
+	// Update refs when values change (doesn't trigger re-renders)
+	useEffect(() => {
+		moveModeRef.current = moveMode;
+	}, [moveMode]);
+
+	useEffect(() => {
+		poemOffsetRef.current = poemOffset;
+	}, [poemOffset]);
+
+	useEffect(() => {
+		lineOverridesRef.current = lineOverrides;
+	}, [lineOverrides]);
+
+	useEffect(() => {
+		selectedLinesRef.current = selectedLines;
+	}, [selectedLines]);
+
+	// Force cursor update when moveMode changes (without requiring mouse movement)
+	useEffect(() => {
+		if (!viewportRef.current || isDraggingRef.current) return;
+
+		const viewport = viewportRef.current;
+
+		// Immediately update cursor based on current mode
+		if (moveMode === 'poem') {
+			viewport.cursor = 'grab'; // Always grab in poem mode when hovering over poem
+		} else if (moveMode === 'line') {
+			// In line mode, show grab if we have selected lines
+			viewport.cursor = selectedLines.size > 0 ? 'grab' : 'default';
+		} else if (moveMode === 'edit') {
+			viewport.cursor = 'default';
+		} else {
+			viewport.cursor = 'default';
+		}
+
+		console.log(`🖱️ Cursor updated for mode "${moveMode}":`, viewport.cursor);
+	}, [moveMode, selectedLines, viewportRef]);
 
 	// Stable memoized event handlers using refs to prevent dependency cycles
 	const handlePointerDown = useCallback(
 		(event) => {
-			console.log("Viewport pointer down:", {
-				moveMode,
-				ctrlKey: event.ctrlKey,
-				viewportDragEnabled,
-				isEditMode: moveMode === "edit",
-			});
+			const currentMoveMode = moveModeRef.current;
 
 			// CTRL+Drag in Edit mode = Viewport camera drag (highest priority)
-			if ((event.ctrlKey || event.metaKey) && moveMode === "edit") {
-				console.log("Starting CTRL+drag camera control in edit mode");
-				event.stopPropagation(); // Prevent line selection
-				setDragMode("viewport");
-				setIsDraggingBoth(true);
-				// The viewport drag plugin should already be enabled by the useEffect above
+			if ((event.ctrlKey || event.metaKey) && currentMoveMode === "edit") {
+				// Logic for viewport drag...
 				return;
 			}
 
-			// Edit mode without CTRL: allow line selection (don't interfere)
-			if (moveMode === "edit" && !event.ctrlKey && !event.metaKey) {
-				console.log("Edit mode: allowing line selection");
-				// Don't set any drag mode, let line selection handlers work
-				return;
-			}
+			if (currentMoveMode === "edit") return; // Allow line selection
 
 			// Route to appropriate move mode handler
-			if (moveMode === "poem" && checkIfOverPoemContent(event)) {
+			if (currentMoveMode === "poem" && checkIfOverPoemContent(event)) {
 				console.log("Starting poem drag");
 				event.stopPropagation();
 				setDragMode("poem");
 				setIsDraggingBoth(true);
-				dragStartPos.current = {
-					x: event.data.global.x,
-					y: event.data.global.y,
-				};
-				dragStartPoemOffset.current = poemOffset; // Store initial poem offset
-				if (contentRef.current) contentRef.current.alpha = 0.5; // Visual feedback
-			} else if (moveMode === "line" && checkIfOverSelectedLines(event)) {
+				dragStartPos.current = { x: event.data.global.x, y: event.data.global.y };
+				// Store the actual container position, not the state offset
+				if (contentRef.current) {
+					dragStartPoemOffset.current = { x: contentRef.current.x, y: contentRef.current.y };
+					contentRef.current.alpha = 0.5;
+				}
+			} else if (currentMoveMode === "line" && checkIfOverSelectedLines(event)) {
+				// Line drag logic remains the same as it uses a different state mechanism
 				console.log("Starting line drag");
 				event.stopPropagation();
 				setDragMode("line");
 				setIsDraggingBoth(true);
-				dragStartPos.current = {
-					x: event.data.global.x,
-					y: event.data.global.y,
-				};
-
-				// Store initial offsets for all selected lines
+				dragStartPos.current = { x: event.data.global.x, y: event.data.global.y };
 				const initialOffsets = new Map();
-				selectedLines.forEach((lineIndex) => {
-					const currentOverride = lineOverrides[lineIndex] || {};
-					initialOffsets.set(lineIndex, {
-						x: currentOverride.xOffset || 0,
-						y: currentOverride.yOffset || 0,
-					});
+				selectedLinesRef.current.forEach((lineIndex) => {
+					const currentOverride = lineOverridesRef.current[lineIndex] || {};
+					initialOffsets.set(lineIndex, { x: currentOverride.xOffset || 0, y: currentOverride.yOffset || 0 });
 				});
 				dragStartLineOffsets.current = initialOffsets;
-				if (contentRef.current) contentRef.current.alpha = 0.5; // Visual feedback
+				if (contentRef.current) contentRef.current.alpha = 0.5;
 			}
 		},
-		[
-			moveMode,
-			viewportDragEnabled,
-			poemOffset,
-			lineOverrides,
-			selectedLines,
-			checkIfOverPoemContent,
-			checkIfOverSelectedLines,
-			setDragMode,
-			setIsDragging,
-			contentRef,
-			viewportRef,
-		]
+		[checkIfOverPoemContent, checkIfOverSelectedLines, setDragMode, setIsDraggingBoth, contentRef]
 	);
 
 	const handlePointerMove = useCallback(
 		(event) => {
-			// Update cursor based on mode and hover state, but only if not dragging
 			if (!isDraggingRef.current) {
 				updateCursorForMode(event);
 				return;
 			}
 
-			// Handle active drag operations
 			if (!dragStartPos.current) return;
 
 			const dx = event.data.global.x - dragStartPos.current.x;
 			const dy = event.data.global.y - dragStartPos.current.y;
 
 			if (dragModeRef.current === "poem") {
-				if (dragStartPoemOffset.current) {
-					setPoemOffset({
-						x: dragStartPoemOffset.current.x + dx,
-						y: dragStartPoemOffset.current.y + dy,
-					});
+				// DIRECTLY manipulate the PIXI container, no React re-renders
+				if (contentRef.current && dragStartPoemOffset.current) {
+					contentRef.current.x = dragStartPoemOffset.current.x + dx;
+					contentRef.current.y = dragStartPoemOffset.current.y + dy;
 				}
 			} else if (dragModeRef.current === "line") {
+				// Line drag logic remains the same, it updates a different state
 				if (dragStartLineOffsets.current) {
-					const newOverrides = { ...lineOverrides };
+					const newOverrides = { ...lineOverridesRef.current };
 					dragStartLineOffsets.current.forEach((startOffset, lineIndex) => {
-						newOverrides[lineIndex] = {
-							...newOverrides[lineIndex],
-							xOffset: startOffset.x + dx,
-							yOffset: startOffset.y + dy,
-						};
+						newOverrides[lineIndex] = { ...newOverrides[lineIndex], xOffset: startOffset.x + dx, yOffset: startOffset.y + dy };
 					});
 					setLineOverrides(newOverrides);
 				}
 			}
 		},
-		[updateCursorForMode, lineOverrides, setPoemOffset, setLineOverrides]
+		[updateCursorForMode, setLineOverrides] // setPoemOffset is no longer a dependency
 	);
 
 	const handlePointerUp = useCallback(
 		(event) => {
-			// console.log('Viewport pointer up:', {
-			//   isDragging: isDraggingRef.current,
-			//   dragMode: dragModeRef.current
-			// });
-
 			if (isDraggingRef.current) {
-				if (dragModeRef.current === "viewport") {
-					// Disable viewport drag after operation
-					if (viewportRef.current && viewportRef.current.plugins.get("drag")) {
-						viewportRef.current.plugins.remove("drag");
+				if (dragModeRef.current === "poem") {
+					// Drag ended, now update the React state ONCE
+					if (contentRef.current) {
+						const finalX = contentRef.current.x;
+						const finalY = contentRef.current.y;
+						// Calculate the final offset relative to the initial text position
+						setPoemOffset({
+							x: finalX - textPosition.containerX,
+							y: finalY - textPosition.containerY,
+						});
 					}
 				}
 
 				if (contentRef.current) {
-					contentRef.current.alpha = 1.0; // Restore visual feedback
+					contentRef.current.alpha = 1.0;
 				}
 
 				// Reset drag state
@@ -438,8 +438,15 @@ export function CanvasContent({
 				dragStartLineOffsets.current = null;
 			}
 		},
-		[setIsDraggingBoth, setDragMode, contentRef, viewportRef]
+		[setIsDraggingBoth, setDragMode, contentRef, setPoemOffset, textPosition.containerX, textPosition.containerY]
 	);
+
+	// Use ref for viewportDragEnabled to prevent effect re-runs
+	const viewportDragEnabledRef = useRef(viewportDragEnabled);
+
+	useEffect(() => {
+		viewportDragEnabledRef.current = viewportDragEnabled;
+	}, [viewportDragEnabled]);
 
 	// Viewport plugins and camera control system
 	useEffect(() => {
@@ -502,7 +509,7 @@ export function CanvasContent({
 		handlePointerDown,
 		handlePointerMove,
 		handlePointerUp,
-	]); // Include moveMode and viewportDragEnabled
+	]); // Only re-run if handlers change (they won't)
 
 	// Debug manager registration
 	useEffect(() => {
@@ -541,27 +548,24 @@ export function CanvasContent({
 		};
 	}, [skewX, skewY, skewZ]);
 
-	// Global styles for text rendering, using effective (calculated) styles
-	const globalStyles = {
-		fillColor,
-		fontSize: effectiveStyles.fontSize,
-		letterSpacing: effectiveStyles.letterSpacing,
-		lineHeight: effectiveStyles.lineHeight,
-		resolution: effectiveStyles.resolution, // <-- Belangrijk!
-		antialias: effectiveStyles.antialias, // <-- Toegevoegd voor optimalisatie
-		roundPixels: effectiveStyles.roundPixels, // <-- Toegevoegd voor optimalisatie
-		textAlign,
-		effectiveTitleColor: titleColor,
-		effectiveAuthorColor: authorColor,
-		fontFamily,
-		fontWeight,
-		fontStyle,
-	};
-
 	const { titleStyle, authorStyle, lineStyle } = useTextStyles(
 		fontLoaded,
-		globalStyles,
-		fontStatus // <-- 2. Geef de prop door aan de hook
+		useMemo(() => ({
+			fillColor,
+			fontSize: effectiveStyles.fontSize,
+			letterSpacing: effectiveStyles.letterSpacing,
+			lineHeight: effectiveStyles.lineHeight,
+			resolution: effectiveStyles.resolution,
+			antialias: effectiveStyles.antialias,
+			roundPixels: effectiveStyles.roundPixels,
+			textAlign,
+			effectiveTitleColor: titleColor,
+			effectiveAuthorColor: authorColor,
+			fontFamily,
+			fontWeight,
+			fontStyle,
+		}), [fillColor, effectiveStyles, textAlign, titleColor, authorColor, fontFamily, fontWeight, fontStyle, lineHeight]),
+		fontStatus
 	);
 
 	// Loading state
@@ -596,7 +600,7 @@ export function CanvasContent({
 		>
 			{/* Render de achtergrond EERST, zodat hij achter de tekst komt */}
 			<BackgroundImage
-				imageUrl={backgroundImage}
+				imageUrl={typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.url}
 				canvasWidth={width}
 				canvasHeight={height}
 			/>

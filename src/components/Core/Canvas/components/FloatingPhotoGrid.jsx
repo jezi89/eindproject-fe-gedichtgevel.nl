@@ -55,21 +55,25 @@ export default function FloatingPhotoGrid({
 
     // FloatingPhotoGrid component ready
 
-    // Generate title based on search context
+    // Generate title based on search context with source indicator
     const getTitle = () => {
         if (!searchContext) return "Achtergronden";
+
+        const source = searchContext.source === 'flickr' ? '📸 Flickr' : '🔍 Pexels';
 
         switch (searchContext.type) {
             case 'collection':
                 return "Achtergronden";
             case 'pexels_search':
-                return `Resultaten voor "${searchContext.query}"`;
+                return `${source}: "${searchContext.query}"`;
             case 'flickr_city':
-                return `Foto's uit ${searchContext.query}`;
+                return `${source}: ${searchContext.query}`;
+            case 'flickr_text':
+                return `${source}: "${searchContext.query}"`;
             case 'pexels_fallback':
-                return `Resultaten voor "${searchContext.query}"`;
+                return `${source}: "${searchContext.query}"`;
             default:
-                return searchContext.query ? `Resultaten voor "${searchContext.query}"` : "Achtergronden";
+                return searchContext.query ? `${source}: "${searchContext.query}"` : "Achtergronden";
         }
     };
 
