@@ -203,24 +203,22 @@ const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSeriesNavi
                         <p>Navigeer door verschillende series van {totalCount} gedichten</p>
                     </div>
                     <div className={styles.seriesOptions}>
-                        {availableDecades.map((decade, index) => {
-                            const startPoem = decade.decade * 10 + 1;
-                            const endPoem = Math.min((decade.decade + 1) * 10, totalCount);
-                            const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
-                            const romanNumeral = romanNumerals[index] || `${index + 1}`;
+                        {availableDecades.map((decade) => {
+                            const startPoem = decade.startIndex + 1;
+                            const endPoem = decade.endIndex + 1;
 
                             return (
                                 <button
                                     key={decade.decade}
                                     className={styles.seriesOption}
                                     onClick={() => handleDecadeClick(decade)}
-                                    title={`Ga naar serie ${romanNumeral}: gedichten ${startPoem}-${endPoem}`}
+                                    title={`Ga naar serie ${decade.romanNumeral}: gedichten ${startPoem}-${endPoem}`}
                                 >
                                     <span className={styles.seriesRoman}>
-                                        {romanNumeral}
+                                        {decade.romanNumeral}
                                     </span>
                                     <span className={styles.seriesRange}>
-                                        ({startPoem}-{endPoem})
+                                        ({startPoem}-${endPoem})
                                     </span>
                                 </button>
                             );

@@ -1,179 +1,248 @@
+@use "../../../../styles/variables" as *;
+
 .navContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 8px;
-    background-color: transparent;
-    height: 100%;
-    overflow: hidden;
-}
+  display:          flex;
+  overflow:         hidden;
+  flex-direction:   column;
+  height:           100%;
+  padding:          8px;
+  background-color: transparent;
+  gap:              6px;
+  }
 
 
 .navItem:hover {
-    background-color: #4a5a6d;
-}
+  background-color: #4a5a6d;
+  }
 
 .navItem:active {
-    background-color: #5a6a7d;
-}
+  background-color: #5a6a7d;
+  }
+
+.saveSection {
+  display:          flex;
+  justify-content:  center;
+  padding:          12px;
+  border-top:       1px solid #3d4a5c;
+  border-bottom:    1px solid #3d4a5c;
+  background-color: rgba(45, 55, 72, 0.3);
+  }
 
 .syncSection {
-    padding-top: 16px;
-    border-top: 1px solid #4a5a6d;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: margin-top 0.3s ease; /* Smooth positioning transitions */
-}
+  display:        flex;
+  flex-direction: column;
+  padding-top:    16px;
+  transition:     margin-top 0.3s ease; /* Smooth positioning transitions */
+  border-top:     1px solid #4a5a6d;
+  gap:            8px;
+  }
 
 /* Smart positioning based on XY sliders visibility */
 .syncSection.withXySlidersHidden {
-    margin-top: 2px; /* Near top when XY sliders not visible */
-}
+  margin-top: 2px; /* Near top when XY sliders not visible */
+  }
 
 .syncSection.withXySlidersVisible {
-    margin-top: 290px; /* Push down when XY sliders are visible - leaves room for positioning */
-}
+  margin-top: 290px; /* Push down when XY sliders are visible - leaves room for positioning */
+  }
 
 .buttonGroup {
-    padding: 12px;
-    border-top: 1px solid #3d4a5c;
-    background-color: rgba(45, 55, 72, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
+  display:          flex;
+  align-items:      center;
+  flex-direction:   column;
+  padding:          12px;
+  border-top:       1px solid #3d4a5c;
+  background-color: rgba(45, 55, 72, 0.2);
+  gap:              8px;
+  }
 
 .syncLabel {
-    font-size: 11px;
-    color: #a0a9b8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-}
+  font-family:    $font-family-nav-item;
+  font-size:      $font-size-xxxs;
+  font-weight:    $font-weight-semibold;
+  margin-bottom:  4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color:          #a0a9b8;
+  }
 
 .syncButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background-color: #3d4a5c;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-size: 14px;
-    color: inherit;
-}
+  font-size:        14px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            32px;
+  height:           32px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease;
+  color:            inherit;
+  border:           none;
+  border-radius:    6px;
+  background-color: #3d4a5c;
+  }
 
 .syncButton:hover {
-    background-color: #4a5a6d;
-}
+  background-color: #4a5a6d;
+  }
 
 .syncButton:active {
-    background-color: #5a6a7d;
-}
+  background-color: #5a6a7d;
+  }
 
 .syncButton.toggledOff {
-    background-color: #2a2a2a;
-    opacity: 0.6;
-}
+  opacity:          0.6;
+  background-color: #2a2a2a;
+  }
 
 .syncButton.toggledOff:hover {
-    background-color: #3a3a3a;
-}
+  background-color: #3a3a3a;
+  }
 
 /* --- Added for consistency with Controls.jsx --- */
 .panelHeader {
-    position: relative; /* For absolute positioning of the button */
-    padding: 16px;
-    padding-top: 28px; /* Extra padding on top for the button */
-    border-bottom: 1px solid #3d4a5c;
-}
+  position:        relative; /* For absolute positioning of buttons */
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+
+
+  padding-top:     28px; /* Extra padding on top for buttons */
+  border-bottom:   1px solid #3d4a5c;
+  }
 
 .panelHeader h2, .panelHeader h3 {
-    margin: 0;
-    font-size: 16px;
-}
+  font-family: $font-family-section-heading;
+  font-size:   $font-size-m;
+  font-weight: $font-weight-bold;
+  flex:        1;
+  margin-top:  3rem;
+  text-align:  center;
+  }
+
+.headerButtons {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  }
+
+.navbarToggleButton {
+  font-size:        18px;
+  position:         absolute;
+  top:              8px;
+  right:            12px; /* Position to right of close button */
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            32px;
+  height:           32px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease;
+  animation:        pulseAttention 2s ease-in-out 3; /* Pulse 3 times = ~6 seconds */
+  color:            #cfd4db;
+  border:           none;
+  border-radius:    6px;
+  background-color: #3d4a5c;
+  }
+
+.navbarToggleButton:hover {
+  animation:        none; /* Stop animation on hover */
+  color:            #ffffff;
+  background-color: #4a5a6d;
+  }
+
+// Pulse animation for button
+@keyframes pulseAttention {
+  0%, 100% {
+	transform:  scale(1);
+	box-shadow: 0 0 0 0 rgba(227, 87, 18, 0.7);
+	}
+  50% {
+	transform:  scale(1.1);
+	box-shadow: 0 0 0 8px rgba(227, 87, 18, 0);
+	}
+  }
+
 
 .closeButton {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    background: none;
-    border: none;
-    color: #a0a9b8;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 4px;
-    line-height: 1;
-    user-select: none; /* Prevents caret on click */
-}
+  font-size:   24px;
+  line-height: 1;
+  position:    absolute;
+  bottom:      30px;
+  left:        2px;
+  padding:     4px;
+  cursor:      pointer;
+  user-select: none; /* Prevents caret on click */
+  color:       #a0a9b8;
+  border:      none;
+  background:  none;
+  }
 
 .closeButton:hover {
-    color: white;
-}
+  color: white;
+  }
 
 /* Selection Indicator */
 .selectionIndicator {
-    padding: 12px 16px;
-    border-bottom: 1px solid #3d4a5c;
-    background-color: rgba(45, 55, 72, 0.3);
-}
+  padding:          12px 16px;
+  border-bottom:    1px solid #3d4a5c;
+  background-color: rgba(45, 55, 72, 0.3);
+  }
 
 .selectionLabel {
-    font-size: 11px;
-    color: #a0a9b8;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-}
+  font-family:    $font-family-nav-item;
+  font-size:      $font-size-xxxs;
+  font-weight:    $font-weight-semibold;
+  margin-bottom:  6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color:          #a0a9b8;
+  }
 
 .selectionStatus {
-    font-size: 12px;
-    color: #e2e8f0;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background-color: rgba(74, 90, 109, 0.3);
-    border-left: 3px solid #4a5a6d;
-    transition: all 0.2s ease;
-}
+  font-family:      $font-family-body;
+  font-size:        $font-size-xxxs;
+  font-weight:      $font-weight-regular;
+  padding:          4px 8px;
+  transition:       all 0.2s ease;
+  color:            #e2e8f0;
+  border-left:      3px solid #4a5a6d;
+  border-radius:    4px;
+  background-color: rgba(74, 90, 109, 0.3);
+  }
 
 /* Selection type indicators */
 .selectionStatus.none {
-    color: #a0a9b8;
-    border-left-color: #64748b;
-}
+  color:             #a0a9b8;
+  border-left-color: #64748b;
+  }
 
 .selectionStatus.lines-only {
-    color: #93c5fd;
-    border-left-color: #3b82f6;
-}
+  color:             #93c5fd;
+  border-left-color: #3b82f6;
+  }
 
 .selectionStatus.all {
-    color: #fbbf24;
-    border-left-color: #f59e0b;
-}
+  color:             #fbbf24;
+  border-left-color: #f59e0b;
+  }
 
 .selectionStatus.lines-title,
 .selectionStatus.lines-author {
-    color: #a78bfa;
-    border-left-color: #8b5cf6;
-}
+  color:             #a78bfa;
+  border-left-color: #8b5cf6;
+  }
 
 .selectionStatus.title-only,
 .selectionStatus.author-only,
 .selectionStatus.title-author {
-    color: #fb7185;
-    border-left-color: #f43f5e;
-}
+  color:             #fb7185;
+  border-left-color: #f43f5e;
+  }
 
 /* Anchor for XY sliders popover */
 .xyAnchor {
-    position: relative;
-    height: 0;
-    width: 0;
-    visibility: hidden;
-}
+  position:   relative;
+  visibility: hidden;
+  width:      0;
+  height:     0;
+  }

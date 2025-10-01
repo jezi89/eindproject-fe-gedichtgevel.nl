@@ -82,15 +82,6 @@ export function useTextStyles(fontLoaded, globalStyles, fontStatus) {
       roundPixels: roundPixels,
     };
 
-    console.log('📝 Creating TextStyle with config:', {
-      type: 'title',
-      fontSize: titleStyleConfig.fontSize,
-      requestedResolution: resolution,
-      antialias: titleStyleConfig.antialias,
-      roundPixels: titleStyleConfig.roundPixels,
-      note: 'Resolution will be set directly on pixiText component'
-    });
-
     return {
       titleStyle: new PIXI.TextStyle(titleStyleConfig),
       authorStyle: new PIXI.TextStyle({

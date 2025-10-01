@@ -12,13 +12,22 @@ export function useCanvasState() {
 	const viewportRef = useRef(null);
 	const contentRef = useRef(null);
 
-	// Drag-and-Drop State
-	const [poemOffset, setPoemOffset] = useState({ x: 170, y: 0 });
-	const [moveMode, setMoveMode] = useState("edit");
+	// Drag-and-Drop State - PERSISTENT
+	const [poemOffset, setPoemOffset] = usePersistedState(
+		PERSISTED_KEYS.POEM_OFFSET,
+		{ x: 170, y: 0 }
+	);
+	const [moveMode, setMoveMode] = usePersistedState(
+		PERSISTED_KEYS.MOVE_MODE,
+		"edit"
+	);
 
 	// UI State
 	const [viewportDragEnabled, setViewportDragEnabled] = useState(false);
-	const [lineOverrides, setLineOverrides] = useState({});
+	const [lineOverrides, setLineOverrides] = usePersistedState(
+		PERSISTED_KEYS.LINE_OVERRIDES,
+		{}
+	);
 	const [isColorPickerActive, setIsColorPickerActive] = useState(false);
 	const [photoGridVisible, setPhotoGridVisible] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
@@ -34,17 +43,20 @@ export function useCanvasState() {
 	const selection = useSelection();
 	const { fontStatus, loadFont, availableFonts } = useFontManager();
 
-	// Text Styling State
-	const [currentFontFamily, setCurrentFontFamily] = useState("Lato");
+	// Text Styling State - PERSISTENT
+	const [currentFontFamily, setCurrentFontFamily] = usePersistedState(
+		PERSISTED_KEYS.FONT_FAMILY,
+		"Lato"
+	);
 	const [pendingFontFamily, setPendingFontFamily] = useState(null);
 
 	// Background State
-	const [backgroundImage, setBackgroundImage] = usePersistedState(
+	const [backgroundImage, setBackgroundImage, clearBackgroundImage] = usePersistedState(
 		PERSISTED_KEYS.BACKGROUND_IMAGE,
 		null
 	);
 
-	const pexels = usePexels(setBackgroundImage);
+	const pexels = usePexels();
 	const flickr = useFlickr();
 
 	const [searchContext, setSearchContext] = useState({
@@ -60,45 +72,79 @@ export function useCanvasState() {
 		}
 	}, [pendingFontFamily, fontStatus]);
 
-	// Core Text Styling State
-	const [fontSize, setFontSize] = useState(20);
-	const [fillColor, setFillColor] = useState("#000000");
-	const [letterSpacing, setLetterSpacing] = useState(0);
-	const [lineHeight, setLineHeight] = useState(20 * 1.5);
-	const [lineHeightMultiplier, setLineHeightMultiplier] = useState(1.5);
-	const [textAlign, setTextAlign] = useState("center");
-	const [fontWeight, setFontWeight] = useState("normal");
-	const [fontStyle, setFontStyle] = useState("normal");
-	// Skew state (container-level - BEHOUDEN)
-	const [skewX, setSkewX] = useState(0);
-	const [skewY, setSkewY] = useState(0);
-	const [skewZ, setSkewZ] = useState(0);
+	// Core Text Styling State - PERSISTENT
+	const [fontSize, setFontSize] = usePersistedState(
+		PERSISTED_KEYS.FONT_SIZE,
+		20
+	);
+	const [fillColor, setFillColor] = usePersistedState(
+		PERSISTED_KEYS.FILL_COLOR,
+		"#000000"
+	);
+	const [letterSpacing, setLetterSpacing] = usePersistedState(
+		PERSISTED_KEYS.LETTER_SPACING,
+		0
+	);
+	const [lineHeight, setLineHeight] = usePersistedState(
+		PERSISTED_KEYS.LINE_HEIGHT,
+		30
+	);
+	const [lineHeightMultiplier, setLineHeightMultiplier] = usePersistedState(
+		PERSISTED_KEYS.LINE_HEIGHT_MULTIPLIER,
+		1.5
+	);
+	const [textAlign, setTextAlign] = usePersistedState(
+		PERSISTED_KEYS.TEXT_ALIGN,
+		"center"
+	);
+	const [fontWeight, setFontWeight] = usePersistedState(
+		PERSISTED_KEYS.FONT_WEIGHT,
+		"normal"
+	);
+	const [fontStyle, setFontStyle] = usePersistedState(
+		PERSISTED_KEYS.FONT_STYLE,
+		"normal"
+	);
+	// Skew state (container-level) - PERSISTENT
+	const [skewX, setSkewX] = usePersistedState(PERSISTED_KEYS.SKEW_X, 0);
+	const [skewY, setSkewY] = usePersistedState(PERSISTED_KEYS.SKEW_Y, 0);
+	const [skewZ, setSkewZ] = usePersistedState(PERSISTED_KEYS.SKEW_Z, 0);
 
-	// 3D transformation state (per-text level - NIEUW)
-	const [lineTransforms, setLineTransforms] = useState({}); // lineIndex -> Transform3D properties
-	const [global3DSettings, setGlobal3DSettings] = useState({
-		perspective: 1000,
-		depthSorting: true,
-		lightingEnabled: false,
-		// Enhanced per-text controls
-		defaultPivotMode: "center", // 'center', 'top', 'bottom'
-		// Gevel realism settings
-		gevelPreset: "none", // 'none', 'brick', 'stone', 'metal', 'glass', 'wood'
-		globalLighting: {
-			enabled: false,
-			direction: { x: 0, y: 0, z: 1 },
-			intensity: 1.0,
-			ambient: 0.3,
-		},
-		material: {
-			blendMode: "normal",
-		},
-	});
+	// 3D transformation state (per-text level) - PERSISTENT
+	const [lineTransforms, setLineTransforms] = usePersistedState(
+		PERSISTED_KEYS.LINE_TRANSFORMS,
+		{}
+	);
+	const [global3DSettings, setGlobal3DSettings] = usePersistedState(
+		PERSISTED_KEYS.GLOBAL_3D_SETTINGS,
+		{
+			perspective: 1000,
+			depthSorting: true,
+			lightingEnabled: false,
+			defaultPivotMode: "center",
+			gevelPreset: "none",
+			globalLighting: {
+				enabled: false,
+				direction: { x: 0, y: 0, z: 1 },
+				intensity: 1.0,
+				ambient: 0.3,
+			},
+			material: {
+				blendMode: "normal",
+			},
+		}
+	);
 	const [userHasAdjusted, setUserHasAdjusted] = useState(false);
 
-	// Hierarchical color system
-	const [titleColorOverride, setTitleColorOverride] = useState(null);
-	const [authorColorOverride, setAuthorColorOverride] = useState(null);
+	// Hierarchical color system - PERSISTENT
+	const [titleColorOverride, setTitleColorOverride] = usePersistedState(
+		PERSISTED_KEYS.TITLE_COLOR_OVERRIDE,
+		null
+	);
+	const [authorColorOverride, setAuthorColorOverride] = usePersistedState(
+		PERSISTED_KEYS.AUTHOR_COLOR_OVERRIDE,
+		null
+	);
 
 	const effectiveTitleColor = useMemo(
 		() => titleColorOverride || fillColor,
@@ -191,6 +237,7 @@ export function useCanvasState() {
 		// Background State
 		backgroundImage,
 		setBackgroundImage,
+		clearBackgroundImage,
 		searchContext,
 		setSearchContext,
 

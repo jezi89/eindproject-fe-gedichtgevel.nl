@@ -103,8 +103,8 @@ const MonthlyPoems = () => {
     return (
         <section className={styles.monthlyPoemsSection}>
             <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Gedichten van de Maand</h2>
-                <p className={styles.sectionSubtitle}>Ontdek onze curatie van bijzondere gedichten</p>
+                <h2 className={styles.sectionTitle}>Staartgedichten van de Dag</h2>
+                <p className={styles.sectionSubtitle}>Ontdek onze dagelijks wisseledende curatie van daadwerkelijk Nederlandse straatpoezie</p>
             </div>
 
             <div className={styles.poemsGrid} id="monthly-poems-grid">

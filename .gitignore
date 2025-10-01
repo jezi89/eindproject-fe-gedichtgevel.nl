@@ -61,3 +61,6 @@ pnpm-debug.log*
 .claude
 /Canvas-Project/
 /DOCS/
+/supabase/migrations/add_canvas_design_rls_policies.sql
+/src/debug/
+/AUDIO-PROJECT/

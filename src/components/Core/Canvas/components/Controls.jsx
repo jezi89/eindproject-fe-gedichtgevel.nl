@@ -1,11 +1,12 @@
 // src/pages/CanvasPage/Controls.jsx
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import styles from "../Canvas.module.scss";
 import BackgroundControls from "./controls/BackgroundControls";
 import FontControls from "./controls/FontControls";
 import LayoutControls from "./controls/LayoutControls";
 import Transform3DControls from "./controls/Transform3DControls";
+import { useAuthContext } from "@/context/auth/AuthContext";
 
 export default function Controls({
 	toggle, // <-- NEW: For collapsing the panel
@@ -61,6 +62,7 @@ export default function Controls({
 	error,
 	onSearch, // Dit wordt onze handleSearchBackground
 	onCitySearch, // Wordt handleCitySearch
+	onPremiumSearch, // NEW: Premium Flickr text search
 	onResetToCollection, // New prop for resetting to collection
 	onOpenPhotoGrid, // New prop to open floating photo grid
 	onResetViewport, // NEW: For resetting the camera
@@ -85,10 +87,23 @@ export default function Controls({
 	getSelectedTransformValues,
 	handleSelectedTransformChange,
 }) {
+	const { user } = useAuthContext();
+
 	const [query, setQuery] = useState("");
 	const [isFreeSearchVisible, setIsFreeSearchVisible] = useState(false);
 	const [selectedAnwbCity, setSelectedAnwbCity] = useState("");
 	const [selectedCapital, setSelectedCapital] = useState("");
+
+	// Search option states
+	const [useCustomTerm, setUseCustomTerm] = useState(false);
+	const [usePremiumSearch, setUsePremiumSearch] = useState(false);
+
+	// Set premium search to true by default for authenticated users
+	useEffect(() => {
+		if (user) {
+			setUsePremiumSearch(true);
+		}
+	}, [user]);
 
 	// Collapsible section states
 	const [backgroundSectionOpen, setBackgroundSectionOpen] = useState(true);
@@ -174,8 +189,35 @@ export default function Controls({
 
 	const handleSearchClick = () => {
 		if (query.trim()) {
-			onSearch(query.trim());
-			onOpenPhotoGrid(); // AUTO-OPEN MODAL
+			// Determine final query with prefix if needed
+			let finalQuery;
+			if (useCustomTerm) {
+				// User wants exact search term
+				finalQuery = query.trim();
+			} else {
+				// Add appropriate prefix based on search engine
+				if (user && usePremiumSearch) {
+					// Flickr: Use Dutch "gevels in" prefix
+					finalQuery = `gevels in ${query.trim()}`;
+				} else {
+					// Pexels: Use English "facades in" for better results
+					finalQuery = `facades in ${query.trim()}`;
+				}
+			}
+
+			// Switch between Pexels and Flickr based on premium checkbox
+			if (user && usePremiumSearch) {
+				// Premium search: use Flickr with text search
+				onPremiumSearch(finalQuery);
+			} else {
+				// Standard search: use Pexels
+				onSearch(finalQuery);
+			}
+
+			// Open grid after short delay to allow API call to start
+			setTimeout(() => {
+				onOpenPhotoGrid();
+			}, 100);
 		}
 	};
 
@@ -231,6 +273,10 @@ export default function Controls({
 				isLoading={isLoading}
 				error={error}
 				hoverFreezeActive={hoverFreezeActive}
+				useCustomTerm={useCustomTerm}
+				setUseCustomTerm={setUseCustomTerm}
+				usePremiumSearch={usePremiumSearch}
+				setUsePremiumSearch={setUsePremiumSearch}
 				onSearch={onSearch}
 				onOpenPhotoGrid={onOpenPhotoGrid}
 				onCitySearch={onCitySearch}

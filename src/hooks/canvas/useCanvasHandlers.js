@@ -46,6 +46,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 		setLineOverrides,
 		searchPhotos, // <-- Pexels voor vrije zoekopdrachten
 		searchPhotosByGeo, // <-- NIEUW: Onze Flickr specialist
+		searchPhotosByText, // <-- NIEUW: Flickr text-only search
 		getCollectionPhotos,
 		setBackgroundImage, // <-- van useCanvasState
 		goToNextPage, // <-- Nieuw van usePexels
@@ -53,6 +54,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 		searchContext, // <-- Nieuwe search context state
 		setSearchContext, // <-- Nieuwe search context setter
 		goToNextFlickrPage, // <-- NIEUW
+		goToPrevFlickrPage, // <-- NIEUW: Voor vorige pagina
 		flickrPhotos, // <-- NIEUW: om te checken welke bron actief is
 		clearFlickrPhotos, // <-- NIEUW: om Flickr te resetten
 		setPhotoGridVisible, // <-- van useCanvasState
@@ -492,8 +494,23 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 	);
 
 	const handleSetBackground = useCallback(
-		(imageUrl) => {
-			setBackgroundImage(imageUrl);
+		(imageData) => {
+			// Normalize: if string provided, convert to proper object structure
+			if (typeof imageData === 'string') {
+				console.log('⚠️ handleSetBackground: Converting string to object:', imageData);
+				const normalizedData = {
+					url: imageData,
+					thumbnail: imageData,
+					photographer: 'Unknown',
+					source: 'custom',
+					width: null,
+					height: null
+				};
+				setBackgroundImage(normalizedData);
+			} else {
+				// Already an object, use as-is
+				setBackgroundImage(imageData);
+			}
 		},
 		[setBackgroundImage]
 	);
@@ -527,6 +544,19 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 		[searchPhotosByGeo, clearFlickrPhotos, setSearchContext]
 	);
 
+	const handlePremiumSearch = useCallback(
+		(query) => {
+			searchPhotosByText(query);
+			// Update search context voor Flickr text search
+			setSearchContext({
+				type: "flickr_text",
+				query: query,
+				source: "flickr",
+			});
+		},
+		[searchPhotosByText, setSearchContext]
+	);
+
 	// --- NIEUWE HANDLERS VOOR PAGINERING ---
 	const handleNextPage = useCallback(() => {
 		// Als er flickr foto's zijn, gebruik de flickr paginering
@@ -538,14 +568,13 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 	}, [flickrPhotos, goToNextFlickrPage, goToNextPage]);
 
 	const handlePrevPage = useCallback(() => {
-		// Voor nu focussen we op 'volgende pagina', omdat Flickr geen 'prev_page' URL geeft.
-		// Dit houdt de logica simpel. Je kunt altijd een nieuwe zoekopdracht doen.
+		// Switch tussen Flickr en Pexels paginering
 		if (flickrPhotos && flickrPhotos.length > 0) {
-			// Vorige pagina voor Flickr is complexer, voor nu niet geïmplementeerd
+			goToPrevFlickrPage();
 		} else {
 			goToPrevPage();
 		}
-	}, [flickrPhotos, goToPrevPage]);
+	}, [flickrPhotos, goToPrevFlickrPage, goToPrevPage]);
 
 	// NEW: Handler to reset to default collection
 	const handleResetToCollection = useCallback(() => {
@@ -909,6 +938,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 		handleSkewZChange,
 
 		handleSearchBackground,
+		handlePremiumSearch, // <-- NEW: Export premium search handler
 		handleSetBackground,
 		handleNextPage, // <-- Exporteren
 		handlePrevPage, // <-- Exporteren

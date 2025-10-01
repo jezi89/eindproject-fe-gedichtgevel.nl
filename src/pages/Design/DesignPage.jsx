@@ -1,25 +1,58 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useOutletContext, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import Canvas from "../../components/Core/Canvas/Canvas.jsx";
 import { CanvasDataService } from "../../services/canvas/canvasDataService.js";
 import { poems, getPoemById } from "../../data/canvas/testdata.js";
+import { useCanvasStorage } from "../../hooks/canvas/useCanvasStorage.js";
+import { deserializeCanvasState } from "../../services/canvas/canvasStateSerializer.js";
 
 export function DesignPage() {
 	const navigate = useNavigate();
 	const { poemId } = useParams();
+	const [searchParams] = useSearchParams();
+	const designId = searchParams.get('design');
+	const { toggleNavbarOverlay } = useOutletContext();
 	const [poemData, setPoemData] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [dataSource, setDataSource] = useState(null); // Track where data came from
+	const [loadedDesignId, setLoadedDesignId] = useState(null);
+	const [savedCanvasState, setSavedCanvasState] = useState(null);
+	const { load } = useCanvasStorage();
 
-	// Priority-based data loading: sessionStorage → demo poem → fallback
+	// Priority-based data loading: saved design → sessionStorage → demo poem → fallback
 	useEffect(() => {
 		const loadPoemData = async () => {
 			setLoading(true);
 			setError(null);
 
 			try {
-				console.log("🎨 DesignPage: Loading poem data...", { poemId });
+				console.log("🎨 DesignPage: Loading poem data...", { poemId, designId });
+
+				// Priority 0: Load saved design if designId provided
+				if (designId) {
+					console.log("📂 DesignPage: Loading saved design:", designId);
+					const designResult = await load(designId);
+
+					if (designResult.success) {
+						console.log("✅ DesignPage: Loaded saved design:", designResult.data.title);
+						setPoemData(designResult.data.poem);
+						setDataSource("saved-design");
+						setLoadedDesignId(designId);
+
+						// Deserialize and save canvas state for Canvas component
+						if (designResult.data.design_settings) {
+							const canvasState = deserializeCanvasState(designResult.data.design_settings);
+							setSavedCanvasState(canvasState);
+						}
+
+						setLoading(false);
+						return;
+					} else {
+						console.error("❌ Failed to load design:", designResult.error);
+						setError(`Kon design niet laden: ${designResult.error}`);
+					}
+				}
 
 				// Priority 1: Check for poem data from canvas navigation (sessionStorage)
 				const storedPoemData = CanvasDataService.getPoemForCanvas();
@@ -99,7 +132,16 @@ export function DesignPage() {
 		};
 
 		loadPoemData();
-	}, [poemId]);
+	}, [poemId, designId, load]);
+
+	// Clear cached background when navigating to new poem (not when loading saved design)
+	useEffect(() => {
+		if (dataSource && dataSource !== 'saved-design') {
+			console.log("🧹 DesignPage: Clearing cached background for new poem (source:", dataSource, ")");
+			// Clear background from localStorage to prevent it from persisting
+			localStorage.removeItem('canvas_background_image');
+		}
+	}, [dataSource]);
 
 	const handleCanvasSave = (imageData) => {
 		// TODO: Implement save functionality
@@ -218,6 +260,8 @@ export function DesignPage() {
 	// Add data source indicator for debugging/user feedback
 	const getDataSourceMessage = () => {
 		switch (dataSource) {
+			case "saved-design":
+				return "✅ Opgeslagen design geladen";
 			case "navigation":
 				return "✅ Gedicht geladen vanuit zoekresultaten";
 			case "demo":
@@ -232,32 +276,13 @@ export function DesignPage() {
 	};
 
 	return (
-		<div style={{ position: "relative", height: "100vh" }}>
-			{/* Data source indicator - only show for non-navigation sources */}
-			{dataSource !== "navigation" && (
-				<div
-					style={{
-						position: "absolute",
-						top: "10px",
-						right: "10px",
-						background: "rgba(0, 0, 0, 0.7)",
-						color: "white",
-						padding: "0.5rem 1rem",
-						borderRadius: "4px",
-						fontSize: "0.875rem",
-						zIndex: 1000,
-						opacity: 0.8,
-					}}
-				>
-					{getDataSourceMessage()}
-				</div>
-			)}
-
-			<Canvas
-				poemData={poemData}
-				onSave={handleCanvasSave}
-				onBack={handleCanvasBack}
-			/>
-		</div>
+		<Canvas
+			poemData={poemData}
+			onSave={handleCanvasSave}
+			onBack={handleCanvasBack}
+			onToggleNavbarOverlay={toggleNavbarOverlay}
+			savedCanvasState={savedCanvasState}
+			currentDesignId={loadedDesignId}
+		/>
 	);
 }

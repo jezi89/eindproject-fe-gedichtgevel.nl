@@ -1,250 +1,256 @@
-/* src/components/Core/Canvas/components/XYMoveSliders.module.css */
+@use "../../../../styles/variables" as *;
 
 .xyMoveContainer {
-    position: fixed;
-    right: 20px;
-    width: 320px; /* Vaste breedte - geen responsieve verandering */
-    min-width: 280px; /* Minimum voor zeer kleine schermen */
-    max-width: 340px; /* Maximum om groei te voorkomen */
-    padding: 16px;
-    background: rgba(249, 249, 249, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(221, 221, 221, 0.8);
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    will-change: transform; /* Voor betere drag-performance */
-}
+  position:        fixed;
+  z-index:         1000;
+  right:           20px;
+  width:           320px; /* Vaste breedte - geen responsieve verandering */
+  min-width:       280px; /* Minimum voor zeer kleine schermen */
+  max-width:       340px; /* Maximum om groei te voorkomen */
+  padding:         16px;
+  transition:      all 0.3s ease;
+  border:          1px solid rgba(221, 221, 221, 0.8);
+  border-radius:   12px;
+  background:      rgba(249, 249, 249, 0.95);
+  box-shadow:      0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  will-change:     transform; /* Voor betere drag-performance */
+  }
 
 .xyMoveContainer:hover {
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
 
 .titleContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
+  display:       flex;
+  align-items:   center;
+  margin-bottom: 8px;
+  }
 
 
 .moveLabel {
-    width: auto;
-    margin-bottom: 0;
-    margin-right: 12px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-}
+  font-family:   $font-family-section-heading;
+  font-size:     $font-size-xxs;
+  font-weight:   $font-weight-bold;
+  display:       flex;
+  align-items:   center;
+  width:         auto;
+  margin-right:  12px;
+  margin-bottom: 0;
+  color:         #333;
+  }
 
 .moveButton {
-    width: auto;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
+  display:         flex;
+  align-items:     center;
+  justify-content: flex-end;
+  width:           auto;
+  margin-left:     auto;
+  }
 
 .status {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 12px;
-    padding: 6px 8px;
-    background-color: #fff;
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-    min-height: 18px;
-}
+  font-family:      $font-family-body;
+  font-size:        $font-size-xxxs;
+  font-weight:      $font-weight-regular;
+  min-height:       18px;
+  margin-bottom:    12px;
+  padding:          6px 8px;
+  color:            #666;
+  border:           1px solid #e0e0e0;
+  border-radius:    4px;
+  background-color: #fff;
+  }
 
 .sliderGroup {
-    margin-bottom: 12px;
-}
+  margin-bottom: 12px;
+  }
 
 .sliderLabel {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: #444;
-}
+  font-family:   $font-family-body;
+  font-size:     $font-size-xxs;
+  font-weight:   $font-weight-semibold;
+  display:       block;
+  margin-bottom: 4px;
+  color:         #444;
+  }
 
 .value {
-    font-weight: bold;
-    color: #2563eb;
-    font-family: monospace;
-}
+  font-family: $font-family-monospace;
+  font-weight: $font-weight-bold;
+  color:       #2563eb;
+  }
 
 .sliderContainer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%; /* Zorgt dat container volledige breedte gebruikt */
-}
+  display:     flex;
+  align-items: center;
+  width:       100%; /* Zorgt dat container volledige breedte gebruikt */
+  gap:         8px;
+  }
 
 .slider {
-    flex: 1;
-    appearance: none;
-    height: 6px;
-    border-radius: 3px;
-    background: #ddd;
-    outline: none;
-    transition: all 0.2s ease;
-    min-width: 0; /* Voorkomt overflow in flex */
-}
+  flex:          1;
+  min-width:     0; /* Voorkomt overflow in flex */
+  height:        6px;
+  transition:    all 0.2s ease;
+  border-radius: 3px;
+  outline:       none;
+  background:    #ddd;
+  appearance:    none;
+  }
 
 .slider:not(:disabled) {
-    background: linear-gradient(to right, #e0e7ff, #2563eb, #e0e7ff);
-}
+  background: linear-gradient(to right, #e0e7ff, #2563eb, #e0e7ff);
+  }
 
 .slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #2563eb;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
-}
+  width:         18px;
+  height:        18px;
+  cursor:        pointer;
+  transition:    all 0.2s ease;
+  border-radius: 50%;
+  background:    #2563eb;
+  box-shadow:    0 2px 4px rgba(0, 0, 0, 0.2);
+  appearance:    none;
+  }
 
 .slider:not(:disabled)::-webkit-slider-thumb:hover {
-    background: #1d4ed8;
-    transform: scale(1.1);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-}
+  transform:  scale(1.1);
+  background: #1d4ed8;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  }
 
 .slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #2563eb;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
-}
+  width:         18px;
+  height:        18px;
+  cursor:        pointer;
+  transition:    all 0.2s ease;
+  border:        none;
+  border-radius: 50%;
+  background:    #2563eb;
+  box-shadow:    0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 
 .slider:not(:disabled)::-moz-range-thumb:hover {
-    background: #1d4ed8;
-    transform: scale(1.1);
-}
+  transform:  scale(1.1);
+  background: #1d4ed8;
+  }
 
 /* Disabled state */
 .slider:disabled {
-    background: #f0f0f0;
-    cursor: not-allowed;
-}
+  cursor:     not-allowed;
+  background: #f0f0f0;
+  }
 
 .slider:disabled::-webkit-slider-thumb {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
+  cursor:     not-allowed;
+  transform:  none;
+  background: #ccc;
+  }
 
 .slider:disabled::-moz-range-thumb {
-    background: #ccc;
-    cursor: not-allowed;
-}
+  cursor:     not-allowed;
+  background: #ccc;
+  }
 
 /* Voeg nieuwe rule toe voor de waarde-span in sliderContainer */
 .sliderContainer span {
-    flex-shrink: 0; /* Voorkomt krimpen */
-    width: 60px; /* Vaste breedte voor consistentie */
-    text-align: right;
-    font-family: monospace;
-    font-size: 12px;
-    color: #2563eb;
-    font-weight: bold;
-    min-width: 0; /* Voorkomt overflow */
-}
+  font-family: $font-family-monospace;
+  font-size:   $font-size-xxxs;
+  font-weight: $font-weight-bold;
+  flex-shrink: 0; /* Voorkomt krimpen */
+  width:       60px; /* Vaste breedte voor consistentie */
+  min-width:   0; /* Voorkomt overflow */
+  text-align:  right;
+  color:       #2563eb;
+  }
 
 .resetButton {
-    flex-shrink: 0; /* Voorkomt krimpen van button */
-    width: 32px;
-    height: 32px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
-    color: #666;
-    font-size: 11px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
+  font-family:     $font-family-button;
+  font-size:       $font-size-xxxs;
+  font-weight:     $font-weight-bold;
+  display:         flex;
+  align-items:     center;
+  flex-shrink:     0; /* Voorkomt krimpen van button */
+  justify-content: center;
+  width:           32px;
+  height:          32px;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  color:           #666;
+  border:          1px solid #ccc;
+  border-radius:   4px;
+  background:      #fff;
+  }
 
 .resetButton:not(:disabled):hover {
-    background: #f0f0f0;
-    border-color: #999;
-    color: #333;
-}
+  color:        #333;
+  border-color: #999;
+  background:   #f0f0f0;
+  }
 
 .resetButton:disabled {
-    background: #f9f9f9;
-    color: #ccc;
-    cursor: not-allowed;
-}
+  cursor:     not-allowed;
+  color:      #ccc;
+  background: #f9f9f9;
+  }
 
 .resetBothButton {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #2563eb;
-    border-radius: 4px;
-    background: #fff;
-    color: #2563eb;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 4px;
-}
+  font-family:   $font-family-button;
+  font-size:     $font-size-xxxs;
+  font-weight:   $font-weight-semibold;
+  width:         100%;
+  margin-top:    4px;
+  padding:       8px 12px;
+  cursor:        pointer;
+  transition:    all 0.2s ease;
+  color:         #2563eb;
+  border:        1px solid #2563eb;
+  border-radius: 4px;
+  background:    #fff;
+  }
 
 .resetBothButton:not(:disabled):hover {
-    background: #2563eb;
-    color: #fff;
-}
+  color:      #fff;
+  background: #2563eb;
+  }
 
 .resetBothButton:disabled {
-    background: #f9f9f9;
-    color: #ccc;
-    border-color: #e0e0e0;
-    cursor: not-allowed;
-}
+  cursor:       not-allowed;
+  color:        #ccc;
+  border-color: #e0e0e0;
+  background:   #f9f9f9;
+  }
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
-    .xyMoveContainer {
-        right: 10px; /* Alleen positie aanpassen, niet width */
-        bottom: 15px;
-    }
-}
+  .xyMoveContainer {
+	right:  10px; /* Alleen positie aanpassen, niet width */
+	bottom: 15px;
+	}
+  }
 
 @media (max-width: 768px) {
-    .xyMoveContainer {
-        bottom: 10px;
-        right: 10px;
-        padding: 12px;
-    }
+  .xyMoveContainer {
+	right:   10px;
+	bottom:  10px;
+	padding: 12px;
+	}
 
-    .sliderLabel {
-        font-size: 12px;
-    }
+  .sliderLabel {
+	font-size: 12px;
+	}
 
-    .status {
-        font-size: 11px;
-    }
+  .status {
+	font-size: 11px;
+	}
 
-    .resetButton {
-        width: 28px;
-        height: 28px;
-        font-size: 10px;
-    }
-}
+  .resetButton {
+	font-size: 10px;
+	width:     28px;
+	height:    28px;
+	}
+  }
 
 /* ========================================
    FOCUS OVERLAY SYSTEEM voor Alt+J
@@ -255,125 +261,125 @@
 
 /* Globale cursor overlay - verbergt cursor overal behalve op XY container */
 .globalCursorOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    z-index: 999; /* Onder XY container maar boven content */
-    pointer-events: none;
-    cursor: none; /* Verberg cursor overal */
-    transition: opacity 0.2s ease;
-}
+  position:       fixed;
+  z-index:        999; /* Onder XY container maar boven content */
+  top:            0;
+  left:           0;
+  width:          100vw;
+  height:         100vh;
+  cursor:         none; /* Verberg cursor overal */
+  transition:     opacity 0.2s ease;
+  pointer-events: none;
+  background:     transparent;
+  }
 
 /* Focus active state voor XY container */
 .xyMoveContainer.focusActive {
-    box-shadow: 0 0 0 3px #007bff,
-    0 0 0 6px rgba(0, 123, 255, 0.25),
-    0 8px 32px rgba(0, 0, 0, 0.15) ;
-    border-color: #007bff ;
-    cursor: pointer ; /* Alleen hier cursor zichtbaar */
-    pointer-events: auto ;
-    animation: focusPulse 1.5s ease-in-out;
-}
+  cursor:         pointer; /* Alleen hier cursor zichtbaar */
+  animation:      focusPulse 1.5s ease-in-out;
+  pointer-events: auto;
+  border-color:   #007bff;
+  box-shadow:     0 0 0 3px #007bff,
+				  0 0 0 6px rgba(0, 123, 255, 0.25),
+				  0 8px 32px rgba(0, 0, 0, 0.15);
+  }
 
 /* Focus pulse animatie */
 @keyframes focusPulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7),
-        0 0 0 3px #007bff,
-        0 8px 32px rgba(0, 0, 0, 0.15);
-    }
-    70% {
-        box-shadow: 0 0 0 20px rgba(0, 123, 255, 0),
-        0 0 0 6px rgba(0, 123, 255, 0.25),
-        0 8px 32px rgba(0, 0, 0, 0.15);
-    }
-    100% {
-        box-shadow: 0 0 0 20px rgba(0, 123, 255, 0),
-        0 0 0 3px #007bff,
-        0 8px 32px rgba(0, 0, 0, 0.15);
-    }
-}
+  0% {
+	box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7),
+				0 0 0 3px #007bff,
+				0 8px 32px rgba(0, 0, 0, 0.15);
+	}
+  70% {
+	box-shadow: 0 0 0 20px rgba(0, 123, 255, 0),
+				0 0 0 6px rgba(0, 123, 255, 0.25),
+				0 8px 32px rgba(0, 0, 0, 0.15);
+	}
+  100% {
+	box-shadow: 0 0 0 20px rgba(0, 123, 255, 0),
+				0 0 0 3px #007bff,
+				0 8px 32px rgba(0, 0, 0, 0.15);
+	}
+  }
 
 /* Zorg dat child elements ook focus styling krijgen */
 .xyMoveContainer.focusActive * {
-    cursor: inherit ; /* Erf cursor van parent */
-}
+  cursor: inherit; /* Erf cursor van parent */
+  }
 
 /* Overlay fade-in animatie */
 .globalCursorOverlay.fadeIn {
-    opacity: 1;
-}
+  opacity: 1;
+  }
 
 /* Responsive aanpassingen voor focus state */
 @media (max-width: 768px) {
-    .xyMoveContainer.focusActive {
-        box-shadow: 0 0 0 2px #007bff,
-        0 0 0 4px rgba(0, 123, 255, 0.2),
-        0 4px 16px rgba(0, 0, 0, 0.2) ;
-        right: 5px ;
-        bottom: 5px ;
-        transform: none ; /* Voorkom conflicts met andere transforms */
-    }
+  .xyMoveContainer.focusActive {
+	right:      5px;
+	bottom:     5px;
+	transform:  none; /* Voorkom conflicts met andere transforms */
+	box-shadow: 0 0 0 2px #007bff,
+				0 0 0 4px rgba(0, 123, 255, 0.2),
+				0 4px 16px rgba(0, 0, 0, 0.2);
+	}
 
-    .globalCursorOverlay {
-        /* Op mobiel minder restrictief - touch-based interaction */
-        cursor: auto;
-    }
-}
+  .globalCursorOverlay {
+	/* Op mobiel minder restrictief - touch-based interaction */
+	cursor: auto;
+	}
+  }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-    .xyMoveContainer.focusActive {
-        box-shadow: 0 0 0 3px #4dabf7,
-        0 0 0 6px rgba(77, 171, 247, 0.25),
-        0 8px 32px rgba(0, 0, 0, 0.3) ;
-    }
+  .xyMoveContainer.focusActive {
+	box-shadow: 0 0 0 3px #4dabf7,
+				0 0 0 6px rgba(77, 171, 247, 0.25),
+				0 8px 32px rgba(0, 0, 0, 0.3);
+	}
 
-    @keyframes focusPulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(77, 171, 247, 0.7),
-            0 0 0 3px #4dabf7,
-            0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        70% {
-            box-shadow: 0 0 0 20px rgba(77, 171, 247, 0),
-            0 0 0 6px rgba(77, 171, 247, 0.25),
-            0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        100% {
-            box-shadow: 0 0 0 20px rgba(77, 171, 247, 0),
-            0 0 0 3px #4dabf7,
-            0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-    }
-}
+  @keyframes focusPulse {
+	0% {
+	  box-shadow: 0 0 0 0 rgba(77, 171, 247, 0.7),
+				  0 0 0 3px #4dabf7,
+				  0 8px 32px rgba(0, 0, 0, 0.3);
+	  }
+	70% {
+	  box-shadow: 0 0 0 20px rgba(77, 171, 247, 0),
+				  0 0 0 6px rgba(77, 171, 247, 0.25),
+				  0 8px 32px rgba(0, 0, 0, 0.3);
+	  }
+	100% {
+	  box-shadow: 0 0 0 20px rgba(77, 171, 247, 0),
+				  0 0 0 3px #4dabf7,
+				  0 8px 32px rgba(0, 0, 0, 0.3);
+	  }
+	}
+  }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-    .xyMoveContainer.focusActive {
-        border-width: 2px ;
-        box-shadow: 0 0 0 4px #007bff,
-        0 0 0 8px rgba(0, 123, 255, 0.3) ;
-    }
-}
+  .xyMoveContainer.focusActive {
+	border-width: 2px;
+	box-shadow:   0 0 0 4px #007bff,
+				  0 0 0 8px rgba(0, 123, 255, 0.3);
+	}
+  }
 
 /* Popover positioning override */
 .xyMoveContainer:popover-open {
-    top: 185px ;
-    right: 20px ;
-    left: auto ;
-    bottom: auto ;
-}
+  top:    320px;
+  right:  20px;
+  bottom: auto;
+  left:   auto;
+  }
 
 /* Print styles - verwijder focus effects */
 @media print {
-    .globalCursorOverlay,
-    .xyMoveContainer.focusActive {
-        box-shadow: none ;
-        border-color: inherit ;
-        z-index: auto ;
-    }
-}
+  .globalCursorOverlay,
+  .xyMoveContainer.focusActive {
+	z-index:      auto;
+	border-color: inherit;
+	box-shadow:   none;
+	}
+  }

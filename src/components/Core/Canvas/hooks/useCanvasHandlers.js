@@ -1,7 +1,7 @@
 // src/pages/CanvasPage/hooks/useCanvasHandlers.js
 
 import {useCallback, useEffect} from "react";
-import {useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router";
 import {getPoemById} from "../../../data/testdata";
 import {
     handleFontSizeChangeUtil,

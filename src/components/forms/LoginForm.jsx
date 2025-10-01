@@ -155,6 +155,7 @@ function LoginForm() {
                     onChange={handleChange}
                     error={errors.email}
                     required
+                    autoComplete="username"
                 />
 
                 <FormField

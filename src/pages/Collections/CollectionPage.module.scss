@@ -1,53 +1,279 @@
-// CollectionPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/layout';        // Voor layout utilities
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//
-// 2. Collection-specifieke layouts:
-//    - Grid layout voor gedichten/designs
-//    - Filter en sorteer opties
-//    - Collection cards/tiles
-//    - Pagination controls
-//
-// 3. Responsive overwegingen:
-//    - Mobile: 1 kolom
-//    - Tablet: 2-3 kolommen
-//    - Desktop: 3-4 kolommen
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
 
-.collection-container {
-  // Main collection page wrapper
+.collectionPage {
+  max-width: 1400px;
+  margin:    0 auto;
+  padding:   2rem 1rem;
   }
 
-.filter-toolbar {
-  // Filter en sorteer controls
+.pageHeader {
+  margin-bottom: 3rem;
+  text-align:    center;
+
+  h1 {
+	font-size:     2.5rem;
+	margin-bottom: 0.5rem;
+	color:         $text-primary;
+	}
+
+  .subtitle {
+	font-size: 1.1rem;
+	color:     $text-secondary;
+	}
   }
 
-.collection-grid {
-  // Grid container voor items
-  // Gebruik CSS Grid of Flexbox
+.section {
+  margin-bottom: 4rem;
   }
 
-.collection-item {
-  // Individual collection item card
+.sectionHeader {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   2rem;
+  padding-bottom:  1rem;
+  border-bottom:   2px solid #eee;
+
+  h2 {
+	font-size: 2rem;
+	margin:    0;
+	color:     $text-primary;
+	}
+
+  .count {
+	font-size: 0.95rem;
+	color:     $text-secondary;
+	}
   }
 
-.item-thumbnail {
-  // Thumbnail/preview image
+.authPrompt {
+  padding:       3rem 2rem;
+  text-align:    center;
+  border-radius: 12px;
+  background:    #f9f9f9;
+
+  p {
+	font-size:     1.1rem;
+	margin-bottom: 1.5rem;
+	color:         $text-secondary;
+	}
+
+  .loginButton {
+	font-size:        1rem;
+	padding:          0.75rem 2rem;
+	cursor:           pointer;
+	transition:       background-color 0.2s;
+	color:            white;
+	border:           none;
+	border-radius:    8px;
+	background-color: $primary-cognac;
+
+	&:hover {
+	  background-color: color.adjust($primary-cognac, $lightness: -10%);
+	  }
+	}
   }
 
-.item-details {
-  // Title, author, metadata
+.error {
+  margin-bottom:    2rem;
+  padding:          1rem;
+  border:           1px solid #fcc;
+  border-radius:    8px;
+  background-color: #fee;
+
+  p {
+	margin: 0;
+	color:  #c33;
+	}
   }
 
-.pagination {
-  // Pagination controls
+.loading {
+  padding:    4rem 0;
+  text-align: center;
+  color:      $text-secondary;
   }
 
-.empty-state {
-  // Wanneer geen items gevonden
+.empty {
+  padding:       4rem 2rem;
+  text-align:    center;
+  border-radius: 12px;
+  background:    #f9f9f9;
+
+  h3 {
+	font-size:     1.5rem;
+	margin-bottom: 1rem;
+	color:         $text-primary;
+	}
+
+  p {
+	margin-bottom: 2rem;
+	color:         $text-secondary;
+	}
+
+  .createButton {
+	font-size:        1rem;
+	padding:          0.75rem 2rem;
+	cursor:           pointer;
+	transition:       background-color 0.2s;
+	color:            white;
+	border:           none;
+	border-radius:    8px;
+	background-color: $primary-cognac;
+
+	&:hover {
+	  background-color: color.adjust($primary-cognac, $lightness: -10%);
+	  }
+	}
+  }
+
+.designGrid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap:                   1.5rem;
+
+  @media (max-width: 768px) {
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap:                   1rem;
+	}
+  }
+
+.designCard {
+  position:      relative;
+  overflow:      hidden;
+  cursor:        pointer;
+  transition:    transform 0.2s, box-shadow 0.2s;
+  border-radius: 12px;
+  background:    white;
+  box-shadow:    0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+	transform:  translateY(-4px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	}
+  }
+
+.thumbnail {
+  overflow:   hidden;
+  width:      100%;
+  height:     200px;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+
+  img {
+	width:      100%;
+	height:     100%;
+	object-fit: cover;
+	}
+
+  .noImage {
+	font-size:       3rem;
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	width:           100%;
+	height:          100%;
+	color:           $text-secondary;
+	}
+  }
+
+.designInfo {
+  padding: 1rem;
+  }
+
+.designTitle {
+  font-size:     1.25rem;
+  font-weight:   600;
+  overflow:      hidden;
+  margin:        0 0 0.75rem 0;
+  white-space:   nowrap;
+  text-overflow: ellipsis;
+  color:         $text-inverse;
+  }
+
+.poemInfo {
+  margin-bottom:  0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom:  1px solid #eee;
+
+  .poemTitle {
+	font-size:     0.95rem;
+	overflow:      hidden;
+	margin:        0 0 0.25rem 0;
+	white-space:   nowrap;
+	text-overflow: ellipsis;
+	color:         $text-inverse;
+	}
+
+  .poemAuthor {
+	font-size:  0.85rem;
+	font-style: italic;
+	margin:     0;
+	color:      $poem-text;
+	}
+  }
+
+.designMeta {
+  font-size:       0.85rem;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+
+  .date {
+	color: $text-heading-alt-outline;
+	}
+  }
+
+.actions {
+  position: absolute;
+  z-index:  10;
+  top:      0.5rem;
+  right:    0.5rem;
+  }
+
+.deleteBtn {
+  font-size:       1.2rem;
+  padding:         0.5rem;
+  cursor:          pointer;
+  transition:      background-color 0.2s;
+  border:          none;
+  border-radius:   8px;
+  background:      rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+
+  &:hover {
+	background: rgba(255, 255, 255, 1);
+	}
+  }
+
+.deleteConfirm {
+  display:         flex;
+  padding:         0.5rem;
+  border-radius:   8px;
+  background:      rgba(255, 255, 255, 0.95);
+  gap:             0.5rem;
+  backdrop-filter: blur(4px);
+
+  button {
+	font-size:     0.85rem;
+	padding:       0.4rem 0.8rem;
+	cursor:        pointer;
+	transition:    opacity 0.2s;
+	border:        none;
+	border-radius: 4px;
+
+	&:hover {
+	  opacity: 0.8;
+	  }
+	}
+
+  .confirmBtn {
+	color:      white;
+	background: #e74c3c;
+	}
+
+  .cancelBtn {
+	color:      white;
+	background: #95a5a6;
+	}
   }
