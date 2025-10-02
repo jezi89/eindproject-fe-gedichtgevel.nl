@@ -1,0 +1,33 @@
+.frame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #F1E7D2;
+  border: 1.875px solid black;
+  border-radius: 8px;
+  width: 438px;
+  height: 86px;
+  box-sizing: border-box;
+}
+
+.button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.playPause {
+  // Special style for the play/pause button if needed
+}

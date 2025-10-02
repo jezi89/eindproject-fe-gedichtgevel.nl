@@ -145,6 +145,20 @@ class SearchContextService {
     }
 
     /**
+     * Get selected poem
+     * @returns {Promise<Object|null>} Selected poem or null
+     */
+    async getSelectedPoem() {
+        try {
+            const context = await this.loadContext();
+            return context?.selectedPoem || null;
+        } catch (error) {
+            console.error('Failed to get selected poem:', error);
+            return null;
+        }
+    }
+
+    /**
      * Get context for canvas navigation
      * @returns {Object} Context optimized for canvas
      */

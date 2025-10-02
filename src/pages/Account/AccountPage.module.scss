@@ -1,41 +1,120 @@
-// AccountPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/typography';    // Voor text styling
-//    @import '@/styles/layout';        // Voor layout utilities
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//
-// 2. Specifieke use cases voor account pagina:
-//    - Profile informatie sectie
-//    - Account settings
-//    - Security opties
-//    - Subscription/plan info
-//
-// 3. Gebruik utility classes waar mogelijk:
-//    - .container voor max-width en padding
-//    - .card voor kaart-achtige secties
-//    - .button-primary, .button-secondary voor acties
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
 
-.account-container {
-  // Main account page container
+.accountPage {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background-color: $background-page;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Header
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-family: $font-family-title;
+  font-size: $font-size-xxl;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, $secondary-carribean-current, $accent-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-family: $font-family-body;
+  font-size: $font-size-s;
+  color: $neutral-mid;
+  margin: 0;
+}
+
+// Content Area
+.content {
+  margin-top: 2rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Loading State
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: $background-page;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid $border-default;
+  border-top-color: $secondary-carribean-current;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingContainer p {
+  color: $neutral-mid;
+  font-size: $font-size-m;
+  font-family: $font-family-body;
+}
+
+// Responsive adjustments
+@include respond-to(tablet) {
+  .accountPage {
+    padding: 1.5rem 1rem;
   }
 
-.profile-section {
-  // User profile informatie
+  .title {
+    font-size: $font-size-xl;
   }
 
-.settings-grid {
-  // Grid layout voor settings
+  .subtitle {
+    font-size: $font-size-xxs;
+  }
+}
+
+@include respond-to(mobile) {
+  .accountPage {
+    padding: 1rem 0.5rem;
   }
 
-.security-section {
-  // Security en privacy settings
+  .header {
+    margin-bottom: 1.5rem;
   }
 
-.subscription-card {
-  // Subscription/plan informatie
+  .title {
+    font-size: $font-size-l;
   }
+
+  .content {
+    margin-top: 1.5rem;
+  }
+}

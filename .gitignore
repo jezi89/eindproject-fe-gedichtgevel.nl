@@ -64,3 +64,4 @@ pnpm-debug.log*
 /supabase/migrations/add_canvas_design_rls_policies.sql
 /src/debug/
 /AUDIO-PROJECT/
+/LEGACY/

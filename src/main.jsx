@@ -16,11 +16,13 @@ import {AccountPage} from './pages/Account/AccountPage.jsx';
 import {LoginAndSignupPage} from './pages/Auth/LoginAndSignup/LoginAndSignupPage.jsx';
 import PasswordResetPage from './pages/Auth/PasswordResetPage.jsx';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage.jsx';
-import AuthCallback from './pages/Auth/LoginAndSignup/AuthCallback.jsx';
+import AuthCallback from '../LEGACY/pages/auth/LoginAndSignup/AuthCallBack.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import {ContactPage} from './pages/Contact/ContactPage.jsx';
 import {FAQPage} from './pages/FAQ/FAQPage.jsx';
 import {TermsPage} from './pages/Terms/TermsPage.jsx';
+import {DevSupport} from "@react-buddy/ide-toolbox";
+import {ComponentPreviews, useInitial} from "@/dev/index.js";
 
 const router = createBrowserRouter([
     {
@@ -71,7 +73,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <AuthProvider>
-            <RouterProvider router={router}/>
+            <DevSupport ComponentPreviews={ComponentPreviews}
+                        useInitialHook={useInitial}
+            >
+                <RouterProvider router={router}/>
+            </DevSupport>
         </AuthProvider>
     </React.StrictMode>,
 );

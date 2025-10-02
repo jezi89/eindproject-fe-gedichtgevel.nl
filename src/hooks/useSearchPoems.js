@@ -10,7 +10,7 @@ import {searchPoemsGeneral} from '../services/poetryApi.js';
 
 export function useSearchPoems() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState('[]');
+    const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [searchHistory, setSearchHistory] = useState([]);

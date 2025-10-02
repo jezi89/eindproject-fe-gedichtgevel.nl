@@ -19,6 +19,7 @@ const ExpandedContent = memo(({
                                   displayMode = 'search',
                                   onLoadInCanvas,
                                   onNavigateToCanvas,
+                                  onNavigateToRecording,
                                   onToggle,
                                   styles
                               }) => {
@@ -110,6 +111,7 @@ const ExpandedContent = memo(({
                 displayMode={displayMode}
                 onLoadInCanvas={onLoadInCanvas}
                 onNavigateToCanvas={onNavigateToCanvas}
+                onNavigateToRecording={onNavigateToRecording}
                 onToggle={onToggle}
                 styles={styles}
             />
@@ -128,6 +130,7 @@ ExpandedContent.propTypes = {
     displayMode: PropTypes.string,
     onLoadInCanvas: PropTypes.func,
     onNavigateToCanvas: PropTypes.func.isRequired,
+    onNavigateToRecording: PropTypes.func,
     onToggle: PropTypes.func.isRequired,
     styles: PropTypes.object.isRequired
 };

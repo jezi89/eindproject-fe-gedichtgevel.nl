@@ -1,4 +1,4 @@
-import '@/App.scss';
+import '@/index.scss';
 import {Outlet, useLocation} from "react-router"; // Import Outlet
 import NavBar from "@/layouts/NavBar/NavBar.jsx";
 import {useWindowSize} from "@/hooks/useWindowSize.js";
@@ -26,7 +26,7 @@ export default function App() {
     };
 
     return (
-        <div className="app">
+        <div className={`app ${isDesignPage ? 'design-page' : ''}`}>
             <NavBar
                 isOverlayOpen={navbarOverlayOpen}
                 onOverlayClose={() => setNavbarOverlayOpen(false)}

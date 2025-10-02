@@ -23,6 +23,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.58.0
         version: 2.58.0
+      '@wavesurfer/react':
+        specifier: ^1.0.11
+        version: 1.0.11(react@19.1.1)(wavesurfer.js@7.10.3)
       axios:
         specifier: ^1.12.2
         version: 1.12.2
@@ -38,6 +41,9 @@ importers:
       pixi.js:
         specifier: ^8.13.2
         version: 8.13.2
+      projectmap:
+        specifier: 'link:'
+        version: 'link:'
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -1474,6 +1480,12 @@ packages:
 
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
+
+  '@wavesurfer/react@1.0.11':
+    resolution: {integrity: sha512-DRpaA3MRTKy4Jby12xvoHASa+w31FZtxaqanXcJjfqNqfamkKi8VJfRnz+Uub9LkpdgoAc3g5SuZF75lEcGgzQ==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      wavesurfer.js: '>=7.7.14'
 
   '@webgpu/types@0.1.65':
     resolution: {integrity: sha512-cYrHab4d6wuVvDW5tdsfI6/o6vcLMDe6w2Citd1oS51Xxu2ycLCnVo4fqwujfKWijrZMInTJIKcXxteoy21nVA==}
@@ -5261,6 +5273,11 @@ snapshots:
       '@vitest/pretty-format': 3.2.4
       loupe: 3.2.1
       tinyrainbow: 2.0.0
+
+  '@wavesurfer/react@1.0.11(react@19.1.1)(wavesurfer.js@7.10.3)':
+    dependencies:
+      react: 19.1.1
+      wavesurfer.js: 7.10.3
 
   '@webgpu/types@0.1.65': {}
 
