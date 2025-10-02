@@ -1,83 +1,83 @@
 // src/components/Core/Canvas/components/XYMoveSliders.jsx
 import React, {useCallback, useMemo, useState, useRef, useEffect} from "react";
-import {useWindowSize} from "@/hooks/useWindowSize"; // Updated import path
+import {useWindowSize} from "@/hooks/useWindowSize.js"; // Updated import path
 import styles from "./XYMoveSliders.module.scss";
 
 export default function XYMoveSliders({
-  moveMode,
-  selectedLines,
-  poemOffset,
-  setPoemOffset,
-  lineOverrides,
-  setLineOverrides,
-  isDragging,
-  isVisible,
-  setIsVisible,
-  onRequestFocus, // Callback voor focus request van parent
-}) {
-  const containerRef = useRef(null);
-  const overlayRef = useRef(null);
-  const [isFocusActive, setIsFocusActive] = useState(false);
+                                          moveMode,
+                                          selectedLines,
+                                          poemOffset,
+                                          setPoemOffset,
+                                          lineOverrides,
+                                          setLineOverrides,
+                                          isDragging,
+                                          isVisible,
+                                          setIsVisible,
+                                          onRequestFocus, // Callback voor focus request van parent
+                                      }) {
+    const containerRef = useRef(null);
+    const overlayRef = useRef(null);
+    const [isFocusActive, setIsFocusActive] = useState(false);
 
-  // Auto-focus en cursor overlay wanneer visibility verandert naar true
-  useEffect(() => {
-    if (isVisible && containerRef.current) {
-      console.log('📦 XYMoveSliders: Showing popover and auto-focusing on visibility change');
-      containerRef.current.showPopover();
-      containerRef.current.focus({ preventScroll: true });
+    // Auto-focus en cursor overlay wanneer visibility verandert naar true
+    useEffect(() => {
+        if (isVisible && containerRef.current) {
+            console.log('📦 XYMoveSliders: Showing popover and auto-focusing on visibility change');
+            containerRef.current.showPopover();
+            containerRef.current.focus({preventScroll: true});
 
-      // Activeer focus overlay
-      setIsFocusActive(true);
-      const timeout = setTimeout(() => {
-        setIsFocusActive(false);
-      }, 5000); // Auto-deactiveer na 5 seconden
+            // Activeer focus overlay
+            setIsFocusActive(true);
+            const timeout = setTimeout(() => {
+                setIsFocusActive(false);
+            }, 5000); // Auto-deactiveer na 5 seconden
 
-      return () => clearTimeout(timeout);
-    } else if (containerRef.current) {
-      console.log('📦 XYMoveSliders: Hiding popover on visibility change');
-      containerRef.current.hidePopover();
-    }
-  }, [isVisible]);
+            return () => clearTimeout(timeout);
+        } else if (containerRef.current) {
+            console.log('📦 XYMoveSliders: Hiding popover on visibility change');
+            containerRef.current.hidePopover();
+        }
+    }, [isVisible]);
 
-  // Focus request handler voor callback van parent (met cursor overlay)
-  const handleRequestFocus = useCallback(() => {
-    if (containerRef.current) {
-      console.log('🎛️ XYMoveSliders: Focus requested via callback');
-      containerRef.current.focus({ preventScroll: true });
-      
-      // Activeer focus overlay
-      setIsFocusActive(true);
-      const _timeout = setTimeout(() => {
-        setIsFocusActive(false);
-      }, 5000);
-      
-      return true;
-    }
-    console.warn('🎛️ XYMoveSliders: Container ref not available for focus');
-    return false;
-  }, []);
+    // Focus request handler voor callback van parent (met cursor overlay)
+    const handleRequestFocus = useCallback(() => {
+        if (containerRef.current) {
+            console.log('🎛️ XYMoveSliders: Focus requested via callback');
+            containerRef.current.focus({preventScroll: true});
 
-  // ESC key om focus overlay vroegtijdig te deactiveren
-  useEffect(() => {
-    const handleEscKey = (event) => {
-      if (event.key === 'Escape' && isFocusActive) {
-        setIsFocusActive(false);
-        console.log('⌨️ ESC pressed: Deactivating XY focus overlay');
-      }
-    };
+            // Activeer focus overlay
+            setIsFocusActive(true);
+            const _timeout = setTimeout(() => {
+                setIsFocusActive(false);
+            }, 5000);
 
-    if (isFocusActive) {
-      document.addEventListener('keydown', handleEscKey);
-      return () => document.removeEventListener('keydown', handleEscKey);
-    }
-  }, [isFocusActive]);
+            return true;
+        }
+        console.warn('🎛️ XYMoveSliders: Container ref not available for focus');
+        return false;
+    }, []);
 
-  // Registreer de focus handler bij de parent
-  useEffect(() => {
-    if (onRequestFocus && typeof onRequestFocus === 'function') {
-      onRequestFocus(handleRequestFocus);
-    }
-  }, [onRequestFocus, handleRequestFocus]);
+    // ESC key om focus overlay vroegtijdig te deactiveren
+    useEffect(() => {
+        const handleEscKey = (event) => {
+            if (event.key === 'Escape' && isFocusActive) {
+                setIsFocusActive(false);
+                console.log('⌨️ ESC pressed: Deactivating XY focus overlay');
+            }
+        };
+
+        if (isFocusActive) {
+            document.addEventListener('keydown', handleEscKey);
+            return () => document.removeEventListener('keydown', handleEscKey);
+        }
+    }, [isFocusActive]);
+
+    // Registreer de focus handler bij de parent
+    useEffect(() => {
+        if (onRequestFocus && typeof onRequestFocus === 'function') {
+            onRequestFocus(handleRequestFocus);
+        }
+    }, [onRequestFocus, handleRequestFocus]);
     const {width: windowWidth, height: windowHeight} = useWindowSize();
     const selectionCount = selectedLines.size;
     const sortedSelectedLines = useMemo(() => {
@@ -206,7 +206,7 @@ export default function XYMoveSliders({
                     data-testid="cursor-overlay"
                 />
             )}
-            
+
             {isVisible && (
                 <div
                     ref={containerRef}

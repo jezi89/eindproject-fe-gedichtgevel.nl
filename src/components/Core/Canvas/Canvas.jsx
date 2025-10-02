@@ -7,17 +7,17 @@ import {useNavigate} from "react-router";
 // CRITICAL: extend() MUST be called at module level, outside components
 extend({Text, Container, Graphics, Sprite, Viewport});
 
-import Controls from "./components/Controls";
+import Controls from "./Controls.jsx";
 import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
 import {useCanvasState} from "../../../hooks/canvas/useCanvasState";
 import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
-import {CanvasContent} from "./components/CanvasContent";
-import ResponsiveLayout from "./components/ResponsiveLayout";
-import Navigation from "./components/Navigation";
-import FloatingPhotoGrid from "./components/FloatingPhotoGrid";
-import XYMoveSliders from "./components/XYMoveSliders";
-import ShortcutFeedback from "./components/ShortcutFeedback";
+import {CanvasContent} from "./CanvasContent.jsx";
+import ResponsiveLayout from "./ResponsiveLayout.jsx";
+import Navigation from "./Navigation.jsx";
+import FloatingPhotoGrid from "./FloatingPhotoGrid.jsx";
+import XYMoveSliders from "./XYMoveSliders.jsx";
+import ShortcutFeedback from "./ShortcutFeedback.jsx";
 import styles from "./Canvas.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";

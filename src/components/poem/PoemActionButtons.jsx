@@ -17,6 +17,7 @@ const PoemActionButtons = memo(({
                                     displayMode = 'search', // 'search' or 'monthly'
                                     onLoadInCanvas,
                                     onNavigateToCanvas,
+                                    onNavigateToRecording,
                                     onToggle,
                                     styles,
                                     className = ''
@@ -42,9 +43,21 @@ const PoemActionButtons = memo(({
                 ease: isExpanded ? [0.25, 0.46, 0.45, 0.94] : undefined
             }}
         >
-            {/* CANVAS BUTTONS - Show for search and monthly modes */}
-            {/*// TODO Checken of it goed gaat en we de canvas button bij monthly  ook te zien krijgen*/}
+            {/* DECLAMEER BUTTON - Always visible when handler exists */}
+            {onNavigateToRecording && (
+                <motion.button
+                    className={`${styles.expandButton} ${styles.recordingButton}`}
+                    onClick={onNavigateToRecording}
+                    aria-label="Open dit gedicht in Spreekgevel voor opname"
+                    whileHover={buttonVariants.button.hover}
+                    whileTap={buttonVariants.button.tap}
+                >
+                    <span className={styles.expandIcon}>🎤</span>
+                    Declameer!
+                </motion.button>
+            )}
 
+            {/* CANVAS BUTTONS - Show for search and monthly modes */}
             {showCanvasButton && (
                 <>
                     {canvasMode ? (

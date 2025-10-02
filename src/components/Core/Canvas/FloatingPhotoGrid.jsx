@@ -1,27 +1,27 @@
 // src/components/Core/Canvas/components/FloatingPhotoGrid.jsx
 
 import React, {useState, useEffect} from "react";
-import styles from "../Canvas.module.scss"; // Updated import path
-import { usePhotoPreview } from "@/hooks/canvas/usePhotoPreview";
+import styles from "./Canvas.module.scss"; // Updated import path
+import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
 
 export default function FloatingPhotoGrid({
-                                               photos,
-                                               isLoading,
-                                               error,
-                                               onSetBackground,
-                                               onSetBackgroundLoadingFreeze, // NEW: Callback to control background loading freeze
-                                               onClose,
-                                               onNextPage,
-                                               onPrevPage,
-                                               hasNextPage,
-                                               hasPrevPage,
-                                               searchContext,
-                                               currentBackground,     // NEW: Current background to preserve
-                                               onPreviewChange,       // NEW: Callback for preview state changes
-                                               hoverFreezeActive      // NEW: Combined hover freeze state (Alt+J + background loading)
-                                           }) {
+                                              photos,
+                                              isLoading,
+                                              error,
+                                              onSetBackground,
+                                              onSetBackgroundLoadingFreeze, // NEW: Callback to control background loading freeze
+                                              onClose,
+                                              onNextPage,
+                                              onPrevPage,
+                                              hasNextPage,
+                                              hasPrevPage,
+                                              searchContext,
+                                              currentBackground,     // NEW: Current background to preserve
+                                              onPreviewChange,       // NEW: Callback for preview state changes
+                                              hoverFreezeActive      // NEW: Combined hover freeze state (Alt+J + background loading)
+                                          }) {
     const [isVisible, setIsVisible] = useState(false);
-    
+
     // Photo preview functionality
     const photoPreview = usePhotoPreview();
 
@@ -29,12 +29,12 @@ export default function FloatingPhotoGrid({
     useEffect(() => {
         console.log('🖼️ FloatingPhotoGrid mounted, opening preview system');
         photoPreview.openGrid(currentBackground);
-        
+
         // Cleanup when component unmounts
         return () => {
             console.log('🖼️ FloatingPhotoGrid unmounting, closing preview system');
             const backgroundToRestore = photoPreview.closeGrid();
-            
+
             // Only restore background if it's different from current
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
                 onSetBackground(backgroundToRestore);
@@ -85,12 +85,12 @@ export default function FloatingPhotoGrid({
 
     const handleClose = () => {
         console.log('🖼️ Closing FloatingPhotoGrid');
-        
+
         // Clean up preview system and get background to restore
         const backgroundToRestore = photoPreview.closeGrid();
-        
+
         setIsVisible(false);
-        
+
         // Wait for animation before actually closing
         setTimeout(() => {
             // Restore background if needed

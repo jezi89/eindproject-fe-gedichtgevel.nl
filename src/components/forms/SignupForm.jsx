@@ -8,7 +8,8 @@
  */
 
 import {useCallback, useEffect, useRef, useState} from "react";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import useAuthForm from "@/hooks/auth/useAuthForm.js";
 import FormField from "@/components/forms/FormField.jsx";
 import {SubmitButton} from "@/components/ui/button/ActionButton.jsx"; // Correct import
@@ -175,9 +176,13 @@ function SignupForm() {
         return (
             <div className={styles.formContainer}>
                 <div className={styles.formSuccess}>
-                    <h2>Registratie succesvol!</h2>
-                    <p>Je bent geregistreerd met het e-mailadres: {registeredEmail}</p>
-                    <p>Controleer je e-mail voor de bevestigingslink om je account te activeren.</p>
+                    <h2>Controleer je e-mail</h2>
+                    <p>We hebben een e-mail gestuurd naar: {registeredEmail}</p>
+                    <p>
+                        Indien je nog geen account had, vind je hierin een bevestigingslink.
+                        <br />
+                        Niks ontvangen? Probeer <Link to="/login">Wachtwoord vergeten</Link> op de inlogpagina.
+                    </p>
                 </div>
             </div>
         );

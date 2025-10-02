@@ -1,7 +1,6 @@
+import React from 'react';
+import { RecordingBook } from '@/components/Core/Recording/RecordingBook';
+
 export function AudioPage() {
-    return (
-        <>
-            <h1>Spreekgevel</h1>
-        </>
-    )
+    return <RecordingBook />;
 }

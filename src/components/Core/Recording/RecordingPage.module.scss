@@ -1,0 +1,632 @@
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+/* TopNavigation Styles */
+.TopNavContainer {
+  display:         flex;
+  align-items:     flex-end;
+  flex-shrink:     0;
+  justify-content: space-between;
+  width:           100%;
+  max-width:       1524px;
+  height:          5rem;
+  margin:          0;
+  padding:         0 3rem;
+  border-radius:   0.625rem 0.625rem 0 0;
+  background:      $primary-cognac; // Was #933512 in AUDIO-PROJECT
+  }
+
+.TopNavigation {
+  display:         flex;
+  justify-content: space-between;
+  }
+
+.TopNavigation--left {
+  display:     flex;
+  align-items: center;
+  }
+
+.TopNavigation--right {
+  display:     flex;
+  align-items: center;
+  gap:         3rem;
+  }
+
+.TabButton {
+  font-family:     "Work Sans", sans-serif;
+  font-size:       20px;
+  font-weight:     600;
+  margin:          0 0.5rem;
+  padding:         5px 42px;
+  cursor:          pointer;
+  transform:       rotate(-0.8deg);
+  text-align:      center;
+  white-space:     pre-line;
+  color:           $neutral-off-white;
+  border:          none;
+  background-color: $secondary-dark;
+  box-shadow:      0 2.5px 5px rgba(0, 0, 0, 0.25);
+
+  &.active {
+    color:       $accent-gold;
+    text-shadow: 0 1.25px 3.62px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+.TempSearchBar {
+  display:     flex;
+  align-items: center;
+  width:       100%; // Zorg dat de TempSearchBar de volle breedte van de container pakt
+  gap:         15px;
+  }
+
+.TempSearchBar-collections {
+  display:          flex;
+  align-items:      center;
+  max-width:        7rem;
+  height:           3rem;
+  padding:          8px 6px;
+  cursor:           pointer;
+  text-align:       center;
+  color:            #d09a47;
+  //  white-space: nowrap;
+  border:           0.5px solid #4d5061;
+  border-radius:    8px;
+  background-color: #fff5e1;
+  }
+
+.CustomCheckbox {
+  position:      relative;
+  display:       inline-block;
+  width:         1rem;
+  height:        1rem;
+  cursor:        pointer;
+  border:        2px solid var(--Core-neutral-dark, #4D5061);
+  border-radius: 4px;
+  aspect-ratio:  1/1;
+
+  }
+
+input[type="checkbox"]:checked + .CustomCheckbox {
+  background: var(--Core-neutral-dark, #d09a47);
+  }
+
+.TempSearchBar-separator {
+  display:       flex;
+  overflow:      hidden; // Hide anything that pokes out
+  align-items:   center;
+  width:         100%;
+  padding-right: 10px;
+  border:        3px solid $secondary-muted; // Was #0f4648
+  background:    white;
+  }
+
+.TempSearchBar-input {
+  font-size:   18.6px;
+  font-weight: 800;
+  flex-grow:   1; // Allow input to take up available space
+  width:       100%;
+  padding:     0.5rem 1rem;
+  text-align:  center;
+  color:       $neutral-mid; // Was #5f6477
+  border:      none;
+  outline:     none;
+  background:  white;
+  }
+
+.TempSearchBar-button {
+  font-family:     "Quilty", sans-serif;
+  font-size:       18px;
+
+  font-style:      normal;
+  line-height:     0.8;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  height:          100%;
+  padding:         10px 24px;
+  color:           $neutral-off-white;
+  border:          1.553px solid var(--Core-neutral-off-white, #F9F4ED);
+  background:      var(--Components-button-tertiary-background, #156064);
+  box-shadow:      0 0 0.776px 1.035px var(--Core-brand-secondary-muted, #0F4648), 1.035px 1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset, -1.035px -1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset;
+  }
+
+.TempSearchBarContainer {
+  position:        absolute;
+  z-index:         10;
+  top:             120px;
+  display:         flex;
+  justify-content: center;
+  width:           100%;
+
+  }
+
+.BookContainer {
+  position:         relative;
+  display:          flex;
+  align-items:      flex-end;
+  flex-grow:        1; /* Take remaining space in MainContent */
+  justify-content:  center;
+  width:            100%;
+  max-width:        1524px; /* Match TopNavContainer max-width */
+  margin:           0; /* No margins for perfect connection */
+  background-color: $neutral-cream;
+  gap:              1.5rem;
+  }
+
+.SpiralBinding {
+  position: absolute;
+  z-index:  10;
+  left:     45%;
+
+  }
+
+
+.PagePanel {
+  z-index:        5;
+  display:        flex;
+  flex-direction: column;
+  width:          750px;
+  height:         85vh;
+  padding:        2rem;
+  padding-bottom: 0;
+  border-radius:  0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
+
+  box-shadow:     0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+.RecordingPanel {
+  position:        relative;
+
+  /* align-items:      center; */
+  /* This was causing the wrapper to shrink */
+  justify-content: space-between;
+  padding:         3rem 3rem;
+
+  }
+
+.micContainer {
+  position:        absolute;
+  top:             1.5rem;
+  right:           3rem;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           175px;
+  height:          95px;
+
+  // Ensure icons are consistent size
+  svg {
+	width:  175px !important;
+	height: 95px !important;
+	}
+  }
+
+.MuteButton {
+
+  cursor:           pointer;
+
+  border:           2px solid #4D5061;
+
+  background-color: #6c7293;;
+  }
+
+.MuteButton:hover {
+  transform:        translateY(-1px);
+  background-color: #7a83aa;
+  box-shadow:       0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+.MuteButton:active {
+  transform:  translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+/* Active/Muted state styling */
+.MuteButton.muted {
+
+  background-color: #e74c3c;
+  }
+
+.MuteButton.muted:hover {
+  background-color: #ec7063;
+  }
+
+@keyframes pulse {
+  0%, 100% {
+	opacity: 1;
+	}
+  50% {
+	opacity: 0.7;
+	}
+  }
+
+.PageTitle {
+  font-size:   24px;
+  font-weight: bold;
+  margin-top:  2rem;
+  text-align:  center;
+  }
+
+.PoemPanel {
+  position:      relative;
+  padding-right: 1rem;
+  color:         $text-inverse;
+
+  }
+
+.TabNavigation {
+  position: absolute;
+  top:      0;
+  right:    0;
+  left:     0;
+  }
+
+.SearchSection {
+  display:       flex;
+  width:         100%;
+  margin-bottom: 1rem;
+  }
+
+.PoemPanel_header {
+  display:        flex;
+  align-items:    flex-start;
+  flex-direction: column;
+  margin-top:     20px;
+  margin-bottom:  1rem;
+  padding-left:   1rem;
+  color:          $text-inverse;
+  }
+
+.PoemPanel_title {
+  font-family: var(--font-serif);
+  font-size:   30px;
+  font-weight: 700;
+  margin:      0;
+  color:       $text-inverse;
+  }
+
+.PoemPanel_author {
+  font-family: var(--font-main);
+  font-size:   20px;
+  font-weight: 500;
+  color:       $text-inverse;
+  }
+
+.PoemPanel_content {
+  font-size:    20px;
+  line-height:  1.4;
+  display:      flex;
+  overflow-y:   auto;
+  align-items:  flex-start;
+  flex-grow:    1;
+  padding-left: 1rem;
+
+  }
+
+.RecordButton {
+  position:         relative; /* For countdown overlay positioning */
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            80px;
+  height:           80px;
+  margin:           0 auto;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  border:           4px solid black;
+  border-radius:    50%;
+  background-color: #c24818;
+  }
+
+.RecordButton_inner {
+  width:            22px;
+  height:           22px;
+  border-radius:    50%;
+  background-color: white;
+  }
+
+.micSelectWrapper {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+  }
+
+.micSelect {
+  align-self:    flex-start;
+  margin-left:   10px;
+  padding:       5px;
+  color:         #333;
+  border:        1px solid #ccc;
+  border-radius: 4px;
+  background:    white;
+
+  }
+
+.RecordButton.recording .RecordButton_inner {
+  border-radius: 4px;
+  }
+
+/* Countdown styling */
+.RecordButton.countdown {
+  animation: countdownPulse 1s infinite;
+  border:    3px solid #d09a47;
+  }
+
+.CountdownOverlay {
+  font-size:      32px;
+  font-weight:    bold;
+  position:       absolute;
+  top:            50%;
+  left:           50%;
+  transform:      translate(-50%, -50%);
+  animation:      countdownBounce 0.3s ease-out;
+  pointer-events: none;
+  color:          #d09a47;
+  }
+
+@keyframes countdownPulse {
+  0%, 100% {
+	border-color: #d09a47;
+	box-shadow:   0 0 0 0 rgba(208, 154, 71, 0.4);
+	}
+  50% {
+	border-color: #c24919;
+	box-shadow:   0 0 0 8px rgba(208, 154, 71, 0);
+	}
+  }
+
+@keyframes countdownBounce {
+  0% {
+	transform: translate(-50%, -50%) scale(0.5);
+	opacity:   0;
+	}
+  50% {
+	transform: translate(-50%, -50%) scale(1.2);
+	}
+  100% {
+	transform: translate(-50%, -50%) scale(1);
+	opacity:   1;
+	}
+  }
+
+.waveformWrapper {
+  width:         100%; /* Added width */
+  border:        2px solid #333;
+  border-radius: 8px;
+  background:    transparent; /* Changed from #000 */
+  }
+
+.waveform {
+  flex-grow: 1;
+  }
+
+
+:global(#waveform-timeline) {
+  position:   relative !important;
+  z-index:    10 !important;
+  overflow:   visible !important;
+  background: transparent !important;
+
+  wave {
+	overflow: visible !important;
+	}
+
+  time {
+	font-size:      12px;
+	padding:        2px 4px !important;
+	pointer-events: none !important;
+	color:          #333 !important;
+	border-radius:  2px !important;
+	background:     rgba(255, 255, 255, 0.8) !important;
+	}
+  }
+
+
+.AudioControlsSection {
+  display:         flex;
+  justify-content: center;
+  margin:          2rem 0;
+  }
+
+.SaveButtonSection {
+  display:         flex;
+  justify-content: center;
+  padding-bottom:  1rem;
+  }
+
+.BottomControlsSection {
+  position:    absolute;
+  bottom:      20px;
+  left:        50%;
+  display:     flex;
+  align-items: center;
+  transform:   translateX(-50%);
+  gap:         20px;
+  }
+
+.TimeDisplay {
+  font-family: var(--font-main);
+  font-size:   20px;
+  font-weight: bold;
+  padding-top: 10px;
+  text-align:  center;
+  color:       var(--panel-text-color);
+  }
+
+.AudioControls {
+  width:      100%;
+  margin-top: auto; /* Push to bottom */
+  }
+
+.MicrophoneStatus {
+  position: absolute;
+  top:      1.5rem;
+  right:    1.5rem;
+  }
+
+.BottomControls {
+  position:    absolute;
+  bottom:      -60px; /* Position below the book */
+  left:        50%;
+  display:     flex;
+  align-items: center;
+  transform:   translateX(-50%);
+  gap:         1rem;
+  }
+
+.SaveButton {
+  font-family:      var(--font-main);
+  font-size:        17.5px;
+  font-weight:      600;
+  padding:          0.75rem 1.5rem;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            white;
+  border:           1.25px solid black;
+  border-radius:    6.25px;
+  background-color: #d09a47;
+  }
+
+.SaveButton:hover:not(:disabled) {
+  transform:        translateY(-1px);
+  background-color: #e6b85c;
+  box-shadow:       0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+.SaveButton:disabled {
+  cursor:           not-allowed;
+  opacity:          0.6;
+  border-color:     #666;
+  background-color: #888;
+  }
+
+/*
+.FilterPanelContainer {
+  position:  absolute;
+  z-index:   5;
+  top:       50%;
+  right:     80px;
+  transform: translateY(-50%);
+  }
+*/
+
+.BottomButtonWrapper {
+  display:         flex;
+  justify-content: space-evenly;
+  gap:             0.5rem;
+  }
+
+.BrowseButton,
+.ListenButton {
+  font-family:     var(--font-main);
+  font-size:       14px;
+  font-weight:     600;
+  display:         flex;
+  align-items:     center;
+  flex-direction:  column;
+  justify-content: center;
+  width:           15.3125rem;
+  height:          5.375rem;
+
+  padding:         0.3125rem 1.75rem;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  color:           var(--Core-neutral-dark, #4D5061);
+
+  border-top:      1.138px solid var(--Core-neutral-dark, #4D5061);
+  border-right:    1.138px solid var(--Core-neutral-dark, #4D5061);
+  border-bottom:   none;
+  border-left:     1.138px solid var(--Core-neutral-dark, #4D5061);
+  border-radius:   0.46875rem 0.46875rem 0 0;
+  background:      var(--Core-neutral-cream, #FFF5E1);
+
+  gap:             0.3125rem;
+  }
+
+.BrowseButton:hover,
+.ListenButton:hover {
+  transform:  translateY(-2px);
+  background: #f0e6d2;
+  }
+
+.ButtonIcon {
+  flex-shrink: 0;
+  width:       48px;
+  height:      56px;
+  }
+
+.BrowseButton span,
+.ListenButton span {
+  line-height: 1.2;
+  text-align:  center;
+  }
+
+.FilterPanel {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.5rem;
+  }
+
+.FilterPanel > div {
+  font-size:        14px;
+  font-weight:      500;
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  min-width:        120px;
+  padding:          0.75rem 1rem;
+  cursor:           pointer;
+  color:            var(--text-color);
+  border:           1px solid #333;
+  border-radius:    4px;
+  background-color: var(--background-color);
+  }
+
+.FilterPanel > div:hover {
+  color:            white;
+  background-color: var(--primary-accent);
+  }
+
+.LinePath {
+  stroke:       rgb(133, 109, 97);
+  stroke-width: 6px;
+  }
+
+/* Timeline zoom controls */
+.TimelineControls {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  margin-top:      1rem;
+  gap:             0.5rem;
+  }
+
+.ZoomButton {
+  font-family:      var(--font-main);
+  font-size:        16px;
+  font-weight:      600;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            40px;
+  height:           40px;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            var(--Core-neutral-dark, #4D5061);
+  border:           1px solid var(--Core-neutral-dark, #4D5061);
+  border-radius:    6px;
+  background-color: var(--Core-neutral-cream, #FFF5E1);
+  }
+
+.ZoomButton:hover {
+  transform:        translateY(-1px);
+  background-color: #f0e6d2;
+  box-shadow:       0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+.ZoomButton:active {
+  transform:  translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }

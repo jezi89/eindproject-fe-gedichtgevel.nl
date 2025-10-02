@@ -5,6 +5,7 @@ import { CanvasDataService } from "../../services/canvas/canvasDataService.js";
 import { poems, getPoemById } from "../../data/canvas/testdata.js";
 import { useCanvasStorage } from "../../hooks/canvas/useCanvasStorage.js";
 import { deserializeCanvasState } from "../../services/canvas/canvasStateSerializer.js";
+import styles from './DesignPage.module.scss';
 
 export function DesignPage() {
 	const navigate = useNavigate();
@@ -164,21 +165,10 @@ export function DesignPage() {
 	// Show loading state while poem data is being fetched
 	if (loading) {
 		return (
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "calc(100vh - 80px)",
-					background: "#1d2230",
-					color: "#ffffff",
-					gap: "1rem",
-				}}
-			>
-				<div style={{ fontSize: "2rem" }}>🎨</div>
+			<div className={styles.stateContainer}>
+				<div className={styles.icon}>🎨</div>
 				<h2>Canvas wordt geladen...</h2>
-				<p style={{ opacity: 0.7 }}>Gedichtdata wordt voorbereid</p>
+				<p className={styles.text}>Gedichtdata wordt voorbereid</p>
 			</div>
 		);
 	}
@@ -186,33 +176,15 @@ export function DesignPage() {
 	// Show error state if something went wrong
 	if (error) {
 		return (
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "calc(100vh - 80px)",
-					background: "#1d2230",
-					color: "#ffffff",
-					gap: "1rem",
-				}}
-			>
-				<div style={{ fontSize: "2rem" }}>❌</div>
+			<div className={styles.stateContainer}>
+				<div className={styles.icon}>❌</div>
 				<h2>Er ging iets mis</h2>
-				<p style={{ opacity: 0.7, textAlign: "center", maxWidth: "400px" }}>
+				<p className={styles.text}>
 					{error}
 				</p>
 				<button
 					onClick={() => navigate("/")}
-					style={{
-						padding: "0.5rem 1rem",
-						background: "#4a5568",
-						color: "white",
-						border: "none",
-						borderRadius: "4px",
-						cursor: "pointer",
-					}}
+					className={styles.button}
 				>
 					Terug naar home
 				</button>
@@ -223,33 +195,15 @@ export function DesignPage() {
 	// Show message if no poem data (shouldn't happen with fallbacks, but just in case)
 	if (!poemData) {
 		return (
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "calc(100vh - 80px)",
-					background: "#1d2230",
-					color: "#ffffff",
-					gap: "1rem",
-				}}
-			>
-				<div style={{ fontSize: "2rem" }}>📝</div>
+			<div className={styles.stateContainer}>
+				<div className={styles.icon}>📝</div>
 				<h2>Geen gedichtdata beschikbaar</h2>
-				<p style={{ opacity: 0.7 }}>
+				<p className={styles.text}>
 					Ga terug en selecteer een gedicht om te bewerken
 				</p>
 				<button
 					onClick={() => navigate("/")}
-					style={{
-						padding: "0.5rem 1rem",
-						background: "#4a5568",
-						color: "white",
-						border: "none",
-						borderRadius: "4px",
-						cursor: "pointer",
-					}}
+					className={styles.button}
 				>
 					Terug naar zoeken
 				</button>

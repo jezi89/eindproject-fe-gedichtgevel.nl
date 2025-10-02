@@ -1,57 +1,38 @@
-// DesignPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/layout';        // Voor layout utilities
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//
-// 2. Design editor specifieke layouts:
-//    - Canvas area (hoofdgebied)
-//    - Toolbar/controls panel
-//    - Properties panel
-//    - Layers panel
-//
-// 3. Interactieve elementen:
-//    - Tool buttons (active states)
-//    - Color pickers
-//    - Sliders en inputs
-//    - Drag & drop feedback
+@use "@/styles/variables" as *;
+@use "sass:color";
 
-.design-container {
-  // Full height layout container
-  }
+.stateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px); // Assuming 80px is navbar height
+  background: $secondary-dark;
+  color: $neutral-white;
+  gap: 1rem;
+}
 
-.design-workspace {
-  // Flex container voor panels
-  }
+.icon {
+  font-size: 2rem;
+}
 
-.canvas-area {
-  // Main canvas werkgebied
-  }
+.text {
+  opacity: 0.7;
+  text-align: center;
+  max-width: 400px;
+}
 
-.toolbar {
-  // Top toolbar met tools
-  }
+.button {
+  padding: 0.5rem 1rem;
+  background: $neutral-dark;
+  color: $neutral-white;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 
-.tool-button {
-  // Individual tool buttons
+  &:hover {
+    background: color.adjust($neutral-dark, $lightness: 10%);
   }
-
-.properties-panel {
-  // Rechter panel voor properties
-  }
-
-.layers-panel {
-  // Layers/elementen lijst
-  }
-
-.color-picker {
-  // Color selection widget
-  }
-
-.design-controls {
-  // Bottom controls (zoom, etc)
-  }
+}

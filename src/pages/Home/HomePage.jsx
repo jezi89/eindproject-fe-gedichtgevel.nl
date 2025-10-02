@@ -8,7 +8,7 @@
  */
 
 import {useState, useEffect} from 'react';
-import {useSearchParams} from 'react-router';
+import {useSearchParams, useNavigate} from 'react-router';
 import SearchBar from "@/components/search/SearchBar.jsx";
 import SearchResults from "@/components/search/SearchResults.jsx";
 import SearchLoadingState from "@/components/search/SearchLoadingState.jsx";
@@ -31,6 +31,7 @@ export function HomePage() {
     const [searchParams] = useSearchParams();
     const [focusStudioOpen, setFocusStudioOpen] = useState(false);
     const [focusSearchTerm, setFocusSearchTerm] = useState('');
+    const navigate = useNavigate();
 
     // Canvas navigation hook
     const { navigateToCanvas } = useCanvasNavigation();
@@ -79,6 +80,25 @@ export function HomePage() {
             });
             // TODO: Show user-friendly error message (toast/notification)
             alert('Er ging iets mis bij het openen van het gedicht in de canvas. Probeer het opnieuw.');
+        }
+    };
+
+    // Handle recording page navigation from search results (Declameer button)
+    const handleNavigateToRecording = async (poemData) => {
+        if (!poemData) return;
+
+        try {
+            console.log('🎤 HomePage: Navigating to Spreekgevel with poem:', poemData.title);
+
+            // Save poem to SearchContext for retrieval on recording page
+            await searchContextService.saveSelectedPoem(poemData);
+
+            // Navigate to recording page
+            navigate('/spreekgevel');
+        } catch (error) {
+            console.error('❌ Failed to navigate to recording page:', error);
+            // Fallback: navigate anyway
+            navigate('/spreekgevel');
         }
     };
 
@@ -214,6 +234,7 @@ export function HomePage() {
                                     hideSeriesNavigation={false}
                                     initialIndex={carouselPosition}
                                     onNavigateToCanvas={handleNavigateToCanvas}
+                                    onNavigateToRecording={handleNavigateToRecording}
                                 />
                             </SearchErrorBoundary>
                         )}

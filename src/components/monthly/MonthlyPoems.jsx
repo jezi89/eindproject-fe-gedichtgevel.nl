@@ -6,8 +6,10 @@
  */
 
 import {useState} from 'react';
+import {useNavigate} from 'react-router';
 import PoemResultItem from '@/components/poem/PoemResultItem.jsx';
 import {calculateCollapseScroll} from '@/utils/poemHeightCalculator';
+import searchContextService from '@/services/context/searchContextService';
 import styles from './MonthlyPoems.module.scss';
 
 // Sample monthly poems data - exactly 3 poems
@@ -50,6 +52,8 @@ const MONTHLY_POEMS = [
 ];
 
 const MonthlyPoems = () => {
+    const navigate = useNavigate();
+
     // Simple state for 3 poems only
     const [poemStates, setPoemStates] = useState({
         0: {phase: 'idle', expanded: false},
@@ -62,6 +66,25 @@ const MonthlyPoems = () => {
             ...prev,
             [index]: {...prev[index], ...updates}
         }));
+    };
+
+    // Handle recording page navigation (Declameer button)
+    const handleNavigateToRecording = async (poemData) => {
+        if (!poemData) return;
+
+        try {
+            console.log('🎤 MonthlyPoems: Navigating to Spreekgevel with poem:', poemData.title);
+
+            // Save poem to SearchContext for retrieval on recording page
+            await searchContextService.saveSelectedPoem(poemData);
+
+            // Navigate to recording page
+            navigate('/spreekgevel');
+        } catch (error) {
+            console.error('❌ Failed to navigate to recording page:', error);
+            // Fallback: navigate anyway
+            navigate('/spreekgevel');
+        }
     };
 
     // TODO MonthlyPoems omzetten naar een systeem dat favorieten ranked en de 3 meest gelikte van die maand gedichten toont
@@ -127,6 +150,9 @@ const MonthlyPoems = () => {
                             }} // Not needed for monthly
                             onLoadInCanvas={() => {
                             }} // Will show canvas button
+                            onNavigateToCanvas={() => {
+                            }} // Will show canvas button
+                            onNavigateToRecording={() => handleNavigateToRecording(poem)}
                             onCollapseEvent={handleMonthlyCollapseEvent}
                             displayMode="monthly" // Special mode for monthly display
                         />

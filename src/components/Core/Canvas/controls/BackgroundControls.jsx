@@ -1,13 +1,13 @@
 // src/components/Core/Canvas/components/controls/BackgroundControls.jsx
 
 import React, {useState} from "react";
-import styles from "../../Canvas.module.scss"; // Updated import path
+import styles from "../Canvas.module.scss"; // Updated import path
 import {
     anwbCities,
     capitalCities,
     cityDisplayNames,
-} from "@/data/canvas/searchData"; // Updated import path
-import {useAuthContext} from "@/context/auth/AuthContext";
+} from "@/data/canvas/searchData.js"; // Updated import path
+import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function BackgroundControls({
                                                // State

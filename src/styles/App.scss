@@ -60,14 +60,16 @@ body {
   min-height:     100vh;
   }
 
-.app-content {
-  flex:    1;
-  padding: $spacing-m;
-
-  @include media-up($screen-md) {
-	padding: $spacing-l;
-	}
+/* Override flex-direction for design page */
+.app.design-page {
+  flex-direction: row;
   }
+
+.app-content {
+  flex: 1;
+
+  }
+
 
 /* -------------------------------------------------------
  * GLOBALE COMPONENTEN

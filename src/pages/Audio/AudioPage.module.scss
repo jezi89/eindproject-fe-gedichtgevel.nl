@@ -1,49 +1,189 @@
-// AudioPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//    @import '@/styles/layout';        // Voor layout utilities
-//
-// 2. Audio-specifieke styling overwegingen:
-//    - Audio player controls styling
-//    - Waveform visualisatie
-//    - Recording interface
-//    - Playlist/library layout
-//
-// 3. Interactieve elementen:
-//    - Hover states voor controls
-//    - Active/playing states
-//    - Progress indicators
-//    - Volume sliders
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
 
-.audio-container {
-  // Main audio page container
+/* =======================================================
+ * LAYOUT STYLES FOR AUDIO-PROJECT
+ * ======================================================= */
+
+:global(body) {
+  color:            $text-primary;
+  background-color: $background-page;
   }
 
-.audio-player {
-  // Audio player wrapper
+:global(#root) {
+  align-items:     center;
+  justify-content: center;
+  width:           100%;
+  min-height:      100vh;
   }
 
-.controls-section {
-  // Play, pause, skip controls
+.SpreekgevelApp {
+  position:              relative;
+  display:               grid;
+  align-items:           stretch;
+  box-sizing:            border-box;
+  max-height:            70vh;
+  background-color:      $background-page;
+  grid-template-columns: 181px 1fr 213px;
+  grid-template-rows: auto 1fr auto;
+  gap:                   0;
+  grid-template-areas:
+    "nav header  filters"
+    "nav main    filters"
+    "nav main    bottom";
   }
 
-.waveform-display {
-  // Audio waveform visualisatie
+.Header {
+  z-index:        10;
+  display:        flex;
+  align-items:    center;
+  flex-direction: column;
+  grid-area:      header;
+  gap:            1rem;
   }
 
-.recording-interface {
-  // Recording controls en feedback
+.MainContent {
+  position:        relative;
+  display:         flex;
+  align-items:     center;
+  flex-direction:  column;
+  justify-content: flex-start;
+  margin-top:      0;
+  padding-top:     0;
+  grid-area:       main;
   }
 
-.audio-library {
-  // Lijst van audio items
+
+.SideNav {
+  display:          flex;
+  flex-direction:   column;
+  padding:          1rem;
+  border:           1.5px solid $neutral-off-white;
+  border-left:      none;
+  background-color: $primary-cognac;
+  grid-area:        nav;
+  gap:              1rem;
   }
 
-.volume-control {
-  // Volume slider styling
+.FilterPanel {
+  font-family:      $font-family-nav-item;
+  font-size:        24px;
+  font-weight:      600;
+  padding:          1rem;
+  color:            $neutral-off-white;
+  border:           1.5px solid $neutral-cream;
+  border-radius:    8px;
+  background-color: $primary-light;
+  grid-area:        filters;
+  }
+
+.BottomControls {
+  display:         flex;
+  align-items:     flex-end;
+  justify-content: center;
+  padding:         1rem;
+  grid-area:       bottom;
+  gap:             42px;
+  }
+
+.TopNavigation {
+  display:         flex;
+  justify-content: space-between;
+  }
+
+.TabButton {
+  font-family:      $font-family-nav-item;
+  font-size:        20px;
+  font-weight:      600;
+  margin:           0 0.5rem;
+  padding:          5px 42px;
+  cursor:           pointer;
+  transform:        rotate(-0.8deg);
+  text-align:       center;
+  white-space:      pre-line;
+  color:            $neutral-light;
+  border:           none;
+  background-color: $secondary-dark;
+  box-shadow:       0px 2.5px 5px rgba(0, 0, 0, 0.25);
+  }
+
+.TabButton.active {
+  color:       $accent-gold;
+  text-shadow: 0px 1.25px 3.62px rgba(0, 0, 0, 0.25);
+  }
+
+.BottomControls .SaveButton {
+  font-family:      $font-family-body;
+  font-size:        17.5px;
+  font-weight:      600;
+  padding:          0.75rem 2.5rem;
+  cursor:           pointer;
+  color:            white;
+  border:           1.25px solid black;
+  border-radius:    6.25px;
+  background-color: $accent-gold;
+  }
+
+.BottomControls .ControlButton {
+  font-family:      $font-family-section-heading;
+  font-style:       italic;
+  display:          flex;
+  align-items:      center;
+  flex-direction:   column;
+  justify-content:  flex-end;
+  box-sizing:       border-box;
+  width:            245px;
+  height:           86px;
+  padding:          10px 28px;
+  cursor:           pointer;
+  text-align:       center;
+  color:            $neutral-darker;
+  border:           1.12px solid $neutral-dark;
+  border-bottom:    none;
+  border-radius:    7.5px 7.5px 0 0;
+  background-color: $neutral-cream;
+  gap:              5px;
+  }
+
+.SideNav button {
+  font-family: $font-family-nav-item;
+  font-size:   20px;
+  font-weight: 600;
+  cursor:      pointer;
+  text-align:  left;
+  white-space: pre-line;
+  color:       $text-primary;
+  border:      none;
+  background:  none;
+  }
+
+.FilterPanel div {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   0.5rem;
+  }
+
+.TopNavigation--left {
+  display:     flex;
+  align-items: center;
+  }
+
+.TopNavigation--right {
+  display:     flex;
+  align-items: center;
+  gap:         3rem;
+  }
+
+.TopNavContainer {
+  display:         flex;
+  align-items:     flex-end;
+  flex-shrink:     0; /* Don't shrink */
+  justify-content: space-between;
+  width:           100%; /* Full width of MainContent */
+  max-width:       1524px; /* Match BookContainer width */
+  height:          5rem;
+  margin:          0 0 0 0; /* No margins, direct connection */
+  padding:         0 3rem;
+  border-radius:   0.625rem 0.625rem 0 0; /* Only top corners rounded */
   }

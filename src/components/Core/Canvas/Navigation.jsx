@@ -1,9 +1,9 @@
 import styles from "./Navigation.module.scss";
-import MoveControls from "./MoveControls";
-import FloatingShortcutPanel from "./FloatingShortcutPanel";
-import HintLabel from "./HintLabel";
-import SaveDesignButton from "./SaveDesignButton";
-import { useRef } from "react";
+import MoveControls from "./MoveControls.jsx";
+import FloatingShortcutPanel from "./FloatingShortcutPanel.jsx";
+import HintLabel from "./HintLabel.jsx";
+import SaveDesignButton from "./SaveDesignButton.jsx";
+import {useRef} from "react";
 
 export default function Navigation({
                                        toggle,

@@ -32,6 +32,7 @@ const SearchResults = memo(({
                                 onPoemSelect,
                                 onLoadInCanvas,
                                 onNavigateToCanvas,
+                                onNavigateToRecording,
                                 hideSeriesNavigation = false,
                                 hideRangeIndicator = false,
                                 initialIndex = 0,
@@ -204,6 +205,7 @@ const SearchResults = memo(({
                                         onPoemSelect={onPoemSelect}
                                         onLoadInCanvas={onLoadInCanvas}
                                         onNavigateToCanvas={onNavigateToCanvas}
+                                        onNavigateToRecording={onNavigateToRecording}
                                         onCollapseEvent={handleCollapseEvent}
                                     />
                                 </motion.div>
