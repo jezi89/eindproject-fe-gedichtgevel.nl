@@ -1,7 +1,7 @@
 // src/hooks/canvas/useCanvasHandlers.js
 
 import {useCallback, useEffect} from "react";
-import {useSearchParams} from "react-router";
+import { useSearchParams } from "react-router";
 // Import paths aangepast voor hoofdproject
 import {getPoemById} from "@/data/canvas/testdata";
 import {
@@ -709,7 +709,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 
                 if (property === "gevelPreset") {
                     // Apply gevel preset using Transform3D class
-                    const {Transform3D} = require("../../utils/Transform3D");
                     const transform = new Transform3D(currentTransform);
                     transform.applyGevelPreset(value);
 

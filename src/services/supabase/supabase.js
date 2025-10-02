@@ -37,12 +37,11 @@ if (!supabaseUrl || !supabaseAnonKey) {
  *
  * @type {supabase}
  */
-// Default export of the Supabase client instance for use in other parts of the application
-const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// export of the Supabase client instance for use in other parts of the application
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
     }
 });
-export default supabase;

@@ -3,8 +3,7 @@
  * Search functionality, layout, orchestration, and search-related state management hooks
  */
 
-export {default as useAdvancedSearch} from '../../../LEGACY/hooks/search/ref.useAdvancedSearch.js';
 // export {default as useSearchHistory} from './useSearchHistory';
-export {default as useSearchLayout} from './useSearchLayout';
-export {default as useSearchOrchestration} from './useSearchOrchestration';
-export {default as useSearchPoems} from '../search/useSearchPoems.js';
+export {useSearchLayout} from './useSearchLayout';
+export {useSearchOrchestration} from './useSearchOrchestration';
+export {useSearchPoems} from './useSearchPoems.js';

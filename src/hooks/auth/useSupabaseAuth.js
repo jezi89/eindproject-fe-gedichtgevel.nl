@@ -26,8 +26,8 @@
  */
 
 import {useCallback, useEffect, useState} from "react";
-import useAuthForm from "@/hooks/auth/useAuthForm.js";
-import authService from "@/services/auth/authService.js";
+import {useAuthForm} from "@/hooks/auth/useAuthForm.js";
+import {getSession, onAuthStateChange, refreshSession, register, resetPasswordForEmail, signInWithPassword, updateUser, checkUserExists, getCurrentUser} from "@/services/auth/authService.js";
 
 export function useSupabaseAuth() {
 // Auth state
@@ -49,7 +49,7 @@ export function useSupabaseAuth() {
         const initAuth = async () => {
             try {
                 setLoading(true);
-                const {session: currentSession, error: sessionError} = await authService.getSession();
+                const {session: currentSession, error: sessionError} = await getSession();
 
                 if (sessionError) throw new Error(sessionError);
 
@@ -69,7 +69,7 @@ export function useSupabaseAuth() {
         initAuth();
 
         // Subscribe to auth state changes
-        unsubscribe = authService.onAuthStateChange((newSession) => {
+        unsubscribe = onAuthStateChange((newSession) => {
             setSession(newSession);
             setUser(newSession?.user || null);
         });
@@ -85,7 +85,7 @@ export function useSupabaseAuth() {
     const signIn = useCallback(async (email, password) => { // Renamed login to signIn
         try {
             setError(null);
-            const result = await authService.signInWithPassword(email, password); // Use signInWithPassword
+            const result = await signInWithPassword(email, password); // Use signInWithPassword
             if (!result.success) {
                 throw new Error(result.error);
             }
@@ -106,7 +106,7 @@ export function useSupabaseAuth() {
     const signUp = useCallback(async (email, password, profileData = {}) => {
         try {
             setError(null);
-            const result = await authService.register(email, password, profileData);
+            const result = await register(email, password, profileData);
             if (!result.success) {
 
                 // Check for specific error messages
@@ -138,7 +138,7 @@ export function useSupabaseAuth() {
     const signOut = useCallback(async () => {
         try {
             setError(null);
-            const result = await authService.signOut();
+            const result = await signOut();
             if (!result.success) {
                 throw new Error(result.error);
             }
@@ -157,7 +157,7 @@ export function useSupabaseAuth() {
     const sendPasswordResetEmail = useCallback(async (email) => {
         try {
             setError(null);
-            const result = await authService.resetPasswordForEmail(email);
+            const result = await resetPasswordForEmail(email);
 
             if (!result.success) {
                 throw new Error(result.error);
@@ -178,7 +178,7 @@ export function useSupabaseAuth() {
             setError(null);
             // TODO Checken of comment waar is
             // Instead of using updatePassword, we use updateUser, because this gives us more flexibility to update other user fields if needed
-            const result = await authService.updateUser({password: newPassword});
+            const result = await updateUser({password: newPassword});
 
             if (!result.success) {
                 throw new Error(result.error);
@@ -196,7 +196,7 @@ export function useSupabaseAuth() {
     // Profile management
     // TODO Checken wat dit doet
     const getUserProfile = useCallback(async (userId) => {
-        return await authService.getUserProfile(userId || user?.id);
+        return await getUserProfile(userId || user?.id);
     }, [user]);
 
     const updateUserProfile = useCallback(async (updates) => {
@@ -211,7 +211,7 @@ export function useSupabaseAuth() {
 
     // Token refresh
     const refreshUserSession = useCallback(async () => {
-        const result = await authService.refreshSession();
+        const result = await refreshSession();
 
         if (result.success && result.session) {
             setSession(result.session);
@@ -272,8 +272,8 @@ export function useSupabaseAuth() {
 
         // Utility methods
         clearError: () => setError(null),
-        checkUserExists: authService.checkUserExists,
-        getCurrentUser: authService.getUser, // Added for checkAuth in AuthProvider
+        checkUserExists,
+        getCurrentUser
     };
 }
 
@@ -308,5 +308,3 @@ export function useSupabaseAuth() {
  * - Easy testing (mock authService for hook tests)
  * - Progressive enhancement support via form actions
  */
-
-

@@ -2,22 +2,33 @@
  * PoemCard Component
  * Main wrapper component for poem display
  * Provides motion animations and layout structure with spring physics
+ *
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.isExpanded - Whether the card is expanded.
+ * @param {boolean} [props.canvasMode] - Whether the card is in canvas mode.
+ * @param {Function} [props.onClick] - Click handler for the card.
+ * @param {Function} [props.onDoubleClick] - Double click handler for the card.
+ * @param {Function} [props.onMouseEnter] - Mouse enter handler for the card.
+ * @param {Function} [props.onMouseLeave] - Mouse leave handler for the card.
+ * @param {Object} props.styles - CSS module or style object for class names.
+ * @param {React.ReactNode} props.children - Child nodes to render inside the card.
+ * @param {React.Ref} ref - Ref forwarded to the root element.
  */
 
 import {forwardRef, memo} from 'react';
 import {motion} from 'framer-motion';
-import PropTypes from 'prop-types';
 
-const PoemCard = memo(forwardRef(({
-                                      isExpanded,
-                                      canvasMode,
-                                      onClick,
-                                      onDoubleClick,
-                                      onMouseEnter,
-                                      onMouseLeave,
-                                      styles,
-                                      children
-                                  }, ref) => {
+export const PoemCard = memo(forwardRef(({
+                                             isExpanded,
+                                             canvasMode = false,
+                                             onClick,
+                                             onDoubleClick,
+                                             onMouseEnter,
+                                             onMouseLeave,
+                                             styles,
+                                             children
+                                         }, ref) => {
     // TODO debug logging animation states checken en weghalen
     // Debug logging voor animation states
     console.log('PoemCard render:', {isExpanded, canvasMode});
@@ -54,17 +65,3 @@ const PoemCard = memo(forwardRef(({
     );
 }));
 
-PoemCard.displayName = 'PoemCard';
-
-PoemCard.propTypes = {
-    isExpanded: PropTypes.bool.isRequired,
-    canvasMode: PropTypes.bool,
-    onClick: PropTypes.func,
-    onDoubleClick: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    styles: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired
-};
-
-export default PoemCard;

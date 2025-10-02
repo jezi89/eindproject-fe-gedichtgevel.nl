@@ -4,25 +4,21 @@
  * Refactored to use smaller components and custom hooks
  */
 
-import {useState, useMemo, useRef, useEffect, memo} from 'react';
+import {memo, useEffect, useMemo, useRef, useState} from 'react';
 import {motion} from 'framer-motion';
 import styles from '../search/SearchResults.module.scss';
-
 // Custom hooks
-import useExpandablePoem from '@/hooks/useExpandablePoem.js';
-import useHeightCalculation from '@/hooks/poem/useHeightCalculation.js';
-// import useCanvasMode from '@/hooks/poem/useCanvasMode.js';
-
-// Sub-components
-import {PoemCard, PoemHeader, PoemExpansionControls, ExpandedContent, CanvasToast, PoemActionButtons, PoemPreview} from '@/components/poem';
+import {useExpandablePoem} from '@/hooks/useExpandablePoem.js';
+import {useHeightCalculation} from '@/hooks/poem/useHeightCalculation.js';
+import {ExpandedContent, PoemActionButtons, PoemCard, PoemExpansionControls, PoemHeader, PoemPreview} from '@/components/poem';
 
 // Utilities
 import {getPoemDisplayProps} from '@/utils/poem/textFormatting.js';
-import {createExpandablePreview, calculateHiddenContent} from '@/utils/shortPoemUtils.js';
-import {calculateStaggeredDelays, calculateMinimumExpandedHeight, isSmallPoem} from '@/utils/poemHeightCalculator.js';
+import {calculateHiddenContent, createExpandablePreview} from '@/utils/shortPoemUtils.js';
+import {calculateMinimumExpandedHeight, calculateStaggeredDelays, isSmallPoem} from '@/utils/poemHeightCalculator.js';
 import {nonExpandableVariants} from '@/utils/animationVariants.js';
 
-const PoemResultItem = memo(
+export const PoemResultItem = memo(
     ({
          poem,
          index,
@@ -32,12 +28,12 @@ const PoemResultItem = memo(
          onPoemStateChange,
          preCalculatedHeight,
          canvasMode = false,
-         displayMode = "search", // 'search' or 'monthly'
-         onPoemSelect,
+         displayMode = "search",
          onLoadInCanvas,
          onNavigateToCanvas,
          onNavigateToRecording,
          onCollapseEvent,
+
      }) => {
         // Calling hooks before any other logic
         const contentContainerRef = useRef(null);
@@ -61,17 +57,7 @@ const PoemResultItem = memo(
                 expandablePreview,
                 preCalculatedHeight
             );
-        /*
-        // Use canvas mode hook
-        const {
-            navigateToCanvas,
-            handleLoadInCanvas,
-            handleDoubleClick,
-            handleCardClick,
-            showToast,
-            handleMouseEnter,
-            handleMouseLeave
-        } = useCanvasMode(poem, canvasMode, onPoemSelect, onLoadInCanvas);*/
+
 
         // Determine if poem can expand
         const canExpand = useMemo(() => {
@@ -140,11 +126,6 @@ const PoemResultItem = memo(
             <PoemCard
                 ref={cardRef}
                 isExpanded={isExpanded}
-                canvasMode={canvasMode}
-                // onClick={handleCardClick}
-                // onDoubleClick={canvasMode ? handleDoubleClick : undefined}
-                // onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
                 styles={styles}
                 // Monthly sizing via CSS in plaats van displayMode prop
             >
@@ -265,14 +246,6 @@ const PoemResultItem = memo(
                     )}
                 </div>
 
-                {/* Canvas mode toast */}
-                {/* {canvasMode && (
-                <CanvasToast show={showToast} styles={styles}/>
-            )}*/}
             </PoemCard>
         );
     });
-
-PoemResultItem.displayName = 'PoemResultItem';
-
-export default PoemResultItem;

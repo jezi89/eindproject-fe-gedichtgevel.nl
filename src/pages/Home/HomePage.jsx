@@ -7,18 +7,16 @@
  * @module pages/Home/HomePage
  */
 
-import {useState, useEffect} from 'react';
-import {useSearchParams, useNavigate} from 'react-router';
-import SearchBar from "@/components/search/SearchBar.jsx";
-import SearchResults from "@/components/search/SearchResults.jsx";
-import SearchLoadingState from "@/components/search/SearchLoadingState.jsx";
-import SearchErrorBoundary from "@/components/search/SearchErrorBoundary.jsx";
-import Footer from "@/layouts/Footer/Footer.jsx";
-import MonthlyPoems from "@/components/monthly/MonthlyPoems.jsx";
-import {useSearchPoems} from "@/hooks/search/useSearchPoems.js";
+import {useNavigate, useSearchParams} from 'react-router';
+import {SearchBar} from "@/components/search/SearchBar.jsx";
+import {SearchResults} from "@/components/search/SearchResults.jsx";
+import {SearchLoadingState} from "@/components/search/SearchLoadingState.jsx";
+import {SearchErrorBoundary} from "@/components/search/SearchErrorBoundary.jsx";
+import {Footer} from "@/layouts/Footer/Footer.jsx";
+import {MonthlyPoems} from "@/components/monthly/MonthlyPoems.jsx";
+import {useSearchPoems} from '@/hooks/search';
 import {useCanvasNavigation} from "@/hooks/canvas/useCanvasNavigation.js";
-import {scrollToSearchResults} from "@/utils/poemHeightCalculator.js";
-import searchContextService from "@/services/context/searchContextService";
+import {searchContextService} from "@/services/context/searchContextService";
 import styles from './HomePage.module.scss';
 
 /**
@@ -29,12 +27,10 @@ import styles from './HomePage.module.scss';
  */
 export function HomePage() {
     const [searchParams] = useSearchParams();
-    const [focusStudioOpen, setFocusStudioOpen] = useState(false);
-    const [focusSearchTerm, setFocusSearchTerm] = useState('');
     const navigate = useNavigate();
 
     // Canvas navigation hook
-    const { navigateToCanvas } = useCanvasNavigation();
+    const {navigateToCanvas} = useCanvasNavigation();
 
     // Render welcome message and search bar
     // Handle any error states
@@ -70,7 +66,7 @@ export function HomePage() {
                 throw new Error('Navigation function not available');
             }
 
-            navigateToCanvas(poemData, { source: 'search' });
+            navigateToCanvas(poemData, {source: 'search'});
         } catch (error) {
             console.error('❌ Failed to navigate to canvas:', error);
             console.error('Error details:', {
@@ -102,31 +98,6 @@ export function HomePage() {
         }
     };
 
-    // Handle URL parameters for Focus Studio auto-open
-    useEffect(() => {
-        const focusParam = searchParams.get('focus');
-        const termParam = searchParams.get('term');
-
-        if (focusParam === 'true') {
-            // Auto-open Focus Studio from URL parameters
-            const termToUse = termParam || searchTerm;
-            if (termToUse) {
-                console.log('[Homepage] Auto-opening Focus Studio from URL:', termToUse);
-                setFocusSearchTerm(termToUse);
-                setFocusStudioOpen(true);
-
-                // Update search term if provided in URL
-                if (termParam && termParam !== searchTerm) {
-                    updateSearchTerm(termParam);
-                }
-
-                // Auto-trigger search with term
-                if (termToUse.trim()) {
-                    handleSearch(termToUse);
-                }
-            }
-        }
-    }, [searchParams, searchTerm, updateSearchTerm, handleSearch]);
 
     return (
         <div className={styles.homePage}>

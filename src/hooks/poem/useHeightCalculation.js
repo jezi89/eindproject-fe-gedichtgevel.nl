@@ -4,14 +4,8 @@
  * Extracted from PoemResultItem to reduce complexity
  */
 
-import {useState, useEffect, useMemo} from 'react';
-import {
-    calculateExpandedHeight,
-    getCarouselPoemHeight,
-    getResponsiveLayout,
-    clearCarouselCache,
-    createResizeHandler
-} from '@/utils/poemHeightCalculator';
+import {useEffect, useMemo, useState} from 'react';
+import {calculateExpandedHeight, clearCarouselCache, createResizeHandler, getCarouselPoemHeight, getResponsiveLayout} from '@/utils/poemHeightCalculator';
 
 /**
  * Custom hook for managing poem height calculations
@@ -23,7 +17,7 @@ import {
  * @param {Object} preCalculatedHeight - Pre-calculated height if available
  * @returns {Object} Height calculation info and screen layout
  */
-const useHeightCalculation = (
+export const useHeightCalculation = (
     poem,
     index,
     allPoems,
@@ -128,4 +122,3 @@ const useHeightCalculation = (
     };
 };
 
-export default useHeightCalculation;

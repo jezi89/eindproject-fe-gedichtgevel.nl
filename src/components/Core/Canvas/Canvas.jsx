@@ -1,19 +1,15 @@
 import {Application, extend} from "@pixi/react";
-import {Text, Container, Graphics, Sprite} from "pixi.js";
+import {Container, Graphics, Sprite, Text} from "pixi.js";
 import {Viewport} from "pixi-viewport";
-import {useEffect, useState, useCallback} from "react";
-import {useNavigate} from "react-router";
-
-// CRITICAL: extend() MUST be called at module level, outside components
-extend({Text, Container, Graphics, Sprite, Viewport});
-
+import {useCallback, useEffect, useState} from "react";
+import { useNavigate } from "react-router";
 import Controls from "./Controls.jsx";
 import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
 import {useCanvasState} from "../../../hooks/canvas/useCanvasState";
 import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
 import {CanvasContent} from "./CanvasContent.jsx";
-import ResponsiveLayout from "./ResponsiveLayout.jsx";
+import {ResponsiveLayout} from "./ResponsiveLayout.jsx";
 import Navigation from "./Navigation.jsx";
 import FloatingPhotoGrid from "./FloatingPhotoGrid.jsx";
 import XYMoveSliders from "./XYMoveSliders.jsx";
@@ -22,6 +18,9 @@ import styles from "./Canvas.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";
 import {clearAllPersistedState} from "../../../hooks/canvas/usePersistedState";
+
+// CRITICAL: extend() MUST be called at module level, outside components
+extend({Text, Container, Graphics, Sprite, Viewport});
 
 // Main component that manages state
 export default function Canvas({

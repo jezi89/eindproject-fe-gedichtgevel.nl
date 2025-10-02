@@ -7,10 +7,10 @@
  */
 
 // OPTIMIZED IMPORTS - alleen wat nodig is
-import {useState, useCallback, useEffect, useTransition, useDeferredValue, startTransition} from 'react';
-import {getCarouselPoemHeight, calculateCollapseScroll} from '@/utils/poemHeightCalculator';
+import {useCallback, useDeferredValue, useEffect, useState, useTransition} from 'react';
+import {calculateCollapseScroll, getCarouselPoemHeight} from '@/utils/poemHeightCalculator';
 import {analyzeExpandablePoems} from '@/utils/shortPoemUtils.js';
-import searchContextService from '@/services/context/searchContextService';
+import {searchContextService} from '@/services/context/searchContextService';
 
 // Navigation handler for carousel dots
 export const useSearchOrchestration = (results, layout) => {
@@ -438,4 +438,3 @@ export const useSearchOrchestration = (results, layout) => {
     };
 };
 
-export default useSearchOrchestration;

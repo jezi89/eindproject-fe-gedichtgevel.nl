@@ -1,7 +1,7 @@
 import styles from './SearchResults.module.scss';
 
 // ResultsOverview component - Simple or Circle variant
-const ResultsOverview = ({resultCount, variant = 'circle'}) => {
+export const ResultsOverview = ({resultCount, variant = 'circle'}) => {
     // simple variant: just a count and label, for DesignPage
     if (variant === 'simple') {
         return (
@@ -32,6 +32,3 @@ const ResultsOverview = ({resultCount, variant = 'circle'}) => {
     );
 };
 
-ResultsOverview.displayName = 'ResultsOverview';
-
-export default ResultsOverview;

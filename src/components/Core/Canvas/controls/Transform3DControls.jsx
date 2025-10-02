@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../Canvas.module.scss"; // Updated import path
-import MultiSelectSlider from "./MultiSelectSlider.jsx";
+import {MultiSelectSlider} from "./MultiSelectSlider.jsx";
 
 export default function Transform3DControls({
                                                 // State & Derived Values

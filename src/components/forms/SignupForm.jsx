@@ -8,12 +8,10 @@
  */
 
 import {useCallback, useEffect, useRef, useState} from "react";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import useAuthForm from "@/hooks/auth/useAuthForm.js";
-import FormField from "@/components/forms/FormField.jsx";
-import {SubmitButton} from "@/components/ui/button/ActionButton.jsx"; // Correct import
-import {ActionButton} from "@/components/ui/button/ActionButton.jsx"; // For cancel button
+import { Link, useNavigate } from "react-router";
+import {useAuthForm} from "@/hooks/auth/useAuthForm.js";
+import {FormField} from "@/components/forms/FormField.jsx";
+import {ActionButton, SubmitButton} from "@/components/ui/button/ActionButton.jsx"; // For cancel button // Correct import
 import {useAuth} from "@/hooks/auth/useAuth.js";
 import styles from './forms.module.scss';
 
@@ -24,7 +22,7 @@ import styles from './forms.module.scss';
  * @returns {JSX.Element} Signup form component
  */
 
-function SignupForm() {
+export function SignupForm() {
     // - Use useAuthForm for form state management
     // - Handle email, password, and confirmPassword validation
     // - Track submission state
@@ -180,7 +178,7 @@ function SignupForm() {
                     <p>We hebben een e-mail gestuurd naar: {registeredEmail}</p>
                     <p>
                         Indien je nog geen account had, vind je hierin een bevestigingslink.
-                        <br />
+                        <br/>
                         Niks ontvangen? Probeer <Link to="/login">Wachtwoord vergeten</Link> op de inlogpagina.
                     </p>
                 </div>
@@ -264,5 +262,3 @@ function SignupForm() {
         </div>
     );
 }
-
-export default SignupForm;

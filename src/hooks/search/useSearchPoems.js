@@ -1,9 +1,9 @@
 // TODO useSearchPoems.js hook werking checken en testen
 
-import {useState, useCallback, useEffect} from 'react';
-import {searchPoemsGeneral} from '@/services/poetryApi.js';
-import searchCacheService from '@/services/cache/searchCacheService';
-import searchContextService from '@/services/context/searchContextService.js';
+import {useCallback, useEffect, useState} from 'react';
+import {searchPoemsGeneral} from '@/services/api/poemSearchService.js';
+import {searchCacheService} from '@/services/cache/searchCacheService';
+import {searchContextService} from '@/services/context/SearchContextService.js';
 
 
 /**
@@ -186,5 +186,3 @@ export function useSearchPoems(source = 'unknown') {
         searchMeta
     };
 }
-
-export default useSearchPoems;

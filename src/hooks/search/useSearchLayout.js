@@ -5,17 +5,9 @@
  * Extracted from SearchResults for better separation of concerns
  */
 
-import {useState, useEffect, useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {
-    getLayoutClass,
-    getVisibleResults,
-    getActualIndex,
-    isCarouselMode,
-    getIndicesToCalculate,
-    mapVisibleIndices,
-    getIsDesktop
-} from '@/utils/searchLayoutUtils';
+import {getActualIndex, getIndicesToCalculate, getIsDesktop, getLayoutClass, getVisibleResults, isCarouselMode, mapVisibleIndices} from '@/utils/searchLayoutUtils';
 
 export const useSearchLayout = (results, currentIndex) => {
     const [isDesktop, setIsDesktop] = useState(() => getIsDesktop());
@@ -83,4 +75,3 @@ export const useSearchLayout = (results, currentIndex) => {
     };
 };
 
-export default useSearchLayout;

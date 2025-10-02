@@ -1,36 +1,36 @@
 // src/components/Core/Canvas/components/PoemLine.jsx
-import React, {useRef, useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useRef} from "react";
 import {useLineStyle} from "@/hooks/canvas/useTextStyles.js";
 import {Transform3D, Transform3DManager} from "@/utils/canvas/Transform3D.js"; // Updated import path
 // import { useDraggableLine } from "../hooks/useDraggableLine"; // REMOVED: Will use viewport-level event handling
 
-const PoemLine = ({
-                      line,
-                      x,
-                      y,
-                      baseStyle,
-                      lineOverrides,
-                      isSelected,
-                      onSelect,
-                      fontStatus, // <-- Deze prop komt al binnen van CanvasContent
-                      globalFontFamily, // <-- Deze prop komt ook al binnen
-                      anchorX = 0.5,
-                      isColorPickerActive = false,
-                      highlightVisible = true, // <-- NEW: Highlight toggle
-                      // New props for drag functionality
-                      moveMode,
-                      index,
-                      selectedLines,
-                      onDragLineStart,
-                      onDragLineMove,
-                      onDragLineEnd,
-                      // Resolution optimization prop
-                      resolution = 1,
+export const PoemLine = ({
+                             line,
+                             x,
+                             y,
+                             baseStyle,
+                             lineOverrides,
+                             isSelected,
+                             onSelect,
+                             fontStatus, // <-- Deze prop komt al binnen van CanvasContent
+                             globalFontFamily, // <-- Deze prop komt ook al binnen
+                             anchorX = 0.5,
+                             isColorPickerActive = false,
+                             highlightVisible = true, // <-- NEW: Highlight toggle
+                             // New props for drag functionality
+                             moveMode,
+                             index,
+                             selectedLines,
+                             onDragLineStart,
+                             onDragLineMove,
+                             onDragLineEnd,
+                             // Resolution optimization prop
+                             resolution = 1,
 
-                      // 3D transformation props
-                      lineTransforms,
-                      global3DSettings,
-                  }) => {
+                             // 3D transformation props
+                             lineTransforms,
+                             global3DSettings,
+                         }) => {
     const textRef = useRef();
     const containerRef = useRef(); // For line drag functionality
 
@@ -213,4 +213,3 @@ const PoemLine = ({
     );
 };
 
-export default PoemLine;

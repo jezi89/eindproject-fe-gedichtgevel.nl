@@ -1,16 +1,16 @@
 // src/components/Core/Canvas/components/controls/MultiSelectSlider.jsx
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import styles from '../Canvas.module.scss'; // Updated import path
 
-const MultiSelectSlider = ({
-                               label,
-                               min,
-                               max,
-                               step,
-                               values, // Array of values from selected lines
-                               onChange,
-                               unit = '',
-                           }) => {
+export const MultiSelectSlider = ({
+                                      label,
+                                      min,
+                                      max,
+                                      step,
+                                      values, // Array of values from selected lines
+                                      onChange,
+                                      unit = '',
+                                  }) => {
     const isVariable = new Set(values).size > 1;
     const initialValue = isVariable ? 0 : values[0] || 0;
 
@@ -48,4 +48,3 @@ const MultiSelectSlider = ({
     );
 };
 
-export default MultiSelectSlider;

@@ -486,41 +486,43 @@ export const getResponsiveLayout = (width = window.innerWidth) => {
  * @param {string} searchBarSelector - CSS selector voor search bar container
  * @param {number} offset - Extra offset vanaf searchbar (standaard 20px)
  */
-export const scrollToSearchResults = (
-    searchResultsSelector = '[class*="searchResultsArea"]',
-    searchBarSelector = '[class*="searchContainer"]',
-    offset = 20
-) => {
-    // Gebruik requestAnimationFrame om te wachten tot DOM is geupdate
-    requestAnimationFrame(() => {
-        const searchResults = document.querySelector(searchResultsSelector);
-        const searchBar = document.querySelector(searchBarSelector);
 
-        if (!searchResults) {
-            console.log('Search results element not found:', searchResultsSelector);
-            return;
-        }
-
-        if (!searchBar) {
-            console.log('Search bar element not found:', searchBarSelector);
-            return;
-        }
-
-        const searchBarRect = searchBar.getBoundingClientRect();
-        const currentScrollY = window.scrollY;
-
-        // ALTIJD scroll naar bovenkant van search container met offset
-        const searchBarTop = searchBarRect.top + currentScrollY;
-        const targetScrollY = Math.max(0, searchBarTop - offset);
-
-        console.log(`Scrolling to search container top. Current: ${currentScrollY}, Target: ${targetScrollY}`);
-
-        window.scrollTo({
-            top: targetScrollY,
-            behavior: 'smooth'
-        });
-    });
-};
+// UNUSED
+// export const scrollToSearchResults = (
+//     searchResultsSelector = '[class*="searchResultsArea"]',
+//     searchBarSelector = '[class*="searchContainer"]',
+//     offset = 20
+// ) => {
+//     // Gebruik requestAnimationFrame om te wachten tot DOM is geupdate
+//     requestAnimationFrame(() => {
+//         const searchResults = document.querySelector(searchResultsSelector);
+//         const searchBar = document.querySelector(searchBarSelector);
+//
+//         if (!searchResults) {
+//             console.log('Search results element not found:', searchResultsSelector);
+//             return;
+//         }
+//
+//         if (!searchBar) {
+//             console.log('Search bar element not found:', searchBarSelector);
+//             return;
+//         }
+//
+//         const searchBarRect = searchBar.getBoundingClientRect();
+//         const currentScrollY = window.scrollY;
+//
+//         // ALTIJD scroll naar bovenkant van search container met offset
+//         const searchBarTop = searchBarRect.top + currentScrollY;
+//         const targetScrollY = Math.max(0, searchBarTop - offset);
+//
+//         console.log(`Scrolling to search container top. Current: ${currentScrollY}, Target: ${targetScrollY}`);
+//
+//         window.scrollTo({
+//             top: targetScrollY,
+//             behavior: 'smooth'
+//         });
+//     });
+// };
 
 /**
  * Berekent de optimale scroll positie na het inklappen van een gedicht

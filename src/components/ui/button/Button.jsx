@@ -7,23 +7,25 @@
  */
 
 import styles from "./Button.module.scss";
-import PropTypes from 'prop-types';
+
+/**
+ * @typedef {Object} ButtonProps
+ * @property {React.ReactNode} children - Button content
+ * @property {Function} [onClick] - Click handler function
+ * @property {('button'|'submit'|'reset')} [type] - Button type attribute
+ * @property {('primary'|'secondary'|'tertiary'|'danger'|'success')} [variant] - Button style variant
+ * @property {('small'|'large')} [size] - Button size
+ * @property {boolean} [disabled] - Whether the button is disabled
+ * @property {boolean} [loading] - Whether the button is in a loading state
+ * @property {boolean} [fullWidth] - Whether the button should take up the full width of its container
+ * @property {string} [className] - Additional CSS class names
+ * @property {React.ElementType} [as] - The HTML element to render the button as
+ */
 
 /**
  * Versatile button component
  *
- * @component
- * @param {Object} props
- * @param {React.ReactNode} props.children - Button content
- * @param {Function} [props.onClick] - Click handler function
- * @param {string} [props.type="button"] - Button type attribute ('button', 'submit', 'reset')
- * @param {string} [props.variant="primary"] - Button style variant ('primary', 'secondary', 'tertiary', 'danger', 'success')
- * @param {string} [props.size] - Button size ('small', 'large')
- * @param {boolean} [props.disabled=false] - Whether the button is disabled
- * @param {boolean} [props.loading=false] - Whether the button is in a loading state
- * @param {boolean} [props.fullWidth=false] - Whether the button should take up the full width of its container
- * @param {string} [props.className] - Additional CSS class names
- * @param {React.ElementType} [props.as='button'] - The HTML element to render the button as (e.g., 'a' for link-styled buttons)
+ * @param {ButtonProps} props
  * @returns {JSX.Element} Button component
  */
 function Button({
@@ -63,18 +65,5 @@ function Button({
         </Component>
     );
 }
-
-Button.propTypes = {
-    children: PropTypes.node.isRequired,
-    onClick: PropTypes.func,
-    type: PropTypes.oneOf(['button', 'submit', 'reset']),
-    variant: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'danger', 'success']),
-    size: PropTypes.oneOf(['small', 'large']),
-    disabled: PropTypes.bool,
-    loading: PropTypes.bool,
-    fullWidth: PropTypes.bool,
-    className: PropTypes.string,
-    as: PropTypes.elementType,
-};
 
 export default Button;

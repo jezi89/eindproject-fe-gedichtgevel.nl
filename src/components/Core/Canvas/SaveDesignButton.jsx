@@ -1,10 +1,10 @@
-import {useState, useRef} from 'react';
+import {useRef, useState} from 'react';
 import {useCanvasStorage} from '@/hooks/canvas/useCanvasStorage.js';
 import {useAuth} from '@/hooks/auth/useAuth.js';
 import {useNavigate} from 'react-router';
 import styles from './SaveDesignButton.module.scss';
 
-export default function SaveDesignButton({poemData, canvasState, currentDesignId = null}) {
+export function SaveDesignButton({poemData, canvasState, currentDesignId = null}) {
     const {user} = useAuth();
     const navigate = useNavigate();
     const {save, isLoading} = useCanvasStorage();

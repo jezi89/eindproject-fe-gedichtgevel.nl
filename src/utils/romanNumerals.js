@@ -88,7 +88,7 @@ export const getDecadeRoman = (decadeNumber) => {
  * @param {number} decadeNumber - The decade number (0, 1, 2, etc.)
  * @returns {string} Roman numeral for dropdown display
  */
-export const getDropdownDecadeRoman = (decadeNumber) => {
+const getDropdownDecadeRoman = (decadeNumber) => {
     if (decadeNumber === 0) return 'X'; // 1-10
     if (decadeNumber === 1) return 'XX'; // 11-20
     if (decadeNumber === 2) return 'XXX'; // 21-30
@@ -108,7 +108,7 @@ export const getDropdownDecadeRoman = (decadeNumber) => {
  * @returns {Object} Formatted range information
  */
 
-export const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
+const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
     const startDecade = Math.floor(startIndex / 10);
     const endDecade = Math.floor(endIndex / 10);
 

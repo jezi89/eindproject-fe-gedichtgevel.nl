@@ -11,7 +11,7 @@
  * @param {number} maxLength - Maximum length before truncation
  * @returns {Object} Object with display text and optional title
  */
-export const getTitleWithTooltip = (text, maxLength = 50) => {
+const getTitleWithTooltip = (text, maxLength = 50) => {
     if (!text) {
         return {display: '', title: undefined};
     }
@@ -32,7 +32,7 @@ export const getTitleWithTooltip = (text, maxLength = 50) => {
  * @param {number} maxLength - Maximum display length
  * @returns {Object} Formatted title object
  */
-export const formatPoemTitle = (title, maxLength = 60) => {
+const formatPoemTitle = (title, maxLength = 60) => {
     return getTitleWithTooltip(title, maxLength);
 };
 
@@ -55,7 +55,7 @@ export const formatPoemTitle = (title, maxLength = 60) => {
  * @param {Object} poem - The poem object to validate
  * @returns {boolean} Whether poem is valid
  */
-export const isValidPoem = (poem) => {
+const isValidPoem = (poem) => {
     return poem &&
         typeof poem === 'object' &&
         poem.title &&

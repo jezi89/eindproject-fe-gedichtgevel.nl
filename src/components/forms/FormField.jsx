@@ -1,7 +1,7 @@
 import styles from './forms.module.scss';
 import {forwardRef} from 'react';
 
-const FormField = forwardRef(({id, label, name, type, value, onChange, error, required = false, ...props}, ref) => {
+export const FormField = forwardRef(({id, label, name, type, value, onChange, error, required = false, ...props}, ref) => {
     const inputId = id || name;
     return (
         <div className={styles.formGroup}>
@@ -35,6 +35,4 @@ const FormField = forwardRef(({id, label, name, type, value, onChange, error, re
     );
 });
 
-FormField.displayName = 'FormField'; // Add display name for better debugging
 
-export default FormField;

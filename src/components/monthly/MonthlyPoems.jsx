@@ -7,9 +7,8 @@
 
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
-import PoemResultItem from '@/components/poem/PoemResultItem.jsx';
-import {calculateCollapseScroll} from '@/utils/poemHeightCalculator';
-import searchContextService from '@/services/context/searchContextService';
+import {PoemResultItem} from '@/components/poem';
+import {searchContextService} from '@/services/context/searchContextService';
 import styles from './MonthlyPoems.module.scss';
 
 // Sample monthly poems data - exactly 3 poems
@@ -51,7 +50,7 @@ const MONTHLY_POEMS = [
     }
 ];
 
-const MonthlyPoems = () => {
+export const MonthlyPoems = () => {
     const navigate = useNavigate();
 
     // Simple state for 3 poems only
@@ -162,5 +161,3 @@ const MonthlyPoems = () => {
         </section>
     );
 };
-
-export default MonthlyPoems;

@@ -5,8 +5,8 @@
  * Manages poem storage and design_settings JSONB data.
  */
 
-import supabase from '../supabase/supabase';
-import { serializeCanvasState } from './canvasStateSerializer';
+import {supabase} from '../supabase/supabase';
+import {serializeCanvasState} from './canvasStateSerializer';
 
 /**
  * Save or update a canvas design
@@ -19,7 +19,7 @@ import { serializeCanvasState } from './canvasStateSerializer';
  */
 export async function saveDesign(userId, poemData, canvasState, title = null, designId = null) {
     try {
-        console.log('💾 Saving canvas design...', { userId, title, designId });
+        console.log('💾 Saving canvas design...', {userId, title, designId});
 
         // Step 1: Ensure poem exists in database
         const poemId = await ensurePoemExists(poemData, userId);
@@ -42,7 +42,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
 
         if (designId) {
             // Update existing design
-            const { data, error } = await supabase
+            const {data, error} = await supabase
                 .from('canvas_design')
                 .update(designData)
                 .eq('id', designId)
@@ -57,7 +57,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
             // Create new design
             designData.created_at = new Date().toISOString();
 
-            const { data, error } = await supabase
+            const {data, error} = await supabase
                 .from('canvas_design')
                 .insert(designData)
                 .select()
@@ -91,7 +91,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
 async function ensurePoemExists(poemData, userId) {
     try {
         // Check if poem already exists (by title + author)
-        const { data: existingPoem, error: searchError } = await supabase
+        const {data: existingPoem, error: searchError} = await supabase
             .from('poem')
             .select('id')
             .eq('title', poemData.title)
@@ -112,7 +112,7 @@ async function ensurePoemExists(poemData, userId) {
             ? poemData.lines.join('\n')
             : poemData.content || '';
 
-        const { data: newPoem, error: insertError } = await supabase
+        const {data: newPoem, error: insertError} = await supabase
             .from('poem')
             .insert({
                 title: poemData.title,
@@ -166,7 +166,7 @@ export async function loadDesign(designId, userId = null) {
             query = query.eq('user_id', userId);
         }
 
-        const { data, error } = await query.single();
+        const {data, error} = await query.single();
 
         if (error) {
             if (error.code === 'PGRST116') {
@@ -218,7 +218,7 @@ export async function listUserDesigns(userId, options = {}) {
         console.log('📋 Listing designs for user:', userId);
 
         // Debug: Check current auth user
-        const { data: { user: authUser } } = await supabase.auth.getUser();
+        const {data: {user: authUser}} = await supabase.auth.getUser();
         console.log('🔐 Current auth user:', authUser?.id);
 
         let query = supabase
@@ -235,12 +235,12 @@ export async function listUserDesigns(userId, options = {}) {
                     title,
                     author
                 )
-            `, { count: 'exact' })
+            `, {count: 'exact'})
             .eq('user_id', userId)
-            .order(orderBy, { ascending })
+            .order(orderBy, {ascending})
             .range(offset, offset + limit - 1);
 
-        const { data, error, count } = await query;
+        const {data, error, count} = await query;
 
         if (error) {
             console.error('❌ Supabase query error:', {
@@ -281,7 +281,7 @@ export async function deleteDesign(designId, userId) {
     try {
         console.log('🗑️ Deleting design:', designId);
 
-        const { error } = await supabase
+        const {error} = await supabase
             .from('canvas_design')
             .delete()
             .eq('id', designId)
@@ -291,7 +291,7 @@ export async function deleteDesign(designId, userId) {
 
         console.log('✅ Design deleted');
 
-        return { success: true };
+        return {success: true};
 
     } catch (error) {
         console.error('❌ Failed to delete design:', error);
@@ -325,7 +325,7 @@ export async function updateDesignMetadata(designId, userId, updates) {
 
         sanitizedUpdates.updated_at = new Date().toISOString();
 
-        const { data, error } = await supabase
+        const {data, error} = await supabase
             .from('canvas_design')
             .update(sanitizedUpdates)
             .eq('id', designId)
@@ -363,7 +363,7 @@ export async function duplicateDesign(designId, userId, newTitle = null) {
         console.log('📋 Duplicating design:', designId);
 
         // Load original design
-        const { data: original, error: loadError } = await supabase
+        const {data: original, error: loadError} = await supabase
             .from('canvas_design')
             .select('*')
             .eq('id', designId)
@@ -385,7 +385,7 @@ export async function duplicateDesign(designId, userId, newTitle = null) {
             updated_at: new Date().toISOString()
         };
 
-        const { data, error } = await supabase
+        const {data, error} = await supabase
             .from('canvas_design')
             .insert(duplicate)
             .select()
@@ -409,37 +409,28 @@ export async function duplicateDesign(designId, userId, newTitle = null) {
     }
 }
 
-/**
- * Check if user has access to a design
- * @param {string} designId - Design ID
- * @param {string} userId - User ID
- * @returns {Promise<boolean>}
- */
-export async function hasDesignAccess(designId, userId) {
-    try {
-        const { data, error } = await supabase
-            .from('canvas_design')
-            .select('id, user_id, is_public')
-            .eq('id', designId)
-            .single();
-
-        if (error) return false;
-
-        // User has access if they own it or it's public
-        return data.user_id === userId || data.is_public;
-
-    } catch (error) {
-        console.error('Failed to check design access:', error);
-        return false;
-    }
-}
-
-export default {
-    saveDesign,
-    loadDesign,
-    listUserDesigns,
-    deleteDesign,
-    updateDesignMetadata,
-    duplicateDesign,
-    hasDesignAccess
-};
+// UNUSED
+// /**
+//  * Check if user has access to a design
+//  * @param {string} designId - Design ID
+//  * @param {string} userId - User ID
+//  * @returns {Promise<boolean>}
+//  */
+// async function hasDesignAccess(designId, userId) {
+//     try {
+//         const {data, error} = await supabase
+//             .from('canvas_design')
+//             .select('id, user_id, is_public')
+//             .eq('id', designId)
+//             .single();
+//
+//         if (error) return false;
+//
+//         // User has access if they own it or it's public
+//         return data.user_id === userId || data.is_public;
+//
+//     } catch (error) {
+//         console.error('Failed to check design access:', error);
+//         return false;
+//     }
+// }
