@@ -11,6 +11,7 @@ import {LayoutGroup, motion} from 'framer-motion';
 import styles from './SearchResults.module.scss';
 import {ResultsOverview} from './ResultsOverview';
 import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
+import {PoemResultItem} from '@/components/poem';
 
 /**
  * SearchResults component for displaying poem search results
