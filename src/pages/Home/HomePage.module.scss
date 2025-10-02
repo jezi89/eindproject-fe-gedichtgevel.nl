@@ -68,6 +68,9 @@
 
 .homePage {
   font-family:      $font-family-body;
+  display:          flex;
+  flex-direction:   column;
+  margin-top:       4rem;
   color:            $neutral-off-white;
   background-color: transparent; // Inherit from parent
   }

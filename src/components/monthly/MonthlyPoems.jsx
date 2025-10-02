@@ -125,7 +125,7 @@ export const MonthlyPoems = () => {
     return (
         <section className={styles.monthlyPoemsSection}>
             <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Staartgedichten van de Dag</h2>
+                <h2 className={styles.sectionTitle}>Straatgedichten van de Dag</h2>
                 <p className={styles.sectionSubtitle}>Ontdek onze dagelijks wisseledende curatie van daadwerkelijk Nederlandse straatpoezie</p>
             </div>
 

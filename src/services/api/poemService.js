@@ -20,64 +20,59 @@ import {apiCacheService} from '../cache/apiCacheService'; // Import enhanced cac
 // SECTION 1: BASIC API FUNCTIONS (INTERNAL HELPERS)
 // ==========================================================================
 
-// UNUSED
-// /**
-//  * Retrieves poems from PoetryDB based on a field and search term.
-//  *
-//  * @param {string} query – The search term.
-//  * @param {string} field - The field to search for ('title', 'author', etc.).
-//  * @returns {Promise<Array<object>>} - Array of poems found.
-//  */
-// async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
-//     // Check L1/L2 cache hierarchy first
-//     const cacheKey = `poetrydb:${field}:${query.toLowerCase()}`;
-//     const cachedData = await apiCacheService.get(cacheKey);
-//     if (cachedData !== null) {
-//         return cachedData;
-//     }
-//     try {
-//         const endpoint = `/${field}/${encodeURIComponent(query)}`;
-//         const response = await poetryDbApi.get(endpoint);
-//
-//         // poetrydb gives 200 OK with status: 404 in response body for no results
-//         if (response.data && response.data.status === 404) {
-//             return [];
-//         }
-//
-//         return Array.isArray(response.data) ? response.data : [];
-//     } catch (error) {
-//         // handle http 404 (can occur with some API versions)
-//         if (error.response && error.response.status === 404) {
-//             return [];
-//         }
-//         console.error(`Fout bij ophalen gedichten (veld: ${field}, query: "${query}") uit PoetryDB:`, error);
-//         throw new Error(`Kon geen gedichten ophalen van PoetryDB voor ${field} "${query}": ${error.message}`);
-//     }
-// }
+/**
+ * Retrieves poems from PoetryDB based on a field and search term.
+ *
+ * @param {string} query – The search term.
+ * @param {string} field - The field to search for ('title', 'author', etc.).
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
+    // Check L1/L2 cache hierarchy first
+    const cacheKey = `poetrydb:${field}:${query.toLowerCase()}`;
+    const cachedData = await apiCacheService.get(cacheKey);
+    if (cachedData !== null) {
+        return cachedData;
+    }
+    try {
+        const endpoint = `/${field}/${encodeURIComponent(query)}`;
+        const response = await poetryDbApi.get(endpoint);
 
-// UNUSED
-//
-// /**
-//  *
-//  * Retrieves poems from PoetryDB based on title.
-//  *
-//  * @param {string} titleQuery – The title to look up.
-//  * @returns {Promise<Array<object>>} - Array of poems found.
-//  */
-// async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
-//     return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
-// }
-//
-//
-// /**
-//  * Haalt gedichten op van PoetryDB op basis van auteur.
-//  *
-//  * @param {string} authorQuery - De auteur om op te zoeken.
-//  * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
-//  */
-// async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
-//     return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
-// }
+        // poetrydb gives 200 OK with status: 404 in response body for no results
+        if (response.data && response.data.status === 404) {
+            return [];
+        }
+
+        return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+        // handle http 404 (can occur with some API versions)
+        if (error.response && error.response.status === 404) {
+            return [];
+        }
+        console.error(`Fout bij ophalen gedichten (veld: ${field}, query: "${query}") uit PoetryDB:`, error);
+        throw new Error(`Kon geen gedichten ophalen van PoetryDB voor ${field} "${query}": ${error.message}`);
+    }
+}
+
+/**
+ * Retrieves poems from PoetryDB based on title.
+ *
+ * @param {string} titleQuery – The title to look up.
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
+    return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
+}
+
+/**
+ * Haalt gedichten op van PoetryDB op basis van auteur.
+ *
+ * @param {string} authorQuery - De auteur om op te zoeken.
+ * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
+ */
+async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
+    return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
+}
 
 
 /**
