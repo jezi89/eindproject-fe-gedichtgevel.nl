@@ -25,7 +25,7 @@ import {useAuth} from '@/hooks/auth/useAuth.js';
  * @returns {JSX.Element} The protected route component
  */
 
-function ProtectedRoute({children, redirectTo = '/login'}) {
+export function ProtectedRoute({children, redirectTo = '/login'}) {
     // Get authentication state using the refactored useAuth hook
     const authState = useAuth();
     const {user, loading} = authState;
@@ -63,7 +63,6 @@ function ProtectedRoute({children, redirectTo = '/login'}) {
     return children;
 }
 
-export default ProtectedRoute;
 
 /**
  * Implementation Notes:

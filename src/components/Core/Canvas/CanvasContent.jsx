@@ -1,17 +1,17 @@
-import {useSearchParams} from "react-router";
-import {useEffect, useMemo, useCallback, useRef, useState} from "react";
+import { useSearchParams } from "react-router";
+import {useCallback, useEffect, useMemo, useRef} from "react";
 import {useApplication} from "@pixi/react";
 import {getPoemById} from "@/data/canvas/testdata.js";
-import PoemLine from "./poemLine.jsx";
-import PoemTitle from "./PoemTitle.jsx";
-import PoemAuthor from "./PoemAuthor.jsx";
+import {PoemLine} from "./poemLine.jsx";
+import {PoemTitle} from "./PoemTitle.jsx";
+import {PoemAuthor} from "./PoemAuthor.jsx";
 import {useFontManager} from "@/hooks/canvas/useFontManager.js";
 import {useTextStyles} from "@/hooks/canvas/useTextStyles.js";
 import {useResponsiveTextPosition} from "@/hooks/canvas/useResponsiveTextPosition.js";
 import {usePixiAutoRender} from "@/hooks/canvas/usePixiAutoRender.js";
 import {useAutoRecenter} from "@/hooks/canvas/useAutoRecenter.js";
 import {debugManager} from "@/debug/DebugManager.js";
-import BackgroundImage from "./BackgroundImage.jsx"; // <-- Importeren
+import {BackgroundImage} from "./BackgroundImage.jsx"; // <-- Importeren
 // import { useDraggable } from "../hooks/useDraggable"; // <-- REMOVED: Will use viewport-level event handling
 
 

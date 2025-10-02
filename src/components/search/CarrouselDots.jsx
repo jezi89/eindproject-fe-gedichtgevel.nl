@@ -1,8 +1,8 @@
-import {memo, useState, useRef, useEffect} from 'react';
+import {memo, useEffect, useRef, useState} from 'react';
 import styles from './Carrousel.module.scss';
-import {calculateIndicatorConfig, formatIndicatorElements, calculateDotNavigation, getAvailableDecades} from '@/utils/carrouselIndicatorUtils.js';
+import {calculateDotNavigation, calculateIndicatorConfig, formatIndicatorElements, getAvailableDecades} from '@/utils/carrouselIndicatorUtils.js';
 
-const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSeriesNavigation = false, hideRangeIndicator = false}) => {
+export const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSeriesNavigation = false, hideRangeIndicator = false}) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const dotsContainerRef = useRef(null);
@@ -236,7 +236,3 @@ const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSeriesNavi
         </>
     );
 });
-
-CarouselDots.displayName = 'CarouselDots';
-
-export default CarouselDots;

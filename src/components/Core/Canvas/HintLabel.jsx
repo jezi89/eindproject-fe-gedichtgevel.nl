@@ -1,14 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import {useEffect, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 import styles from './HintLabel.module.scss';
 
-/**
- * HintLabel - Floating hint that appears above all content using Portal
- * Shows animated hint pointing to a target button for ~6 seconds
- */
-export default function HintLabel({ targetRef, text, duration = 6000 }) {
+export function HintLabel({targetRef, text, duration = 6000}) {
     const [isVisible, setIsVisible] = useState(true);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const [position, setPosition] = useState({top: 0, left: 0});
     const hintRef = useRef(null);
 
     // Calculate position relative to target button

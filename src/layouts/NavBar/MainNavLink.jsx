@@ -24,7 +24,7 @@ import styles from "./NavBar.module.scss"
  * @param {Object} [props...rest] - Additional props to pass to NavLink
  * @returns {JSX.Element} Styled navigation link
  */
-const MainNavLink = ({to, children, onClick, className = '', prefetch = 'intent', ...rest}) => {
+export const MainNavLink = ({to, children, onClick, className = '', prefetch = 'intent', ...rest}) => {
     // Return NavLink with active/inactive styling based on current route
     // Uses React Router v7 features like prefetch
     return (
@@ -45,4 +45,3 @@ const MainNavLink = ({to, children, onClick, className = '', prefetch = 'intent'
     );
 };
 
-export default MainNavLink;

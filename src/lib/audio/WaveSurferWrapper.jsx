@@ -145,5 +145,3 @@ export function WaveSurferWrapper({
         </div>
     );
 }
-
-export default WaveSurferWrapper;

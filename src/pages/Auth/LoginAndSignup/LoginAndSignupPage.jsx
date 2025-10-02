@@ -9,9 +9,9 @@
 
 import {useEffect, useState} from "react";
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
-import {useLocation} from "react-router";
-import LoginForm from "@/components/forms/LoginForm.jsx";
-import SignupForm from "@/components/forms/SignupForm.jsx";
+import { useLocation } from "react-router";
+import {LoginForm} from "@/components/forms/LoginForm.jsx";
+import {SignupForm} from "@/components/forms/SignupForm.jsx";
 // import LoginForm from "@/components/forms/LoginForm.jsx";
 // import SignupForm from "@/components/forms/SignupForm.jsx";
 // import {ActionButton} from "@/components/ui/button/ActionButton.jsx";

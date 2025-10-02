@@ -8,20 +8,20 @@ import {memo} from 'react';
 import {motion} from 'framer-motion';
 import {buttonVariants} from '@/utils/animationVariants.js';
 
-const PoemActionButtons = memo(({
-                                    canvasMode = false,
-                                    isExpanded = false,
-                                    canExpand = false,
-                                    animationPhase = 'idle',
-                                    hiddenLinesLength = 0,
-                                    displayMode = 'search', // 'search' or 'monthly'
-                                    onLoadInCanvas,
-                                    onNavigateToCanvas,
-                                    onNavigateToRecording,
-                                    onToggle,
-                                    styles,
-                                    className = ''
-                                }) => {
+export const PoemActionButtons = memo(({
+                                           canvasMode = false,
+                                           isExpanded = false,
+                                           canExpand = false,
+                                           animationPhase = 'idle',
+                                           hiddenLinesLength = 0,
+                                           displayMode = 'search', // 'search' or 'monthly'
+                                           onLoadInCanvas,
+                                           onNavigateToCanvas,
+                                           onNavigateToRecording,
+                                           onToggle,
+                                           styles,
+                                           className = ''
+                                       }) => {
 
     // Animation delay for expanded state buttons
     const expandedButtonDelay = 0.4 + (hiddenLinesLength * 0.06);
@@ -112,6 +112,4 @@ const PoemActionButtons = memo(({
     );
 });
 
-PoemActionButtons.displayName = 'PoemActionButtons';
 
-export default PoemActionButtons;

@@ -21,7 +21,7 @@
  *  @module context/auth/AuthProvider
  */
 
-import AuthContext from './AuthContext';
+import { AuthContext } from './AuthContext.jsx';
 import {useSupabaseAuth} from '../../hooks/auth/useSupabaseAuth.js';
 
 /**

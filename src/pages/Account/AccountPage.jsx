@@ -7,13 +7,13 @@
  * @module pages/Account/AccountPage
  */
 
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { useAuth } from '@/hooks/auth/useAuth';
-import { AccountNav } from '@/components/account/AccountNav';
-import { FavoritesSection } from '@/components/account/FavoritesSection';
-import { StatsSection } from '@/components/account/StatsSection';
-import { SettingsSection } from '@/components/account/SettingsSection';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router';
+import {useAuth} from '@/hooks/auth/useAuth';
+import {AccountNav} from '@/components/account/AccountNav';
+import {FavoritesSection} from '@/components/account/FavoritesSection';
+import {StatsSection} from '@/components/account/StatsSection';
+import {SettingsSection} from '@/components/account/SettingsSection';
 import styles from './AccountPage.module.scss';
 
 /**
@@ -23,14 +23,14 @@ import styles from './AccountPage.module.scss';
  * @returns {JSX.Element} Account page component
  */
 export function AccountPage() {
-    const { user, loading } = useAuth();
+    const {user, loading} = useAuth();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('favorites');
 
     // Redirect to login if not authenticated
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/auth/login', { replace: true });
+            navigate('/auth/login', {replace: true});
         }
     }, [user, loading, navigate]);
 
@@ -38,7 +38,7 @@ export function AccountPage() {
     if (loading) {
         return (
             <div className={styles.loadingContainer}>
-                <div className={styles.spinner} />
+                <div className={styles.spinner}/>
                 <p>Account laden...</p>
             </div>
         );
@@ -61,17 +61,15 @@ export function AccountPage() {
                 </header>
 
                 {/* Navigation Tabs */}
-                <AccountNav activeTab={activeTab} onTabChange={setActiveTab} />
+                <AccountNav activeTab={activeTab} onTabChange={setActiveTab}/>
 
                 {/* Tab Content */}
                 <div className={styles.content}>
-                    {activeTab === 'favorites' && <FavoritesSection />}
-                    {activeTab === 'stats' && <StatsSection />}
-                    {activeTab === 'settings' && <SettingsSection />}
+                    {activeTab === 'favorites' && <FavoritesSection/>}
+                    {activeTab === 'stats' && <StatsSection/>}
+                    {activeTab === 'settings' && <SettingsSection/>}
                 </div>
             </div>
         </div>
     );
 }
-
-export default AccountPage;

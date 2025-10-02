@@ -94,7 +94,7 @@ export function serializeCanvasState(canvasState, poemData = null) {
                 gevelPreset: 'none',
                 globalLighting: {
                     enabled: false,
-                    direction: { x: 0, y: 0, z: 1 },
+                    direction: {x: 0, y: 0, z: 1},
                     intensity: 1.0,
                     ambient: 0.3
                 },
@@ -155,7 +155,7 @@ export function deserializeCanvasState(designSettings) {
         // Return state object matching useCanvasState structure
         const canvasState = {
             // Poem positioning
-            poemOffset: designSettings.poemOffset || { x: 170, y: 0 },
+            poemOffset: designSettings.poemOffset || {x: 170, y: 0},
 
             // Background
             backgroundImage: designSettings.backgroundImage || null,
@@ -191,7 +191,7 @@ export function deserializeCanvasState(designSettings) {
                 gevelPreset: 'none',
                 globalLighting: {
                     enabled: false,
-                    direction: { x: 0, y: 0, z: 1 },
+                    direction: {x: 0, y: 0, z: 1},
                     intensity: 1.0,
                     ambient: 0.3
                 },
@@ -221,113 +221,116 @@ export function deserializeCanvasState(designSettings) {
     }
 }
 
-/**
- * Validate canvas state before serialization
- * @param {Object} canvasState - State to validate
- * @returns {Object} Validation result with { valid: boolean, errors: string[] }
- */
-export function validateCanvasState(canvasState) {
-    const errors = [];
+// UNUSED
+// /**
+//  * Validate canvas state before serialization
+//  * @param {Object} canvasState - State to validate
+//  * @returns {Object} Validation result with { valid: boolean, errors: string[] }
+//  */
+// function validateCanvasState(canvasState) {
+//     const errors = [];
+//
+//     // Check required fields
+//     if (!canvasState) {
+//         errors.push('Canvas state is null or undefined');
+//         return { valid: false, errors };
+//     }
+//
+//     // Validate numeric values
+//     if (typeof canvasState.fontSize !== 'number' || canvasState.fontSize <= 0) {
+//         errors.push('Invalid fontSize value');
+//     }
+//
+//     if (typeof canvasState.lineHeight !== 'number' || canvasState.lineHeight <= 0) {
+//         errors.push('Invalid lineHeight value');
+//     }
+//
+//     // Validate color format
+//     const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+//     if (canvasState.fillColor && !colorRegex.test(canvasState.fillColor)) {
+//         errors.push('Invalid fillColor format (should be #RRGGBB)');
+//     }
+//
+//     // Validate poemOffset
+//     if (canvasState.poemOffset) {
+//         if (typeof canvasState.poemOffset.x !== 'number' || typeof canvasState.poemOffset.y !== 'number') {
+//             errors.push('Invalid poemOffset coordinates');
+//         }
+//     }
+//
+//     return {
+//         valid: errors.length === 0,
+//         errors
+//     };
+// }
 
-    // Check required fields
-    if (!canvasState) {
-        errors.push('Canvas state is null or undefined');
-        return { valid: false, errors };
-    }
+// UNUSED
+// /**
+//  * Create a minimal state object for new designs
+//  * @returns {Object} Default canvas state
+//  */
+// function createDefaultCanvasState() {
+//     return {
+//         poemOffset: { x: 170, y: 0 },
+//         backgroundImage: null,
+//         textStyles: {
+//             fontSize: 20,
+//             fillColor: '#000000',
+//             letterSpacing: 0,
+//             lineHeight: 30,
+//             lineHeightMultiplier: 1.5,
+//             textAlign: 'center',
+//             fontWeight: 'normal',
+//             fontStyle: 'normal',
+//             fontFamily: 'Lato'
+//         },
+//         lineOverrides: {},
+//         titleColorOverride: null,
+//         authorColorOverride: null,
+//         containerSkew: { x: 0, y: 0, z: 0 },
+//         lineTransforms: {},
+//         global3DSettings: {
+//             perspective: 1000,
+//             depthSorting: true,
+//             lightingEnabled: false,
+//             defaultPivotMode: 'center',
+//             gevelPreset: 'none',
+//             globalLighting: {
+//                 enabled: false,
+//                 direction: { x: 0, y: 0, z: 1 },
+//                 intensity: 1.0,
+//                 ambient: 0.3
+//             },
+//             material: {
+//                 blendMode: 'normal'
+//             }
+//         },
+//         preferences: {
+//             isOptimizationEnabled: false,
+//             moveMode: 'edit'
+//         }
+//     };
+// }
 
-    // Validate numeric values
-    if (typeof canvasState.fontSize !== 'number' || canvasState.fontSize <= 0) {
-        errors.push('Invalid fontSize value');
-    }
-
-    if (typeof canvasState.lineHeight !== 'number' || canvasState.lineHeight <= 0) {
-        errors.push('Invalid lineHeight value');
-    }
-
-    // Validate color format
-    const colorRegex = /^#[0-9A-Fa-f]{6}$/;
-    if (canvasState.fillColor && !colorRegex.test(canvasState.fillColor)) {
-        errors.push('Invalid fillColor format (should be #RRGGBB)');
-    }
-
-    // Validate poemOffset
-    if (canvasState.poemOffset) {
-        if (typeof canvasState.poemOffset.x !== 'number' || typeof canvasState.poemOffset.y !== 'number') {
-            errors.push('Invalid poemOffset coordinates');
-        }
-    }
-
-    return {
-        valid: errors.length === 0,
-        errors
-    };
-}
-
-/**
- * Create a minimal state object for new designs
- * @returns {Object} Default canvas state
- */
-export function createDefaultCanvasState() {
-    return {
-        poemOffset: { x: 170, y: 0 },
-        backgroundImage: null,
-        textStyles: {
-            fontSize: 20,
-            fillColor: '#000000',
-            letterSpacing: 0,
-            lineHeight: 30,
-            lineHeightMultiplier: 1.5,
-            textAlign: 'center',
-            fontWeight: 'normal',
-            fontStyle: 'normal',
-            fontFamily: 'Lato'
-        },
-        lineOverrides: {},
-        titleColorOverride: null,
-        authorColorOverride: null,
-        containerSkew: { x: 0, y: 0, z: 0 },
-        lineTransforms: {},
-        global3DSettings: {
-            perspective: 1000,
-            depthSorting: true,
-            lightingEnabled: false,
-            defaultPivotMode: 'center',
-            gevelPreset: 'none',
-            globalLighting: {
-                enabled: false,
-                direction: { x: 0, y: 0, z: 1 },
-                intensity: 1.0,
-                ambient: 0.3
-            },
-            material: {
-                blendMode: 'normal'
-            }
-        },
-        preferences: {
-            isOptimizationEnabled: false,
-            moveMode: 'edit'
-        }
-    };
-}
-
-/**
- * Compare two canvas states to detect changes
- * @param {Object} state1 - First state
- * @param {Object} state2 - Second state
- * @returns {boolean} True if states are different
- */
-export function hasCanvasStateChanged(state1, state2) {
-    try {
-        const serialized1 = serializeCanvasState(state1);
-        const serialized2 = serializeCanvasState(state2);
-
-        // Remove timestamps for comparison
-        delete serialized1.timestamp;
-        delete serialized2.timestamp;
-
-        return JSON.stringify(serialized1) !== JSON.stringify(serialized2);
-    } catch (error) {
-        console.warn('Failed to compare canvas states:', error);
-        return true; // Assume changed if comparison fails
-    }
-}
+// UNUSED
+// /**
+//  * Compare two canvas states to detect changes
+//  * @param {Object} state1 - First state
+//  * @param {Object} state2 - Second state
+//  * @returns {boolean} True if states are different
+//  */
+// function hasCanvasStateChanged(state1, state2) {
+//     try {
+//         const serialized1 = serializeCanvasState(state1);
+//         const serialized2 = serializeCanvasState(state2);
+//
+//         // Remove timestamps for comparison
+//         delete serialized1.timestamp;
+//         delete serialized2.timestamp;
+//
+//         return JSON.stringify(serialized1) !== JSON.stringify(serialized2);
+//     } catch (error) {
+//         console.warn('Failed to compare canvas states:', error);
+//         return true; // Assume changed if comparison fails
+//     }
+// }

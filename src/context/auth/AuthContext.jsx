@@ -7,15 +7,11 @@
 import {createContext, useContext} from 'react';
 
 // Implementation
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export function useAuthContext() {
     return useContext(AuthContext);
 }
-
-export default AuthContext;
-
-    
     
 
 

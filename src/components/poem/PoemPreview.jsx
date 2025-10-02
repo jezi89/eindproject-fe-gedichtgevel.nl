@@ -6,15 +6,15 @@
 
 import {memo} from 'react';
 import {motion} from 'framer-motion';
-import {poemLineVariants, hiddenIndicatorVariants} from '@/utils/animationVariants';
+import {hiddenIndicatorVariants, poemLineVariants} from '@/utils/animationVariants';
 
-const PoemPreview = memo(({
-                              previewLines = [],
-                              hiddenContentInfo = {},
-                              isExpandable = false,
-                              isExpanded = false,
-                              styles
-                          }) => {
+export const PoemPreview = memo(({
+                                     previewLines = [],
+                                     hiddenContentInfo = {},
+                                     isExpandable = false,
+                                     isExpanded = false,
+                                     styles
+                                 }) => {
 
     return (
         <div className={styles.previewSection}>
@@ -44,7 +44,3 @@ const PoemPreview = memo(({
         </div>
     );
 });
-
-PoemPreview.displayName = 'PoemPreview';
-
-export default PoemPreview;

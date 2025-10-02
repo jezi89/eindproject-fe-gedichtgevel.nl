@@ -6,84 +6,87 @@
 /**
  * PoetryDB API Service Module
  *
- * Verantwoordelijkheden:
- * - API-interacties met PoetryDB (externe gedichtendatabase)
- * - Integratie met Supabase voor gebruikersgedichten
- * - Gecombineerde zoekopdrachten over beide databronnen
- * - Error handling en transformatie van resultaten
+ *Responsibilities:
+ * - API interactions with PoetryDB (external poetry database)
+ * - Integration with Supabase for user poems
+ * - Combined searches across both data sources
+ * - Error handling and transformation of results
  */
 
 import {poetryDbApi} from './axios'; // Import voor de geconfigureerde axios instantie
-import apiCacheService from '../cache/apiCacheService'; // Import enhanced cache service
+import {apiCacheService} from '../cache/apiCacheService'; // Import enhanced cache service
 
 // ==========================================================================
-// SECTIE 1: BASIS API-FUNCTIES (INTERNE HELPERS)
+// SECTION 1: BASIC API FUNCTIONS (INTERNAL HELPERS)
 // ==========================================================================
 
+// UNUSED
+// /**
+//  * Retrieves poems from PoetryDB based on a field and search term.
+//  *
+//  * @param {string} query – The search term.
+//  * @param {string} field - The field to search for ('title', 'author', etc.).
+//  * @returns {Promise<Array<object>>} - Array of poems found.
+//  */
+// async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
+//     // Check L1/L2 cache hierarchy first
+//     const cacheKey = `poetrydb:${field}:${query.toLowerCase()}`;
+//     const cachedData = await apiCacheService.get(cacheKey);
+//     if (cachedData !== null) {
+//         return cachedData;
+//     }
+//     try {
+//         const endpoint = `/${field}/${encodeURIComponent(query)}`;
+//         const response = await poetryDbApi.get(endpoint);
+//
+//         // poetrydb gives 200 OK with status: 404 in response body for no results
+//         if (response.data && response.data.status === 404) {
+//             return [];
+//         }
+//
+//         return Array.isArray(response.data) ? response.data : [];
+//     } catch (error) {
+//         // handle http 404 (can occur with some API versions)
+//         if (error.response && error.response.status === 404) {
+//             return [];
+//         }
+//         console.error(`Fout bij ophalen gedichten (veld: ${field}, query: "${query}") uit PoetryDB:`, error);
+//         throw new Error(`Kon geen gedichten ophalen van PoetryDB voor ${field} "${query}": ${error.message}`);
+//     }
+// }
+
+// UNUSED
+//
+// /**
+//  *
+//  * Retrieves poems from PoetryDB based on title.
+//  *
+//  * @param {string} titleQuery – The title to look up.
+//  * @returns {Promise<Array<object>>} - Array of poems found.
+//  */
+// async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
+//     return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
+// }
+//
+//
+// /**
+//  * Haalt gedichten op van PoetryDB op basis van auteur.
+//  *
+//  * @param {string} authorQuery - De auteur om op te zoeken.
+//  * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
+//  */
+// async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
+//     return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
+// }
+
+
 /**
- * Haalt gedichten op van PoetryDB op basis van een veld en zoekterm.
+ * Retrieves poems from PoetryDB that match both author and title.
+ * Uses the AND operator of PoetryDB API.
  *
- * @param {string} query - De zoekterm.
- * @param {string} field - Het veld waarop gezocht moet worden ('title', 'author', etc.).
- * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
- */
-async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
-    // Check L1/L2 cache hierarchy first
-    const cacheKey = `poetrydb:${field}:${query.toLowerCase()}`;
-    const cachedData = await apiCacheService.get(cacheKey);
-    if (cachedData !== null) {
-        return cachedData;
-    }
-    try {
-        const endpoint = `/${field}/${encodeURIComponent(query)}`;
-        const response = await poetryDbApi.get(endpoint);
-
-        // PoetryDB geeft 200 OK met status: 404 in response body bij geen resultaten
-        if (response.data && response.data.status === 404) {
-            return [];
-        }
-
-        return Array.isArray(response.data) ? response.data : [];
-    } catch (error) {
-        // Handle HTTP 404 (kan voorkomen bij sommige API versies)
-        if (error.response && error.response.status === 404) {
-            return [];
-        }
-        console.error(`Fout bij ophalen gedichten (veld: ${field}, query: "${query}") uit PoetryDB:`, error);
-        throw new Error(`Kon geen gedichten ophalen van PoetryDB voor ${field} "${query}": ${error.message}`);
-    }
-}
-
-
-/**
- * Haalt gedichten op van PoetryDB op basis van titel.
- *
- * @param {string} titleQuery - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
- */
-async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
-    return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
-}
-
-
-/**
- * Haalt gedichten op van PoetryDB op basis van auteur.
- *
- * @param {string} authorQuery - De auteur om op te zoeken.
- * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
- */
-async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
-    return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
-}
-
-
-/**
- * Haalt gedichten op van PoetryDB die overeenkomen met zowel auteur als titel.
- * Gebruikt de AND operator van PoetryDB API.
- *
- * @param {string} authorTerm - De auteur om op te zoeken.
- * @param {string} titleTerm - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
+ * @param {string} authorTerm – The author to look up.
+ * @param {string} titleTerm - The title to look up.
+ * @returns {Promise<Array<object>>} - Array of poems found.
  */
 async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm) {
     // Check L1/L2 cache hierarchy first
@@ -118,22 +121,22 @@ async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm) {
 
 
 /**
- * Haalt overeenkomstige titel/auteur combinaties op uit Supabase.
+ * Retrieves corresponding title/author combinations from Supabase.
  *
- * @param {string} query - De zoekterm.
- * @param {string} field - Het veld waarop gezocht moet worden ('title' of 'author').
- * @returns {Promise<Array<{title: string, author: string}>>} - Array van titel/auteur combinaties.
+ * @param {string} query – The search term.
+ * @param {string} field - The field to be searched for ('title' or 'author').
+ * @returns {Promise<Array<{title: string, author: string}>>} - Array of title/author combinations.
  */
 // TODO nog implementeren
 
 // TEMP
 
 /**
- * Haalt overeenkomstige titel/auteur combinaties op uit Supabase.
+ * Retrieves corresponding title/author combinations from Supabase.
  *
- * @param {string} query - De zoekterm.
- * @param {string} field - Het veld waarop gezocht moet worden ('title' of 'author').
- * @returns {Promise<Array<{title: string, author: string}>>} - Array van titel/auteur combinaties.
+ * @param {string} query – The search term.
+ * @param {string} field - The field to be searched for ('title' or 'author').
+ * @returns {Promise<Array<{title: string, author: string}>>} - Array of title/author combinations.
  */
 async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
     // TODO: Implementeer echte Supabase interactie wanneer beschikbaar
@@ -174,11 +177,11 @@ async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
 // TEMP
 
 /**
- * Haalt één specifiek gedicht op basis van exacte titel en auteur.
+ * Retrieves one specific poem based on exact title and author.
  *
- * @param {string} title - De exacte titel van het gedicht.
- * @param {string} author - De exacte auteur van het gedicht.
- * @returns {Promise<object|null>} - Het gevonden gedicht of null bij niet gevonden.
+ * @param {string} title - The exact title of the poem.
+ * @param {string} author - The exact author of the poem.
+ * @returns {Promise<object|null>} - The poem found or null if not found.
  */
 async function fetchPoem(title, author) {
     if (!title || !author) {
@@ -202,10 +205,10 @@ async function fetchPoem(title, author) {
 }
 
 /**
- * Zoekt gedichten op basis van titel, met gecombineerde resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on title, with combined results from Supabase and PoetryDB.
  *
- * @param {string} title - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
+ * @param {string} title - The title to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
 export async function searchPoemsByTitle(title) {
     let supabaseMatches = [];
@@ -219,6 +222,7 @@ export async function searchPoemsByTitle(title) {
     }
 
     // Stap 2: Voor elke Supabase match, haal details op uit PoetryDB
+    // Helpful for quick favorites and future user-added poems.
     if (supabaseMatches.length > 0) {
         for (const match of supabaseMatches) {
             try {
@@ -247,7 +251,7 @@ export async function searchPoemsByTitle(title) {
         }
     }
 
-    // Stap 3: Zoek direct in PoetryDB
+    // Zoek direct in PoetryDB
     try {
         const poetryDbResults = await fetchPoemsFromPoetryDBByTitle(title);
 
@@ -268,28 +272,28 @@ export async function searchPoemsByTitle(title) {
         if (poemsForDisplay.length === 0) throw error;
     }
 
-    // Stap 4: Zorg voor unieke resultaten
+    // Zorg voor unieke resultaten
     return removeDuplicatePoems(poemsForDisplay);
 }
 
 /**
- * Zoekt gedichten op basis van auteur, met gecombineerde resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on author, with combined results from Supabase and PoetryDB.
  *
- * @param {string} author - De auteur om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
+ * @param {string} author – The author to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
 export async function searchPoemsByAuthor(author) {
     let supabaseMatches = [];
     let poemsForDisplay = [];
 
-    // Stap 1: Zoek eerst in Supabase
+    // Search Supabase First
     try {
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(author, 'author');
     } catch (error) {
         console.warn(`Kon geen auteur matches ophalen van Supabase voor "${author}":`, error.message);
     }
 
-    // Stap 2: Voor elke Supabase match, haal details op uit PoetryDB
+    // Before each Supabase match, retrieve details from PoetryDB
     if (supabaseMatches.length > 0) {
         for (const match of supabaseMatches) {
             try {
@@ -298,7 +302,7 @@ export async function searchPoemsByAuthor(author) {
                 if (specificPoem) {
                     poemsForDisplay.push({...specificPoem, source: 'supabase_author_match_exact'});
                 } else {
-                    // Fallback: zoek alle gedichten van auteur en filter op titel
+                    // Fallback: Find all poems of author and filter by title
                     const authorPoemsPoetryDb = await fetchPoemsFromPoetryDBByAuthor(match.author);
                     const poemByAuthorAndTitle = authorPoemsPoetryDb.find(p => p.title === match.title);
 
@@ -315,7 +319,7 @@ export async function searchPoemsByAuthor(author) {
         }
     }
 
-    // Stap 3: Zoek direct in PoetryDB
+    // Search directly in Poetrydb
     try {
         const poetryDbResults = await fetchPoemsFromPoetryDBByAuthor(author);
 
@@ -341,12 +345,12 @@ export async function searchPoemsByAuthor(author) {
 }
 
 /**
- * Zoekt gedichten op basis van zowel auteur als titel.
- * Combineert resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on both author and title.
+ * Combines results from Supabase and PoetryDB.
  *
- * @param {string} author - De auteur om op te zoeken.
- * @param {string} title - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten die aan beide criteria voldoen.
+ * @param {string} author – The author to look up.
+ * @param {string} title - The title to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems that meet both criteria.
  */
 // UNUSED: export async function searchPoemsByAuthorAndTitle(author, title) {
 //     if (!author || !title) {
@@ -372,20 +376,20 @@ export async function searchPoemsByAuthor(author) {
 // }
 
 /**
- * Haalt één specifiek gedicht op basis van exacte titel en auteur.
+ * Retrieves one specific poem based on exact title and author.
  *
- * @param {string} title - De exacte titel van het gedicht.
- * @param {string} author - De exacte auteur van het gedicht.
- * @returns {Promise<object|null>} - Het gevonden gedicht of null bij niet gevonden.
+ * @param {string} title - The exact title of the poem.
+ * @param {string} author - The exact author of the poem.
+ * @returns {Promise<object|null>} - The poem found or null if not found.
  */
 
 // TODO nog implementeren
 
 /**
- * Zoekt gedichten op basis van titel, met gecombineerde resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on title, with combined results from Supabase and PoetryDB.
  *
- * @param {string} title - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
+ * @param {string} title - The title to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
 
 // Implementation
@@ -400,10 +404,10 @@ export async function searchPoemsByAuthor(author) {
 // TODO nog implementeren
 
 /**
- * Zoekt gedichten op basis van auteur, met gecombineerde resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on author, with combined results from Supabase and PoetryDB.
  *
- * @param {string} author - De auteur om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten met bronvermelding.
+ * @param {string} author – The author to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
 
 // Implementation
@@ -418,12 +422,12 @@ export async function searchPoemsByAuthor(author) {
 // TODO nog implementeren
 
 /**
- * Zoekt gedichten op basis van zowel auteur als titel.
- * Combineert resultaten uit Supabase en PoetryDB.
+ * Searches for poems based on both author and title.
+ * Combines results from Supabase and PoetryDB.
  *
- * @param {string} author - De auteur om op te zoeken.
- * @param {string} title - De titel om op te zoeken.
- * @returns {Promise<Array<object>>} - Een array van unieke gedichten die aan beide criteria voldoen.
+ * @param {string} author – The author to look up.
+ * @param {string} title - The title to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems that meet both criteria.
  */
 
 // Implementation
@@ -460,7 +464,7 @@ export async function searchPoemsByAuthor(author) {
 
 
 // ==========================================================================
-// SECTIE 3: HULPFUNCTIES
+// SECTION 3: HELPER FUNCTIONS
 // ==========================================================================
 
 // TODO Implementeren en checken of deze niet in de utlility map moeten komen.
@@ -468,10 +472,10 @@ export async function searchPoemsByAuthor(author) {
 // TEMP
 
 /**
- * Verwijdert duplicaten uit een array van gedichten op basis van titel+auteur combinatie.
+ * Removes duplicates from an array of poems based on title+author combination.
  *
- * @param {Array<object>} poems - Array van gedichten mogelijk met duplicaten.
- * @returns {Array<object>} - Array van unieke gedichten.
+ * @param {Array<object>} poems - Array of poems possible with duplicates.
+ * @returns {Array<object>} - Array of unique poems.
  */
 function removeDuplicatePoems(poems) {
     const uniqueResults = [];
@@ -491,13 +495,12 @@ function removeDuplicatePoems(poems) {
 
 
 // ==========================================================================
-// SECTIE 4: EXPORT VOOR PUBLIEKE API
+// SECTION 4: EXPORT FOR PUBLIC API
 // ==========================================================================
 
 
 export {
-    fetchPoemsFromPoetryDBByTitle,
-    fetchPoemsFromPoetryDBByAuthor,
+
     fetchPoemsFromPoetryDBByAuthorAndTitle
 };
 

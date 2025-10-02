@@ -64,7 +64,7 @@ export const CACHE_CONFIG = {
 /**
  * Initialize database with default data if needed
  */
-export async function initializeDatabase() {
+async function initializeDatabase() {
     try {
         const count = await db.metadata.count();
         if (count === 0) {
@@ -326,4 +326,3 @@ export async function getDatabaseHealth() {
 /**
  * Export database instance and utilities
  */
-export default db;

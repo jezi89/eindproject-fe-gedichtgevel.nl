@@ -31,7 +31,7 @@ import {useState} from "react";
  * @returns {Function} .resetForm - Function to reset form to initial state
  * @returns {Function} .createFormAction - Creates a form action function
  */
-function useAuthForm(initialValues = {email: "", password: ""}) {
+export function useAuthForm(initialValues = {email: "", password: ""}) {
     // Form values, errors and submission state
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
@@ -127,5 +127,3 @@ function useAuthForm(initialValues = {email: "", password: ""}) {
         createFormAction
     };
 }
-
-export default useAuthForm;

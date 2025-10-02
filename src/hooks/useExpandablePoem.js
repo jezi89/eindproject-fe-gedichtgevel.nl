@@ -7,13 +7,9 @@
  */
 
 import {useCallback, useEffect, useRef} from 'react';
-import {
-    calculateOptimalScroll,
-    calculateCollapseScroll,
-    isSmallPoem
-} from '@/utils/poemHeightCalculator';
+import {calculateCollapseScroll, calculateOptimalScroll, isSmallPoem} from '@/utils/poemHeightCalculator';
 
-const useExpandablePoem = (
+export const useExpandablePoem = (
     poem,
     index,
     poemState,
@@ -180,5 +176,3 @@ const useExpandablePoem = (
         updatePoemState
     };
 };
-
-export default useExpandablePoem;

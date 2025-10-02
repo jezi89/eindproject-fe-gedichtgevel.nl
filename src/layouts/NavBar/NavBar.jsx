@@ -7,9 +7,9 @@
  * @module layouts/NavBar/NavBar
  */
 
-import {useState, useRef, useEffect} from "react";
-import {Link, useLocation, useNavigate} from "react-router";
-import MainNavLink from "./MainNavLink.jsx";
+import {useEffect, useRef, useState} from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+import {MainNavLink} from "./MainNavLink.jsx";
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 import styles from "./NavBar.module.scss"
 import {useAuth} from "@/hooks/auth/useAuth.js";
@@ -20,7 +20,7 @@ import {useAuth} from "@/hooks/auth/useAuth.js";
  * @component
  * @returns {JSX.Element} Navigation bar component
  */
-function NavBar({isOverlayOpen, onOverlayClose}) {
+export function NavBar({isOverlayOpen, onOverlayClose}) {
     // States
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -213,5 +213,3 @@ function NavBar({isOverlayOpen, onOverlayClose}) {
         </div>
     );
 }
-
-export default NavBar;

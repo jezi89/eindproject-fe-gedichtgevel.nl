@@ -2,27 +2,40 @@
  * ExpandedContent Component
  * Displays the expanded poem content with staggered animations
  * Extracted from PoemResultItem for modularity
+ *
+ * @component
+ * @param {Object} props
+ * @param {string[]} props.hiddenLines - The lines of the poem to display in expanded view.
+ * @param {number[]} props.staggeredDelays - Animation delays for each line.
+ * @param {boolean} [props.canvasMode] - Whether the component is in canvas mode.
+ * @param {string} props.animationPhase - Animation phase (e.g., 'collapsing', 'expanding').
+ * @param {boolean} [props.isSmallPoem=false] - Whether the poem is considered small (affects animation style).
+ * @param {string} [props.displayMode='search'] - Display mode for the component.
+ * @param {Function} [props.onLoadInCanvas] - Handler for loading in canvas.
+ * @param {Function} props.onNavigateToCanvas - Handler for navigating to canvas.
+ * @param {Function} [props.onNavigateToRecording] - Handler for navigating to recording.
+ * @param {Function} props.onToggle - Handler for toggling the expanded state.
+ * @param {Object} props.styles - CSS module or style object for class names.
  */
 
 import {memo} from 'react';
 import {motion} from 'framer-motion';
-import PropTypes from 'prop-types';
-import PoemActionButtons from './PoemActionButtons.jsx';
-import {poemLineVariants, expandedContentVariants} from '@/utils/animationVariants.js';
+import {PoemActionButtons} from './PoemActionButtons.jsx';
+import {expandedContentVariants, poemLineVariants} from '@/utils/animationVariants.js';
 
-const ExpandedContent = memo(({
-                                  hiddenLines,
-                                  staggeredDelays,
-                                  canvasMode,
-                                  animationPhase,
-                                  isSmallPoem = false,
-                                  displayMode = 'search',
-                                  onLoadInCanvas,
-                                  onNavigateToCanvas,
-                                  onNavigateToRecording,
-                                  onToggle,
-                                  styles
-                              }) => {
+export const ExpandedContent = memo(({
+                                         hiddenLines,
+                                         staggeredDelays,
+                                         canvasMode = false,
+                                         animationPhase,
+                                         isSmallPoem = false,
+                                         displayMode = 'search',
+                                         onLoadInCanvas,
+                                         onNavigateToCanvas,
+                                         onNavigateToRecording,
+                                         onToggle,
+                                         styles
+                                     }) => {
     return (
         <motion.div
             key="expanded-content"
@@ -119,20 +132,3 @@ const ExpandedContent = memo(({
     );
 });
 
-ExpandedContent.displayName = 'ExpandedContent';
-
-ExpandedContent.propTypes = {
-    hiddenLines: PropTypes.arrayOf(PropTypes.string).isRequired,
-    staggeredDelays: PropTypes.arrayOf(PropTypes.number).isRequired,
-    canvasMode: PropTypes.bool,
-    animationPhase: PropTypes.string.isRequired,
-    isSmallPoem: PropTypes.bool,
-    displayMode: PropTypes.string,
-    onLoadInCanvas: PropTypes.func,
-    onNavigateToCanvas: PropTypes.func.isRequired,
-    onNavigateToRecording: PropTypes.func,
-    onToggle: PropTypes.func.isRequired,
-    styles: PropTypes.object.isRequired
-};
-
-export default ExpandedContent;

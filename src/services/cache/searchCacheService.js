@@ -1,9 +1,4 @@
-import db, {
-    CACHE_CONFIG,
-    cleanupCache,
-    resetDatabase,
-    getDatabaseHealth
-} from './dexieConfig';
+import {CACHE_CONFIG, cleanupCache, db, getDatabaseHealth, resetDatabase} from './dexieConfig';
 
 /**
  * SearchCacheService
@@ -282,7 +277,7 @@ class SearchCacheService {
 }
 
 // Export singleton instance
-const searchCacheService = new SearchCacheService();
+export const searchCacheService = new SearchCacheService();
 
 // Make debugging utilities available globally
 if (typeof window !== 'undefined') {
@@ -294,4 +289,3 @@ if (typeof window !== 'undefined') {
 // Auto-initialize on import
 searchCacheService.initialize().catch(console.error);
 
-export default searchCacheService;

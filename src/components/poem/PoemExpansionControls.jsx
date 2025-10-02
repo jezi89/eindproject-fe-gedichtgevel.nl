@@ -4,23 +4,36 @@
  * Extracted from PoemResultItem for clarity
  */
 
-import {motion, AnimatePresence} from 'framer-motion';
-import PropTypes from 'prop-types';
-import PoemActionButtons from './PoemActionButtons.jsx';
+import {AnimatePresence, motion} from 'framer-motion';
+import {PoemActionButtons} from './PoemActionButtons.jsx';
 import {ellipsisVariants} from '@/utils/animationVariants.js';
 
-const PoemExpansionControls = ({
-                                   isExpanded,
-                                   animationPhase,
-                                   canvasMode,
-                                   canExpand,
-                                   displayMode = 'search',
-                                   onLoadInCanvas,
-                                   onNavigateToCanvas,
-                                   onNavigateToRecording,
-                                   onToggle,
-                                   styles
-                               }) => {
+/**
+ * @param {Object} props
+ * @param {boolean} props.isExpanded
+ * @param {string} props.animationPhase
+ * @param {boolean} [props.canvasMode]
+ * @param {boolean} props.canExpand
+ * @param {string} [props.displayMode]
+ * @param {Function} [props.onLoadInCanvas]
+ * @param {Function} props.onNavigateToCanvas
+ * @param {Function} [props.onNavigateToRecording]
+ * @param {Function} props.onToggle
+ * @param {Object} props.styles
+ */
+
+export const PoemExpansionControls = ({
+                                          isExpanded,
+                                          animationPhase,
+                                          canvasMode = false,
+                                          canExpand,
+                                          displayMode = 'search',
+                                          onLoadInCanvas,
+                                          onNavigateToCanvas,
+                                          onNavigateToRecording,
+                                          onToggle,
+                                          styles
+                                      }) => {
     if (!canExpand) return null;
 
     // TODO goed begrijpen hoe deze expansion controls werken en hoe ze zich verhouden tot de rest van de UI
@@ -52,20 +65,3 @@ const PoemExpansionControls = ({
         </AnimatePresence>
     );
 };
-
-PoemExpansionControls.displayName = 'PoemExpansionControls';
-
-PoemExpansionControls.propTypes = {
-    isExpanded: PropTypes.bool.isRequired,
-    animationPhase: PropTypes.string.isRequired,
-    canvasMode: PropTypes.bool,
-    canExpand: PropTypes.bool.isRequired,
-    displayMode: PropTypes.string,
-    onLoadInCanvas: PropTypes.func,
-    onNavigateToCanvas: PropTypes.func.isRequired,
-    onNavigateToRecording: PropTypes.func,
-    onToggle: PropTypes.func.isRequired,
-    styles: PropTypes.object.isRequired
-};
-
-export default PoemExpansionControls;

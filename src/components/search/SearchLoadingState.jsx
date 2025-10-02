@@ -12,5 +12,3 @@ export function SearchLoadingState() {
         </div>
     );
 }
-
-export default SearchLoadingState;

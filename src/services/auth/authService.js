@@ -17,7 +17,7 @@
  * - Easy to test and mock
  */
 
-import supabase from '../supabase/supabase';
+import {supabase} from '../supabase/supabase';
 
 // Helper function for consistent error handling
 const handleAuthError = (operation, error) => {
@@ -40,7 +40,7 @@ const handleAuthSuccess = (data = null) => {
  */
 
 // TODO Checken of profiledata paramtere gebruikt moet worden
-export const register = async (email, password, captchaToken = null, profileData = {}) => {
+const register = async (email, password, captchaToken = null, profileData = {}) => {
 
     // Todo captcha token implementeren en checken of het nu modulair is
     try {
@@ -84,7 +84,8 @@ export const register = async (email, password, captchaToken = null, profileData
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
 
-export const login = async (email, password, captchaToken = null) => {
+// Maak login een interne functie, geen export
+const login = async (email, password, captchaToken = null) => {
     try {
         const authOptions = {};
         if (captchaToken) {
@@ -114,7 +115,7 @@ export const login = async (email, password, captchaToken = null) => {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 
-export const logout = async () => {
+const logout = async () => {
     try {
         const {error} = await supabase.auth.signOut();
         if (error) {
@@ -132,7 +133,7 @@ export const logout = async () => {
  * @returns {Promise<{session: Object|null, error?: string}>}
  */
 
-export const getSession = async () => {
+const getSession = async () => {
     try {
         const {data: {session}, error} = await supabase.auth.getSession();
         if (error) {
@@ -149,7 +150,7 @@ export const getSession = async () => {
  * @returns {Promise<{user: Object|null, error?: string}>}
  */
 
-export const getCurrentUser = async () => {
+const getCurrentUser = async () => {
     try {
         const {data, error} = await supabase.auth.getUser();
         if (error) throw error;
@@ -167,7 +168,7 @@ export const getCurrentUser = async () => {
  * @returns {Function} Unsubscribe function
  */
 
-export const onAuthStateChange = (callback) => {
+const onAuthStateChange = (callback) => {
     const {data: {subscription}} = supabase.auth.onAuthStateChange(
         (_event, session) => {
             callback(session);
@@ -182,7 +183,7 @@ export const onAuthStateChange = (callback) => {
  * @returns {Promise<{success: boolean, session?: Object, error?: string}>}
  */
 
-export const refreshToken = async () => {
+const refreshToken = async () => {
     try {
         const {data, error} = await supabase.auth.refreshSession();
         if (error) throw error;
@@ -198,7 +199,7 @@ export const refreshToken = async () => {
  * @returns {Promise<{exists: boolean, error?: string}>}
  */
 
-export const checkUserExists = async (email) => {
+const checkUserExists = async (email) => {
     try {
         const {data, error} = await supabase
             .from('profile')
@@ -226,7 +227,7 @@ export const checkUserExists = async (email) => {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 
-export const sendPasswordResetEmail = async (email) => {
+const sendPasswordResetEmail = async (email) => {
     try {
         const {error} = await supabase.auth.resetPasswordForEmail(email, {
             redirectTo: `${window.location.origin}/reset-password`,
@@ -246,7 +247,7 @@ export const sendPasswordResetEmail = async (email) => {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 
-export const updatePassword = async (newPassword) => {
+const updatePassword = async (newPassword) => {
     try {
         const {error} = await supabase.auth.updateUser({
             password: newPassword
@@ -267,7 +268,7 @@ export const updatePassword = async (newPassword) => {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 
-export const createUserProfile = async (user, additionalData = {}) => {
+const createUserProfile = async (user, additionalData = {}) => {
     try {
         // First check if profile already exists
         const {data: existingProfile} = await supabase
@@ -313,7 +314,7 @@ export const createUserProfile = async (user, additionalData = {}) => {
  * @returns {Promise<{profile: Object|null, error?: string}>}
  */
 
-export const getUserProfile = async (userId) => {
+const getUserProfile = async (userId) => {
     try {
         const {data, error} = await supabase
             .from('profile')
@@ -353,38 +354,24 @@ export const getUserProfile = async (userId) => {
 // };
 
 
-/**
- * Default export for backward compatibility
- * This allows both named imports and default import
- */
-
-// TODO Chekcen of die aliasses hier voordelen bieden ten opzichte van gebruik van de originele methoden
-export default {
-    register,
-    signUp: register,  // Alias for consistency with useSupabaseAuth
-    login,
-    signInWithPassword: login,  // Alias for consistency with useSupabaseAuth
-    logout,
-    signOut: logout,  // Alias for consistency with useSupabaseAuth
-    getSession,
-    getCurrentUser,
-    getUser: getCurrentUser,  // Alias for consistency with useSupabaseAuth
-    onAuthStateChange,
-    refreshToken,
-    refreshSession: refreshToken,  // Alias for consistency with useSupabaseAuth
-    checkUserExists,
-    sendPasswordResetEmail,
-    resetPasswordForEmail: sendPasswordResetEmail,  // Alias for consistency with useSupabaseAuth
-    updatePassword,
-    updateUser: async (updates) => {
-        // Wrapper to handle both password updates and other user updates
-        if (updates.password) {
-            return updatePassword(updates.password);
-        }
-        // TODO For other updates, we have to implement updateUser properly
+// updateUser als wrapper blijft als named export
+const updateUser = async (updates) => {
+    if (updates.password) {
         return updatePassword(updates.password);
-    },
-    createUserProfile,
-    getUserProfile
-    // updateUserProfile (commented out as UNUSED)
+    }
+    // TODO: Voor andere updates, implementatie toevoegen
+    return updatePassword(updates.password);
+};
+
+export {
+    getSession,
+    onAuthStateChange,
+    refreshToken as refreshSession,
+    register,
+    sendPasswordResetEmail as resetPasswordForEmail,
+    login as signInWithPassword,
+    updateUser,
+    updatePassword,
+    checkUserExists,
+    getCurrentUser
 };

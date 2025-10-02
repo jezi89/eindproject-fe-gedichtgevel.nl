@@ -1,8 +1,8 @@
 import '@/index.scss';
-import {Outlet, useLocation} from "react-router"; // Import Outlet
-import NavBar from "@/layouts/NavBar/NavBar.jsx";
+import { Outlet, useLocation } from "react-router"; // Import Outlet
+import {NavBar} from "@/layouts/NavBar/NavBar.jsx";
 import {useWindowSize} from "@/hooks/useWindowSize.js";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 // import StatusBanner from "@/layouts/StatusBanner/StatusBanner.jsx";
 // import styles from "@/styles/pageStylesTemp.module.css";
 

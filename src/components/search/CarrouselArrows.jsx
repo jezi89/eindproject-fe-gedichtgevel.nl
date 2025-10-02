@@ -5,19 +5,19 @@
  * Extracted from SearchResults for better separation of concerns
  */
 
-import {memo, useMemo, useState, useEffect, useCallback, useRef} from 'react';
+import {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './Carrousel.module.scss';
 
-const CarouselArrows = memo(({
-                                 onPrevious,
-                                 onNext,
-                                 hasMultiple,
-                                 allowDynamicPositioning = false,
-                                 hasAnyExpanded = false,
-                                 searchResultsRef = null,
-                                 onCollapseEvent = null,
-                                 canvasMode = false
-                             }) => {
+export const CarouselArrows = memo(({
+                                        onPrevious,
+                                        onNext,
+                                        hasMultiple,
+                                        allowDynamicPositioning = false,
+                                        hasAnyExpanded = false,
+                                        searchResultsRef = null,
+                                        onCollapseEvent = null,
+                                        canvasMode = false
+                                    }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [dynamicPosition, setDynamicPosition] = useState(0);
     const [positioningMode, setPositioningMode] = useState('static'); // 'static', 'dynamic', 'hanging'
@@ -267,7 +267,3 @@ const CarouselArrows = memo(({
         </div>
     );
 });
-
-CarouselArrows.displayName = 'CarouselArrows';
-
-export default CarouselArrows;

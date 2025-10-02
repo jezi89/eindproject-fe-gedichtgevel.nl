@@ -78,13 +78,14 @@ export const hiddenIndicatorVariants = {
     transition: {delay: 0.3, duration: 0.3}
 };
 
+// UNUSED
 // Toast animations
-export const toastVariants = {
-    initial: {opacity: 0, y: 10},
-    animate: {opacity: 1, y: 0},
-    exit: {opacity: 0, y: 10},
-    transition: {duration: 0.2}
-};
+// export const toastVariants = {
+//     initial: {opacity: 0, y: 10},
+//     animate: {opacity: 1, y: 0},
+//     exit: {opacity: 0, y: 10},
+//     transition: {duration: 0.2}
+// };
 
 // Non-expandable actions
 export const nonExpandableVariants = {

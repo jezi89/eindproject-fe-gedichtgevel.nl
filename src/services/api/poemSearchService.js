@@ -17,12 +17,7 @@
  */
 
 // src/services/api/poemSearchService.js
-import {
-    searchPoemsByTitle as searchByTitleInService,
-    searchPoemsByAuthor as searchByAuthorInService,
-    fetchPoemsFromPoetryDBByAuthorAndTitle
-
-} from './poemService.js';
+import {fetchPoemsFromPoetryDBByAuthorAndTitle, searchPoemsByAuthor as searchByAuthorInService, searchPoemsByTitle as searchByTitleInService} from './poemService.js';
 import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js'; // Zorg ervoor dat je deze lijst hebt gedefinieerd in een apart bestand
 
 // Request deduplication cache
@@ -268,11 +263,12 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
     // Preparing the promises
     const promises = [];
     const promiseLabels = []; // For logging
-    let resultsByTitle = [];
-    let resultsByAuthor = [];
-    let resultsByAuthorAndTitle = [];
-    let resultsByOption1 = [];
-    let resultsByOption2 = [];
+    // UNUSED
+    // let resultsByTitle = [];
+    // let resultsByAuthor = [];
+    // let resultsByAuthorAndTitle = [];
+    // let resultsByOption1 = [];
+    // let resultsByOption2 = [];
 
     // 2. Smart request routing based on analysis
     const shouldSearchTitle = analysis.searchStrategy === 'all' ||

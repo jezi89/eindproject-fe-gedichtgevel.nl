@@ -7,7 +7,7 @@ import styles from './SearchProgress.module.scss';
  * Error Boundary specifically for search functionality
  * Provides graceful fallback when search components crash
  */
-class SearchErrorBoundary extends Component {
+export class SearchErrorBoundary extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -92,5 +92,3 @@ class SearchErrorBoundary extends Component {
         return this.props.children;
     }
 }
-
-export default SearchErrorBoundary;

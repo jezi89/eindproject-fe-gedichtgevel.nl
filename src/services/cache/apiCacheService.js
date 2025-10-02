@@ -1,4 +1,4 @@
-import db, {CACHE_CONFIG} from './dexieConfig';
+import {db} from './dexieConfig';
 
 /**
  * ApiCacheService
@@ -239,8 +239,8 @@ class ApiCacheService {
     }
 }
 
-// Export singleton instance
-const apiCacheService = new ApiCacheService();
+// Export singleton instance as named export
+export const apiCacheService = new ApiCacheService();
 
 // Auto-initialize on import
 apiCacheService.initialize().catch(console.error);
@@ -250,4 +250,3 @@ setInterval(() => {
     apiCacheService.cleanupMemoryCache();
 }, 10 * 60 * 1000);
 
-export default apiCacheService;

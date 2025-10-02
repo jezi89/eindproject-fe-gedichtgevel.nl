@@ -7,11 +7,11 @@
  * @module components/forms/LoginForm
  */
 
-import {useNavigate, Link} from 'react-router';
-import {useAuth} from '../../hooks/auth/useAuth.js';
-import useAuthForm from '../../hooks/auth/useAuthForm.js';
+import {Link, useNavigate} from 'react-router';
+import {useAuth} from '@/hooks/auth/useAuth.js';
+import {useAuthForm} from '@/hooks/auth/useAuthForm.js';
 import {SubmitButton} from '@/components/ui/button/ActionButton.jsx';
-import FormField from '@/components/forms/FormField.jsx';
+import {FormField} from '@/components/forms/FormField.jsx';
 import {useNavigationState, usePrefilledEmail} from "@/hooks/useNavigationState.js";
 import styles from './forms.module.scss';
 import {useEffect, useRef, useState} from "react";
@@ -23,7 +23,7 @@ import {useEffect, useRef, useState} from "react";
  * @returns {JSX.Element} Login form component
  */
 
-function LoginForm() {
+export function LoginForm() {
     // - loginAttempted: Tracks if login has been attempted
     // Navigation
     // - Use React Router's useNavigate for redirection after login
@@ -188,6 +188,4 @@ function LoginForm() {
         </div>
     );
 }
-
-export default LoginForm;
 

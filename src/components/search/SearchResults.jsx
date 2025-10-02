@@ -6,13 +6,10 @@
  * @module components/search/SearchResults
  */
 
-import {memo, useRef, useCallback, useState} from 'react';
-import {motion, LayoutGroup} from 'framer-motion';
+import {memo, useCallback, useRef, useState} from 'react';
+import {LayoutGroup, motion} from 'framer-motion';
 import styles from './SearchResults.module.scss';
-import CarrouselDots from './CarrouselDots.jsx';
-import CarrouselArrows from './CarrouselArrows';
-import PoemResultItem from '../poem/PoemResultItem.jsx';
-import ResultsOverview from './ResultsOverview';
+import {ResultsOverview} from './ResultsOverview';
 import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
 
 /**
@@ -23,22 +20,21 @@ import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
  * @param {Array} props.results - Array of poem objects
  * @returns {JSX.Element|null} Search results container or null if no results
  */
-const SearchResults = memo(({
-                                results,
-                                onOpenFocusStudio,
-                                searchTerm,
-                                focusMode = false,
-                                canvasMode = false,
-                                onPoemSelect,
-                                onLoadInCanvas,
-                                onNavigateToCanvas,
-                                onNavigateToRecording,
-                                hideSeriesNavigation = false,
-                                hideRangeIndicator = false,
-                                initialIndex = 0,
-                                ResultsOverviewComponent = ResultsOverview,
-                                resultsOverviewProps = {}
-                            }) => {
+export const SearchResults = memo(({
+                                       results,
+                                       searchTerm,
+                                       focusMode = false,
+                                       canvasMode = false,
+                                       onPoemSelect,
+                                       onLoadInCanvas,
+                                       onNavigateToCanvas,
+                                       onNavigateToRecording,
+                                       hideSeriesNavigation = false,
+                                       hideRangeIndicator = false,
+                                       initialIndex = 0,
+                                       ResultsOverviewComponent = ResultsOverview,
+                                       resultsOverviewProps = {}
+                                   }) => {
     // Hooks before early return
     // Refs and state for dynamic positioning
     const searchResultsRef = useRef(null);
@@ -77,72 +73,6 @@ const SearchResults = memo(({
                 </div>
             )}
 
-            {/* Focus Studio Button - should only show when not in Focus Studio, currently also checking if we are using CanvasMode */}
-            {/*// TODO Checken of check of we in CanvasMode zijn overbodig is*/}
-            {!focusMode && onOpenFocusStudio && searchTerm && !canvasMode && (
-
-                <div
-                    className={styles.globalToggleContainer}
-                >
-                    <button
-                        className={`${styles.globalToggleButton} ${styles.focusStudioButton}`}
-                        onClick={() => onOpenFocusStudio(searchTerm)}
-                        aria-label="Open Focus Studio voor geconcentreerd zoeken"
-                    >
-                        <span className={styles.toggleIcon}>🎯</span>
-                        Open Focus Studio
-                    </button>
-                </div>
-            )}
-            {/* Global Expand/Collapse Toggle - only for expandable poems and NOT in canvas/focus mode */}
-            {/*// TODO Checken of CanvasMode Check nodig is en hoe de orchestration hier precies werkt*/}
-            {updatedLayout.hasMultiple && !canvasMode && !focusMode && orchestration.getGlobalToggleState().totalCount > 0 && (
-                <div
-                    className={styles.globalToggleContainer}
-                >
-                    <button
-                        className={styles.globalToggleButton}
-                        onClick={orchestration.handleGlobalExpandToggle}
-                        aria-label={(() => {
-                            const toggleState = orchestration.getGlobalToggleState();
-                            return toggleState.allExpanded ? "Klap alle lange gedichten in" : "Klap alle lange gedichten uit";
-                        })()}
-                        aria-expanded={(() => {
-                            const toggleState = orchestration.getGlobalToggleState();
-                            return toggleState.allExpanded ? "true" : toggleState.hasAnyExpanded ? "partial" : "false";
-                        })()}
-                    >
-                            <span className={styles.toggleIcon}>
-                                {(() => {
-                                    const toggleState = orchestration.getGlobalToggleState();
-                                    return toggleState.allExpanded ? "✓" : toggleState.hasAnyExpanded ? "▣" : "☐";
-                                })()}
-                            </span>
-                        {(() => {
-                            const toggleState = orchestration.getGlobalToggleState();
-                            if (toggleState.totalCount === 0) return "Geen lange gedichten";
-                            return toggleState.allExpanded
-                                ? "Alle lange gedichten inklappen"
-                                : toggleState.hasAnyExpanded
-                                    ? `${toggleState.expandedCount}/${toggleState.totalCount} lange gedichten uitgeklapt - Klap rest uit`
-                                    : "Alle lange gedichten uitklappen";
-                        })()}
-                    </button>
-                </div>
-            )}
-
-            {/* TODO Test if visible and hidden dots indicator works correctly */}
-            {/* carrousel dots indicator for  4+ poems  - only on homepage (not in focus mode) */}
-
-            {updatedLayout.isDesktop && !canvasMode && !focusMode && (
-                <CarrouselDots
-                    totalCount={updatedLayout.resultCount}
-                    currentIndex={orchestration.currentIndex}
-                    onNavigate={orchestration.handleNavigateToIndex}
-                    hideSeriesNavigation={hideSeriesNavigation}
-                    hideRangeIndicator={hideRangeIndicator}
-                />
-            )}
 
             <div className={`${styles.resultsContainer} ${styles[updatedLayout.layoutClass]}`}>
                 <LayoutGroup>
@@ -156,16 +86,6 @@ const SearchResults = memo(({
                         }}
                         style={{position: 'relative'}} // Ensure relative positioning for arrows
                     >
-                        {/* carrousel Navigation Arrows - static positioning only */}
-                        {updatedLayout.iscarrousel && updatedLayout.isDesktop && (
-                            <CarrouselArrows
-                                onPrevious={orchestration.handlePrevious}
-                                onNext={orchestration.handleNext}
-                                hasMultiple={updatedLayout.hasMultiple}
-                                allowDynamicPositioning={false}
-                                canvasMode={canvasMode}
-                            />
-                        )}
 
                         {/* TODO Checken of dit allemaal nodig is */}
                         {updatedLayout.visibleResults.map((poem, displayIndex) => {
@@ -217,8 +137,3 @@ const SearchResults = memo(({
         </div>
     );
 });
-
-// Add display names for debugging
-SearchResults.displayName = 'SearchResults';
-
-export default SearchResults;

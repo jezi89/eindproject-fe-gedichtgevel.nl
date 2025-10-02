@@ -1,5 +1,5 @@
 // src/components/Core/Canvas/components/FloatingShortcutPanel.jsx
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {createPortal} from 'react-dom';
 import styles from './FloatingShortcutPanel.module.scss';
 
@@ -69,13 +69,13 @@ const shortcuts = [
     }
 ];
 
-export default function FloatingShortcutPanel({
-                                                  moveMode = 'edit',
-                                                  selectedLines = new Set(),
-                                                  activeShortcut = null,
-                                                  xySlidersVisible = false,
-                                                  navWidth,
-                                              }) {
+export function FloatingShortcutPanel({
+                                          moveMode = 'edit',
+                                          selectedLines = new Set(),
+                                          activeShortcut = null,
+                                          xySlidersVisible = false,
+                                          navWidth,
+                                      }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [otherShortcutsExpanded, setOtherShortcutsExpanded] = useState(false);
     const [isPinned, setIsPinned] = useState(() => {
@@ -169,7 +169,7 @@ export default function FloatingShortcutPanel({
             if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
                 return;
             }
-            
+
             // ONLY handle Alt + ? - don't interfere with other shortcuts
             if (event.altKey && event.key === '?' && !event.ctrlKey && !event.shiftKey) {
                 event.preventDefault();

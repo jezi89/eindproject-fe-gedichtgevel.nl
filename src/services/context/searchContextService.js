@@ -1,4 +1,4 @@
-import searchCacheService from '../cache/searchCacheService.js';
+import {searchCacheService} from '../cache/searchCacheService.js';
 
 // TODO Checken of dit allemaal nodig is
 
@@ -214,7 +214,4 @@ class SearchContextService {
     }
 }
 
-// Export singleton instance
-const searchContextService = new SearchContextService();
-
-export default searchContextService;
+export const searchContextService = new SearchContextService();

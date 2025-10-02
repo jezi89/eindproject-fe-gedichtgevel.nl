@@ -5,19 +5,12 @@
  * Provides loading states, error handling, and user feedback.
  */
 
-import { useState, useCallback } from 'react';
-import { useAuth } from '../auth/useAuth';
-import {
-    saveDesign,
-    loadDesign,
-    listUserDesigns,
-    deleteDesign,
-    updateDesignMetadata,
-    duplicateDesign
-} from '../../services/canvas/canvasStorageService';
+import {useCallback, useState} from 'react';
+import {useAuth} from '../auth/useAuth';
+import {deleteDesign, duplicateDesign, listUserDesigns, loadDesign, saveDesign, updateDesignMetadata} from '@/services/canvas/canvasStorageService.js';
 
 export function useCanvasStorage() {
-    const { user } = useAuth();
+    const {user} = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [designs, setDesigns] = useState([]);
@@ -29,7 +22,7 @@ export function useCanvasStorage() {
     const save = useCallback(async (poemData, canvasState, title = null, designId = null) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs op te slaan');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -46,7 +39,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to save design';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
@@ -58,7 +51,7 @@ export function useCanvasStorage() {
     const load = useCallback(async (designId) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs te laden');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -75,7 +68,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to load design';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
@@ -87,7 +80,7 @@ export function useCanvasStorage() {
     const list = useCallback(async (options = {}) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs te bekijken');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -107,7 +100,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to list designs';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
@@ -119,7 +112,7 @@ export function useCanvasStorage() {
     const remove = useCallback(async (designId) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs te verwijderen');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -140,7 +133,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to delete design';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
@@ -152,7 +145,7 @@ export function useCanvasStorage() {
     const updateMetadata = useCallback(async (designId, updates) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs te bewerken');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -164,7 +157,7 @@ export function useCanvasStorage() {
             if (result.success) {
                 // Update local state
                 setDesigns(prev =>
-                    prev.map(d => d.id === designId ? { ...d, ...updates } : d)
+                    prev.map(d => d.id === designId ? {...d, ...updates} : d)
                 );
             } else {
                 setError(result.error);
@@ -174,7 +167,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to update design';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
@@ -186,7 +179,7 @@ export function useCanvasStorage() {
     const duplicate = useCallback(async (designId, newTitle = null) => {
         if (!user) {
             setError('Je moet ingelogd zijn om designs te dupliceren');
-            return { success: false, error: 'Not authenticated' };
+            return {success: false, error: 'Not authenticated'};
         }
 
         setIsLoading(true);
@@ -207,7 +200,7 @@ export function useCanvasStorage() {
         } catch (err) {
             const errorMsg = err.message || 'Failed to duplicate design';
             setError(errorMsg);
-            return { success: false, error: errorMsg };
+            return {success: false, error: errorMsg};
         } finally {
             setIsLoading(false);
         }
