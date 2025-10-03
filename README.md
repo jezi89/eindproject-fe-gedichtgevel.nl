@@ -103,7 +103,7 @@ The components directory is organized by function and feature:
 
 #### Search Components (`/components/search/`)
 
-- **TempSearchBar.jsx**: Search interface with real-time feedback
+- **AltSearchBar.jsx**: Search interface with real-time feedback
 - **SearchResults.jsx**: Display of poem search results with expandable details
 
 #### UI Components (`/components/ui/`)
