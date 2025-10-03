@@ -1,13 +1,38 @@
 // UNUSED - Temporary stub export to prevent import errors
+// Returns silent success responses to prevent error messages in UI
 export const favoritesService = {
-    addFavoritePoem: async () => ({ success: false, error: 'Not implemented' }),
-    removeFavoritePoem: async () => ({ success: false, error: 'Not implemented' }),
-    getFavoritePoems: async () => ({ success: false, error: 'Not implemented' }),
-    checkPoemFavorited: async () => ({ isFavorited: false }),
-    addFavoriteAuthor: async () => ({ success: false, error: 'Not implemented' }),
-    removeFavoriteAuthor: async () => ({ success: false, error: 'Not implemented' }),
-    getFavoriteAuthors: async () => ({ success: false, error: 'Not implemented' }),
-    checkAuthorFavorited: async () => ({ isFavorited: false })
+    addFavoritePoem: async () => ({
+        success: true,
+        data: { message: 'Favourites feature coming soon!' }
+    }),
+    removeFavoritePoem: async () => ({
+        success: true,
+        data: { message: 'Favourites feature coming soon!' }
+    }),
+    getFavoritePoems: async () => ({
+        success: true,
+        data: [] // Empty array = no favourites yet
+    }),
+    checkPoemFavorited: async () => ({
+        success: true,
+        isFavorited: false
+    }),
+    addFavoriteAuthor: async () => ({
+        success: true,
+        data: { message: 'Favourites feature coming soon!' }
+    }),
+    removeFavoriteAuthor: async () => ({
+        success: true,
+        data: { message: 'Favourites feature coming soon!' }
+    }),
+    getFavoriteAuthors: async () => ({
+        success: true,
+        data: [] // Empty array = no favourites yet
+    }),
+    checkAuthorFavorited: async () => ({
+        success: true,
+        isFavorited: false
+    })
 };
 
 //

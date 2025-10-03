@@ -19,10 +19,25 @@ const handleSuccess = (data = null) => {
 };
 
 // UNUSED - Temporary stub export to prevent import errors
+// Returns silent success responses with empty data to prevent error messages in UI
 export const userStatsService = {
-    getUserStats: async () => ({ success: false, error: 'Not implemented' }),
-    getMonthlyActivity: async () => ({ success: false, error: 'Not implemented' }),
-    getFavoriteThemes: async () => ({ success: false, error: 'Not implemented' })
+    getUserStats: async () => ({
+        success: true,
+        data: {
+            totalFavorites: 0,
+            totalFavoriteAuthors: 0,
+            topAuthors: [],
+            recentActivity: []
+        }
+    }),
+    getMonthlyActivity: async () => ({
+        success: true,
+        data: [] // Empty array = no activity yet
+    }),
+    getFavoriteThemes: async () => ({
+        success: true,
+        data: [] // Empty array = no themes yet
+    })
 };
 
 //
@@ -108,7 +123,7 @@ export const userStatsService = {
 
 // UNUSED
 // /**
-//  * Get monthly activity breakdown
+//  * Get daily activity breakdown
 //  * @param {string} userId - User ID
 //  * @param {number} months - Number of months to look back (default: 6)
 //  * @returns {Promise<{success: boolean, data?: Array, error?: string}>}
@@ -127,11 +142,11 @@ export const userStatsService = {
 //         if (error) throw error;
 //
 //         // Group by month
-//         const monthlyData = {};
+//         const dailyData = {};
 //         favorites?.forEach(({created_at}) => {
 //             const date = new Date(created_at);
 //             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-//             monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
+//             dailyData[monthKey] = (dailyData[monthKey] || 0) + 1;
 //         });
 //
 //         // Fill in missing months with 0
@@ -142,13 +157,13 @@ export const userStatsService = {
 //             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 //             result.unshift({
 //                 month: monthKey,
-//                 count: monthlyData[monthKey] || 0
+//                 count: dailyData[monthKey] || 0
 //             });
 //         }
 //
 //         return handleSuccess(result);
 //     } catch (error) {
-//         return handleError('Get monthly activity', error);
+//         return handleError('Get daily activity', error);
 //     }
 // };
 

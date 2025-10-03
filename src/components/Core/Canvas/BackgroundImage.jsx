@@ -47,6 +47,7 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
                         })
                         .catch(fallbackErr => {
                             console.error("❌ Failed to load default background:", fallbackErr);
+                            console.warn("⚠️ Both custom and default backgrounds failed to load - will render solid color fallback");
                             if (isMounted) {
                                 setTexture(Texture.EMPTY);
                             }
@@ -59,8 +60,17 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
         };
     }, [imageUrl]);
 
+    // If texture failed to load, render a solid color fallback instead of nothing
     if (!texture || texture === Texture.EMPTY) {
-        return null;
+        return (
+            <pixiGraphics
+                draw={(graphics) => {
+                    graphics.clear();
+                    graphics.rect(0, 0, canvasWidth, canvasHeight);
+                    graphics.fill({ color: 0xE5E5E5 }); // Light gray fallback
+                }}
+            />
+        );
     }
 
     // "Cover" effect logica: schaal de afbeelding om het canvas te vullen zonder vervorming

@@ -565,14 +565,14 @@
 /// @param {String} $duration [vars.$transition-normal] - Animatie duur
 /// @param {String} $delay [0s] - Animatie vertraging
 @mixin fade-in($duration: vars.$transition-normal, $delay: 0s) {
-  animation: fadeIn $duration ease-out $delay;
+  animation: fade-in $duration ease-out $delay;
   }
 
 /// Mixin voor slide-up animatie
 /// @param {String} $duration [vars.$transition-normal] - Animatie duur
 /// @param {String} $delay [0s] - Animatie vertraging
 @mixin slide-up($duration: vars.$transition-normal, $delay: 0s) {
-  animation: slideInUp $duration ease-out $delay;
+  animation: slide-in-up $duration ease-out $delay;
   }
 
 /// Mixin voor container met max-width en center

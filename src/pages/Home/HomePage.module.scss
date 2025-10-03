@@ -140,7 +140,7 @@
   @include flex-center;
   border-style: solid;
   border-color: $secondary-muted; // Exact Figma color #0f4648
-  gap:          16px;
+  gap:          1rem;
 
   @media (max-width: 768px) {
 	padding: 0 20px;
@@ -149,7 +149,7 @@
 
   @media (max-width: 480px) {
 	height:  50px;
-	padding: 0 16px;
+	padding: 0 1rem;
 	gap:     10px;
 	}
   }
@@ -327,10 +327,10 @@
 
 .dropdownArrow {
   position: absolute;
-  top:      calc(50% - 16px / 2 + 4px);
+  top:      calc(50% - 1rem / 2 + 4px);
   right:    -30px;
   width:    21px;
-  height:   16px;
+  height:   1rem;
   }
 
 .arrowVector {
@@ -378,7 +378,7 @@
   }
 
 // Gedichten van de Maand Showcase
-.monthlyPoemsShowcase {
+.dailyPoemsShowcase {
   width:            100%;
   margin-top:       $spacing-xl;
   padding:          $spacing-xl 0;
@@ -445,7 +445,7 @@ a
 
 .showcaseCardAuthor {
   font-family: $font-family-body;
-  font-size:   16px;
+  font-size:   1rem;
   font-weight: 400;
   line-height: 1.3;
   margin:      0;
@@ -458,7 +458,7 @@ a
 
 .showcaseCardLine {
   font-family: $font-family-body;
-  font-size:   16px;
+  font-size:   1rem;
   font-weight: 400;
   line-height: 1.5;
   margin:      0 0 $spacing-xs 0;
@@ -467,7 +467,7 @@ a
 
 .showcaseCardEllipsis {
   font-family: $font-family-body;
-  font-size:   16px;
+  font-size:   1rem;
   margin:      $spacing-s 0 0 0;
   text-align:  center;
   color:       $text-secondary; // Dark grey for better contrast
@@ -511,7 +511,7 @@ a
   min-width:     300px;
   height:        40px;
   margin-bottom: $spacing-s;
-  padding:       0 16px;
+  padding:       0 1rem;
   border-width:  2px 0px;
   @include flex-center;
   border-style:  solid;
@@ -708,7 +708,7 @@ a
 
   .filterText,
   .filterTextAdvanced {
-	font-size:      clamp(16px, 4vw, 20px);
+	font-size:      clamp(1rem, 4vw, 20px);
 	line-height:    26px;
 	letter-spacing: 1px;
 	}
@@ -744,7 +744,7 @@ a
 	height:    35px;
 
 	h3 {
-	  font-size:   16px;
+	  font-size:   1rem;
 	  line-height: 20px;
 	  }
 	}
@@ -768,7 +768,7 @@ a
 
   .filterText,
   .filterTextAdvanced {
-	font-size:   16px;
+	font-size:   1rem;
 	line-height: 22px;
 	}
 
@@ -777,7 +777,7 @@ a
 	}
 
   .showcaseSubtitle {
-	font-size: 16px;
+	font-size: 1rem;
 	}
 
   .showcaseCardTitle {

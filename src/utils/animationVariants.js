@@ -135,3 +135,20 @@ export const nonExpandableVariants = {
 //         }
 //     }
 // };
+
+// Unified spring configurations for expand/collapse
+export const SPRING_CONFIG = {
+    expand: {
+        type: "spring",
+        stiffness: 250,
+        damping: 22,
+        mass: 0.8
+    },
+    collapse: {
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        mass: 0.6,
+        velocity: -50
+    }
+};

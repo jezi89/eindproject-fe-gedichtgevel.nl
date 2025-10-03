@@ -19,7 +19,7 @@ import {AccountPage} from './pages/Account/AccountPage.jsx';
 import {LoginAndSignupPage} from './pages/Auth/LoginAndSignup/LoginAndSignupPage.jsx';
 import PasswordResetPage from './pages/Auth/PasswordResetPage.jsx';
 import ResetPasswordPage from './pages/Auth/ResetPasswordPage.jsx';
-import AuthCallback from './pages/auth/LoginAndSignup/AuthCallBack.jsx';
+import AuthCallback from './pages/Auth/LoginAndSignup/AuthCallBack.jsx';
 import {ProtectedRoute} from './components/ProtectedRoute.jsx';
 import {ContactPage} from './pages/Contact/ContactPage.jsx';
 import {FAQPage} from './pages/FAQ/FAQPage.jsx';

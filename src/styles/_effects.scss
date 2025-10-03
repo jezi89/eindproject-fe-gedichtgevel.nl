@@ -58,19 +58,20 @@ $transition-background: background-color vars.$transition-normal vars.$ease-defa
  * door de applicatie gebruikt kunnen worden.
  */
 
-// Fade Animaties
-@keyframes fadeIn {
+/* ------------------- */
+
+@keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
   }
 
-@keyframes fadeOut {
+@keyframes fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
   }
 
 // Bewegingsanimaties
-@keyframes slideInUp {
+@keyframes slide-in-up {
   from {
 	transform: translateY(20px);
 	opacity:   0;
@@ -81,7 +82,7 @@ $transition-background: background-color vars.$transition-normal vars.$ease-defa
 	}
   }
 
-@keyframes slideOutDown {
+@keyframes slide-out-down {
   from {
 	transform: translateY(0);
 	opacity:   1;
@@ -99,12 +100,12 @@ $transition-background: background-color vars.$transition-normal vars.$ease-defa
   }
 
 // Poëziespecifieke animaties
-@keyframes textReveal {
+@keyframes text-reveal {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
   }
 
-@keyframes inkSpread {
+@keyframes ink-spread {
   0% {
 	filter:  blur(10px);
 	opacity: 0;

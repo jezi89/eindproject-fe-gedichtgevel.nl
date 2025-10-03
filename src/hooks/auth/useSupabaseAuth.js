@@ -27,7 +27,7 @@
 
 import {useCallback, useEffect, useState} from "react";
 import {useAuthForm} from "@/hooks/auth/useAuthForm.js";
-import {getSession, onAuthStateChange, refreshSession, register, resetPasswordForEmail, signInWithPassword, updateUser, checkUserExists, getCurrentUser} from "@/services/auth/authService.js";
+import {getSession, onAuthStateChange, refreshSession, register, resetPasswordForEmail, signInWithPassword, logout as authSignOut, updateUser, checkUserExists, getCurrentUser} from "@/services/auth/authService.js";
 
 export function useSupabaseAuth() {
 // Auth state
@@ -138,7 +138,7 @@ export function useSupabaseAuth() {
     const signOut = useCallback(async () => {
         try {
             setError(null);
-            const result = await signOut();
+            const result = await authSignOut();
             if (!result.success) {
                 throw new Error(result.error);
             }

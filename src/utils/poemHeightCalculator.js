@@ -208,63 +208,6 @@ const getFallbackHeight = (poem, screenWidth) => {
 };
 
 /**
- * Berekent de optimale scroll positie voor een uitklappend gedicht
- * @param {HTMLElement} cardElement - Het card DOM element
- * @param {Object} heightInfo - Resultaat van calculateExpandedHeight
- * @param {number} navbarHeight - Hoogte van de navbar (standaard 80px)
- * @returns {Object} Scroll informatie
- */
-export const calculateOptimalScroll = (cardElement, heightInfo, navbarHeight = 80) => {
-    if (!cardElement || !heightInfo) {
-        return {shouldScroll: false, targetPosition: 0};
-    }
-
-    const cardRect = cardElement.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const currentScrollY = window.scrollY;
-
-    // Huidige positie van card ten opzichte van document
-    const cardTop = cardRect.top + currentScrollY;
-    const cardBottom = cardRect.bottom + currentScrollY;
-
-    // Berekening nieuwe positie na uitklappen - voeg extra margin toe
-    const expandedCardHeight = cardRect.height + heightInfo.totalHeight;
-    const expandedBottom = cardTop + expandedCardHeight;
-
-    // Check of het volledige uitklapte gedicht in de viewport past
-    const totalNeededSpace = expandedCardHeight + navbarHeight + 40; // 40px bottom buffer
-    const fitsInViewport = totalNeededSpace <= viewportHeight;
-
-    let targetScrollY;
-
-    if (fitsInViewport) {
-        // Als het past: positioneer card top net onder navbar
-        targetScrollY = cardTop - navbarHeight - 20; // 20px buffer
-    } else {
-        // Als het niet past: zorg dat gebruiker kan scrollen om alles te zien
-        // Positioneer zo dat card top zichtbaar is en gebruiker kan scrollen voor de rest
-        targetScrollY = cardTop - navbarHeight - 20;
-    }
-
-    // Zorg ervoor dat we niet verder scrollen dan nodig en niet negatief gaan
-    const minScroll = 0;
-    const finalTargetScroll = Math.max(minScroll, targetScrollY);
-
-    // Bepaal of scrollen nodig is
-    const scrollDistance = Math.abs(finalTargetScroll - currentScrollY);
-    const shouldScroll = scrollDistance > 50; // Alleen scrollen als significant verschil
-
-    return {
-        shouldScroll,
-        targetPosition: finalTargetScroll,
-        scrollDistance,
-        estimatedDuration: Math.min(1000, Math.max(300, scrollDistance * 0.6)),
-        fitsInViewport,
-        expandedHeight: heightInfo.totalHeight
-    };
-};
-
-/**
  * Berekent staggered animatie delays voor gedichtregels
  * @param {number} totalLines - Totaal aantal uit te klappen regels
  * @param {number} baseDelay - Base delay in ms

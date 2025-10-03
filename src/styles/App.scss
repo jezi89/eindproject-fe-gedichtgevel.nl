@@ -153,14 +153,14 @@ body {
  */
 
 .fade-in {
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fade-in 0.3s ease-in-out;
   }
 
 .slide-up {
-  animation: slideUp 0.4s ease-out;
+  animation: slide-up 0.4s ease-out;
   }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
 	opacity: 0;
 	}
@@ -169,7 +169,7 @@ body {
 	}
   }
 
-@keyframes slideUp {
+@keyframes slide-up {
   from {
 	transform: translateY(20px);
 	opacity:   0;

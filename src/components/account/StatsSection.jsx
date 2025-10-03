@@ -18,7 +18,7 @@ import styles from './StatsSection.module.scss';
 export function StatsSection() {
     const {
         stats,
-        monthlyActivity,
+        dailyActivity,
         favoriteThemes,
         loading,
         error,
@@ -113,10 +113,10 @@ export function StatsSection() {
                         <span className={styles.detailIcon}>📈</span>
                         Activiteit (6 maanden)
                     </h3>
-                    {monthlyActivity?.length > 0 ? (
+                    {dailyActivity?.length > 0 ? (
                         <div className={styles.activityChart}>
-                            {monthlyActivity.map((month, idx) => {
-                                const maxCount = Math.max(...monthlyActivity.map(m => m.count));
+                            {dailyActivity.map((month, idx) => {
+                                const maxCount = Math.max(...dailyActivity.map(m => m.count));
                                 const heightPercent = maxCount > 0 ? (month.count / maxCount) * 100 : 0;
 
                                 return (

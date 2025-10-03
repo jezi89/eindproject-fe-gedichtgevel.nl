@@ -19,13 +19,13 @@
   align-items: center;
   gap: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  animation: slideInFeedback 0.4s ease-out;
+  animation: slide-in-feedback 0.4s ease-out;
   min-width: 200px;
 }
 
 .feedbackIcon {
   font-size: 18px;
-  animation: pulseIcon 0.8s ease-in-out;
+  animation: pulse-icon 0.8s ease-in-out;
 }
 
 .feedbackText {
@@ -35,7 +35,7 @@
   line-height: 1.4;
 }
 
-@keyframes slideInFeedback {
+@keyframes slide-in-feedback {
   0% {
     transform: translateY(100%) scale(0.8);
     opacity: 0;
@@ -46,7 +46,7 @@
   }
 }
 
-@keyframes pulseIcon {
+@keyframes pulse-icon {
   0%, 100% {
     transform: scale(1);
   }

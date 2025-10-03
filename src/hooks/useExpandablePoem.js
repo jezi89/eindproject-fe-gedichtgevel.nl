@@ -7,7 +7,7 @@
  */
 
 import {useCallback, useEffect, useRef} from 'react';
-import {calculateCollapseScroll, calculateOptimalScroll, isSmallPoem} from '@/utils/poemHeightCalculator';
+import {calculateCollapseScroll, isSmallPoem} from '@/utils/poemHeightCalculator';
 
 export const useExpandablePoem = (
     poem,
@@ -42,42 +42,37 @@ export const useExpandablePoem = (
             return;
         }
 
-        // Determine if this is a small poem using utility function
+        // ✅ STEP 1: Scroll FIRST to top of card (before any animation)
+        if (cardRef.current) {
+            const cardRect = cardRef.current.getBoundingClientRect();
+            const scrollTarget = window.scrollY + cardRect.top - 80; // 80px offset
+
+            // Only scroll if card is not already near top
+            if (cardRect.top > 100 || cardRect.top < 0) {
+                window.scrollTo({
+                    top: scrollTarget,
+                    behavior: 'smooth'
+                });
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+        }
+
+        // ✅ STEP 2: THEN start animation
         const isSmallPoemValue = isSmallPoem(poem);
 
         if (isSmallPoemValue) {
-            // Small poems: Immediate expansion with fade-in
             updatePoemState({phase: 'revealing', expanded: true});
-
-            // Wait brief moment for DOM update, then complete
             await new Promise(resolve => setTimeout(resolve, 100));
             updatePoemState({phase: 'complete'});
         } else {
-            // Large poems: Smooth expansion with staggered text reveal
             updatePoemState({phase: 'expanding', expanded: true});
-
-            // Wait for container expansion (slower for larger poems)
             await new Promise(resolve => setTimeout(resolve, 600));
-
-            // Start revealing content
             updatePoemState({phase: 'revealing'});
-
-            // Wait for staggered text reveal
             await new Promise(resolve => setTimeout(resolve, 800));
-
             updatePoemState({phase: 'complete'});
         }
 
-        // Scroll optimization after expansion
-        const scrollInfo = calculateOptimalScroll(cardRef.current, finalHeightInfo, 80);
-        if (scrollInfo.shouldScroll) {
-            window.scrollTo({
-                top: scrollInfo.targetPosition,
-                behavior: 'smooth'
-            });
-        }
-
-    }, [finalHeightInfo, animationPhase, updatePoemState, index, expandablePreview.isExpandable, poem.lines]);
+    }, [finalHeightInfo, animationPhase, updatePoemState, index, expandablePreview.isExpandable, poem]);
 
     const collapsePoem = useCallback(async (skipScroll = false) => {
         if (animationPhase !== 'complete' && animationPhase !== 'revealing') {

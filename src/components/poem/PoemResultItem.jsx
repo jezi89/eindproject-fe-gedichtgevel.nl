@@ -10,13 +10,13 @@ import styles from '../search/SearchResults.module.scss';
 // Custom hooks
 import {useExpandablePoem} from '@/hooks/useExpandablePoem.js';
 import {useHeightCalculation} from '@/hooks/poem/useHeightCalculation.js';
-import {ExpandedContent, PoemActionButtons, PoemCard, PoemExpansionControls, PoemHeader, PoemPreview} from '@/components/poem';
+import {AddressDisplay, ExpandedContent, PoemActionButtons, PoemCard, PoemExpansionControls, PoemHeader, PoemPreview} from '@/components/poem';
 
 // Utilities
 import {getPoemDisplayProps} from '@/utils/poem/textFormatting.js';
 import {calculateHiddenContent, createExpandablePreview} from '@/utils/shortPoemUtils.js';
 import {calculateMinimumExpandedHeight, calculateStaggeredDelays, isSmallPoem} from '@/utils/poemHeightCalculator.js';
-import {nonExpandableVariants} from '@/utils/animationVariants.js';
+import {nonExpandableVariants, SPRING_CONFIG} from '@/utils/animationVariants.js';
 
 export const PoemResultItem = memo(
     ({
@@ -135,6 +135,13 @@ export const PoemResultItem = memo(
                     styles={styles}
                 />
 
+                <AddressDisplay
+                    address={poem.address}
+                    lat={poem.location_lat}
+                    lon={poem.location_lon}
+                    styles={styles}
+                />
+
                 <div className={styles.poemContent}>
                     {/* Stable preview section */}
                     <PoemPreview
@@ -172,20 +179,7 @@ export const PoemResultItem = memo(
                                         minExpandedHeight
                                     ) : 0
                             }}
-                            transition={{
-                                type: "spring",
-                                // Expand: zachte spring met overshoot
-                                // Collapse: snellere spring, minder bounce
-                                stiffness: animationPhase === 'expanding'
-                                    ? (isSmallPoemValue ? 280 : 220)  // Lagere stiffness voor smooth expand
-                                    : (isSmallPoemValue ? 450 : 400), // Hogere stiffness voor snelle collapse
-                                damping: animationPhase === 'expanding'
-                                    ? (isSmallPoemValue ? 18 : 15)    // Lagere damping voor bounce bij expand
-                                    : (isSmallPoemValue ? 30 : 28),   // Hogere damping voor quick collapse
-                                mass: animationPhase === 'expanding' ? 0.9 : 0.6,
-                                // Extra velocity voor natuurlijker gevoel
-                                velocity: animationPhase === 'expanding' ? 0 : -50
-                            }}
+                            transition={SPRING_CONFIG[isExpanded ? 'expand' : 'collapse']}
                             onAnimationStart={() => {
                                 console.log('Expansion animation started:', {
                                     isExpanded,
@@ -198,7 +192,7 @@ export const PoemResultItem = memo(
                                 console.log('Expansion animation completed:', {isExpanded, animationPhase});
                             }}
                             style={{
-                                overflow: animationPhase === 'expanding' ? 'hidden' : 'visible',
+                                overflow: 'visible',
                                 backgroundColor: 'transparent',
                                 transformOrigin: 'top center',
                                 flex: 1,
