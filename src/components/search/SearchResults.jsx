@@ -19,6 +19,11 @@ import {PoemResultItem} from '@/components/poem';
  * @component
  * @param {Object} props
  * @param {Array} props.results - Array of poem objects
+ * @param {string} props.layoutMode - Layout mode: 'search' or 'daily'
+ * @param {string} props.cardSize - Card size: 'normal' or 'compact'
+ * @param {boolean} props.showGlobalToggle - Show global expand/collapse toggle
+ * @param {string} props.sectionTitle - Optional section title
+ * @param {string} props.sectionSubtitle - Optional section subtitle
  * @returns {JSX.Element|null} Search results container or null if no results
  */
 export const SearchResults = memo(({
@@ -26,6 +31,11 @@ export const SearchResults = memo(({
                                        searchTerm,
                                        focusMode = false,
                                        canvasMode = false,
+                                       layoutMode = 'search',
+                                       cardSize = 'normal',
+                                       showGlobalToggle = true,
+                                       sectionTitle,
+                                       sectionSubtitle,
                                        onPoemSelect,
                                        onLoadInCanvas,
                                        onNavigateToCanvas,
@@ -58,13 +68,25 @@ export const SearchResults = memo(({
         return null;
     }
 
+    const isDailyMode = layoutMode === 'daily';
+
     return (
         <div
             ref={searchResultsRef}
-            className={`${styles.searchResultsSection} ${canvasMode ? styles.canvasMode : ''}`}
+            className={`${styles.searchResultsSection} ${canvasMode ? styles.canvasMode : ''} ${isDailyMode ? styles.dailyMode : ''}`}
         >
-            {/* Results overview - hidden in canvas mode and focus mode */}
-            {!canvasMode && !focusMode && ResultsOverviewComponent && (
+            {/* Section header for daily mode */}
+            {isDailyMode && sectionTitle && (
+                <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>{sectionTitle}</h2>
+                    {sectionSubtitle && (
+                        <p className={styles.sectionSubtitle}>{sectionSubtitle}</p>
+                    )}
+                </div>
+            )}
+
+            {/* Results overview - hidden in canvas mode, focus mode, and daily mode */}
+            {!canvasMode && !focusMode && !isDailyMode && ResultsOverviewComponent && (
                 <div>
                     <ResultsOverviewComponent
                         resultCount={updatedLayout.resultCount}

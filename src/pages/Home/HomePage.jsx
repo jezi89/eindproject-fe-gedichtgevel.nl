@@ -13,7 +13,7 @@ import {SearchResults} from "@/components/search/SearchResults.jsx";
 import {SearchLoadingState} from "@/components/search/SearchLoadingState.jsx";
 import {SearchErrorBoundary} from "@/components/search/SearchErrorBoundary.jsx";
 import {Footer} from "@/layouts/Footer/Footer.jsx";
-import {MonthlyPoems} from "@/components/monthly/MonthlyPoems.jsx";
+import {DailyPoems} from "@/components/DailyPoems/DailyPoems.jsx";
 import {useSearchPoems} from '@/hooks/search';
 import {useCanvasNavigation} from "@/hooks/canvas/useCanvasNavigation.js";
 import styles from './HomePage.module.scss';
@@ -254,7 +254,7 @@ export function HomePage() {
             </div>
 
             {/* Gedichten van de Maand - nieuwe MonthlyPoems component */}
-            <MonthlyPoems/>
+            <DailyPoems/>
 
             {/* Footer - altijd onderaan */}
             <Footer/>

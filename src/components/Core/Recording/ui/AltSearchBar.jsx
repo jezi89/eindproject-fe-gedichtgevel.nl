@@ -1,7 +1,7 @@
 import styles from '../RecordingPage.module.scss';
 import {useSearchPoems} from '@/hooks/search';
 
-export function TempSearchBar({onPoemSelect, onSearchStart}) {
+export function AltSearchBar({onPoemSelect, onSearchStart}) {
     const {searchTerm, updateSearchTerm, handleSearch, results, loading} = useSearchPoems();
 
     const handleSearchClick = async () => {
@@ -29,19 +29,19 @@ export function TempSearchBar({onPoemSelect, onSearchStart}) {
     };
 
     return (
-        <div className={styles.TempSearchBar}>
+        <div className={styles.AltSearchBar}>
 
-            <div className={styles['TempSearchBar-collections']}>zoek in collecties
+            <div className={styles['AltSearchBar-collections']}>zoek in collecties
                 <input
                     type="checkbox"
                     id="toggle-search-options"
-                    className={styles['TempSearchBar-checkbox']}
+                    className={styles['AltSearchBar-checkbox']}
                     style={{display: 'none'}}
                 />
                 <label htmlFor="toggle-search-options" className={styles['CustomCheckbox']}></label></div>
-            <div className={styles['TempSearchBar-separator']}>
+            <div className={styles['AltSearchBar-separator']}>
                 <input
-                    className={styles['TempSearchBar-input']}
+                    className={styles['AltSearchBar-input']}
                     type="text"
                     placeholder="Verschuur: De Gevel van Mijn Dromen"
                     value={searchTerm}
@@ -50,7 +50,7 @@ export function TempSearchBar({onPoemSelect, onSearchStart}) {
                     disabled={loading}
                 />
                 <button
-                    className={styles['TempSearchBar-button']}
+                    className={styles['AltSearchBar-button']}
                     onClick={handleSearchClick}
                     disabled={loading}
                 >

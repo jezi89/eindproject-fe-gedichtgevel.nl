@@ -113,27 +113,31 @@ export function CanvasContent({
         deps: [width, height, poemId, textAlign],
     });
 
-    // Debug logging
+    // Debug logging (dev only, reduced frequency)
     useEffect(() => {
-        console.log("Viewport Debug:", {
-            app: !!app,
-            ticker: !!app?.ticker,
-            renderer: !!app?.renderer,
-            events: !!app?.renderer?.events,
-            width,
-            height,
-        });
+        if (import.meta.env.DEV) {
+            console.log("Viewport Debug:", {
+                app: !!app,
+                ticker: !!app?.ticker,
+                renderer: !!app?.renderer,
+                events: !!app?.renderer?.events,
+                width,
+                height,
+            });
+        }
     }, [app, width, height]);
 
-    // Debug logging for drag issues
+    // Debug logging for drag issues (dev only)
     useEffect(() => {
-        console.log("DEBUG CanvasContent:", {
-            contentRef: !!contentRef.current,
-            contentRefType: contentRef.current?.constructor?.name,
-            moveMode: moveMode,
-            appReady: !!app,
-            stageReady: !!app?.stage,
-        });
+        if (import.meta.env.DEV) {
+            console.log("DEBUG CanvasContent:", {
+                contentRef: !!contentRef.current,
+                contentRefType: contentRef.current?.constructor?.name,
+                moveMode: moveMode,
+                appReady: !!app,
+                stageReady: !!app?.stage,
+            });
+        }
     }, [contentRef.current, moveMode, app]);
 
     // Use refs for drag state to prevent useEffect dependency cycles
@@ -264,6 +268,7 @@ export function CanvasContent({
     const poemOffsetRef = useRef(poemOffset);
     const lineOverridesRef = useRef(lineOverrides);
     const selectedLinesRef = useRef(selectedLines);
+    const textPositionRef = useRef(textPosition);
 
     // Stable cursor update function
     const updateCursorForMode = useCallback(
@@ -312,6 +317,10 @@ export function CanvasContent({
     useEffect(() => {
         selectedLinesRef.current = selectedLines;
     }, [selectedLines]);
+
+    useEffect(() => {
+        textPositionRef.current = textPosition;
+    }, [textPosition]);
 
     // Force cursor update when moveMode changes (without requiring mouse movement)
     useEffect(() => {
@@ -436,10 +445,10 @@ export function CanvasContent({
                     if (contentRef.current) {
                         const finalX = contentRef.current.x;
                         const finalY = contentRef.current.y;
-                        // Calculate the final offset relative to the initial text position
+                        // Calculate the final offset relative to the initial text position (using ref)
                         setPoemOffset({
-                            x: finalX - textPosition.containerX,
-                            y: finalY - textPosition.containerY,
+                            x: finalX - textPositionRef.current.containerX,
+                            y: finalY - textPositionRef.current.containerY,
                         });
                     }
                 }
@@ -456,7 +465,7 @@ export function CanvasContent({
                 dragStartLineOffsets.current = null;
             }
         },
-        [setIsDraggingBoth, setDragMode, contentRef, setPoemOffset, textPosition.containerX, textPosition.containerY]
+        [setIsDraggingBoth, setDragMode, contentRef, setPoemOffset]
     );
 
     // Use ref for viewportDragEnabled to prevent effect re-runs
@@ -468,36 +477,42 @@ export function CanvasContent({
 
     // Viewport plugins and camera control system
     useEffect(() => {
-        console.log("=== VIEWPORT SETUP ===");
-        console.log("viewportRef.current exists:", !!viewportRef.current);
-        console.log("contentRef.current exists:", !!contentRef.current);
-        console.log("Current moveMode:", moveMode);
-        console.log("viewportDragEnabled:", viewportDragEnabled);
+        if (import.meta.env.DEV) {
+            console.log("=== VIEWPORT SETUP ===");
+            console.log("viewportRef.current exists:", !!viewportRef.current);
+            console.log("contentRef.current exists:", !!contentRef.current);
+            console.log("Current moveMode:", moveMode);
+            console.log("viewportDragEnabled:", viewportDragEnabled);
+        }
 
         if (!viewportRef.current || !contentRef.current) {
-            console.log("No viewport or content ref, skipping setup");
+            if (import.meta.env.DEV) {
+                console.log("No viewport or content ref, skipping setup");
+            }
             return;
         }
 
         const viewport = viewportRef.current;
-        console.log("Setting up viewport:", viewport.constructor.name);
+        if (import.meta.env.DEV) {
+            console.log("Setting up viewport:", viewport.constructor.name);
+        }
 
         // Configure viewport plugins based on mode and CTRL state
         if (moveMode === "edit") {
             // Edit mode: Enable camera controls when CTRL is held or viewportDragEnabled is true
             if (viewportDragEnabled) {
-                console.log("Enabling camera controls in edit mode");
+                if (import.meta.env.DEV) console.log("Enabling camera controls in edit mode");
                 viewport.drag().pinch().wheel().decelerate();
             } else {
-                console.log(
-                    "Disabling camera controls in edit mode, enabling line selection"
-                );
+                if (import.meta.env.DEV) {
+                    console.log("Disabling camera controls in edit mode, enabling line selection");
+                }
                 viewport.plugins.remove("drag");
                 viewport.pinch().wheel().decelerate(); // Keep zoom and wheel
             }
         } else {
             // Move modes: Disable all camera controls
-            console.log("Move mode active, disabling all camera controls");
+            if (import.meta.env.DEV) console.log("Move mode active, disabling all camera controls");
             viewport.plugins.remove("drag");
             viewport.plugins.remove("pinch");
             viewport.plugins.remove("wheel");
@@ -511,10 +526,10 @@ export function CanvasContent({
         viewport.on("pointerup", handlePointerUp);
         viewport.on("pointerupoutside", handlePointerUp);
 
-        console.log("Event handlers attached to viewport");
+        if (import.meta.env.DEV) console.log("Event handlers attached to viewport");
 
         return () => {
-            console.log("Cleaning up viewport event handlers");
+            if (import.meta.env.DEV) console.log("Cleaning up viewport event handlers");
             if (viewport && typeof viewport.off === "function") {
                 viewport.off("pointerdown", handlePointerDown);
                 viewport.off("pointermove", handlePointerMove);

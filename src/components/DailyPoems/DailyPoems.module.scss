@@ -1,7 +1,7 @@
 /**
- * MonthlyPoems Component Styles
+ * DailyPoems Component Styles
  *
- * Compact styling that reuses SearchResults styling but with monthly-specific adjustments
+ * Compact styling that reuses SearchResults styling but with daily-specific adjustments
  */
 
 @use "@styles/variables" as *;
@@ -10,7 +10,7 @@
 /// TODO Checken of er zo'n groot apart scss bestand nodig is, of dat we searchResults.module.scss verder kunnen hergebruiken
 
 // Main section container
-.monthlyPoemsSection {
+.DailyPoemsSection {
   width:            100%;
   margin-top:       $spacing-xl;
   padding:          $spacing-xl 0;
@@ -60,7 +60,7 @@
 	gap:                   $spacing-xl; // Increased from $spacing-l
 
 	// Third item spans full width on 2-column layout
-	.monthlyPoemCard:nth-child(3) {
+	.dailyPoemCard:nth-child(3) {
 	  max-width:   0%; //
 	  margin:      0 auto;
 	  grid-column: 1 / -1;
@@ -69,11 +69,11 @@
   }
 
 // Individual poem card container
-.monthlyPoemCard {
-  // Maak monthly poems kleiner via CSS sizing (geen transforms!)
+.dailyPoemCard {
+  // Maak daily poems kleiner via CSS sizing (geen transforms!)
   // Dit behoudt text clarity en voorkomt browser rendering issues
 
-  // Override SearchResults spacing for monthly display
+  // Override SearchResults spacing for daily display
   :global(.resultCard) {
 	max-width:     90%; // Kleinere container via width
 	margin-right:  auto;

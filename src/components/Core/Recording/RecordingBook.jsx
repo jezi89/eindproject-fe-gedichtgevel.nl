@@ -1,6 +1,6 @@
 import React, {useRef, useState, useContext, useEffect} from 'react';
 import {useLocation} from 'react-router';
-import {TempSearchBar} from './ui/TempSearchBar';
+import {AltSearchBar} from './ui/AltSearchBar';
 import {AudioControls} from './ui/AudioControls';
 import {TopNavigation} from './layout/TopNavigation';
 import {SpiralBook} from './icons/SpiralBook';
@@ -193,7 +193,7 @@ export function RecordingBook() {
 
                                 <div className={`${componentStyles.PagePanel} ${componentStyles.PoemPanel}`}>
                                     <div className={componentStyles.SearchSection}>
-                                        <TempSearchBar onPoemSelect={handlePoemSelect} onSearchStart={handleSearchStart}/>
+                                        <AltSearchBar onPoemSelect={handlePoemSelect} onSearchStart={handleSearchStart}/>
                                     </div>
                                     <div className={componentStyles.PoemPanel_header}>
                                         <h2 className={componentStyles.PoemPanel_title}>

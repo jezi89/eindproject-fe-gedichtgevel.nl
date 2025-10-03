@@ -244,14 +244,18 @@ export function useKeyboardShortcuts({
   }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, onXyFocusRequest, moveMouseToContainer]);
 
   useEffect(() => {
-    console.log('⌨️ KeyboardShortcuts: Hook mounted');
-    
+    if (import.meta.env.DEV) {
+      console.log('⌨️ KeyboardShortcuts: Hook mounted');
+    }
+
     const handleKeyDown = (event) => {
-			console.log("⌨️ Keydown:", {
-				key: event.key,
-				altKey: event.altKey,
-				target: event.target.tagName,
-			});
+			if (import.meta.env.DEV) {
+				console.log("⌨️ Keydown:", {
+					key: event.key,
+					altKey: event.altKey,
+					target: event.target.tagName,
+				});
+			}
 
 			if (
 				event.target.tagName === "INPUT" ||

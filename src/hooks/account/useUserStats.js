@@ -20,7 +20,7 @@ export function useUserStats() {
         recentActivity: [],
         lastActivityDate: null
     });
-    const [monthlyActivity, setMonthlyActivity] = useState([]);
+    const [dailyActivity, setMonthlyActivity] = useState([]);
     const [favoriteThemes, setFavoriteThemes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,7 +44,7 @@ export function useUserStats() {
         setError(null);
 
         try {
-            const [statsResult, monthlyResult, themesResult] = await Promise.all([
+            const [statsResult, dailyResult, themesResult] = await Promise.all([
                 userStatsService.getUserStats(user.id),
                 userStatsService.getMonthlyActivity(user.id, 6),
                 userStatsService.getFavoriteThemes(user.id)
@@ -56,8 +56,8 @@ export function useUserStats() {
                 throw new Error(statsResult.error);
             }
 
-            if (monthlyResult.success) {
-                setMonthlyActivity(monthlyResult.data);
+            if (dailyResult.success) {
+                setMonthlyActivity(dailyResult.data);
             }
 
             if (themesResult.success) {
@@ -88,9 +88,9 @@ export function useUserStats() {
             lastActivity: stats.lastActivityDate
                 ? new Date(stats.lastActivityDate).toLocaleDateString('nl-NL')
                 : 'Geen activiteit',
-            activeThisMonth: monthlyActivity[monthlyActivity.length - 1]?.count || 0
+            activeThisMonth: dailyActivity[dailyActivity.length - 1]?.count || 0
         };
-    }, [stats, monthlyActivity]);
+    }, [stats, dailyActivity]);
 
     /**
      * Clear error message
@@ -102,7 +102,7 @@ export function useUserStats() {
     return {
         // State
         stats,
-        monthlyActivity,
+        dailyActivity,
         favoriteThemes,
         loading,
         error,

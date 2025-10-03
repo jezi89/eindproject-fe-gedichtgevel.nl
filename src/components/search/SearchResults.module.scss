@@ -30,6 +30,51 @@
 	.resultCard {
 	  margin-bottom: $spacing-s; }
 	}
+
+  // Daily mode styling
+  &.dailyMode {
+	width:            100%;
+	margin-top:       $spacing-xl;
+	padding:          $spacing-xl 0;
+	background-color: $secondary-dark;
+	border-top:       2px solid $secondary-muted;
+
+	// Compact spacing for daily poems
+	.cardHeader {
+	  padding-bottom: $spacing-xs; // Much less space below header
+	  }
+
+	.addressContainer {
+	  margin-top:    0; // No negative margin
+	  margin-bottom: $spacing-xxs; // Very tight spacing to poem content
+	  }
+
+	// Hide global toggles in daily mode
+	.globalToggleContainer,
+	.focusStudioButton {
+	  display: none !important;
+	  }
+	}
+  }
+
+// Section Header for daily mode
+.sectionHeader {
+  margin-bottom: $spacing-xl;
+  text-align:    center;
+  }
+
+.sectionTitle {
+  @include heading-primary;
+  font-size: $font-size-xl;
+  margin:    0 0 $spacing-s 0;
+  color:     $text-heading;
+  }
+
+.sectionSubtitle {
+  @include body-text;
+  font-size: $font-size-m;
+  margin:    0;
+  color:     $poem-text-inverse;
   }
 
 // Global Toggle Button Container
@@ -134,7 +179,7 @@
   flex-direction:   column;
   justify-content:  center;
   height:           $height-min-text-area; // Was 120px;
-  padding:          $spacing-xl;
+  padding:          $spacing-m; // Changed from $spacing-xl (2rem) to $spacing-m (1rem)
   padding-bottom:   $spacing-l;
   text-align:       center;
   border-bottom:    1px solid rgba($neutral-mid, 0.2); // Was $grey-500
@@ -568,6 +613,13 @@
 	width:       30vw;
 	}
 
+  // Daily mode: narrower max-width for more compact layout
+  :global(.dailyMode) & {
+	.resultsList {
+	  max-width: 88vw;
+	  }
+	}
+
   @include respond-to("tablet") {
 	.resultsList {
 	  align-items:    center;
@@ -915,11 +967,11 @@
   }
 
 // Animation classes
-.fadeIn {
+.fade-in {
   @include fade-in;
   }
 
-.slideUp {
+.slide-up {
   @include slide-up;
   }
 
@@ -1055,7 +1107,7 @@
   min-height:      $spacing-xl; // Was 32px;
   padding:         $spacing-xs $spacing-m; // Was $spacing-md
   transform:       translateX(-50%); // Perfect centering
-  animation:       toastPulse 2s ease-in-out infinite;
+  animation:       toast-pulse 2s ease-in-out infinite;
   text-align:      center;
   pointer-events:  none;
 
@@ -1069,7 +1121,7 @@
   backdrop-filter: blur(8px);
   }
 
-@keyframes toastPulse {
+@keyframes toast-pulse {
   0%, 100% {
 	transform:  translateX(-50%) scale(1);
 	box-shadow: $shadow-lg;
@@ -1079,3 +1131,70 @@
 	box-shadow: $shadow-lg, 0 0 15px rgba($primary-flame, 0.5);
 	}
   }
+
+// CSS animation for text reveal (replaces Framer Motion)
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.poemLineAnimated {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+
+  @for $i from 1 through 200 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 60}ms;
+    }
+  }
+}
+
+.SearchResultsContainer {
+  // bestaande styling
+}
+
+// Address Display Component Styles
+.addressContainer {
+  display:         flex;
+  flex-direction:  column; // Stack vertically
+  align-items:     flex-start;
+  width:           100%;
+  margin:          -$spacing-xs $spacing-m $spacing-xs; // Reduced horizontal margin, smaller bottom
+  padding:         $spacing-xs $spacing-s; // Smaller padding
+  border-radius:   $border-radius-sm;
+  background-color: rgba($neutral-mid, 0.05);
+  gap:             $spacing-xxs; // Smaller gap between address and link
+}
+
+.addressText {
+  font-size:   $font-size-xs;
+  font-style:  italic;
+  line-height: $line-height-snug;
+  color:       $neutral-mid-dark;
+}
+
+.mapsLink {
+  font-size:       $font-size-xs;
+  font-weight:     $font-weight-semibold;
+  white-space:     nowrap;
+  text-decoration: none;
+  transition:      color $transition-fast;
+  color:           $secondary-carribean-current;
+
+  &:hover {
+    text-decoration: underline;
+    color:           $primary-cognac;
+  }
+
+  &:focus {
+    outline:        2px solid $primary-cognac;
+    outline-offset: 2px;
+  }
+}

@@ -79,9 +79,10 @@ export default function Canvas({
                 if (savedCanvasState.lineTransforms) canvasState.setLineTransforms(savedCanvasState.lineTransforms);
                 if (savedCanvasState.global3DSettings) canvasState.setGlobal3DSettings(savedCanvasState.global3DSettings);
                 if (savedCanvasState.isOptimizationEnabled !== undefined) canvasState.setIsOptimizationEnabled(savedCanvasState.isOptimizationEnabled);
-                if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
+                // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
+                // if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
 
-                console.log("✅ Canvas: State restored successfully");
+                console.log("✅ Canvas: State restored successfully (moveMode reset to 'edit')");
             }, 50); // Small delay to ensure localStorage is cleared
         }
     }, [savedCanvasState]); // Only run when savedCanvasState changes

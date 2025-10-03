@@ -121,30 +121,30 @@
 // ==============================================
 
 @mixin search-fade-in($delay: 0s) {
-  animation: searchFadeIn $transition-normal ease-out $delay;
+  animation: search-fade-in $transition-normal ease-out $delay;
   }
 
 @mixin search-slide-in($direction: "up", $delay: 0s) {
   @if $direction == "up" {
-	animation: searchSlideInUp $transition-normal ease-out $delay;
+	animation: search-slide-in-up $transition-normal ease-out $delay;
 	} @else if $direction == "down" {
-	animation: searchSlideInDown $transition-normal ease-out $delay;
+	animation: search-slide-in-down $transition-normal ease-out $delay;
 	} @else if $direction == "left" {
-	animation: searchSlideInLeft $transition-normal ease-out $delay;
+	animation: search-slide-in-left $transition-normal ease-out $delay;
 	} @else if $direction == "right" {
-	animation: searchSlideInRight $transition-normal ease-out $delay;
+	animation: search-slide-in-right $transition-normal ease-out $delay;
 	}
   }
 
 @mixin search-expand-animation {
-  animation: searchExpand $transition-slow ease-out;
+  animation: search-expand $transition-slow ease-out;
   }
 
 // ==============================================
 // SHARED KEYFRAMES
 // ==============================================
 
-@keyframes searchFadeIn {
+@keyframes search-fade-in {
   from {
 	opacity: 0;
 	}
@@ -153,7 +153,7 @@
 	}
   }
 
-@keyframes searchSlideInUp {
+@keyframes search-slide-in-up {
   from {
 	opacity:   0;
 	transform: translateY(20px);
@@ -164,7 +164,7 @@
 	}
   }
 
-@keyframes searchSlideInDown {
+@keyframes search-slide-in-down {
   from {
 	opacity:   0;
 	transform: translateY(-20px);
@@ -175,7 +175,7 @@
 	}
   }
 
-@keyframes searchSlideInLeft {
+@keyframes search-slide-in-left {
   from {
 	opacity:   0;
 	transform: translateX(-20px);
@@ -186,7 +186,7 @@
 	}
   }
 
-@keyframes searchSlideInRight {
+@keyframes search-slide-in-right {
   from {
 	opacity:   0;
 	transform: translateX(20px);
@@ -197,7 +197,7 @@
 	}
   }
 
-@keyframes searchExpand {
+@keyframes search-expand {
   from {
 	max-height: 0;
 	opacity:    0;

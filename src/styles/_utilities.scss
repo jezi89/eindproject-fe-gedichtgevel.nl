@@ -463,9 +463,9 @@
 
 .transition-none { transition: none; }
 
-.animate-fade-in { animation: fadeIn $transition-normal forwards; }
+.animate-fade-in { animation: fade-in $transition-normal forwards; }
 
-.animate-slide-up { animation: slideInUp $transition-normal forwards; }
+.animate-slide-up { animation: slide-in-up $transition-normal forwards; }
 
 .animate-pulse { animation: pulse 2s infinite; }
 
@@ -475,9 +475,9 @@
  * Klassen specifiek voor poëzie-elementen.
  */
 
-.poem-text-reveal { animation: textReveal 1.5s forwards; }
+.poem-text-reveal { animation: text-reveal 1.5s forwards; }
 
-.poem-ink-effect { animation: inkSpread 2s forwards; }
+.poem-ink-effect { animation: ink-spread 2s forwards; }
 
 .poem-shadow { text-shadow: $shadow-poem-text; }
 

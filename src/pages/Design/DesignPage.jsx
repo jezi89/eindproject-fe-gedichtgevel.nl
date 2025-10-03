@@ -28,7 +28,9 @@ export function DesignPage() {
 			setError(null);
 
 			try {
-				console.log("🎨 DesignPage: Loading poem data...", { poemId, designId });
+				if (import.meta.env.DEV) {
+					console.log("🎨 DesignPage: Loading poem data...", { poemId, designId });
+				}
 
 				// Priority 0: Load saved design if designId provided
 				if (designId) {

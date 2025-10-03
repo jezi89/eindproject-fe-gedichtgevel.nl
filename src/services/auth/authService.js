@@ -370,6 +370,7 @@ export {
     register,
     sendPasswordResetEmail as resetPasswordForEmail,
     login as signInWithPassword,
+    logout,
     updateUser,
     updatePassword,
     checkUserExists,

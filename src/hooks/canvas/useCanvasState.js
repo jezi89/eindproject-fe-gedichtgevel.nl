@@ -17,10 +17,8 @@ export function useCanvasState() {
 		PERSISTED_KEYS.POEM_OFFSET,
 		{ x: 170, y: 0 }
 	);
-	const [moveMode, setMoveMode] = usePersistedState(
-		PERSISTED_KEYS.MOVE_MODE,
-		"edit"
-	);
+	// moveMode should always start as "edit" - do NOT persist to avoid mode confusion
+	const [moveMode, setMoveMode] = useState("edit");
 
 	// UI State
 	const [viewportDragEnabled, setViewportDragEnabled] = useState(false);

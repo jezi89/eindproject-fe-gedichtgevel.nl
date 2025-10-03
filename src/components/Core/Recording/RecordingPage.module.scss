@@ -34,34 +34,34 @@
   }
 
 .TabButton {
-  font-family:     "Work Sans", sans-serif;
-  font-size:       20px;
-  font-weight:     600;
-  margin:          0 0.5rem;
-  padding:         5px 42px;
-  cursor:          pointer;
-  transform:       rotate(-0.8deg);
-  text-align:      center;
-  white-space:     pre-line;
-  color:           $neutral-off-white;
-  border:          none;
+  font-family:      $font-family-nav-item;
+  font-size:        20px;
+  font-weight:      600;
+  margin:           0 0.5rem;
+  padding:          5px 42px;
+  cursor:           pointer;
+  transform:        rotate(-0.8deg);
+  text-align:       center;
+  white-space:      pre-line;
+  color:            $neutral-off-white;
+  border:           none;
   background-color: $secondary-dark;
-  box-shadow:      0 2.5px 5px rgba(0, 0, 0, 0.25);
+  box-shadow:       0 2.5px 5px rgb(0 0 0 / 25%);
 
   &.active {
-    color:       $accent-gold;
-    text-shadow: 0 1.25px 3.62px rgba(0, 0, 0, 0.25);
-    }
+	color:       $accent-gold;
+	text-shadow: 0 1.25px 3.62px rgb(0 0 0 / 25%);
+	}
   }
 
-.TempSearchBar {
+.AltSearchBar {
   display:     flex;
   align-items: center;
-  width:       100%; // Zorg dat de TempSearchBar de volle breedte van de container pakt
+  width:       100%; // Zorg dat de AltSearchBar de volle breedte van de container pakt
   gap:         15px;
   }
 
-.TempSearchBar-collections {
+.AltSearchBar-collections {
   display:          flex;
   align-items:      center;
   max-width:        7rem;
@@ -70,6 +70,7 @@
   cursor:           pointer;
   text-align:       center;
   color:            #d09a47;
+
   //  white-space: nowrap;
   border:           0.5px solid #4d5061;
   border-radius:    8px;
@@ -92,7 +93,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   background: var(--Core-neutral-dark, #d09a47);
   }
 
-.TempSearchBar-separator {
+.AltSearchBar-separator {
   display:       flex;
   overflow:      hidden; // Hide anything that pokes out
   align-items:   center;
@@ -102,7 +103,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   background:    white;
   }
 
-.TempSearchBar-input {
+.AltSearchBar-input {
   font-size:   18.6px;
   font-weight: 800;
   flex-grow:   1; // Allow input to take up available space
@@ -115,10 +116,9 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   background:  white;
   }
 
-.TempSearchBar-button {
-  font-family:     "Quilty", sans-serif;
+.AltSearchBar-button {
+  font-family:     Quilty, sans-serif;
   font-size:       18px;
-
   font-style:      normal;
   line-height:     0.8;
   display:         flex;
@@ -132,7 +132,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   box-shadow:      0 0 0.776px 1.035px var(--Core-brand-secondary-muted, #0F4648), 1.035px 1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset, -1.035px -1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset;
   }
 
-.TempSearchBarContainer {
+.AltSearchBarContainer {
   position:        absolute;
   z-index:         10;
   top:             120px;
@@ -143,16 +143,16 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   }
 
 .BookContainer {
-  position:         relative;
-  display:          flex;
-  align-items:      flex-end;
-  flex-grow:        1; /* Take remaining space in MainContent */
-  justify-content:  center;
-  width:            100%;
-  max-width:        1524px; /* Match TopNavContainer max-width */
-  margin:           0; /* No margins for perfect connection */
-  background-color: $neutral-cream;
-  gap:              1.5rem;
+  position:        relative;
+  display:         flex;
+  align-items:     flex-end;
+  flex-grow:       1; /* Take remaining space in MainContent */
+  justify-content: center;
+  width:           100%;
+  max-width:       1524px; /* Match TopNavContainer max-width */
+  margin:          0; /* No margins for perfect connection */
+  color:           $text-inverse;
+  gap:             1.5rem;
   }
 
 .SpiralBinding {
@@ -164,25 +164,26 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 
 
 .PagePanel {
-  z-index:        5;
-  display:        flex;
-  flex-direction: column;
-  width:          750px;
-  height:         85vh;
-  padding:        2rem;
-  padding-bottom: 0;
-  border-radius:  0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
-
-  box-shadow:     0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index:          5;
+  display:          flex;
+  flex-direction:   column;
+  width:            750px;
+  height:           85vh;
+  padding:          2rem;
+  padding-bottom:   0;
+  border-radius:    0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
+  background-color: $neutral-cream;
+  box-shadow:       0 4px 15px rgb(0 0 0 / 20%);
   }
 
 .RecordingPanel {
   position:        relative;
 
   /* align-items:      center; */
+
   /* This was causing the wrapper to shrink */
   justify-content: space-between;
-  padding:         3rem 3rem;
+  padding:         3rem;
 
   }
 
@@ -204,28 +205,24 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   }
 
 .MuteButton {
-
   cursor:           pointer;
-
   border:           2px solid #4D5061;
-
   background-color: #6c7293;;
   }
 
 .MuteButton:hover {
   transform:        translateY(-1px);
   background-color: #7a83aa;
-  box-shadow:       0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow:       0 4px 8px rgb(0 0 0 / 15%);
   }
 
 .MuteButton:active {
   transform:  translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
   }
 
 /* Active/Muted state styling */
 .MuteButton.muted {
-
   background-color: #e74c3c;
   }
 
@@ -237,6 +234,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   0%, 100% {
 	opacity: 1;
 	}
+
   50% {
 	opacity: 0.7;
 	}
@@ -280,7 +278,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   }
 
 .PoemPanel_title {
-  font-family: var(--font-serif);
+  font-family: $font-family-title;
   font-size:   30px;
   font-weight: 700;
   margin:      0;
@@ -350,7 +348,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 
 /* Countdown styling */
 .RecordButton.countdown {
-  animation: countdownPulse 1s infinite;
+  animation: countdown-pulse 1s infinite;
   border:    3px solid #d09a47;
   }
 
@@ -361,30 +359,33 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   top:            50%;
   left:           50%;
   transform:      translate(-50%, -50%);
-  animation:      countdownBounce 0.3s ease-out;
+  animation:      countdown-bounce 0.3s ease-out;
   pointer-events: none;
   color:          #d09a47;
   }
 
-@keyframes countdownPulse {
+@keyframes countdown-pulse {
   0%, 100% {
 	border-color: #d09a47;
-	box-shadow:   0 0 0 0 rgba(208, 154, 71, 0.4);
+	box-shadow:   0 0 0 0 rgb(208 154 71 / 40%);
 	}
+
   50% {
 	border-color: #c24919;
-	box-shadow:   0 0 0 8px rgba(208, 154, 71, 0);
+	box-shadow:   0 0 0 8px rgb(208 154 71 / 0%);
 	}
   }
 
-@keyframes countdownBounce {
+@keyframes countdown-bounce {
   0% {
 	transform: translate(-50%, -50%) scale(0.5);
 	opacity:   0;
 	}
+
   50% {
 	transform: translate(-50%, -50%) scale(1.2);
 	}
+
   100% {
 	transform: translate(-50%, -50%) scale(1);
 	opacity:   1;
@@ -404,22 +405,22 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 
 
 :global(#waveform-timeline) {
-  position:   relative !important;
-  z-index:    10 !important;
-  overflow:   visible !important;
-  background: transparent !important;
+  position:   relative;
+  z-index:    10;
+  overflow:   visible;
+  background: transparent;
 
   wave {
-	overflow: visible !important;
+	overflow: visible;
 	}
 
   time {
 	font-size:      12px;
-	padding:        2px 4px !important;
-	pointer-events: none !important;
-	color:          #333 !important;
-	border-radius:  2px !important;
-	background:     rgba(255, 255, 255, 0.8) !important;
+	padding:        2px 4px;
+	pointer-events: none;
+	color:          #333;
+	border-radius:  2px;
+	background:     rgb(255 255 255 / 80%);
 	}
   }
 
@@ -492,7 +493,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 .SaveButton:hover:not(:disabled) {
   transform:        translateY(-1px);
   background-color: #e6b85c;
-  box-shadow:       0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow:       0 4px 8px rgb(0 0 0 / 15%);
   }
 
 .SaveButton:disabled {
@@ -529,19 +530,16 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   justify-content: center;
   width:           15.3125rem;
   height:          5.375rem;
-
   padding:         0.3125rem 1.75rem;
   cursor:          pointer;
   transition:      all 0.2s ease;
   color:           var(--Core-neutral-dark, #4D5061);
-
   border-top:      1.138px solid var(--Core-neutral-dark, #4D5061);
   border-right:    1.138px solid var(--Core-neutral-dark, #4D5061);
   border-bottom:   none;
   border-left:     1.138px solid var(--Core-neutral-dark, #4D5061);
   border-radius:   0.46875rem 0.46875rem 0 0;
   background:      var(--Core-neutral-cream, #FFF5E1);
-
   gap:             0.3125rem;
   }
 
@@ -590,7 +588,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   }
 
 .LinePath {
-  stroke:       rgb(133, 109, 97);
+  stroke:       rgb(133 109 97);
   stroke-width: 6px;
   }
 
@@ -623,10 +621,10 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 .ZoomButton:hover {
   transform:        translateY(-1px);
   background-color: #f0e6d2;
-  box-shadow:       0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow:       0 2px 4px rgb(0 0 0 / 10%);
   }
 
 .ZoomButton:active {
   transform:  translateY(0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
   }

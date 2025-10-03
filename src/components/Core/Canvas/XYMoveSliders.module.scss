@@ -276,7 +276,7 @@
 /* Focus active state voor XY container */
 .xyMoveContainer.focusActive {
   cursor:         pointer; /* Alleen hier cursor zichtbaar */
-  animation:      focusPulse 1.5s ease-in-out;
+  animation:      focus-pulse 1.5s ease-in-out;
   pointer-events: auto;
   border-color:   #007bff;
   box-shadow:     0 0 0 3px #007bff,
@@ -285,7 +285,7 @@
   }
 
 /* Focus pulse animatie */
-@keyframes focusPulse {
+@keyframes focus-pulse {
   0% {
 	box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7),
 				0 0 0 3px #007bff,
@@ -309,7 +309,7 @@
   }
 
 /* Overlay fade-in animatie */
-.globalCursorOverlay.fadeIn {
+.globalCursorOverlay.fade-in {
   opacity: 1;
   }
 

@@ -43,7 +43,7 @@ Form components for user input.
 
 Search interface components.
 
-- **TempSearchBar.jsx**: Main search input component
+- **AltSearchBar.jsx**: Main search input component
 - **SearchResults.jsx**: Search results display
 - Filter controls and search options
 

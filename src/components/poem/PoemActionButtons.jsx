@@ -14,7 +14,7 @@ export const PoemActionButtons = memo(({
                                            canExpand = false,
                                            animationPhase = 'idle',
                                            hiddenLinesLength = 0,
-                                           displayMode = 'search', // 'search' or 'monthly'
+                                           displayMode = 'search', // 'search' or 'daily'
                                            onLoadInCanvas,
                                            onNavigateToCanvas,
                                            onNavigateToRecording,
@@ -26,8 +26,8 @@ export const PoemActionButtons = memo(({
     // Animation delay for expanded state buttons
     const expandedButtonDelay = 0.4 + (hiddenLinesLength * 0.06);
 
-    // For monthly display mode, only show canvas and expand/collapse buttons
-    const showCanvasButton = displayMode === 'search' || displayMode === 'monthly';
+    // For daily display mode, only show canvas and expand/collapse buttons
+    const showCanvasButton = displayMode === 'search' || displayMode === 'daily';
 
     return (
         <motion.div
@@ -57,7 +57,7 @@ export const PoemActionButtons = memo(({
                 </motion.button>
             )}
 
-            {/* CANVAS BUTTONS - Show for search and monthly modes */}
+            {/* CANVAS BUTTONS - Show for search and daily modes */}
             {showCanvasButton && (
                 <>
                     {canvasMode ? (

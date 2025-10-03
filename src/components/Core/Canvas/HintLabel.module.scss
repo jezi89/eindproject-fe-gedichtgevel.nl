@@ -6,7 +6,7 @@
   font-weight:      $font-weight-semibold;
   z-index:          10001; // Above everything (navbar is 10000)
   padding:          6px 12px;
-  animation:        slideInFade 2s ease-in-out 3; // 3 cycles = 6 seconds
+  animation:        slide-in-fade 2s ease-in-out 3; // 3 cycles = 6 seconds
   white-space:      nowrap;
   pointer-events:   none; // Don't block interactions
   color:            $primary-flame;
@@ -16,7 +16,7 @@
   box-shadow:       0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
-@keyframes slideInFade {
+@keyframes slide-in-fade {
   0%, 100% {
 	opacity:   0;
 	transform: translateY(-50%) translateX(10px);
