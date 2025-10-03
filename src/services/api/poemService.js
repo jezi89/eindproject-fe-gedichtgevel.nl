@@ -14,7 +14,6 @@
  */
 
 import {poetryDbApi} from './axios'; // Import voor de geconfigureerde axios instantie
-import {apiCacheService} from '../cache/apiCacheService'; // Import enhanced cache service
 
 // ==========================================================================
 // SECTION 1: BASIC API FUNCTIONS (INTERNAL HELPERS)
@@ -28,12 +27,6 @@ import {apiCacheService} from '../cache/apiCacheService'; // Import enhanced cac
  * @returns {Promise<Array<object>>} - Array of poems found.
  */
 async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
-    // Check L1/L2 cache hierarchy first
-    const cacheKey = `poetrydb:${field}:${query.toLowerCase()}`;
-    const cachedData = await apiCacheService.get(cacheKey);
-    if (cachedData !== null) {
-        return cachedData;
-    }
     try {
         const endpoint = `/${field}/${encodeURIComponent(query)}`;
         const response = await poetryDbApi.get(endpoint);
@@ -84,29 +77,18 @@ async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
  * @returns {Promise<Array<object>>} - Array of poems found.
  */
 async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm) {
-    // Check L1/L2 cache hierarchy first
-    const cacheKey = `poetrydb:author-title:${authorTerm.toLowerCase()};${titleTerm.toLowerCase()}`;
-    const cachedData = await apiCacheService.get(cacheKey);
-    if (cachedData !== null) {
-        return cachedData;
-    }
-
     try {
         // Juiste format voor AND-zoekopdracht met PoetryDB API
         const endpoint = `/author,title/${encodeURIComponent(authorTerm)};${encodeURIComponent(titleTerm)}`;
         const response = await poetryDbApi.get(endpoint);
 
         if (response.data && response.data.status === 404) {
-            await apiCacheService.set(cacheKey, [], 'failed'); // Cache empty results with shorter TTL
             return [];
         }
 
-        const results = Array.isArray(response.data) ? response.data : [];
-        await apiCacheService.set(cacheKey, results, 'normal');
-        return results;
+        return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            await apiCacheService.set(cacheKey, [], 'failed'); // Cache 404s with shorter TTL
             return [];
         }
         console.error(`Fout bij ophalen gedichten (auteur: "${authorTerm}", titel: "${titleTerm}") uit PoetryDB:`, error);

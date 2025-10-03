@@ -1,149 +1,63 @@
-// TODO useSearchPoems.js hook werking checken en testen
-
-import {useCallback, useEffect, useState} from 'react';
-import {searchPoemsGeneral} from '@/services/api/poemSearchService.js';
-import {searchCacheService} from '@/services/cache/searchCacheService';
-import {searchContextService} from '@/services/context/SearchContextService.js';
-
-
 /**
- * Modern React 19 search hook with improved UX patterns
- * Implements Dexie caching, error handling and loading states
- * Now with comprehensive search term synchronization
+ * Modern React 19 search hook using TanStack Query
+ * Automatic caching, refetching, and state management
  */
-export function useSearchPoems(source = 'unknown') {
+
+import {useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import {searchPoemsGeneral} from '@/services/api/poemSearchService.js';
+
+export function useSearchPoems() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     const [searchHistory, setSearchHistory] = useState([]);
-    const [fromCache, setFromCache] = useState(false);
-    const [carouselPosition, setCarouselPosition] = useState(0);
 
-    // Initialize search context on mount
-    useEffect(() => {
-        const loadContext = async () => {
-            try {
-                const context = await searchContextService.loadContext();
-                if (context) {
-                    setSearchTerm(context.searchTerm || '');
-                    setResults(context.results || []);
-                    setSearchHistory(context.searchHistory || []);
-                    setCarouselPosition(context.carouselPosition || 0);
+    // TanStack Query hook - automatic caching and state management
+    const {
+        data: results = [],
+        isLoading: loading,
+        error: queryError,
+        isFetching,
+        refetch
+    } = useQuery({
+        queryKey: ['poems', 'search', searchTerm.trim()],
+        queryFn: async () => {
+            const trimmed = searchTerm.trim();
+            if (!trimmed) return [];
 
-                    console.log(`[${source}] Loaded search context:`, {
-                        searchTerm: context.searchTerm,
-                        resultCount: context.results?.length || 0,
-                        carouselPosition: context.carouselPosition || 0,
-                        lastSource: context.lastSearchSource
-                    });
-                }
-            } catch (error) {
-                console.error('Failed to load search context:', error);
-            }
-        };
-        loadContext();
-    }, [source]);
+            const data = await searchPoemsGeneral(trimmed);
 
-    const clearResults = useCallback(() => {
-        setResults([]);
-        setError('');
-    }, []);
-
-    const handleSearch = useCallback(async (term = searchTerm) => {
-        const trimmedTerm = term.trim();
-
-        if (!trimmedTerm) {
-            setError('Voer een zoekterm in');
-            clearResults();
-            return;
-        }
-
-        setLoading(true);
-        setError('');
-        setFromCache(false);
-
-        try {
-            // Check Dexie cache first
-            const cachedResults = await searchCacheService.get(trimmedTerm);
-
-            if (cachedResults) {
-                setResults(cachedResults);
-                setError('');
-                setFromCache(true);
-                setLoading(false);
-
-                // Save context for navigation
-                await searchCacheService.setContext({
-                    searchTerm: trimmedTerm,
-                    results: cachedResults,
-                    searchHistory
-                });
-
-                return;
-            }
-
-            // Not in cache, fetch from API
-            clearResults();
-            const data = await searchPoemsGeneral(trimmedTerm);
-
+            // Update search history when successful
             if (data && data.length > 0) {
-                setResults(data);
-                setError('');
-
-                // Cache the results in Dexie
-                await searchCacheService.set(trimmedTerm, data);
-
-                // Update search history (max 10 items)
-                const newHistory = [trimmedTerm, ...searchHistory.filter(item => item !== trimmedTerm)].slice(0, 10);
-                setSearchHistory(newHistory);
-
-                // Save context for navigation with source tracking
-                await searchContextService.saveContext({
-                    searchTerm: trimmedTerm,
-                    results: data,
-                    searchHistory: newHistory,
-                    source: source
-                });
-            } else {
-                setError('Geen gedichten gevonden die overeenkomen met uw zoekopdracht.');
-                setResults([]);
+                setSearchHistory(prev =>
+                    [trimmed, ...prev.filter(item => item !== trimmed)].slice(0, 10)
+                );
             }
-        } catch (err) {
-            console.error("Zoekfout:", err);
-            setError('Er ging iets mis bij het zoeken. Probeer het opnieuw.');
-            setResults([]);
-        } finally {
-            setLoading(false);
-        }
-    }, [searchTerm, searchHistory, clearResults]);
 
-    // Enhanced updateSearchTerm with real-time sync
-    const updateSearchTerm = useCallback(async (term) => {
+            return data || [];
+        },
+        enabled: !!searchTerm.trim(), // Only fetch if searchTerm is not empty
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        gcTime: 1000 * 60 * 60, // 1 hour
+        retry: 1,
+    });
+
+    // Convert error to string message
+    const error = queryError ?
+        (results.length === 0 ? 'Geen gedichten gevonden die overeenkomen met uw zoekopdracht.' : '')
+        : '';
+
+    // Actions
+    const handleSearch = (term = searchTerm) => {
         setSearchTerm(term);
+    };
 
-        // Save search term immediately for sync across components
-        if (term.trim()) {
-            await searchContextService.saveSearchTerm(term, source);
-        }
-    }, [source]);
+    const updateSearchTerm = (term) => {
+        setSearchTerm(term);
+    };
 
-    // Auto-trigger search for non-homepage sources when term is loaded
-    const autoTriggerSearch = useCallback(async () => {
-        if (source !== 'homepage' && searchTerm.trim() && results.length === 0) {
-            console.log(`[${source}] Auto-triggering search for: "${searchTerm}"`);
-            await handleSearch(searchTerm);
-        }
-    }, [source, searchTerm, results.length, handleSearch]);
-
-    // Effect for auto-triggering search on canvas/focus pages
-    useEffect(() => {
-        if (searchTerm && (source === 'canvas' || source === 'focus')) {
-            // Small delay to ensure component is mounted
-            const timer = setTimeout(autoTriggerSearch, 100);
-            return () => clearTimeout(timer);
-        }
-    }, [searchTerm, source, autoTriggerSearch]);
+    const clearResults = () => {
+        setSearchTerm('');
+    };
 
     // Search metadata
     const searchMeta = {
@@ -151,36 +65,26 @@ export function useSearchPoems(source = 'unknown') {
         resultCount: results.length,
         isEmpty: !searchTerm.trim(),
         hasError: !!error,
-        isLoading: loading,
+        isLoading: loading || isFetching,
         canSearch: !!searchTerm.trim() && !loading,
-        fromCache
+        fromCache: false // TanStack Query handles caching automatically
     };
-
-    // Save context when important state changes
-    useEffect(() => {
-        if (searchTerm && results.length > 0) {
-            searchCacheService.setContext({
-                searchTerm,
-                results,
-                searchHistory
-            }).catch(console.error);
-        }
-    }, [searchTerm, results, searchHistory]);
 
     return {
         // State
         searchTerm,
         results,
-        loading,
+        loading: loading || isFetching,
         error,
         searchHistory,
-        fromCache,
-        carouselPosition,
+        fromCache: false,
+        carouselPosition: 0, // Can be managed separately if needed
 
         // Actions
         handleSearch,
         updateSearchTerm,
         clearResults,
+        refetch,
 
         // Computed
         searchMeta
