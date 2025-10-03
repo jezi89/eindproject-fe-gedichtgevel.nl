@@ -66,3 +66,4 @@ pnpm-debug.log*
 /AUDIO-PROJECT/
 /LEGACY/
 /FUTURE/
+/scripts/migrate_poems.py
