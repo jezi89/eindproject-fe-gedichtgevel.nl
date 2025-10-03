@@ -1,12 +1,13 @@
 // Importeer alle benodigde ESLint plugins en configuraties
-import js from '@eslint/js';                      // Basis JavaScript linting regels
-import globals from 'globals';                    // Globale variabelen definities voor verschillende omgevingen
-import reactPlugin from 'eslint-plugin-react';    // React-specifieke linting regels
-import reactHooks from 'eslint-plugin-react-hooks'; // Regels voor correcte React hooks
-import reactRefresh from 'eslint-plugin-react-refresh'; // Voor correcte HMR met React
-import jsxA11y from 'eslint-plugin-jsx-a11y';     // Toegankelijkheidsregels voor JSX
-import importPlugin from 'eslint-plugin-import';  // Import statement validatie
+// noinspection CommaExpressionJS
 
+import js from '@eslint/js';
+import globals from 'globals';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import importPlugin from 'eslint-plugin-import';
 
 // Basisregels voor React componenten en JSX
 const reactRules = {
@@ -126,14 +127,10 @@ const reactHooksRules = {
 
 // Vite en HMR specifieke regels
 const viteRules = {
-    // Regel voor Fast Refresh (HMR) in Vite
     'react-refresh/only-export-components': [
         'warn',
         {
-            // Sta constante exports toe naast component exports
             allowConstantExport: true,
-
-            // Support voor React Router v7 exports
             allowExportNames: ['meta', 'links', 'loader', 'action']
         }
     ]
@@ -146,7 +143,6 @@ export default [
 
     // Algemene ESLint opties - werken op root niveau
     {
-        // Rapporteer ongebruikte eslint-disable comments
         linterOptions: {
             reportUnusedDisableDirectives: 'error',
         }
@@ -188,7 +184,18 @@ export default [
             'jsx-a11y': jsxA11y,
             import: importPlugin
         },
-
+        settings: {
+            react: {version: 'detect'},
+            'import/resolver': {
+                alias: {
+                    map: [['@', './src']],
+                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                },
+                node: {
+                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+                }
+            }
+        },
         // Combineer alle regelsets
         rules: {
             ...reactRules,
@@ -196,39 +203,17 @@ export default [
             ...jsxA11yRules,
             ...importRules,
             ...viteRules,
-
-            // Basis JavaScript regels
-            'no-unused-vars': ['warn', {"varsIgnorePattern": "motion|React"}], // Warn for unused vars, except for motion and React
-
-            // Extra settings voor plugins
-            settings: {
-                // Automatisch detecteren welke React versie wordt gebruikt
-                react: {version: 'detect'},
-
-                // Configuratie voor import/resolver
-                'import/resolver': {
-                    alias: {
-                        map: [
-                            ['@', './src']
-                        ],
-                        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-                    },
-                    node: {
-                        // Ondersteunde bestandsextensies voor imports
-                        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-                    }
-                }
-            }
+            'no-unused-vars': ['warn', {varsIgnorePattern: 'motion|React'}]
         }
     },
-
     // Basis ondersteuning voor TypeScript bestanden
     // (Zelfs als je nu geen TypeScript gebruikt, is dit handig voor toekomstige uitbreiding)
     {
         files: ['**/*.{ts,tsx}'],
-        // Hier kun je TypeScript-specifieke configuraties toevoegen indien nodig
     },
+    // Hier kun je TypeScript-specifieke configuraties toevoegen indien nodig
     // Specifieke regels voor Vite configuratie bestanden
+
     {
         files: ['vite.config.js'],
         rules: {
