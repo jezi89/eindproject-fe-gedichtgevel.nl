@@ -16,7 +16,6 @@ import {Footer} from "@/layouts/Footer/Footer.jsx";
 import {MonthlyPoems} from "@/components/monthly/MonthlyPoems.jsx";
 import {useSearchPoems} from '@/hooks/search';
 import {useCanvasNavigation} from "@/hooks/canvas/useCanvasNavigation.js";
-import {searchContextService} from "@/services/context/searchContextService";
 import styles from './HomePage.module.scss';
 
 /**
@@ -80,20 +79,22 @@ export function HomePage() {
     };
 
     // Handle recording page navigation from search results (Declameer button)
-    const handleNavigateToRecording = async (poemData) => {
+    const handleNavigateToRecording = (poemData) => {
         if (!poemData) return;
 
         try {
             console.log('🎤 HomePage: Navigating to Spreekgevel with poem:', poemData.title);
 
-            // Save poem to SearchContext for retrieval on recording page
-            await searchContextService.saveSelectedPoem(poemData);
-
-            // Navigate to recording page
-            navigate('/spreekgevel');
+            // Navigate to recording page with poem data in state
+            navigate('/spreekgevel', {
+                state: {
+                    selectedPoem: poemData,
+                    source: 'search'
+                }
+            });
         } catch (error) {
             console.error('❌ Failed to navigate to recording page:', error);
-            // Fallback: navigate anyway
+            // Fallback: navigate without state
             navigate('/spreekgevel');
         }
     };

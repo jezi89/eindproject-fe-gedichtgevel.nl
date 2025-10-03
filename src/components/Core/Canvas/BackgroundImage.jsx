@@ -14,7 +14,7 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
         if (previousTextureRef.current && previousTextureRef.current !== Texture.EMPTY) {
             try {
                 // Only destroy if it's not a shared/cached texture
-                if (previousTextureRef.current.baseTexture && previousTextureRef.current.baseTexture.destroyed === false) {
+                if (previousTextureRef.current.source && previousTextureRef.current.source.destroyed === false) {
                     console.log('🧹 Cleaning up previous texture');
                 }
             } catch (err) {

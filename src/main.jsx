@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 // Using createBrowserRouter for React Router v6.4+ because it allows for better data loading and route management
 import {createBrowserRouter, RouterProvider} from 'react-router';
+import {QueryClient} from '@tanstack/react-query';
+import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
+import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
 import {AuthProvider} from './context/auth/AuthProvider';
 import App from './App.jsx';
 
@@ -21,6 +24,24 @@ import {ProtectedRoute} from './components/ProtectedRoute.jsx';
 import {ContactPage} from './pages/Contact/ContactPage.jsx';
 import {FAQPage} from './pages/FAQ/FAQPage.jsx';
 import {TermsPage} from './pages/Terms/TermsPage.jsx';
+
+// Create QueryClient with default options
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5, // 5 minutes - data is considered fresh
+            gcTime: 1000 * 60 * 60 * 24, // 24 hours - cached data cleanup time
+            retry: 1, // Retry failed requests once
+            refetchOnWindowFocus: false, // Don't refetch on window focus
+        },
+    },
+});
+
+// Create persister for L2 cache (localStorage)
+const localStoragePersister = createSyncStoragePersister({
+    storage: window.localStorage,
+    key: 'GEDICHTGEVEL_QUERY_CACHE', // Custom key for this app
+});
 
 const router = createBrowserRouter([
     {
@@ -66,12 +87,17 @@ const router = createBrowserRouter([
     // AuthCallback outside the main layout
     {path: "auth/callback", element: <AuthCallback/>},
 ]);
-// TODO checken of dit React 18+ of React 19 syntax specifiek is
-// Create the root element for React 18+
+
+// Create the root element for React 19
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <AuthProvider>
-            <RouterProvider router={router} />
-        </AuthProvider>
+        <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{persister: localStoragePersister}}
+        >
+            <AuthProvider>
+                <RouterProvider router={router}/>
+            </AuthProvider>
+        </PersistQueryClientProvider>
     </React.StrictMode>,
 );

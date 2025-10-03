@@ -10,7 +10,9 @@
 import {useCallback, useDeferredValue, useEffect, useState, useTransition} from 'react';
 import {calculateCollapseScroll, getCarouselPoemHeight} from '@/utils/poemHeightCalculator';
 import {analyzeExpandablePoems} from '@/utils/shortPoemUtils.js';
-import {searchContextService} from '@/services/context/searchContextService';
+
+// LocalStorage key for carousel position
+const CAROUSEL_POSITION_KEY = 'gedichtgevel_carousel_position';
 
 // Navigation handler for carousel dots
 export const useSearchOrchestration = (results, layout) => {
@@ -42,37 +44,32 @@ export const useSearchOrchestration = (results, layout) => {
         }));
     }, []);
 
-    // Load carousel position from context on mount
+    // Load carousel position from localStorage on mount
     useEffect(() => {
         if (!hasLoadedPosition && results && results.length > 0) {
-            const loadPosition = async () => {
-                try {
-                    const context = await searchContextService.loadContext();
-                    if (context && context.carouselPosition !== undefined && context.carouselPosition !== null) {
-                        // Ensure carouselPosition is a valid number
-                        const position = typeof context.carouselPosition === 'number' ? context.carouselPosition : parseInt(context.carouselPosition, 10);
-                        if (!isNaN(position)) {
-                            // Validate position is within bounds
-                            const savedPosition = Math.max(0, Math.min(position, results.length - 1));
-                            setCurrentIndex(savedPosition);
-                            console.log('Loaded carousel position from context:', savedPosition);
-                        } else {
-                            console.warn('Invalid carousel position in context:', context.carouselPosition);
-                            setCurrentIndex(0);
-                            // Clear invalid position from cache
-                            await searchContextService.saveCarouselPosition(0);
-                        }
+            try {
+                const savedPosition = localStorage.getItem(CAROUSEL_POSITION_KEY);
+                if (savedPosition !== null) {
+                    const position = parseInt(savedPosition, 10);
+                    if (!isNaN(position)) {
+                        // Validate position is within bounds
+                        const validPosition = Math.max(0, Math.min(position, results.length - 1));
+                        setCurrentIndex(validPosition);
+                        console.log('Loaded carousel position from localStorage:', validPosition);
                     } else {
-                        // No carousel position in context, default to 0
+                        console.warn('Invalid carousel position in localStorage:', savedPosition);
                         setCurrentIndex(0);
+                        localStorage.setItem(CAROUSEL_POSITION_KEY, '0');
                     }
-                    setHasLoadedPosition(true);
-                } catch (error) {
-                    console.error('Failed to load carousel position:', error);
-                    setHasLoadedPosition(true);
+                } else {
+                    // No saved position, default to 0
+                    setCurrentIndex(0);
                 }
-            };
-            loadPosition();
+            } catch (error) {
+                console.error('Failed to load carousel position:', error);
+                setCurrentIndex(0);
+            }
+            setHasLoadedPosition(true);
         }
     }, [results, hasLoadedPosition]);
 
@@ -140,7 +137,7 @@ export const useSearchOrchestration = (results, layout) => {
     }, [results, currentIndex, layout.isCarousel, layout.resultCount, layout.isDesktop, layout.indicesToCalculate]);
 
     // Navigation handlers
-    const handlePrevious = useCallback(async () => {
+    const handlePrevious = useCallback(() => {
         if (!layout.isCarousel) return;
 
         const newIndex = (currentIndex - 1 + layout.resultCount) % layout.resultCount;
@@ -151,8 +148,8 @@ export const useSearchOrchestration = (results, layout) => {
         setNavigationDirection('prev');
         setCurrentIndex(newIndex);
 
-        // Save carousel position to context
-        await searchContextService.saveCarouselPosition(newIndex);
+        // Save carousel position to localStorage
+        localStorage.setItem(CAROUSEL_POSITION_KEY, String(newIndex));
 
         // Cleanup: Reset navigation direction na korte delay
         setTimeout(() => {
@@ -160,7 +157,7 @@ export const useSearchOrchestration = (results, layout) => {
         }, 500);
     }, [layout.isCarousel, layout.resultCount, currentIndex]);
 
-    const handleNext = useCallback(async () => {
+    const handleNext = useCallback(() => {
         if (!layout.isCarousel) return;
 
         const newIndex = (currentIndex + 1) % layout.resultCount;
@@ -171,8 +168,8 @@ export const useSearchOrchestration = (results, layout) => {
         setNavigationDirection('next');
         setCurrentIndex(newIndex);
 
-        // Save carousel position to context
-        await searchContextService.saveCarouselPosition(newIndex);
+        // Save carousel position to localStorage
+        localStorage.setItem(CAROUSEL_POSITION_KEY, String(newIndex));
 
         // Cleanup: Reset navigation direction na korte delay
         setTimeout(() => {
@@ -343,7 +340,7 @@ export const useSearchOrchestration = (results, layout) => {
         };
     }, [poemStates, layout.visibleIndices, results]);
 
-    const handleNavigateToIndex = useCallback(async (targetIndex, options = {}) => {
+    const handleNavigateToIndex = useCallback((targetIndex, options = {}) => {
         // Validate targetIndex is a valid number
         const validIndex = typeof targetIndex === 'number' ? targetIndex : parseInt(targetIndex, 10);
         if (isNaN(validIndex) || validIndex < 0) {
@@ -388,12 +385,12 @@ export const useSearchOrchestration = (results, layout) => {
             }
 
             // Wait for collapse animations before navigating
-            setTimeout(async () => {
+            setTimeout(() => {
                 setCurrentIndex(targetIndex);
                 setNavigationDirection('series-change');
 
                 // Save carousel position after series change
-                await searchContextService.saveCarouselPosition(targetIndex);
+                localStorage.setItem(CAROUSEL_POSITION_KEY, String(targetIndex));
 
                 setTimeout(() => setNavigationDirection('initial'), 800);
             }, 200);
@@ -406,8 +403,8 @@ export const useSearchOrchestration = (results, layout) => {
         setNavigationDirection(direction);
         setCurrentIndex(targetIndex);
 
-        // Save carousel position to context
-        await searchContextService.saveCarouselPosition(targetIndex);
+        // Save carousel position to localStorage
+        localStorage.setItem(CAROUSEL_POSITION_KEY, String(targetIndex));
 
         // Cleanup
         setTimeout(() => {

@@ -332,7 +332,25 @@ export function CanvasContent({
         }
 
         console.log(`🖱️ Cursor updated for mode "${moveMode}":`, viewport.cursor);
-    }, [moveMode, selectedLines, viewportRef]);
+    }, [moveMode, selectedLines, viewportRef.current]); // Added .current to trigger when viewport becomes available
+
+    // Initialize cursor when viewport becomes available (handles race condition with persisted moveMode)
+    useEffect(() => {
+        if (!viewportRef.current) return;
+
+        const viewport = viewportRef.current;
+        const currentMode = moveModeRef.current;
+
+        if (currentMode === 'poem') {
+            viewport.cursor = 'grab';
+        } else if (currentMode === 'line') {
+            viewport.cursor = selectedLines.size > 0 ? 'grab' : 'default';
+        } else {
+            viewport.cursor = 'default';
+        }
+
+        console.log(`🖱️ Cursor initialized on viewport ready: ${viewport.cursor} (mode: ${currentMode})`);
+    }, [viewportRef.current, selectedLines]);
 
     // Stable memoized event handlers using refs to prevent dependency cycles
     const handlePointerDown = useCallback(
@@ -452,11 +470,12 @@ export function CanvasContent({
     useEffect(() => {
         console.log("=== VIEWPORT SETUP ===");
         console.log("viewportRef.current exists:", !!viewportRef.current);
+        console.log("contentRef.current exists:", !!contentRef.current);
         console.log("Current moveMode:", moveMode);
         console.log("viewportDragEnabled:", viewportDragEnabled);
 
-        if (!viewportRef.current) {
-            console.log("No viewport ref, skipping setup");
+        if (!viewportRef.current || !contentRef.current) {
+            console.log("No viewport or content ref, skipping setup");
             return;
         }
 

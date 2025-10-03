@@ -8,7 +8,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
 import {PoemResultItem} from '@/components/poem';
-import {searchContextService} from '@/services/context/searchContextService';
 import styles from './MonthlyPoems.module.scss';
 
 // Sample monthly poems data - exactly 3 poems
@@ -68,20 +67,22 @@ export const MonthlyPoems = () => {
     };
 
     // Handle recording page navigation (Declameer button)
-    const handleNavigateToRecording = async (poemData) => {
+    const handleNavigateToRecording = (poemData) => {
         if (!poemData) return;
 
         try {
             console.log('🎤 MonthlyPoems: Navigating to Spreekgevel with poem:', poemData.title);
 
-            // Save poem to SearchContext for retrieval on recording page
-            await searchContextService.saveSelectedPoem(poemData);
-
-            // Navigate to recording page
-            navigate('/spreekgevel');
+            // Navigate to recording page with poem data in state
+            navigate('/spreekgevel', {
+                state: {
+                    selectedPoem: poemData,
+                    source: 'monthly'
+                }
+            });
         } catch (error) {
             console.error('❌ Failed to navigate to recording page:', error);
-            // Fallback: navigate anyway
+            // Fallback: navigate without state
             navigate('/spreekgevel');
         }
     };
