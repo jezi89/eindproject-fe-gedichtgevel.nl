@@ -616,25 +616,23 @@ export function useCanvasHandlers(canvasState, poemData = null) {
                 }
             }
 
-            // CTRL key in Edit mode enables viewport dragging
+            // C key in Edit mode enables viewport dragging
             if (
-                (event.ctrlKey || event.metaKey) &&
+                event.key.toLowerCase() === "c" &&
                 moveMode === "edit" &&
                 !viewportDragEnabled
             ) {
-                console.log("CTRL pressed in edit mode - enabling viewport drag");
                 setViewportDragEnabled(true);
             }
         };
 
         const handleKeyUp = (event) => {
-            // CTRL key release in Edit mode disables viewport dragging
+            // Vervang CTRL door C voor viewport drag uitzetten
             if (
-                !(event.ctrlKey || event.metaKey) &&
+                event.key.toLowerCase() === "c" &&
                 moveMode === "edit" &&
                 viewportDragEnabled
             ) {
-                console.log("CTRL released in edit mode - disabling viewport drag");
                 setViewportDragEnabled(false);
             }
         };
@@ -651,7 +649,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         selectAll,
         currentPoem,
         setViewportDragEnabled,
-        moveMode, // Add moveMode as dependency
+        moveMode,
     ]);
 
     // 3D transformation handlers

@@ -9,6 +9,7 @@ export default function LayoutControls({
                                            fontSize,
                                            textAlign,
                                            viewportDragEnabled,
+                                           isTempCameraControlActive, // For C-key state
                                            isOptimizationEnabled,
                                            skewX,
                                            skewY,
@@ -122,17 +123,17 @@ export default function LayoutControls({
                 {/* Camera Control */}
                 <div className={styles.controlGroup}>
                     <label>
-                        Camera Control <span className={styles.hintText}>(Ctrl+Drag)</span>
+                        Camera Control <span className={styles.hintText}>(C key+Drag/scroll)</span>
                     </label>
                     <div className={styles.cameraButtons}>
                         <button
-                            className={viewportDragEnabled ? styles.active : ""}
+                            className={viewportDragEnabled || isTempCameraControlActive ? styles.active : ""}
                             onClick={() => onViewportToggle(true)}
                         >
                             Aan
                         </button>
                         <button
-                            className={!viewportDragEnabled ? styles.active : ""}
+                            className={!viewportDragEnabled && !isTempCameraControlActive ? styles.active : ""}
                             onClick={() => onViewportToggle(false)}
                         >
                             Uit
