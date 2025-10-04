@@ -69,3 +69,5 @@ pnpm-debug.log*
 /scripts/migrate_poems.py
 /src/dev/
 .venv/ 
+/Inspect/
+Inspect/
