@@ -11,6 +11,7 @@ export function useCanvasState() {
 	// Refs
 	const viewportRef = useRef(null);
 	const contentRef = useRef(null);
+	const appRef = useRef(null);
 
 	// Drag-and-Drop State - PERSISTENT
 	const [poemOffset, setPoemOffset] = usePersistedState(
@@ -196,6 +197,7 @@ export function useCanvasState() {
 		// Refs
 		viewportRef,
 		contentRef,
+		appRef,
 
 		// UI State
 		...selection,

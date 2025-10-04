@@ -41,6 +41,7 @@ export function CanvasContent({
                                   skewZ,
                                   backgroundImage, // <-- De nieuwe prop
                                   contentRef,
+                                  appRef,
                                   poemOffset,
                                   setPoemOffset, // <-- STAP 2: Ontvang de state setter
                                   moveMode, // <-- En de moveMode
@@ -103,6 +104,13 @@ export function CanvasContent({
             app.renderer.resize(width, height);
         }
     }, [width, height, app]);
+
+    // Store app instance in appRef for export functionality
+    useEffect(() => {
+        if (app && appRef) {
+            appRef.current = app;
+        }
+    }, [app, appRef]);
 
     // Reset viewport zoom/pan when background image changes
     useEffect(() => {
