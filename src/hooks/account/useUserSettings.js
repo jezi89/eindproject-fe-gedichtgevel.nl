@@ -7,86 +7,42 @@
  * @returns {Object} Settings state and methods
  */
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {useAuth} from '../auth/useAuth';
 import {userSettingsService} from '@/services/settings/userSettingsService';
+import { supabaseApiService } from '../../services/api/apiService';
 
 export function useUserSettings() {
     const {user} = useAuth();
-    const [settings, setSettings] = useState({
-        display_name: null,
-        email_notifications: true,
-        theme_preference: 'dark',
-        updated_at: null
+    const queryClient = useQueryClient();
+
+    const { data: settings, isLoading: loading, error } = useQuery({
+        queryKey: ['userSettings', user?.id],
+        queryFn: () => supabaseApiService.getUserSettings(user.id),
+        enabled: !!user?.id,
     });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+
     const [saveSuccess, setSaveSuccess] = useState(false);
 
-    // Load settings on mount
-    useEffect(() => {
-        if (user?.id) {
-            loadSettings();
-        } else {
-            setLoading(false);
-        }
-    }, [user?.id]);
-
-    /**
-     * Load user settings from database
-     */
-    const loadSettings = useCallback(async () => {
-        if (!user?.id) return;
-
-        setLoading(true);
-        setError(null);
-
-        try {
-            const result = await userSettingsService.getUserSettings(user.id);
-
+    const { mutateAsync: updateSettingsMutation } = useMutation({
+        mutationFn: (updates) => userSettingsService.updateUserSettings(user.id, updates),
+        onSuccess: (result) => {
             if (result.success) {
-                setSettings(result.data);
-            } else {
-                throw new Error(result.error);
+                queryClient.setQueryData(['userSettings', user?.id], result.data);
+                setSaveSuccess(true);
+                setTimeout(() => setSaveSuccess(false), 3000);
             }
-        } catch (err) {
-            console.error('Failed to load settings:', err);
-            setError(err.message);
-        } finally {
-            setLoading(false);
         }
-    }, [user?.id]);
+    });
 
-    /**
-     * Update settings
-     */
     const updateSettings = useCallback(async (updates) => {
         if (!user?.id) {
-            setError('Je moet ingelogd zijn om instellingen te wijzigen');
-            return {success: false};
+            return {success: false, error: 'Je moet ingelogd zijn om instellingen te wijzigen'};
         }
+        return await updateSettingsMutation(updates);
+    }, [user?.id, updateSettingsMutation]);
 
-        setSaveSuccess(false);
-        setError(null);
-
-        try {
-            const result = await userSettingsService.updateUserSettings(user.id, updates);
-
-            if (result.success) {
-                setSettings(result.data);
-                setSaveSuccess(true);
-                // Auto-hide success message after 3 seconds
-                setTimeout(() => setSaveSuccess(false), 3000);
-            } else {
-                setError(result.error);
-            }
-
-            return result;
-        } catch (err) {
-            setError(err.message);
-            return {success: false, error: err.message};
-        }
-    }, [user?.id]);
 
     /**
      * Update display name
@@ -101,15 +57,14 @@ export function useUserSettings() {
     const toggleEmailNotifications = useCallback(async () => {
         const newValue = !settings.email_notifications;
         return await updateSettings({email_notifications: newValue});
-    }, [settings.email_notifications, updateSettings]);
+    }, [settings, updateSettings]);
 
     /**
      * Update theme preference
      */
     const updateTheme = useCallback(async (theme) => {
         if (!['dark', 'light'].includes(theme)) {
-            setError('Ongeldig thema gekozen');
-            return {success: false};
+            return {success: false, error: 'Ongeldig thema gekozen'};
         }
         return await updateSettings({theme_preference: theme});
     }, [updateSettings]);
@@ -119,7 +74,6 @@ export function useUserSettings() {
      */
     const changePassword = useCallback(async (newPassword) => {
         setSaveSuccess(false);
-        setError(null);
 
         try {
             const result = await userSettingsService.changePassword(newPassword);
@@ -127,13 +81,10 @@ export function useUserSettings() {
             if (result.success) {
                 setSaveSuccess(true);
                 setTimeout(() => setSaveSuccess(false), 3000);
-            } else {
-                setError(result.error);
             }
 
             return result;
         } catch (err) {
-            setError(err.message);
             return {success: false, error: err.message};
         }
     }, []);
@@ -144,18 +95,10 @@ export function useUserSettings() {
     const deleteAccount = useCallback(async () => {
         if (!user?.id) return {success: false};
 
-        setError(null);
-
         try {
             const result = await userSettingsService.deleteUserAccount(user.id);
-
-            if (!result.success) {
-                setError(result.error);
-            }
-
             return result;
         } catch (err) {
-            setError(err.message);
             return {success: false, error: err.message};
         }
     }, [user?.id]);
@@ -183,7 +126,6 @@ export function useUserSettings() {
 
             return result;
         } catch (err) {
-            setError(err.message);
             return {success: false, error: err.message};
         }
     }, [user?.id]);
@@ -192,7 +134,6 @@ export function useUserSettings() {
      * Clear messages
      */
     const clearMessages = useCallback(() => {
-        setError(null);
         setSaveSuccess(false);
     }, []);
 
@@ -204,7 +145,7 @@ export function useUserSettings() {
         saveSuccess,
 
         // Methods
-        loadSettings,
+        loadSettings: () => queryClient.invalidateQueries(['userSettings', user?.id]),
         updateSettings,
         updateDisplayName,
         toggleEmailNotifications,
