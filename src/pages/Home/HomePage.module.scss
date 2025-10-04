@@ -360,6 +360,48 @@
   text-decoration-line: underline;
   }
 
+// ===================================
+// Advanced Filters Section - New Implementation
+// ===================================
+
+.filtersSection {
+  width:            100%;
+  margin-bottom:    $spacing-m;
+  padding:          $spacing-l;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius:    12px;
+  backdrop-filter:  blur(10px);
+
+  @include respond-to("tablet") {
+    padding: $spacing-m;
+  }
+
+  @include respond-to("mobile") {
+    padding: $spacing-s;
+  }
+}
+
+.filtersGrid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap:                   $spacing-m;
+  margin-bottom:         $spacing-m;
+
+  @include respond-to("tablet") {
+    grid-template-columns: 1fr;
+    gap:                   $spacing-s;
+  }
+
+  @include respond-to("mobile") {
+    gap: $spacing-xs;
+  }
+}
+
+.filterFullWidth {
+  width:      100%;
+  margin-top: $spacing-s;
+}
+
 // Search Results Area - simple container without height constraints
 .searchResultsArea {
   width:            100%;

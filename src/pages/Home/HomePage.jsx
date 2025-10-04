@@ -8,11 +8,14 @@
  */
 
 import { useNavigate, useSearchParams } from 'react-router';
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useMemo } from 'react';
 import { SearchBar } from "@/components/search/SearchBar.jsx";
 import { SearchResults } from "@/components/search/SearchResults.jsx";
 import { SearchLoadingState } from "@/components/search/SearchLoadingState.jsx";
 import { SearchErrorBoundary } from "@/components/search/SearchErrorBoundary.jsx";
+import { FilterSlider } from "@/components/search/filters/FilterSlider.jsx";
+import { FilterDropdown } from "@/components/search/filters/FilterDropdown.jsx";
+import { FilterToggle } from "@/components/search/filters/FilterToggle.jsx";
 import { Footer } from "@/layouts/Footer/Footer.jsx";
 import { DailyPoems } from "@/components/DailyPoems/DailyPoems.jsx";
 import { useSearchPoems } from '@/hooks/search';
@@ -20,6 +23,7 @@ import { useCanvasNavigation } from "@/hooks/canvas/useCanvasNavigation.js";
 import { useAuthContext } from '@/context/auth/AuthContext.jsx';
 import { DailyPoemsProvider, useDailyPoems } from '@/context/poem/DailyPoemsContext.jsx';
 import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
+import { ERAS, filterPoemsByEra } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
 
 /**
@@ -48,6 +52,13 @@ function HomePageContent() {
     useEasterEgg(easterEggCallback);
     // ------------------------------------------------------------------
 
+    // --- Filter State Management ---
+    const [maxLength, setMaxLength] = useState(150); // Default: no length restriction
+    const [selectedEra, setSelectedEra] = useState(ERAS.ALL.id); // Default: all eras
+    const [language, setLanguage] = useState('en'); // Default: English (only available option)
+    const [onlyMyDesigns, setOnlyMyDesigns] = useState(false); // Creative Canvas filter (disabled)
+    // ------------------------------
+
     // Canvas navigation hook
     const { navigateToCanvas } = useCanvasNavigation();
 
@@ -64,6 +75,37 @@ function HomePageContent() {
         carouselPosition
     } = useSearchPoems('homepage');
 
+    // --- Apply Filters to Search Results ---
+    const filteredResults = useMemo(() => {
+        if (!results || results.length === 0) return [];
+
+        let filtered = [...results];
+
+        // 1. Filter by length (line count)
+        if (maxLength < 150) {
+            filtered = filtered.filter(poem => {
+                const lineCount = poem.lines ? poem.lines.length : 0;
+                return lineCount <= maxLength;
+            });
+        }
+
+        // 2. Filter by era (based on author birth year)
+        if (selectedEra !== ERAS.ALL.id) {
+            filtered = filterPoemsByEra(filtered, selectedEra);
+        }
+
+        // 3. Filter by language (currently only English is available)
+        // Future: Add language detection or filter based on poem metadata
+        // For now, all poems from PoetryDB are in English
+
+        // 4. Filter by Creative Canvas designs (future feature)
+        // if (onlyMyDesigns) {
+        //     filtered = filtered.filter(poem => hasUserDesign(poem));
+        // }
+
+        return filtered;
+    }, [results, maxLength, selectedEra]);
+    // ---------------------------------------
 
     // Bepaal search state gebaseerd op hook
     const getSearchState = () => {
@@ -153,50 +195,42 @@ function HomePageContent() {
 
                 {/* Search Container with Filter Bar and Search Bar */}
                 <div className={styles.searchContainer}>
-                    {/* Filter Bar - direct boven search bar */}
-                    <div className={styles.filterBarContainer}>
-                        <div className={styles.filterBar}>
-                            <div className={styles.filterContainer}>
-                                <div className={styles.filterItem}>
-                                    <span className={styles.filterText}>Taal</span>
-                                    <div className={styles.dropdownArrow}>
-                                        <svg className={styles.arrowVector} viewBox="0 0 21 16">
-                                            <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
-                                        </svg>
-                                    </div>
-                                </div>
+                    {/* Advanced Filters Section */}
+                    <div className={styles.filtersSection}>
+                        <div className={styles.filtersGrid}>
+                            {/* Language Filter */}
+                            <FilterDropdown
+                                type="language"
+                                value={language}
+                                onChange={setLanguage}
+                            />
 
-                                <div className={styles.filterItem}>
-                                    <span className={styles.filterText}>Lengte</span>
-                                    <div className={styles.dropdownArrow}>
-                                        <svg className={styles.arrowVector} viewBox="0 0 21 16">
-                                            <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
-                                        </svg>
-                                    </div>
-                                </div>
+                            {/* Era Filter */}
+                            <FilterDropdown
+                                type="era"
+                                value={selectedEra}
+                                onChange={setSelectedEra}
+                            />
 
-                                <div className={styles.filterItem}>
-                                    <span className={styles.filterText}>Tijdperk</span>
-                                    <div className={styles.dropdownArrow}>
-                                        <svg className={styles.arrowVector} viewBox="0 0 21 16">
-                                            <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
-                                        </svg>
-                                    </div>
-                                </div>
+                            {/* Creative Canvas Filter (disabled mock-up) */}
+                            <FilterToggle
+                                checked={onlyMyDesigns}
+                                onChange={setOnlyMyDesigns}
+                                label="Alleen gedichten met mijn designs"
+                                disabled={true}
+                                tooltipText="Binnenkort beschikbaar"
+                            />
+                        </div>
 
-                                <div className={styles.filterItem}>
-                                    <span className={styles.filterText}>Creative Canvas</span>
-                                    <div className={styles.dropdownArrow}>
-                                        <svg className={styles.arrowVector} viewBox="0 0 21 16">
-                                            <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                <div className={styles.filterItemAdvanced}>
-                                    <span className={styles.filterTextAdvanced}>Meer Filters</span>
-                                </div>
-                            </div>
+                        {/* Length Filter - Full Width */}
+                        <div className={styles.filterFullWidth}>
+                            <FilterSlider
+                                value={maxLength}
+                                onChange={setMaxLength}
+                                min={10}
+                                max={150}
+                                label="Maximale lengte"
+                            />
                         </div>
                     </div>
 
@@ -220,7 +254,7 @@ function HomePageContent() {
                         {searchState === 'results' && (
                             <SearchErrorBoundary>
                                 <SearchResults
-                                    results={results}
+                                    results={filteredResults}
                                     // onOpenFocusStudio={handleOpenFocusStudio}
                                     searchTerm={searchTerm}
                                     hideSeriesNavigation={false}

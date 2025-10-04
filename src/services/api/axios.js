@@ -1,40 +1,30 @@
-/**
- * Axios API Client Instances
- * 
- * Configures and exports axios instances for different API endpoints.
- * 
- * @module services/api/axios
- */
 
 import axios from 'axios';
 
 /**
- * Axios instance for the external PoetryDB API
- * 
- * @constant
- * @type {import('axios').AxiosInstance}
+ * Een factory-functie voor het aanmaken van een geconfigureerde Axios-instantie.
+ * @param {string} baseURL - De basis-URL van de API.
+ * @param {object} headers - Optionele extra headers.
+ * @returns {import('axios').AxiosInstance}
  */
-export const poetryDbApi = axios.create({
-    baseURL: 'https://poetrydb.org',
-    timeout: 5000
-    // Additional headers or interceptors for PoetryDB
+const createApiClient = (baseURL, headers = {}) => {
+    return axios.create({
+        baseURL,
+        headers: {
+            'Content-Type': 'application/json',
+            ...headers,
+        },
+    });
+};
+
+// Client voor PoetryDB
+export const poetryDbApi = createApiClient('https://poetrydb.org');
+
+// Client voor Flickr
+// API key wordt via request params meegegeven, dus geen extra headers nodig.
+export const flickrApi = createApiClient('https://api.flickr.com/services/rest/');
+
+// Client voor Pexels
+export const pexelsApi = createApiClient('https://api.pexels.com/v1/', {
+    Authorization: import.meta.env.VITE_PEXELS_API_KEY,
 });
-
-/**
- * Example: Axios instance for Supabase API
- * Note: Often the Supabase client is more appropriate than a custom REST endpoint
- * 
- * @constant
- * @type {import('axios').AxiosInstance}
- */
-// export const supabaseApi = axios.create({
-//     baseURL: 'YOUR_SUPABASE_URL',
-//     timeout: 10000,
-//     headers: {
-//         'apikey': 'YOUR_SUPABASE_ANON_KEY',
-//         'Authorization': `Bearer YOUR_SUPABASE_ANON_KEY`
-//     }
-// });
-
-// Additional API instances can be added here
-// export const anotherApi = axios.create({...});

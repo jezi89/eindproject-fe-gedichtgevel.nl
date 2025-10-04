@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 // Using createBrowserRouter for React Router v6.4+ because it allows for better data loading and route management
 import {createBrowserRouter, RouterProvider} from 'react-router';
-import {QueryClient} from '@tanstack/react-query';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
 import {AuthProvider} from './context/auth/AuthProvider';
 import App from './App.jsx';
+import queryClient from './services/api/queryClient.js';
 
 // Import Page Components
 import {HomePage} from './pages/Home/HomePage.jsx';
@@ -25,17 +25,7 @@ import {ContactPage} from './pages/Contact/ContactPage.jsx';
 import {FAQPage} from './pages/FAQ/FAQPage.jsx';
 import {TermsPage} from './pages/Terms/TermsPage.jsx';
 
-// Create QueryClient with default options
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            staleTime: 1000 * 60 * 5, // 5 minutes - data is considered fresh
-            gcTime: 1000 * 60 * 60 * 24, // 24 hours - cached data cleanup time
-            retry: 1, // Retry failed requests once
-            refetchOnWindowFocus: false, // Don't refetch on window focus
-        },
-    },
-});
+
 
 // Create persister for L2 cache (localStorage)
 const localStoragePersister = createSyncStoragePersister({
