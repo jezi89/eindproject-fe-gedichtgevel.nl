@@ -12,6 +12,8 @@ import styles from './SearchResults.module.scss';
 import {ResultsOverview} from './ResultsOverview';
 import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
 import {PoemResultItem} from '@/components/poem';
+import {CarouselArrows} from './CarrouselArrows';
+import {CarouselDots} from './CarrouselDots';
 
 /**
  * SearchResults component for displaying poem search results
@@ -96,6 +98,16 @@ export const SearchResults = memo(({
                 </div>
             )}
 
+            {/* Carousel dots/indicators - show above results container */}
+            {!isDailyMode && updatedLayout.isCarousel && (
+                <CarouselDots
+                    totalCount={updatedLayout.resultCount}
+                    currentIndex={orchestration.currentIndex}
+                    onNavigate={orchestration.handleNavigateToIndex}
+                    hideSeriesNavigation={hideSeriesNavigation}
+                    hideRangeIndicator={hideRangeIndicator}
+                />
+            )}
 
             <div className={`${styles.resultsContainer} ${styles[updatedLayout.layoutClass]}`}>
                 <LayoutGroup>
@@ -156,6 +168,17 @@ export const SearchResults = memo(({
                         })}
                     </motion.div>
                 </LayoutGroup>
+
+                {/* Carousel arrows - only in search mode */}
+                {!isDailyMode && updatedLayout.isCarousel && (
+                    <CarouselArrows
+                        onPrevious={orchestration.handlePrevious}
+                        onNext={orchestration.handleNext}
+                        hasMultiple={updatedLayout.hasMultiple}
+                        searchResultsRef={searchResultsRef}
+                        canvasMode={canvasMode}
+                    />
+                )}
             </div>
         </div>
     );

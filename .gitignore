@@ -67,3 +67,5 @@ pnpm-debug.log*
 /LEGACY/
 /FUTURE/
 /scripts/migrate_poems.py
+/src/dev/
+.venv/ 

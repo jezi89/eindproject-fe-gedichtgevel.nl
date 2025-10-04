@@ -13,9 +13,9 @@
   flex-direction:   column;
   justify-content:  center; // Added for proper vertical centering
   width:            100%;
-  padding:          $spacing-s 0;
+  padding:          $spacing-m 0 $spacing-xxl 0; // Add bottom padding for animations
   background-color: transparent; // Inherit from parent
-  gap:              $spacing-s;
+
   container-type:   inline-size;
   container-name:   search-results;
 

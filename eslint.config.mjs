@@ -8,6 +8,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
+import viteResolver from 'eslint-import-resolver-vite';
 
 // Basisregels voor React componenten en JSX
 const reactRules = {
@@ -187,9 +188,7 @@ export default [
         settings: {
             react: {version: 'detect'},
             'import/resolver': {
-                vite: {
-                    viteConfig: './vite.config.js'
-                }
+                vite: viteResolver
             }
         },
         // Combineer alle regelsets

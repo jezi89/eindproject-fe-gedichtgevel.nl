@@ -244,11 +244,6 @@ export default function XYMoveSliders({
                                 disabled={!isActive}
                                 className={styles.slider}
                             />
-                            <span>
-                                {isDragging
-                                    ? Number(currentPosition.x.toFixed(3))
-                                    : currentPosition.x}
-                            </span>
                             <button
                                 type="button"
                                 onClick={handleResetX}
@@ -276,11 +271,6 @@ export default function XYMoveSliders({
                                 disabled={!isActive}
                                 className={styles.slider}
                             />
-                            <span>
-                                {isDragging
-                                    ? Number(currentPosition.y.toFixed(3))
-                                    : currentPosition.y}
-                            </span>
                             <button
                                 type="button"
                                 onClick={handleResetY}

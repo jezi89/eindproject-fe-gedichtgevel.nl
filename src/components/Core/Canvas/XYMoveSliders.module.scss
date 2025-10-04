@@ -4,9 +4,9 @@
   position:        fixed;
   z-index:         1000;
   right:           20px;
-  width:           320px; /* Vaste breedte - geen responsieve verandering */
-  min-width:       280px; /* Minimum voor zeer kleine schermen */
-  max-width:       340px; /* Maximum om groei te voorkomen */
+  width:           400px; /* Bredere slider voor betere controle */
+  min-width:       320px; /* Minimum voor zeer kleine schermen */
+  max-width:       480px; /* Maximum om groei te voorkomen */
   padding:         16px;
   transition:      all 0.3s ease;
   border:          1px solid rgba(221, 221, 221, 0.8);
@@ -42,11 +42,28 @@
   }
 
 .moveButton {
+  font-family:     $font-family-button;
+  font-size:       $font-size-xxxs;
+  font-weight:     $font-weight-semibold;
   display:         flex;
   align-items:     center;
-  justify-content: flex-end;
+  justify-content: center;
   width:           auto;
   margin-left:     auto;
+  padding:         6px 12px;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  color:           #666;
+  border:          1px solid #ddd;
+  border-radius:   6px;
+  background:      #fff;
+  }
+
+.moveButton:hover {
+  color:        #333;
+  border-color: #999;
+  background:   #f5f5f5;
+  box-shadow:   0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
 .status {
@@ -153,17 +170,7 @@
   background: #ccc;
   }
 
-/* Voeg nieuwe rule toe voor de waarde-span in sliderContainer */
-.sliderContainer span {
-  font-family: $font-family-monospace;
-  font-size:   $font-size-xxxs;
-  font-weight: $font-weight-bold;
-  flex-shrink: 0; /* Voorkomt krimpen */
-  width:       60px; /* Vaste breedte voor consistentie */
-  min-width:   0; /* Voorkomt overflow */
-  text-align:  right;
-  color:       #2563eb;
-  }
+/* Removed: duplicate position span styling (no longer in JSX) */
 
 .resetButton {
   font-family:     $font-family-button;
@@ -222,16 +229,16 @@
   background:   #f9f9f9;
   }
 
-/* Responsive adjustments */
+/* Responsive adjustments - alleen voor niet-popover state */
 @media (max-width: 1200px) {
-  .xyMoveContainer {
-	right:  10px; /* Alleen positie aanpassen, niet width */
-	bottom: 15px;
+  .xyMoveContainer:not(:popover-open) {
+	right:  10px;
+	bottom: 15px; /* Alleen als popover NIET open is */
 	}
   }
 
 @media (max-width: 768px) {
-  .xyMoveContainer {
+  .xyMoveContainer:not(:popover-open) {
 	right:   10px;
 	bottom:  10px;
 	padding: 12px;
@@ -366,13 +373,38 @@
 	}
   }
 
-/* Popover positioning override */
+/* Popover positioning - gecentreerd in vrije ruimte boven syncSection */
 .xyMoveContainer:popover-open {
-  top:    320px;
+  top:    340px;  /* Perfect gecentreerd op 1080p (syncSection op 380px) */
   right:  20px;
   bottom: auto;
   left:   auto;
   }
+
+/* Responsive vertical positioning voor verschillende schermhoogtes */
+@media (max-height: 900px) {
+  .xyMoveContainer:popover-open {
+    top: 300px; /* Proportioneel aangepast voor kleinere schermen */
+  }
+}
+
+@media (max-height: 800px) {
+  .xyMoveContainer:popover-open {
+    top: 260px; /* Iets hoger op kleine schermen */
+  }
+}
+
+@media (max-height: 700px) {
+  .xyMoveContainer:popover-open {
+    top: 220px; /* Compacter op zeer kleine schermen */
+  }
+}
+
+@media (max-height: 600px) {
+  .xyMoveContainer:popover-open {
+    top: 180px; /* Minimale ruimte op zeer kleine schermen */
+  }
+}
 
 /* Print styles - verwijder focus effects */
 @media print {

@@ -1,0 +1,19 @@
+create table public.background (
+  id uuid not null default extensions.uuid_generate_v4 (),
+  name text not null,
+  description text null,
+  file_path text not null,
+  thumbnail_path text null,
+  width integer null,
+  height integer null,
+  category text null,
+  is_system boolean null default false,
+  user_id uuid null,
+  created_at timestamp with time zone null default now(),
+  is_public boolean null default true,
+  metadata jsonb null default '{}'::jsonb,
+  constraint backgrounds_pkey primary key (id),
+  constraint backgrounds_file_path_key unique (file_path),
+  constraint backgrounds_thumbnail_path_key unique (thumbnail_path),
+  constraint backgrounds_user_id_fkey foreign KEY (user_id) references profile (id) on delete set null
+) TABLESPACE pg_default;
