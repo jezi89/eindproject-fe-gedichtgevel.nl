@@ -21,11 +21,49 @@
 
 .saveSection {
   display:          flex;
-  justify-content:  center;
+  flex-direction:   column;
+  align-items:      center;
   padding:          12px;
   border-top:       1px solid #3d4a5c;
   border-bottom:    1px solid #3d4a5c;
   background-color: rgba(45, 55, 72, 0.3);
+  gap:              12px;
+  }
+
+.downloadButtons {
+  display:         flex;
+  justify-content: center;
+  width:           100%;
+  gap:             8px;
+  }
+
+.downloadButton {
+  font-family:      $font-family-body;
+  font-size:        $font-size-xs;
+  font-weight:      $font-weight-semibold;
+  display:          flex;
+  flex:             1;
+  align-items:      center;
+  justify-content:  center;
+  min-width:        0;
+  padding:          8px 12px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease, transform 0.1s ease;
+  color:            #e2e8f0;
+  border:           none;
+  border-radius:    6px;
+  background-color: #3d4a5c;
+  gap:              4px;
+  }
+
+.downloadButton:hover {
+  background-color: #4a5a6d;
+  transform:        translateY(-1px);
+  }
+
+.downloadButton:active {
+  background-color: #5a6a7d;
+  transform:        translateY(0);
   }
 
 .syncSection {

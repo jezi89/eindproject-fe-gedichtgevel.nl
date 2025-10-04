@@ -104,6 +104,20 @@ export function CanvasContent({
         }
     }, [width, height, app]);
 
+    // Reset viewport zoom/pan when background image changes
+    useEffect(() => {
+        if (viewportRef.current && backgroundImage) {
+            const viewport = viewportRef.current;
+
+            // Reset viewport to default state (no zoom, no pan)
+            viewport.scale.set(1, 1);  // Reset zoom to 100%
+            viewport.position.set(0, 0);  // Reset pan to origin
+
+            console.log('🔄 Viewport reset to default state (new background)');
+        }
+    }, [backgroundImage, viewportRef]);
+    
+
     // Auto-recenter viewport (only when no moves have been made)
     useAutoRecenter({
         viewportRef,
