@@ -17,25 +17,28 @@ export function Footer() {
                     <div className={styles.footerSection}>
                         <h4 className={styles.footerSubtitle}>Ontdekken</h4>
                         <ul className={styles.footerLinks}>
-                            <li><a href="/zoeken" className={styles.footerLink}>Zoeken</a></li>
-                            <li><a href="/collectie" className={styles.footerLink}>Collectie</a></li>
-                            <li><a href="/audio" className={styles.footerLink}>Audio</a></li>
+                            <li><a href="/" className={styles.footerLink}>Zoeken</a></li>
+                            <li><a href="/designgevel" className={styles.footerLink}>Designgevel</a></li>
+                            <li><a href="/spreekgevel" className={styles.footerLink}>Spreekgevel</a></li>
+                            <li><a href="/collectiegevel" className={styles.footerLink}>Collectiegevel</a></li>
                         </ul>
                     </div>
 
                     <div className={styles.footerSection}>
                         <h4 className={styles.footerSubtitle}>Account</h4>
                         <ul className={styles.footerLinks}>
-                            <li><a href="/profiel" className={styles.footerLink}>Profiel</a></li>
-                            <li><a href="/instellingen" className={styles.footerLink}>Instellingen</a></li>
+                            <li><a href="/account" className={styles.footerLink}>Mijn Account</a></li>
+                            <li><a href="/welkom" className={styles.footerLink}>Inloggen</a></li>
                         </ul>
                     </div>
 
                     <div className={styles.footerSection}>
                         <h4 className={styles.footerSubtitle}>Info</h4>
                         <ul className={styles.footerLinks}>
-                            <li><a href="/over" className={styles.footerLink}>Over ons</a></li>
+                            <li><a href="/overmij" className={styles.footerLink}>Over</a></li>
                             <li><a href="/contact" className={styles.footerLink}>Contact</a></li>
+                            <li><a href="/hoedan" className={styles.footerLink}>FAQ</a></li>
+                            <li><a href="/voorwaarden" className={styles.footerLink}>Voorwaarden</a></li>
                         </ul>
                     </div>
                 </div>

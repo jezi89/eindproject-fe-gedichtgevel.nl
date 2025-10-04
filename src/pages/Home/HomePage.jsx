@@ -7,29 +7,49 @@
  * @module pages/Home/HomePage
  */
 
-import {useNavigate, useSearchParams} from 'react-router';
-import {SearchBar} from "@/components/search/SearchBar.jsx";
-import {SearchResults} from "@/components/search/SearchResults.jsx";
-import {SearchLoadingState} from "@/components/search/SearchLoadingState.jsx";
-import {SearchErrorBoundary} from "@/components/search/SearchErrorBoundary.jsx";
-import {Footer} from "@/layouts/Footer/Footer.jsx";
-import {DailyPoems} from "@/components/DailyPoems/DailyPoems.jsx";
-import {useSearchPoems} from '@/hooks/search';
-import {useCanvasNavigation} from "@/hooks/canvas/useCanvasNavigation.js";
+import { useNavigate, useSearchParams } from 'react-router';
+import { useRef, useCallback } from 'react';
+import { SearchBar } from "@/components/search/SearchBar.jsx";
+import { SearchResults } from "@/components/search/SearchResults.jsx";
+import { SearchLoadingState } from "@/components/search/SearchLoadingState.jsx";
+import { SearchErrorBoundary } from "@/components/search/SearchErrorBoundary.jsx";
+import { Footer } from "@/layouts/Footer/Footer.jsx";
+import { DailyPoems } from "@/components/DailyPoems/DailyPoems.jsx";
+import { useSearchPoems } from '@/hooks/search';
+import { useCanvasNavigation } from "@/hooks/canvas/useCanvasNavigation.js";
+import { useAuthContext } from '@/context/auth/AuthContext.jsx';
+import { DailyPoemsProvider, useDailyPoems } from '@/context/poem/DailyPoemsContext.jsx';
+import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
 import styles from './HomePage.module.scss';
 
 /**
- * HomePage component
- *
- * @component
- * @returns {JSX.Element} Home page component
+ * Internal component containing the actual page content.
+ * This allows us to use the DailyPoemsContext within the same file as the provider.
  */
-export function HomePage() {
+function HomePageContent() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const dailyPoemsSectionRef = useRef(null);
+
+    // --- Easter Egg for Refetching Daily Poems (for logged-in users) ---
+    const { user } = useAuthContext();
+    const { refetchDailyPoems } = useDailyPoems();
+
+    const handleRefetchAndScroll = useCallback(async () => {
+        await refetchDailyPoems();
+        // Scroll to the section after the poems have been refetched.
+        // A small timeout ensures the DOM has time to update before scrolling.
+        setTimeout(() => {
+            dailyPoemsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }, [refetchDailyPoems]);
+
+    const easterEggCallback = user ? handleRefetchAndScroll : () => {};
+    useEasterEgg(easterEggCallback);
+    // ------------------------------------------------------------------
 
     // Canvas navigation hook
-    const {navigateToCanvas} = useCanvasNavigation();
+    const { navigateToCanvas } = useCanvasNavigation();
 
     // Render welcome message and search bar
     // Handle any error states
@@ -253,12 +273,26 @@ export function HomePage() {
                 </div>
             </div>
 
-            {/* Gedichten van de Maand - nieuwe MonthlyPoems component */}
-            <DailyPoems/>
+            {/* Gedichten van de Dag - met ref voor scroll-naar-sectie */}
+            <div ref={dailyPoemsSectionRef}>
+                <DailyPoems/>
+            </div>
 
             {/* Footer - altijd onderaan */}
             <Footer/>
         </div>
 
+    );
+}
+
+/**
+ * Main HomePage export, wrapped in the DailyPoemsProvider.
+ * This ensures all children have access to the shared daily poems state.
+ */
+export function HomePage() {
+    return (
+        <DailyPoemsProvider>
+            <HomePageContent />
+        </DailyPoemsProvider>
     );
 }
