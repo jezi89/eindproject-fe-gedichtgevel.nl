@@ -76,10 +76,14 @@ export default function FontControls({
                         onChange={(e) => onFontFamilyChange(e.target.value)}
                         style={{width: "100%", padding: "4px"}}
                     >
-                        {availableFonts.map((font) => (
-                            <option key={font.name} value={font.value}>
-                                {font.name}
-                            </option>
+                        {availableFonts.map((group) => (
+                            <optgroup key={group.label} label={group.label}>
+                                {group.fonts.map((font) => (
+                                    <option key={font.value} value={font.value}>
+                                        {font.label}
+                                    </option>
+                                ))}
+                            </optgroup>
                         ))}
                     </select>
                 </div>
