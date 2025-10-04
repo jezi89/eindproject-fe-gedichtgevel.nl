@@ -23,6 +23,8 @@ export default function Navigation({
                                        poemData,
                                        canvasState,
                                        currentDesignId,
+                                       onExportAsPNG,
+                                       onExportAsJPG,
                                    }) {
     const navbarToggleRef = useRef(null);
 
@@ -121,6 +123,25 @@ export default function Navigation({
                         canvasState={canvasState}
                         currentDesignId={currentDesignId}
                     />
+                    {/* Download Buttons */}
+                    {onExportAsPNG && onExportAsJPG && (
+                        <div className={styles.downloadButtons}>
+                            <button
+                                onClick={() => onExportAsPNG()}
+                                className={styles.downloadButton}
+                                title="Download als PNG"
+                            >
+                                📥 PNG
+                            </button>
+                            <button
+                                onClick={() => onExportAsJPG()}
+                                className={styles.downloadButton}
+                                title="Download als JPG"
+                            >
+                                📥 JPG
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 

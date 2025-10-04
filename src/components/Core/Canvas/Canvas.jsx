@@ -8,6 +8,7 @@ import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
 import {useCanvasState} from "../../../hooks/canvas/useCanvasState";
 import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
+import {useCanvasExport} from "../../../hooks/canvas/useCanvasExport";
 import {CanvasContent} from "./CanvasContent.jsx";
 import {ResponsiveLayout} from "./ResponsiveLayout.jsx";
 import Navigation from "./Navigation.jsx";
@@ -181,6 +182,9 @@ export default function Canvas({
 
     // Use responsive canvas hook
     const layout = useResponsiveCanvas();
+
+    // Use canvas export hook for downloading designs
+    const {exportAsPNG, exportAsJPG} = useCanvasExport(canvasState.appRef);
 
     // 3D transformation handlers
     const getSelectedTransformValues = useCallback((property, defaultValue) => {
@@ -444,6 +448,8 @@ export default function Canvas({
                         poemData={currentPoem}
                         canvasState={canvasState}
                         currentDesignId={currentDesignId}
+                        onExportAsPNG={exportAsPNG}
+                        onExportAsJPG={exportAsJPG}
                     />
                 }
             />
