@@ -394,6 +394,7 @@ export default function Canvas({
                             authorColor={canvasState.effectiveAuthorColor}
                             viewportRef={canvasState.viewportRef}
                             contentRef={canvasState.contentRef}
+                            appRef={canvasState.appRef}
                             fontFamily={canvasState.fontFamily}
                             fontStatus={canvasState.fontStatus}
                             fontWeight={canvasState.fontWeight}
