@@ -46,22 +46,14 @@ export function FilterToggle({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <label className={styles.toggleLabel}>
+            <button
+                type="button"
+                className={styles.toggleLabel}
+                onClick={handleToggle}
+                disabled={disabled}
+            >
                 <span className={styles.labelText}>{label}</span>
-                <button
-                    type="button"
-                    role="switch"
-                    aria-checked={checked}
-                    aria-label={label}
-                    className={`${styles.toggleSwitch} ${checked ? styles.checked : ''}`}
-                    onClick={handleToggle}
-                    disabled={disabled}
-                >
-                    <span className={styles.toggleSlider}>
-                        <span className={styles.toggleThumb}></span>
-                    </span>
-                </button>
-            </label>
+            </button>
 
             {showTooltip && tooltipText && (
                 <div className={styles.tooltip}>
