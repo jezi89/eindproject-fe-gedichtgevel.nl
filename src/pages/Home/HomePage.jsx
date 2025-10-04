@@ -13,8 +13,8 @@ import { SearchBar } from "@/components/search/SearchBar.jsx";
 import { SearchResults } from "@/components/search/SearchResults.jsx";
 import { SearchLoadingState } from "@/components/search/SearchLoadingState.jsx";
 import { SearchErrorBoundary } from "@/components/search/SearchErrorBoundary.jsx";
-import { FilterSlider } from "@/components/search/filters/FilterSlider.jsx";
 import { FilterDropdown } from "@/components/search/filters/FilterDropdown.jsx";
+import { FilterDropdownSlider } from "@/components/search/filters/FilterDropdownSlider.jsx";
 import { FilterToggle } from "@/components/search/filters/FilterToggle.jsx";
 import { Footer } from "@/layouts/Footer/Footer.jsx";
 import { DailyPoems } from "@/components/DailyPoems/DailyPoems.jsx";
@@ -195,42 +195,53 @@ function HomePageContent() {
 
                 {/* Search Container with Filter Bar and Search Bar */}
                 <div className={styles.searchContainer}>
-                    {/* Advanced Filters Section */}
-                    <div className={styles.filtersSection}>
-                        <div className={styles.filtersGrid}>
-                            {/* Language Filter */}
-                            <FilterDropdown
-                                type="language"
-                                value={language}
-                                onChange={setLanguage}
-                            />
+                    {/* Filter Bar - paginabrede oranje bar met filters */}
+                    <div className={styles.filterBarContainer}>
+                        <div className={styles.filterBar}>
+                            <div className={styles.filterContainer}>
+                                {/* Language Filter */}
+                                <div className={styles.filterItem}>
+                                    <FilterDropdown
+                                        type="language"
+                                        value={language}
+                                        onChange={setLanguage}
+                                    />
+                                </div>
 
-                            {/* Era Filter */}
-                            <FilterDropdown
-                                type="era"
-                                value={selectedEra}
-                                onChange={setSelectedEra}
-                            />
+                                {/* Length Filter - uitklapbaar met slider */}
+                                <div className={styles.filterItem}>
+                                    <FilterDropdownSlider
+                                        value={maxLength}
+                                        onChange={setMaxLength}
+                                        label="Lengte"
+                                    />
+                                </div>
 
-                            {/* Creative Canvas Filter (disabled mock-up) */}
-                            <FilterToggle
-                                checked={onlyMyDesigns}
-                                onChange={setOnlyMyDesigns}
-                                label="Alleen gedichten met mijn designs"
-                                disabled={true}
-                                tooltipText="Binnenkort beschikbaar"
-                            />
-                        </div>
+                                {/* Era Filter */}
+                                <div className={styles.filterItem}>
+                                    <FilterDropdown
+                                        type="era"
+                                        value={selectedEra}
+                                        onChange={setSelectedEra}
+                                    />
+                                </div>
 
-                        {/* Length Filter - Full Width */}
-                        <div className={styles.filterFullWidth}>
-                            <FilterSlider
-                                value={maxLength}
-                                onChange={setMaxLength}
-                                min={10}
-                                max={150}
-                                label="Maximale lengte"
-                            />
+                                {/* Creative Canvas Filter (disabled mock-up) */}
+                                <div className={styles.filterItem}>
+                                    <FilterToggle
+                                        checked={onlyMyDesigns}
+                                        onChange={setOnlyMyDesigns}
+                                        label="Canvas"
+                                        disabled={true}
+                                        tooltipText="Binnenkort beschikbaar"
+                                    />
+                                </div>
+
+                                {/* Meer Filters - toekomstige uitbreiding */}
+                                <div className={styles.filterItemAdvanced}>
+                                    <span className={styles.filterTextAdvanced}>Meer Filters</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

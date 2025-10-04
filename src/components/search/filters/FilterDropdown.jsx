@@ -143,15 +143,12 @@ export function FilterDropdown({
                 className={`${styles.dropdownButton} ${isOpen ? styles.open : ''} ${isActive() ? styles.active : ''}`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span className={styles.dropdownLabel}>{getLabel()}</span>
-                <span className={styles.dropdownValue}>{getDisplayValue()}</span>
-                <svg
-                    className={`${styles.dropdownArrow} ${isOpen ? styles.rotated : ''}`}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                >
-                    <path d="M7 10l5 5 5-5H7z" fill="currentColor" />
-                </svg>
+                <span className={styles.dropdownValue}>{getLabel()}</span>
+                <div className={styles.dropdownArrow}>
+                    <svg className={styles.arrowVector} viewBox="0 0 21 16">
+                        <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
+                    </svg>
+                </div>
             </button>
 
             {isOpen && (
