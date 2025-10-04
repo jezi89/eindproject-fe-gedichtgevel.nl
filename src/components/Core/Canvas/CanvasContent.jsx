@@ -113,32 +113,32 @@ export function CanvasContent({
         deps: [width, height, poemId, textAlign],
     });
 
-    // Debug logging (dev only, reduced frequency)
-    useEffect(() => {
-        if (import.meta.env.DEV) {
-            console.log("Viewport Debug:", {
-                app: !!app,
-                ticker: !!app?.ticker,
-                renderer: !!app?.renderer,
-                events: !!app?.renderer?.events,
-                width,
-                height,
-            });
-        }
-    }, [app, width, height]);
+    // Debug logging disabled - was causing excessive console spam during resize/drag
+    // useEffect(() => {
+    //     if (import.meta.env.DEV) {
+    //         console.log("Viewport Debug:", {
+    //             app: !!app,
+    //             ticker: !!app?.ticker,
+    //             renderer: !!app?.renderer,
+    //             events: !!app?.renderer?.events,
+    //             width,
+    //             height,
+    //         });
+    //     }
+    // }, [app, width, height]);
 
-    // Debug logging for drag issues (dev only)
-    useEffect(() => {
-        if (import.meta.env.DEV) {
-            console.log("DEBUG CanvasContent:", {
-                contentRef: !!contentRef.current,
-                contentRefType: contentRef.current?.constructor?.name,
-                moveMode: moveMode,
-                appReady: !!app,
-                stageReady: !!app?.stage,
-            });
-        }
-    }, [contentRef.current, moveMode, app]);
+    // Debug logging disabled - was causing excessive console spam
+    // useEffect(() => {
+    //     if (import.meta.env.DEV) {
+    //         console.log("DEBUG CanvasContent:", {
+    //             contentRef: !!contentRef.current,
+    //             contentRefType: contentRef.current?.constructor?.name,
+    //             moveMode: moveMode,
+    //             appReady: !!app,
+    //             stageReady: !!app?.stage,
+    //         });
+    //     }
+    // }, [contentRef.current, moveMode, app]);
 
     // Use refs for drag state to prevent useEffect dependency cycles
     const isDraggingRef = useRef(false);
@@ -190,8 +190,8 @@ export function CanvasContent({
                 return false;
             }
         },
-        [contentRef, viewportRef]
-    ); // No dependencies to prevent re-creation
+        [] // Empty deps - refs are used directly in function body, stable callback
+    );
 
     // Check if pointer is over any selected lines
     const checkIfOverSelectedLines = useCallback(
@@ -260,8 +260,8 @@ export function CanvasContent({
                 return false;
             }
         },
-        [contentRef, viewportRef]
-    ); // Removed selectedLines dependency - using ref instead
+        [] // Empty deps - refs are used directly in function body, stable callback
+    );
 
     // Use refs for values that change frequently to prevent callback recreation
     const moveModeRef = useRef(moveMode);
@@ -298,7 +298,7 @@ export function CanvasContent({
                 console.warn("Error updating cursor:", error);
             }
         },
-        [checkIfOverPoemContent, checkIfOverSelectedLines, viewportRef]
+        [checkIfOverPoemContent, checkIfOverSelectedLines] // viewportRef removed - used directly in body
     );
 
     // Update refs when values change (doesn't trigger re-renders)
@@ -340,7 +340,8 @@ export function CanvasContent({
             viewport.cursor = 'default';
         }
 
-        console.log(`🖱️ Cursor updated for mode "${moveMode}":`, viewport.cursor);
+        // Debug logging disabled to reduce console spam
+        // console.log(`🖱️ Cursor updated for mode "${moveMode}":`, viewport.cursor);
     }, [moveMode, selectedLines, viewportRef.current]); // Added .current to trigger when viewport becomes available
 
     // Initialize cursor when viewport becomes available (handles race condition with persisted moveMode)
@@ -477,42 +478,25 @@ export function CanvasContent({
 
     // Viewport plugins and camera control system
     useEffect(() => {
-        if (import.meta.env.DEV) {
-            console.log("=== VIEWPORT SETUP ===");
-            console.log("viewportRef.current exists:", !!viewportRef.current);
-            console.log("contentRef.current exists:", !!contentRef.current);
-            console.log("Current moveMode:", moveMode);
-            console.log("viewportDragEnabled:", viewportDragEnabled);
-        }
+        // Debug logging disabled - was causing excessive console spam
 
         if (!viewportRef.current || !contentRef.current) {
-            if (import.meta.env.DEV) {
-                console.log("No viewport or content ref, skipping setup");
-            }
             return;
         }
 
         const viewport = viewportRef.current;
-        if (import.meta.env.DEV) {
-            console.log("Setting up viewport:", viewport.constructor.name);
-        }
 
         // Configure viewport plugins based on mode and CTRL state
         if (moveMode === "edit") {
             // Edit mode: Enable camera controls when CTRL is held or viewportDragEnabled is true
             if (viewportDragEnabled) {
-                if (import.meta.env.DEV) console.log("Enabling camera controls in edit mode");
                 viewport.drag().pinch().wheel().decelerate();
             } else {
-                if (import.meta.env.DEV) {
-                    console.log("Disabling camera controls in edit mode, enabling line selection");
-                }
                 viewport.plugins.remove("drag");
                 viewport.pinch().wheel().decelerate(); // Keep zoom and wheel
             }
         } else {
             // Move modes: Disable all camera controls
-            if (import.meta.env.DEV) console.log("Move mode active, disabling all camera controls");
             viewport.plugins.remove("drag");
             viewport.plugins.remove("pinch");
             viewport.plugins.remove("wheel");
@@ -526,10 +510,7 @@ export function CanvasContent({
         viewport.on("pointerup", handlePointerUp);
         viewport.on("pointerupoutside", handlePointerUp);
 
-        if (import.meta.env.DEV) console.log("Event handlers attached to viewport");
-
         return () => {
-            if (import.meta.env.DEV) console.log("Cleaning up viewport event handlers");
             if (viewport && typeof viewport.off === "function") {
                 viewport.off("pointerdown", handlePointerDown);
                 viewport.off("pointermove", handlePointerMove);
@@ -540,10 +521,9 @@ export function CanvasContent({
     }, [
         moveMode,
         viewportDragEnabled,
-        handlePointerDown,
-        handlePointerMove,
-        handlePointerUp,
-    ]); // Only re-run if handlers change (they won't)
+        // Handlers are stable (refs-based), safe to use without being in deps array
+        // Adding them would cause unnecessary effect re-runs and drag delays
+    ]);
 
     // Debug manager registration
     useEffect(() => {

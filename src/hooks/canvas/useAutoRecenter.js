@@ -70,12 +70,8 @@ export function useAutoRecenter({ viewportRef, contentRef, poemOffset, lineOverr
     });
 
     if (hasPoemMoves || hasLineMoves) {
-      console.log('Skipping auto-recenter: moves detected', { 
-        hasPoemMoves, 
-        hasLineMoves,
-        poemOffset,
-        lineOverrideCount: Object.keys(lineOverrides || {}).length
-      });
+      // Auto-recenter disabled when user has made manual adjustments
+      // (Removed excessive logging - was spamming console during drag operations)
       return;
     }
 
