@@ -19,7 +19,7 @@ export function FilterSlider({
     value,
     onChange,
     min = 10,
-    max = 150,
+    max = 250,
     label = 'Maximale lengte'
 }) {
     const [isDragging, setIsDragging] = useState(false);
@@ -81,6 +81,8 @@ export function FilterSlider({
                     <span className={styles.tick}>{min}</span>
                     <span className={styles.tick}>50</span>
                     <span className={styles.tick}>100</span>
+                    <span className={styles.tick}>150</span>
+                    <span className={styles.tick}>200</span>
                     <span className={styles.tick}>{max}</span>
                 </div>
             </div>

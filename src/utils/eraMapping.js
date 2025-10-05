@@ -9,13 +9,72 @@ import authorLifespans from '@/data/canvas/author_lifespans.json';
  * Literary era definitions with year ranges
  */
 export const ERAS = {
-    ALL: { id: 'all', label: 'Alle Tijdperken', minYear: null, maxYear: null },
-    RENAISSANCE: { id: 'renaissance', label: 'Renaissance (<1800)', minYear: 0, maxYear: 1799 },
-    ROMANTIC: { id: 'romantic', label: 'Romantiek (1800-1870)', minYear: 1800, maxYear: 1870 },
-    VICTORIAN: { id: 'victorian', label: 'Victoriaans (1830-1900)', minYear: 1830, maxYear: 1900 },
-    MODERNIST: { id: 'modernist', label: 'Modernisme (1890-1945)', minYear: 1890, maxYear: 1945 },
-    CONTEMPORARY: { id: 'contemporary', label: 'Hedendaags (>1945)', minYear: 1945, maxYear: 9999 },
-    UNKNOWN: { id: 'unknown', label: 'Onbekend', minYear: null, maxYear: null }
+    ALL: {
+        id: 'all',
+        label: 'Alle Tijdperken',
+        minYear: null,
+        maxYear: null,
+    },
+    MEDIEVAL: {
+        id: 'medieval',
+        label: 'Middeleeuwen (<1500)',
+        minYear: 0,
+        maxYear: 1499,
+    },
+    RENAISSANCE: {
+        id: 'renaissance',
+        label: 'Renaissance (1500–1600)',
+        minYear: 1500,
+        maxYear: 1599,
+    },
+    BAROQUE: {
+        id: 'baroque',
+        label: 'Barok (1600–1700)',
+        minYear: 1600,
+        maxYear: 1699,
+    },
+    CLASSICISM: {
+        id: 'classicism',
+        label: 'Classicisme (1660–1750)',
+        minYear: 1660,
+        maxYear: 1750,
+    },
+    ENLIGHTENMENT: {
+        id: 'enlightenment',
+        label: 'Verlichting (1700–1800)',
+        minYear: 1700,
+        maxYear: 1799,
+    },
+    ROMANTIC: {
+        id: '(pre-)romantic',
+        label: 'Romantiek (1800–1870)',
+        minYear: 1770,
+        maxYear: 1870,
+    },
+    VICTORIAN: {
+        id: 'victorian',
+        label: 'Victoriaans (1830–1900)',
+        minYear: 1830,
+        maxYear: 1900,
+    },
+    MODERNIST: {
+        id: 'modernist',
+        label: 'Modernisme (1890–1945)',
+        minYear: 1890,
+        maxYear: 1945,
+    },
+    CONTEMPORARY: {
+        id: 'contemporary',
+        label: 'Hedendaags (komt in V2)',
+        minYear: 1945,
+        maxYear: 9999,
+    },
+    UNKNOWN: {
+        id: 'unknown',
+        label: 'Leefperiode Onbekend',
+        minYear: null,
+        maxYear: null,
+    },
 };
 
 /**
@@ -74,13 +133,42 @@ export function mapBirthYearToEra(birthYear) {
         return ERAS.UNKNOWN.id;
     }
 
-    // Check each era (order matters for overlapping ranges)
-    if (birthYear < ERAS.RENAISSANCE.maxYear) return ERAS.RENAISSANCE.id;
-    if (birthYear >= ERAS.ROMANTIC.minYear && birthYear <= ERAS.ROMANTIC.maxYear) return ERAS.ROMANTIC.id;
-    if (birthYear >= ERAS.VICTORIAN.minYear && birthYear <= ERAS.VICTORIAN.maxYear) return ERAS.VICTORIAN.id;
-    if (birthYear >= ERAS.MODERNIST.minYear && birthYear <= ERAS.MODERNIST.maxYear) return ERAS.MODERNIST.id;
-    if (birthYear >= ERAS.CONTEMPORARY.minYear) return ERAS.CONTEMPORARY.id;
+    // Loop over alle era's behalve 'all' en 'unknown'
+    for (const era of Object.values(ERAS)) {
+        if (
+            era.id === 'all' ||
+            era.id === 'unknown' ||
+            era.minYear === null ||
+            era.maxYear === null
+        ) {
+            continue;
+        }
+        if (birthYear >= era.minYear && birthYear <= era.maxYear) {
+            return era.id;
+        }
+    }
 
+    return ERAS.UNKNOWN.id;
+}
+
+// Mapping op basis van actief midden
+export function mapActiveMiddleToEra(activeMiddleYear) {
+    if (activeMiddleYear === null || activeMiddleYear === undefined) {
+        return ERAS.UNKNOWN.id;
+    }
+    for (const era of Object.values(ERAS)) {
+        if (
+            era.id === 'all' ||
+            era.id === 'unknown' ||
+            era.minYear === null ||
+            era.maxYear === null
+        ) {
+            continue;
+        }
+        if (activeMiddleYear >= era.minYear && activeMiddleYear <= era.maxYear) {
+            return era.id;
+        }
+    }
     return ERAS.UNKNOWN.id;
 }
 
@@ -91,8 +179,19 @@ export function mapBirthYearToEra(birthYear) {
  * @returns {string} Era ID
  */
 export function getAuthorEra(authorName) {
-    const birthYear = getAuthorBirthYear(authorName);
-    return mapBirthYearToEra(birthYear);
+    const activeMiddle = getAuthorActiveMiddle(authorName);
+    return mapActiveMiddleToEra(activeMiddle);
+}
+
+/**
+ * Haal het actieve midden op voor een auteur
+ */
+export function getAuthorActiveMiddle(authorName) {
+    if (!authorName) return null;
+    const normalized = normalizeAuthorName(authorName);
+    const entry = authorLifespans.find(e => normalizeAuthorName(e.author) === normalized);
+    if (!entry) return null;
+    return getActiveMiddleYear(entry.birth_year, entry.death_year);
 }
 
 /**
@@ -122,4 +221,40 @@ export function filterPoemsByEra(poems, selectedEraId) {
 export function getEraLabel(eraId) {
     const era = Object.values(ERAS).find(e => e.id === eraId);
     return era ? era.label : ERAS.ALL.label;
+}
+
+// Nieuwe versie van countAuthorsPerEra
+export function countAuthorsPerEra({ excludeContemporary = false } = {}) {
+    const counts = {};
+    Object.values(ERAS).forEach(era => {
+        if (era.id === 'all') return;
+        if (excludeContemporary && era.id === 'contemporary') return;
+        counts[era.id] = 0;
+    });
+    authorLifespans.forEach(entry => {
+        const activeMiddle = getActiveMiddleYear(entry.birth_year, entry.death_year);
+        const eraId = mapActiveMiddleToEra(activeMiddle);
+        if (counts.hasOwnProperty(eraId)) {
+            counts[eraId]++;
+        }
+    });
+    return counts;
+}
+
+// Bepaal het actieve midden van het leven van een dichter
+export function getActiveMiddleYear(birthYear, deathYear) {
+    if (birthYear != null && deathYear != null) {
+        // Beide bekend: gemiddelde
+        return Math.round((birthYear + deathYear) / 2);
+    }
+    if (birthYear != null) {
+        // Alleen geboortejaar bekend
+        return birthYear + 35;
+    }
+    if (deathYear != null) {
+        // Alleen sterfjaar bekend
+        return deathYear - 35;
+    }
+    // Beide onbekend
+    return null;
 }

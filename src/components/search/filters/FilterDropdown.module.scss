@@ -3,8 +3,8 @@
  * Dropdown component for era and language selection
  */
 
-@import '@styles/_variables.scss';
-@import '@styles/_mixins.scss';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .filterDropdown {
     position: relative;
@@ -249,6 +249,25 @@
     width: 18px;
     height: 18px;
     flex-shrink: 0;
+}
+
+.countBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5em;
+    height: 1.5em;
+    margin-left: 0.75em;
+    padding: 0 0.5em;
+    background: var(--primary-color, #FF6B35);
+    color: #fff;
+    font-size: 0.85em;
+    font-weight: 700;
+    border-radius: 1em;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    line-height: 1;
+    vertical-align: middle;
+    transition: background 0.2s;
 }
 
 @keyframes dropdownSlide {

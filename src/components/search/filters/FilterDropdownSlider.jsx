@@ -34,7 +34,7 @@ export function FilterDropdownSlider({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const isActive = value < 150;
+    const isActive = value < 250;
 
     return (
         <div className={styles.filterDropdown} ref={dropdownRef}>
@@ -56,7 +56,7 @@ export function FilterDropdownSlider({
                         value={value}
                         onChange={onChange}
                         min={10}
-                        max={150}
+                        max={250}
                         label="Maximale lengte"
                     />
                 </div>

@@ -6,6 +6,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { ERAS } from '@/utils/eraMapping.js';
 import styles from './FilterDropdown.module.scss';
+import { countAuthorsPerEra } from '@/utils/eraMapping.js';
+
 
 /**
  * @param {Object} props
@@ -62,7 +64,8 @@ export function FilterDropdown({
         return false;
     };
 
-    // Render era options
+    const eraCounts = countAuthorsPerEra({ excludeContemporary: true });
+
     const renderEraOptions = () => {
         return Object.values(ERAS).map(era => (
             <button
@@ -71,6 +74,10 @@ export function FilterDropdown({
                 onClick={() => handleSelect(era.id)}
             >
                 {era.label}
+                {/* Show count if available */}
+                {eraCounts[era.id] !== undefined && (
+                    <span className={styles.countBadge}>{eraCounts[era.id]}</span>
+                )}
                 {value === era.id && (
                     <svg className={styles.checkIcon} viewBox="0 0 24 24" fill="none">
                         <path

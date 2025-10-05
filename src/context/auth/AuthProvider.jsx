@@ -48,6 +48,7 @@ export function AuthProvider({children}) {
         signUp: auth.signUp,
         signIn: auth.signIn,
         signOut: auth.signOut,
+        signInWithGoogle: auth.signInWithGoogle,
         checkAuth: async () => {
             // Using getCurrentUser from useSupabaseAuth which in turn uses authService.getUser
             const {user: currentUser, error: currentError} = await auth.getCurrentUser?.() || {};

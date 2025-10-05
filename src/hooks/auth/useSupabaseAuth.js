@@ -27,7 +27,7 @@
 
 import {useCallback, useEffect, useState} from "react";
 import {useAuthForm} from "@/hooks/auth/useAuthForm.js";
-import {getSession, onAuthStateChange, refreshSession, register, resetPasswordForEmail, signInWithPassword, logout as authSignOut, updateUser, checkUserExists, getCurrentUser} from "@/services/auth/authService.js";
+import {getSession, onAuthStateChange, refreshSession, register, resetPasswordForEmail, signInWithPassword, signInWithProvider, logout as authSignOut, updateUser, checkUserExists, getCurrentUser} from "@/services/auth/authService.js";
 
 export function useSupabaseAuth() {
 // Auth state
@@ -153,6 +153,24 @@ export function useSupabaseAuth() {
         }
     }, [loginForm, signupForm]);
 
+    // Google Sign-In handler
+    const signInWithGoogle = useCallback(async () => {
+        try {
+            setError(null);
+            const result = await signInWithProvider('google');
+            if (!result.success) {
+                throw new Error(result.error);
+            }
+            // User state will be updated by the auth change listener
+            return result;
+        } catch (error) {
+            setError(error.message);
+            // Optionally set a form error if you have a specific place to display this
+            // loginForm.setErrors({ form: error.message });
+            throw error;
+        }
+    }, []);
+
     // Password reset handler
     const sendPasswordResetEmail = useCallback(async (email) => {
         try {
@@ -250,6 +268,7 @@ export function useSupabaseAuth() {
         signIn,
         signUp,
         signOut,
+        signInWithGoogle,
         sendPasswordResetEmail,
         updateUserPassword,
 
