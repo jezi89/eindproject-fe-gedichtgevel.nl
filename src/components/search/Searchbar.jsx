@@ -70,7 +70,7 @@ export function SearchBar({
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault(); // Prevent default form submission
-            if (onSearch && searchTerm.trim()) {
+            if (onSearch) {
                 onSearch(searchTerm);
             }
         }
@@ -87,7 +87,7 @@ export function SearchBar({
 
 // Handle click on search button
     const handleSearchClick = () => {
-        if (onSearch && searchTerm.trim()) {
+        if (onSearch) {
             onSearch(searchTerm);
         }
     };
@@ -126,7 +126,6 @@ export function SearchBar({
                     <div className={styles.searchButtonContainer}>
                         <button
                             onClick={handleSearchClick}
-                            disabled={!hasContent}
                             className={styles.searchButton}
                             aria-label="Zoeken"
                         >
