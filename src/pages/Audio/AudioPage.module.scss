@@ -14,7 +14,6 @@
   align-items:     center;
   justify-content: center;
   width:           100%;
-  min-height:      100vh;
   }
 
 .SpreekgevelApp {
@@ -22,7 +21,6 @@
   display:               grid;
   align-items:           stretch;
   box-sizing:            border-box;
-  max-height:            70vh;
   background-color:      $background-page;
   grid-template-columns: 181px 1fr 213px;
   grid-template-rows: auto 1fr auto;
@@ -45,12 +43,13 @@
 .MainContent {
   position:        relative;
   display:         flex;
-  align-items:     center;
+
   flex-direction:  column;
   justify-content: flex-start;
-  margin-top:      0;
+
   padding-top:     0;
   grid-area:       main;
+  margin-top:  0.5rem;
   }
 
 
@@ -89,6 +88,7 @@
 .TopNavigation {
   display:         flex;
   justify-content: space-between;
+  
   }
 
 .TabButton {
@@ -176,10 +176,8 @@
   }
 
 .TopNavContainer {
-  display:         flex;
-  align-items:     flex-end;
+
   flex-shrink:     0; /* Don't shrink */
-  justify-content: space-between;
   width:           100%; /* Full width of MainContent */
   max-width:       1524px; /* Match BookContainer width */
   height:          5rem;

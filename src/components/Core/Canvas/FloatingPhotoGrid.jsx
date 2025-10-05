@@ -185,7 +185,18 @@ export default function FloatingPhotoGrid({
                                 }
 
                                 photoPreview.handlePhotoSelect(photo.src.large2x);
-                                onSetBackground(photo.src.large2x);
+
+                                // Pass complete photo object with metadata including alt text
+                                onSetBackground({
+                                    url: photo.src.large2x,
+                                    thumbnail: photo.src.tiny,
+                                    alt: photo.alt,
+                                    photographer: photo.photographer || 'Unknown',
+                                    source: searchContext?.source || 'custom',
+                                    width: photo.width || null,
+                                    height: photo.height || null
+                                });
+
                                 handleClose(); // Close grid after selecting
                             }}
                             onMouseEnter={() => {

@@ -3,11 +3,14 @@
     "stylelint-config-standard-scss"
   ],
   "plugins": [
-    "stylelint-scss"
+    "stylelint-scss",
+    "stylelint-declaration-strict-value"
   ],
   "rules": {
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
+    "at-rule-disallowed-list": ["import"],
+
     "property-no-unknown": [
       true,
       {
@@ -20,21 +23,16 @@
         ]
       }
     ],
-    "value-keyword-case": [
-      "lower",
-      {
-        "ignoreKeywords": [
-          "anchor",
-          "flip-block",
-          "flip-inline",
-          "center",
-          "bottom",
-          "top",
-          "left",
-          "right"
-        ]
-      }
+
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["global", "export"] }
     ],
+    "selector-type-no-unknown": [
+      true,
+      { "ignoreTypes": ["page", "wave"] }
+    ],
+
     "declaration-block-no-duplicate-properties": [
       true,
       {
@@ -43,6 +41,69 @@
         ]
       }
     ],
+
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "color",
+        "background-color",
+        "border-color",
+        "outline-color",
+        "/-color$/"
+      ],
+      {
+        "ignoreValues": {
+          "/color/": ["transparent", "currentColor", "inherit"]
+        },
+        "disableFix": true,
+        "message": "Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren"
+      }
+    ],
+
+    "declaration-property-unit-allowed-list": {
+      "/^font-size$/": ["rem", "em", "vw"],
+      "/^(margin|padding|gap)$/": ["rem", "%", "vw", "vh"],
+      "/^(inset|top|right|bottom|left)$/": ["rem", "px", "%", "vw", "vh"],
+      "/^border(-.*)?-width$/": ["px"],
+      "/^outline(-.*)?-width$/": ["px"],
+      "stroke-width": ["px"],
+      "/^(box-shadow|text-shadow)$/": ["px"],
+      "/^(filter|backdrop-filter)$/": ["px", "%"],
+      "/^(width|height|min-width|min-height|max-width|max-height)$/": ["rem", "%", "vw", "vh", "px"],
+      "/^letter-spacing$/": ["rem", "em", "px"]
+    },
+
+    "media-feature-range-notation": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "shorthand-property-no-redundant-values": null,
+    "font-family-no-duplicate-names": null,
+    "scss/at-if-no-null": null,
+
+    "value-keyword-case": null,
+    "rule-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "scss/double-slash-comment-empty-line-before": null,
+    "scss/double-slash-comment-whitespace-inside": null,
+    "comment-empty-line-before": null,
+    "comment-whitespace-inside": null,
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "alpha-value-notation": null,
+    "color-hex-length": null,
+    "font-family-name-quotes": null,
+    "keyframes-name-pattern": null,
+    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-single-line-max-declarations": null,
+    "length-zero-no-unit": null,
+    "number-max-precision": null,
+    "property-no-vendor-prefix": null,
+    "scss/comment-no-empty": null,
+    "scss/percent-placeholder-pattern": null,
+    "scss/at-mixin-argumentless-call-parentheses": null,
+    "selector-pseudo-element-colon-notation": null,
+    "declaration-property-value-keyword-no-deprecated": null,
+    "property-no-deprecated": null,
     "selector-class-pattern": null,
     "scss/dollar-variable-pattern": null,
     "custom-property-pattern": null,

@@ -213,6 +213,36 @@
 	}
   }
 
+.photoInfo {
+  margin-bottom:  0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom:  1px solid #eee;
+
+  .photoAlt {
+	font-size:     0.85rem;
+	overflow:      hidden;
+	margin:        0 0 0.5rem 0;
+	white-space:   nowrap;
+	text-overflow: ellipsis;
+	color:         #666;
+	}
+
+  .photoMeta {
+	font-size:   0.75rem;
+	display:     flex;
+	flex-wrap:   wrap;
+	gap:         0.5rem;
+	color:       #777;
+
+	.photographer,
+	.dimensions {
+	  display:     flex;
+	  align-items: center;
+	  gap:         0.25rem;
+	  }
+	}
+  }
+
 .designMeta {
   font-size:       0.85rem;
   display:         flex;

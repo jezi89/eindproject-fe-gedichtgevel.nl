@@ -48,13 +48,14 @@ export function FilterDropdownSlider({
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <span className={styles.dropdownValue}>{label}</span>
-                <button
+                <div
                     className={styles.maxButton}
                     onClick={handleMaxClick}
                     title="Maximale lengte"
+                    role="button"
                 >
                     MAX
-                </button>
+                </div>
                 <div className={styles.dropdownArrow}>
                     <svg className={styles.arrowVector} viewBox="0 0 21 16">
                         <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>

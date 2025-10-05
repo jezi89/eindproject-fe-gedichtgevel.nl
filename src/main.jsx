@@ -12,7 +12,6 @@ import queryClient from './services/api/queryClient.js';
 import {HomePage} from './pages/Home/HomePage.jsx';
 import {DesignPage} from './pages/Design/DesignPage.jsx';
 import {CollectionPage} from './pages/Collections/CollectionPage.jsx';
-import {MyDesignsPage} from './pages/Collections/MyDesignsPage.jsx';
 import {AudioPage} from './pages/Audio/AudioPage.jsx';
 import {AboutPage} from './pages/About/AboutPage.jsx';
 import {AccountPage} from './pages/Account/AccountPage.jsx';
@@ -45,14 +44,6 @@ const router = createBrowserRouter([
             {path: "canvas/:poemId", element: <DesignPage/>}, // Legacy canvas route with poem ID
             {path: "spreekgevel", element: <AudioPage/>},
             {path: "collectiegevel", element: <CollectionPage/>},
-            {
-                path: "mijn-designs",
-                element: (
-                    <ProtectedRoute>
-                        <MyDesignsPage/>
-                    </ProtectedRoute>
-                ),
-            },
             {path: "overmij", element: <AboutPage/>},
             {path: "contact", element: <ContactPage/>},
             {path: "hoedan", element: <FAQPage/>},
