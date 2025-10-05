@@ -36,9 +36,8 @@ export function CanvasContent({
                                   fontStatus,
                                   fontWeight,
                                   fontStyle,
-                                  skewX,
-                                  skewY,
-                                  skewZ,
+                                  skewX = 0,
+                                  skewY = 0,
                                   backgroundImage, // <-- De nieuwe prop
                                   contentRef,
                                   appRef,
@@ -49,10 +48,6 @@ export function CanvasContent({
                                   setIsDragging, // <-- NIEUW: Add deze prop
                                   effectiveStyles, // <-- NIEUW: Voor tekst optimalisatie
                                   highlightVisible = true, // <-- NEW: Highlight toggle
-
-                                  // 3D transformation props
-                                  lineTransforms,
-                                  global3DSettings,
                                   // Poem data prop (takes priority over URL params)
                                   poemData,
                               }) {
@@ -567,22 +562,17 @@ export function CanvasContent({
         }[textAlign];
     }, [textAlign]);
 
-    // Calculate combined container-level skew including Z-axis effect
+    // Calculate container-level skew (2D only - horizontal and vertical)
     const containerSkew = useMemo(() => {
         // Convert degrees to radians
         const skewXRad = (skewX * Math.PI) / 180;
         const skewYRad = (skewY * Math.PI) / 180;
-        const skewZRad = (skewZ * Math.PI) / 180;
-
-        // skewZ creates a rotational effect that affects both X and Y skew
-        const skewZEffectX = Math.sin(skewZRad) * 0.5; // Z-skew creates X component
-        const skewZEffectY = Math.cos(skewZRad) * 0.5 - 0.5; // Z-skew creates Y component
 
         return {
-            x: skewXRad + skewZEffectX,
-            y: skewYRad + skewZEffectY,
+            x: skewXRad,
+            y: skewYRad,
         };
-    }, [skewX, skewY, skewZ]);
+    }, [skewX, skewY]);
 
     const {titleStyle, authorStyle, lineStyle} = useTextStyles(
         fontLoaded,
@@ -668,9 +658,6 @@ export function CanvasContent({
                     index={-2}
                     selectedLines={selectedLines}
                     resolution={effectiveStyles.resolution}
-                    // 3D transformation props
-                    lineTransforms={lineTransforms?.[-2]}
-                    global3DSettings={global3DSettings}
                 />
 
                 <PoemAuthor
@@ -690,9 +677,6 @@ export function CanvasContent({
                     index={-1}
                     selectedLines={selectedLines}
                     resolution={effectiveStyles.resolution}
-                    // 3D transformation props
-                    lineTransforms={lineTransforms?.[-1]}
-                    global3DSettings={global3DSettings}
                 />
 
                 {currentPoem.lines.map((line, index) => {
@@ -722,9 +706,6 @@ export function CanvasContent({
                             index={index}
                             selectedLines={selectedLines}
                             resolution={effectiveStyles.resolution}
-                            // 3D transformation props
-                            lineTransforms={lineTransforms?.[index]}
-                            global3DSettings={global3DSettings}
                         />
                     );
                 })}

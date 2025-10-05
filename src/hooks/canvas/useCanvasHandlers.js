@@ -10,7 +10,6 @@ import {
     resetLineHeightUtil,
 } from "@/utils/canvas/lineHeightUtils";
 import {getGeoDataByCity} from "@/data/canvas/cityGeoData";
-import {Transform3D} from "@/utils/canvas/Transform3D.js";
 
 
 export function useCanvasHandlers(canvasState, poemData = null) {
@@ -59,12 +58,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         flickrPhotos, // <-- NIEUW: om te checken welke bron actief is
         clearFlickrPhotos, // <-- NIEUW: om Flickr te resetten
         setPhotoGridVisible, // <-- van useCanvasState
-
-        // 3D transformation state
-        lineTransforms,
-        setLineTransforms,
-        global3DSettings,
-        setGlobal3DSettings,
     } = canvasState;
 
     // Line selection handler is nu een simpele doorgever
@@ -239,24 +232,17 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [canvasState]
     );
 
-    // Skew handlers
+    // Skew handlers (2D transformations)
     const handleSkewXChange = useCallback(
-        (skewX) => {
-            canvasState.setSkewX(skewX);
+        (value) => {
+            canvasState.setSkewX(value);
         },
         [canvasState]
     );
 
     const handleSkewYChange = useCallback(
-        (skewY) => {
-            canvasState.setSkewY(skewY);
-        },
-        [canvasState]
-    );
-
-    const handleSkewZChange = useCallback(
-        (skewZ) => {
-            canvasState.setSkewZ(skewZ);
+        (value) => {
+            canvasState.setSkewY(value);
         },
         [canvasState]
     );
@@ -652,257 +638,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         moveMode,
     ]);
 
-    // 3D transformation handlers
-    const handleLineTransformChange = useCallback(
-        (lineIndex, property, value) => {
-            setLineTransforms((prev) => {
-                const currentTransform = prev[lineIndex] || {};
-
-                // Handle nested properties (e.g., "lighting.enabled")
-                if (property.includes(".")) {
-                    const [parentProp, childProp] = property.split(".");
-                    return {
-                        ...prev,
-                        [lineIndex]: {
-                            ...currentTransform,
-                            [parentProp]: {
-                                ...currentTransform[parentProp],
-                                [childProp]: value,
-                            },
-                        },
-                    };
-                }
-
-                // Handle special cases
-                if (property === "pivotMode") {
-                    // Update pivot coordinates based on mode
-                    const pivotCoords = {
-                        top: {pivotX: 0.5, pivotY: 0},
-                        center: {pivotX: 0.5, pivotY: 0.5},
-                        bottom: {pivotX: 0.5, pivotY: 1},
-                    };
-
-                    return {
-                        ...prev,
-                        [lineIndex]: {
-                            ...currentTransform,
-                            pivotMode: value,
-                            ...pivotCoords[value],
-                        },
-                    };
-                }
-
-                if (property === "uniformScale") {
-                    // Update both scaleX and scaleY
-                    return {
-                        ...prev,
-                        [lineIndex]: {
-                            ...currentTransform,
-                            uniformScale: value,
-                            scaleX: value,
-                            scaleY: value,
-                        },
-                    };
-                }
-
-                if (property === "gevelPreset") {
-                    // Apply gevel preset using Transform3D class
-                    const transform = new Transform3D(currentTransform);
-                    transform.applyGevelPreset(value);
-
-                    return {
-                        ...prev,
-                        [lineIndex]: {
-                            ...currentTransform,
-                            ...transform,
-                            gevelPreset: value,
-                        },
-                    };
-                }
-
-                // Default case: simple property update
-                return {
-                    ...prev,
-                    [lineIndex]: {
-                        ...currentTransform,
-                        [property]: value,
-                    },
-                };
-            });
-
-            console.log(
-                `🎭 Enhanced 3D Transform: Line ${lineIndex} ${property} = ${value}`
-            );
-        },
-        [setLineTransforms]
-    );
-
-    const handleGlobal3DSettingChange = useCallback(
-        (property, value) => {
-            setGlobal3DSettings((prev) => {
-                // Handle Gevel preset application
-                if (property === "gevelPreset") {
-                    const presets = {
-                        brick: {
-                            // Darker, more shadowed text like carved into brick
-                            globalLighting: {enabled: true, intensity: 0.8, ambient: 0.4},
-                            material: {blendMode: "multiply"}, // Darkens text, creates shadow effect
-                        },
-                        stone: {
-                            // Weathered, textured appearance like stone carving
-                            globalLighting: {enabled: true, intensity: 0.9, ambient: 0.3},
-                            material: {blendMode: "overlay"}, // Enhances contrast, stone-like texture
-                        },
-                        metal: {
-                            // Bright, reflective text like polished metal lettering
-                            globalLighting: {enabled: true, intensity: 1.2, ambient: 0.2},
-                            material: {blendMode: "screen"}, // Brightens text, metallic shine
-                        },
-                        glass: {
-                            // Translucent, glowing text like etched or backlit glass
-                            globalLighting: {enabled: true, intensity: 0.6, ambient: 0.6},
-                            material: {blendMode: "add"}, // Creates glow effect, glass-like transparency
-                        },
-                        wood: {
-                            // Natural, warm text like carved or painted wood
-                            globalLighting: {enabled: true, intensity: 0.7, ambient: 0.5},
-                            material: {blendMode: "normal"}, // Natural appearance with subtle lighting
-                        },
-                    };
-
-                    // Handle preset clearing
-                    if (value === null) {
-                        console.log("🏗️ Clearing Gevel preset");
-
-                        // Show notification for clearing
-                        if (typeof window !== "undefined" && window.document) {
-                            const notification = document.createElement("div");
-                            notification.textContent = "Gevel preset cleared";
-                            notification.style.cssText = `
-								position: fixed;
-								top: 20px;
-								right: 20px;
-								background: #ff9800;
-								color: white;
-								padding: 12px 20px;
-								border-radius: 4px;
-								font-family: Arial, sans-serif;
-								font-size: 14px;
-								z-index: 10000;
-								box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-								transition: opacity 0.3s ease;
-							`;
-
-                            document.body.appendChild(notification);
-
-                            setTimeout(() => {
-                                notification.style.opacity = "0";
-                                setTimeout(() => {
-                                    if (notification.parentNode) {
-                                        notification.parentNode.removeChild(notification);
-                                    }
-                                }, 300);
-                            }, 2000);
-                        }
-
-                        return {
-                            ...prev,
-                            gevelPreset: null,
-                            // Reset to default lighting and material settings
-                            globalLighting: {enabled: false, intensity: 1.0, ambient: 0.3},
-                            material: {blendMode: "normal"},
-                        };
-                    }
-
-                    const preset = presets[value];
-                    if (preset) {
-                        console.log(`🏗️ Applying Gevel preset: ${value}`, preset);
-
-                        // Add visual feedback - show a temporary notification
-                        if (typeof window !== "undefined" && window.document) {
-                            // Create a temporary notification element
-                            const notification = document.createElement("div");
-                            notification.textContent = `Applied ${
-                                value.charAt(0).toUpperCase() + value.slice(1)
-                            } preset`;
-                            notification.style.cssText = `
-								position: fixed;
-								top: 20px;
-								right: 20px;
-								background: #4CAF50;
-								color: white;
-								padding: 12px 20px;
-								border-radius: 4px;
-								font-family: Arial, sans-serif;
-								font-size: 14px;
-								z-index: 10000;
-								box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-								transition: opacity 0.3s ease;
-							`;
-
-                            document.body.appendChild(notification);
-
-                            // Remove notification after 2 seconds
-                            setTimeout(() => {
-                                notification.style.opacity = "0";
-                                setTimeout(() => {
-                                    if (notification.parentNode) {
-                                        notification.parentNode.removeChild(notification);
-                                    }
-                                }, 300);
-                            }, 2000);
-                        }
-
-                        return {
-                            ...prev,
-                            ...preset,
-                            gevelPreset: value, // Store the active preset name
-                        };
-                    }
-                    return prev;
-                }
-
-                // Handle nested properties (e.g., "globalLighting.enabled")
-                if (property.includes(".")) {
-                    const [parentProp, childProp] = property.split(".");
-                    return {
-                        ...prev,
-                        [parentProp]: {
-                            ...prev[parentProp],
-                            [childProp]: value,
-                        },
-                    };
-                }
-
-                // Handle simple properties
-                return {
-                    ...prev,
-                    [property]: value,
-                };
-            });
-
-            console.log(`🌍 Global 3D: ${property} = ${value}`);
-        },
-        [setGlobal3DSettings]
-    );
-
-    const handleResetLineTransform = useCallback(
-        (lineIndex) => {
-            setLineTransforms((prev) => {
-                const newTransforms = {...prev};
-                delete newTransforms[lineIndex];
-                return newTransforms;
-            });
-
-            console.log(`🔄 Reset 3D transform for line ${lineIndex}`);
-        },
-        [setLineTransforms]
-    );
-
-    const handleResetAllTransforms = useCallback(() => {
-        setLineTransforms({});
-        console.log("🔄 Reset all 3D transforms");
-    }, [setLineTransforms]);
 
     return {
         handleLineSelect,
@@ -933,7 +668,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         // Skew handlers
         handleSkewXChange,
         handleSkewYChange,
-        handleSkewZChange,
 
         handleSearchBackground,
         handlePremiumSearch, // <-- NEW: Export premium search handler
@@ -943,11 +677,5 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         handleCitySearch, // <-- Exporteer de nieuwe handler
         handleResetToCollection, // <-- NEW: Export reset handler
         handleOpenPhotoGrid, // <-- NEW: Export open photo grid handler
-
-        // 3D transformation handlers
-        handleLineTransformChange,
-        handleGlobal3DSettingChange,
-        handleResetLineTransform,
-        handleResetAllTransforms,
     };
 }
