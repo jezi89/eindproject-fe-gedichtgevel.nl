@@ -10,6 +10,7 @@ import {searchPoemsGeneral} from '@/services/api/poemSearchService.js';
 export function useSearchPoems() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchHistory, setSearchHistory] = useState([]);
+    const [hasSearched, setHasSearched] = useState(false); // Track if user has initiated a search
 
     // TanStack Query hook - automatic caching and state management
     const {
@@ -22,12 +23,10 @@ export function useSearchPoems() {
         queryKey: ['poems', 'search', searchTerm.trim()],
         queryFn: async () => {
             const trimmed = searchTerm.trim();
-            if (!trimmed) return [];
-
             const data = await searchPoemsGeneral(trimmed);
 
-            // Update search history when successful
-            if (data && data.length > 0) {
+            // Update search history when successful (only for non-empty searches)
+            if (trimmed && data && data.length > 0) {
                 setSearchHistory(prev =>
                     [trimmed, ...prev.filter(item => item !== trimmed)].slice(0, 10)
                 );
@@ -35,7 +34,7 @@ export function useSearchPoems() {
 
             return data || [];
         },
-        enabled: !!searchTerm.trim(), // Only fetch if searchTerm is not empty
+        enabled: hasSearched, // Only fetch when user has initiated a search
         staleTime: 1000 * 60 * 5, // 5 minutes
         gcTime: 1000 * 60 * 60, // 1 hour
         retry: 1,
@@ -49,6 +48,7 @@ export function useSearchPoems() {
     // Actions
     const handleSearch = (term = searchTerm) => {
         setSearchTerm(term);
+        setHasSearched(true); // Mark that a search has been initiated
     };
 
     const updateSearchTerm = (term) => {
@@ -57,6 +57,7 @@ export function useSearchPoems() {
 
     const clearResults = () => {
         setSearchTerm('');
+        setHasSearched(false); // Reset search state
     };
 
     // Search metadata
@@ -66,7 +67,7 @@ export function useSearchPoems() {
         isEmpty: !searchTerm.trim(),
         hasError: !!error,
         isLoading: loading || isFetching,
-        canSearch: !!searchTerm.trim() && !loading,
+        canSearch: !loading, // Always can search, even with empty term
         fromCache: false // TanStack Query handles caching automatically
     };
 

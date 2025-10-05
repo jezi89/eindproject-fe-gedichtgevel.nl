@@ -36,6 +36,11 @@ export function FilterDropdownSlider({
 
     const isActive = value < 250;
 
+    const handleMaxClick = (e) => {
+        e.stopPropagation();
+        onChange(250);
+    };
+
     return (
         <div className={styles.filterDropdown} ref={dropdownRef}>
             <button
@@ -43,6 +48,13 @@ export function FilterDropdownSlider({
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <span className={styles.dropdownValue}>{label}</span>
+                <button
+                    className={styles.maxButton}
+                    onClick={handleMaxClick}
+                    title="Maximale lengte"
+                >
+                    MAX
+                </button>
                 <div className={styles.dropdownArrow}>
                     <svg className={styles.arrowVector} viewBox="0 0 21 16">
                         <path d="M0 0L21 0L10.5 15L0 0Z" fill="#EFEFEF"/>
