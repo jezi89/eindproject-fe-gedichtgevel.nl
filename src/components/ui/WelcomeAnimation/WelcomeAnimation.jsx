@@ -11,6 +11,12 @@ export function WelcomeAnimation({ videoUrl, onAnimationEnd }) {
                 onEnded={onAnimationEnd}
                 className={styles.videoPlayer}
             />
+            <button
+                className={styles.skipButton}
+                onClick={onAnimationEnd}
+            >
+                Animatie overslaan
+            </button>
         </div>
     );
 }
