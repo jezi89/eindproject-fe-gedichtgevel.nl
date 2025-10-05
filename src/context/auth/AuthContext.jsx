@@ -12,6 +12,9 @@ export const AuthContext = createContext(null);
 export function useAuthContext() {
     return useContext(AuthContext);
 }
+
+// Alias for backwards compatibility
+export const useAuth = useAuthContext;
     
 
 

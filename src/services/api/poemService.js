@@ -26,10 +26,10 @@ import {poetryDbApi} from './axios'; // Import voor de geconfigureerde axios ins
  * @param {string} field - The field to search for ('title', 'author', etc.).
  * @returns {Promise<Array<object>>} - Array of poems found.
  */
-async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
+async function fetchPoemsFromPoetryDBByField(query, field = 'title', { signal } = {}) {
     try {
         const endpoint = `/${field}/${encodeURIComponent(query)}`;
-        const response = await poetryDbApi.get(endpoint);
+        const response = await poetryDbApi.get(endpoint, { signal });
 
         // poetrydb gives 200 OK with status: 404 in response body for no results
         if (response.data && response.data.status === 404) {
@@ -38,6 +38,12 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
 
         return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
+        // Axios throws a 'CanceledError' when a request is aborted.
+        if (error.name === 'CanceledError') {
+            console.log(`Request for field "${field}" with query "${query}" was canceled.`);
+            // Re-throw the error so TanStack Query can handle it
+            throw error;
+        }
         // handle http 404 (can occur with some API versions)
         if (error.response && error.response.status === 404) {
             return [];
@@ -51,20 +57,24 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title') {
  * Retrieves poems from PoetryDB based on title.
  *
  * @param {string} titleQuery – The title to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
  * @returns {Promise<Array<object>>} - Array of poems found.
  */
-async function fetchPoemsFromPoetryDBByTitle(titleQuery) {
-    return fetchPoemsFromPoetryDBByField(titleQuery, 'title');
+async function fetchPoemsFromPoetryDBByTitle(titleQuery, { signal } = {}) {
+    return fetchPoemsFromPoetryDBByField(titleQuery, 'title', { signal });
 }
 
 /**
  * Haalt gedichten op van PoetryDB op basis van auteur.
  *
  * @param {string} authorQuery - De auteur om op te zoeken.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
  * @returns {Promise<Array<object>>} - Array van gevonden gedichten.
  */
-async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
-    return fetchPoemsFromPoetryDBByField(authorQuery, 'author');
+async function fetchPoemsFromPoetryDBByAuthor(authorQuery, { signal } = {}) {
+    return fetchPoemsFromPoetryDBByField(authorQuery, 'author', { signal });
 }
 
 
@@ -74,13 +84,15 @@ async function fetchPoemsFromPoetryDBByAuthor(authorQuery) {
  *
  * @param {string} authorTerm – The author to look up.
  * @param {string} titleTerm - The title to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
  * @returns {Promise<Array<object>>} - Array of poems found.
  */
-async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm) {
+async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm, { signal } = {}) {
     try {
         // Juiste format voor AND-zoekopdracht met PoetryDB API
         const endpoint = `/author,title/${encodeURIComponent(authorTerm)};${encodeURIComponent(titleTerm)}`;
-        const response = await poetryDbApi.get(endpoint);
+        const response = await poetryDbApi.get(endpoint, { signal });
 
         if (response.data && response.data.status === 404) {
             return [];
@@ -88,6 +100,10 @@ async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm) {
 
         return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
+        if (error.name === 'CanceledError') {
+            console.log(`Combined search for author "${authorTerm}" and title "${titleTerm}" was canceled.`);
+            throw error;
+        }
         if (error.response && error.response.status === 404) {
             return [];
         }
@@ -187,69 +203,61 @@ async function fetchPoem(title, author) {
  * @param {string} title - The title to look up.
  * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
-export async function searchPoemsByTitle(title) {
+export async function searchPoemsByTitle(title, { signal } = {}) {
     let supabaseMatches = [];
     let poemsForDisplay = [];
 
     // Stap 1: Zoek eerst in Supabase
     try {
+        // Supabase JS client v2 doesn't support AbortController directly in all methods.
+        // Assuming fetchTitleAuthorMatchesFromSupabase is custom and doesn't support it yet.
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(title, 'title');
     } catch (error) {
         console.warn(`Kon geen titel matches ophalen van Supabase voor "${title}":`, error.message);
     }
 
     // Stap 2: Voor elke Supabase match, haal details op uit PoetryDB
-    // Helpful for quick favorites and future user-added poems.
     if (supabaseMatches.length > 0) {
         for (const match of supabaseMatches) {
             try {
-                // Probeer het specifieke gedicht te vinden
-                const specificPoem = await fetchPoem(match.title, match.author);
-
+                const specificPoem = await fetchPoem(match.title, match.author, { signal });
                 if (specificPoem) {
                     poemsForDisplay.push({...specificPoem, source: 'supabase_title_match_exact'});
                 } else {
-                    // Fallback naar algemene zoektocht op titel als exacte match faalt
-                    const poetryDbDetailsArray = await fetchPoemsFromPoetryDBByTitle(match.title);
+                    const poetryDbDetailsArray = await fetchPoemsFromPoetryDBByTitle(match.title, { signal });
                     const firstMatchByAuthor = poetryDbDetailsArray.find(p => p.author === match.author);
-
                     if (firstMatchByAuthor) {
                         poemsForDisplay.push({...firstMatchByAuthor, source: 'supabase_title_match_author_verified'});
                     } else if (poetryDbDetailsArray.length > 0) {
-                        poemsForDisplay.push({
-                            ...poetryDbDetailsArray[0],
-                            source: 'supabase_title_match_generic_author'
-                        });
+                        poemsForDisplay.push({...poetryDbDetailsArray[0], source: 'supabase_title_match_generic_author'});
                     }
                 }
             } catch (error) {
-                console.warn(`Fout bij ophalen details van PoetryDB voor titel "${match.title}" (auteur "${match.author}"):`, error.message);
+                 if (error.name !== 'CanceledError') {
+                    console.warn(`Fout bij ophalen details van PoetryDB voor titel "${match.title}" (auteur "${match.author}"):`, error.message);
+                 }
             }
         }
     }
 
     // Zoek direct in PoetryDB
     try {
-        const poetryDbResults = await fetchPoemsFromPoetryDBByTitle(title);
-
-        // Voeg alleen gedichten toe die nog niet eerder zijn toegevoegd
+        const poetryDbResults = await fetchPoemsFromPoetryDBByTitle(title, { signal });
         poetryDbResults.forEach(pdbPoem => {
             const key = `${pdbPoem.title}-${pdbPoem.author}`.toLowerCase();
-            const alreadyAdded = poemsForDisplay.some(p =>
-                `${p.title}-${p.author}`.toLowerCase() === key
-            );
-
+            const alreadyAdded = poemsForDisplay.some(p => `${p.title}-${p.author}`.toLowerCase() === key);
             if (!alreadyAdded) {
                 poemsForDisplay.push({...pdbPoem, source: 'poetrydb_direct_title'});
             }
         });
     } catch (error) {
-        console.error(`Fout bij direct ophalen van PoetryDB op titel "${title}":`, error.message);
-        // Alleen werpen als er nog geen resultaten zijn
-        if (poemsForDisplay.length === 0) throw error;
+        if (error.name !== 'CanceledError') {
+            console.error(`Fout bij direct ophalen van PoetryDB op titel "${title}":`, error.message);
+            if (poemsForDisplay.length === 0) throw error;
+        } else {
+            throw error; // Re-throw cancellation
+        }
     }
-
-    // Zorg voor unieke resultaten
     return removeDuplicatePoems(poemsForDisplay);
 }
 
@@ -257,9 +265,11 @@ export async function searchPoemsByTitle(title) {
  * Searches for poems based on author, with combined results from Supabase and PoetryDB.
  *
  * @param {string} author – The author to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
  * @returns {Promise<Array<object>>} - An array of unique poems with citations.
  */
-export async function searchPoemsByAuthor(author) {
+export async function searchPoemsByAuthor(author, { signal } = {}) {
     let supabaseMatches = [];
     let poemsForDisplay = [];
 
@@ -274,50 +284,42 @@ export async function searchPoemsByAuthor(author) {
     if (supabaseMatches.length > 0) {
         for (const match of supabaseMatches) {
             try {
-                const specificPoem = await fetchPoem(match.title, match.author);
-
+                const specificPoem = await fetchPoem(match.title, match.author, { signal });
                 if (specificPoem) {
                     poemsForDisplay.push({...specificPoem, source: 'supabase_author_match_exact'});
                 } else {
-                    // Fallback: Find all poems of author and filter by title
-                    const authorPoemsPoetryDb = await fetchPoemsFromPoetryDBByAuthor(match.author);
+                    const authorPoemsPoetryDb = await fetchPoemsFromPoetryDBByAuthor(match.author, { signal });
                     const poemByAuthorAndTitle = authorPoemsPoetryDb.find(p => p.title === match.title);
-
                     if (poemByAuthorAndTitle) {
-                        poemsForDisplay.push({
-                            ...poemByAuthorAndTitle,
-                            source: 'supabase_author_match_found_via_pdb_author_search'
-                        });
+                        poemsForDisplay.push({...poemByAuthorAndTitle, source: 'supabase_author_match_found_via_pdb_author_search'});
                     }
                 }
             } catch (error) {
-                console.warn(`Fout bij ophalen details van PoetryDB voor gedicht van auteur "${match.author}" (titel "${match.title}"):`, error.message);
+                if (error.name !== 'CanceledError') {
+                    console.warn(`Fout bij ophalen details van PoetryDB voor gedicht van auteur "${match.author}" (titel "${match.title}"):`, error.message);
+                }
             }
         }
     }
 
     // Search directly in Poetrydb
     try {
-        const poetryDbResults = await fetchPoemsFromPoetryDBByAuthor(author);
-
-        // Voeg alleen gedichten toe die nog niet eerder zijn toegevoegd
+        const poetryDbResults = await fetchPoemsFromPoetryDBByAuthor(author, { signal });
         poetryDbResults.forEach(pdbPoem => {
             const key = `${pdbPoem.title}-${pdbPoem.author}`.toLowerCase();
-            const alreadyAdded = poemsForDisplay.some(p =>
-                `${p.title}-${p.author}`.toLowerCase() === key
-            );
-
+            const alreadyAdded = poemsForDisplay.some(p => `${p.title}-${p.author}`.toLowerCase() === key);
             if (!alreadyAdded) {
                 poemsForDisplay.push({...pdbPoem, source: 'poetrydb_direct_author'});
             }
         });
     } catch (error) {
-        console.error(`Fout bij direct ophalen van PoetryDB op auteur "${author}":`, error.message);
-        // Alleen werpen als er nog geen resultaten zijn
-        if (poemsForDisplay.length === 0) throw error;
+        if (error.name !== 'CanceledError') {
+            console.error(`Fout bij direct ophalen van PoetryDB op auteur "${author}":`, error.message);
+            if (poemsForDisplay.length === 0) throw error;
+        } else {
+            throw error; // Re-throw cancellation
+        }
     }
-
-    // Stap 4: Zorg voor unieke resultaten
     return removeDuplicatePoems(poemsForDisplay);
 }
 

@@ -1,14 +1,5 @@
-/**
- * HomePage Component
- *
- * The main landing page for the gedichtgevel.nl application.
- * Displays welcome message and search functionality.
- *
- * @module pages/Home/HomePage
- */
-
 import { useNavigate, useSearchParams } from 'react-router';
-import { useRef, useCallback, useState, useMemo } from 'react';
+import { useRef, useCallback, useState, useMemo, useEffect } from 'react';
 import { SearchBar } from "@/components/search/SearchBar.jsx";
 import { SearchResults } from "@/components/search/SearchResults.jsx";
 import { SearchLoadingState } from "@/components/search/SearchLoadingState.jsx";
@@ -18,13 +9,18 @@ import { FilterDropdownSlider } from "@/components/search/filters/FilterDropdown
 import { FilterToggle } from "@/components/search/filters/FilterToggle.jsx";
 import { Footer } from "@/layouts/Footer/Footer.jsx";
 import { DailyPoems } from "@/components/DailyPoems/DailyPoems.jsx";
+import { WelcomeAnimation } from "@/components/ui/WelcomeAnimation/WelcomeAnimation.jsx";
 import { useSearchPoems } from '@/hooks/search';
 import { useCanvasNavigation } from "@/hooks/canvas/useCanvasNavigation.js";
-import { useAuthContext } from '@/context/auth/AuthContext.jsx';
+import { useAuth } from '@/context/auth/AuthContext.jsx';
 import { DailyPoemsProvider, useDailyPoems } from '@/context/poem/DailyPoemsContext.jsx';
 import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
 import { ERAS, filterPoemsByEra } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
+
+// Plaats hier de Public URL van je video in Supabase Storage
+const WELCOME_ANIMATION_URL = "https://ivzmgjowaqjjpwagesde.supabase.co/storage/v1/object/public/assets/Gedichtgevel%20animatie%20bewerkt%20high%20res.mp4";
+
 
 /**
  * Internal component containing the actual page content.
@@ -34,9 +30,48 @@ function HomePageContent() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const dailyPoemsSectionRef = useRef(null);
+    const { user } = useAuth();
+    const [showAnimation, setShowAnimation] = useState(false);
+
+
+    // --- Welcome Animation Logic ---
+    useEffect(() => {
+        // 1. Voer alleen uit voor ingelogde gebruikers
+        if (!user) {
+            return;
+        }
+
+        // 2. Controleer of de animatie al is getoond in deze sessie
+        if (sessionStorage.getItem('hasSeenWelcomeAnimation')) {
+            return;
+        }
+
+        const handleFirstScroll = () => {
+            // 3. Toon de animatie
+            setShowAnimation(true);
+
+            // 4. Markeer als gezien voor deze sessie
+            sessionStorage.setItem('hasSeenWelcomeAnimation', 'true');
+
+            // 5. Verwijder de listener om te voorkomen dat het opnieuw wordt geactiveerd
+            window.removeEventListener('scroll', handleFirstScroll);
+        };
+
+        // Voeg de scroll listener toe
+        window.addEventListener('scroll', handleFirstScroll);
+
+        // Cleanup: verwijder de listener als de component unmount
+        return () => {
+            window.removeEventListener('scroll', handleFirstScroll);
+        };
+    }, [user]); // Afhankelijk van de user state
+
+    const handleAnimationEnd = () => {
+        setShowAnimation(false);
+    };
+    // --------------------------------
 
     // --- Easter Egg for Refetching Daily Poems (for logged-in users) ---
-    const { user } = useAuthContext();
     const { refetchDailyPoems } = useDailyPoems();
 
     const handleRefetchAndScroll = useCallback(async () => {
@@ -164,6 +199,14 @@ function HomePageContent() {
 
     return (
         <div className={styles.homePage}>
+            {/* Conditionally render the animation */}
+            {showAnimation && (
+                <WelcomeAnimation
+                    videoUrl={WELCOME_ANIMATION_URL}
+                    onAnimationEnd={handleAnimationEnd}
+                />
+            )}
+
             {/* Hero Section - Text Container P2 */}
             <div className={styles.heroSection}>
                 <div className={styles.heroContainer}>
