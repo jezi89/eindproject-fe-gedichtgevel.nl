@@ -78,18 +78,6 @@ export const ERAS = {
 };
 
 /**
- * Create a Map for fast author birth year lookups
- * Key: author name (normalized)
- * Value: birth year (number or null)
- */
-export const authorBirthYearMap = new Map(
-    authorLifespans.map(entry => [
-        normalizeAuthorName(entry.author),
-        entry.birth_year
-    ])
-);
-
-/**
  * Normalize author name for consistent lookups
  * - Trim whitespace
  * - Convert to lowercase
@@ -97,8 +85,9 @@ export const authorBirthYearMap = new Map(
  *
  * @param {string} authorName - Raw author name
  * @returns {string} Normalized author name
+ * @internal
  */
-export function normalizeAuthorName(authorName) {
+function normalizeAuthorName(authorName) {
     if (!authorName) return '';
 
     return authorName
@@ -110,49 +99,39 @@ export function normalizeAuthorName(authorName) {
 }
 
 /**
- * Get birth year for an author
+ * Calculate the active middle year of a poet's life
+ * Uses average of birth and death year, or estimates based on available data
  *
- * @param {string} authorName - Author name to lookup
- * @returns {number|null} Birth year or null if not found
+ * @param {number|null} birthYear - Birth year
+ * @param {number|null} deathYear - Death year
+ * @returns {number|null} Active middle year or null
+ * @internal
  */
-export function getAuthorBirthYear(authorName) {
-    if (!authorName) return null;
-
-    const normalized = normalizeAuthorName(authorName);
-    return authorBirthYearMap.get(normalized) || null;
+function getActiveMiddleYear(birthYear, deathYear) {
+    if (birthYear != null && deathYear != null) {
+        // Both known: average
+        return Math.round((birthYear + deathYear) / 2);
+    }
+    if (birthYear != null) {
+        // Only birth year known: add typical active age
+        return birthYear + 35;
+    }
+    if (deathYear != null) {
+        // Only death year known: subtract typical active age
+        return deathYear - 35;
+    }
+    // Both unknown
+    return null;
 }
 
 /**
- * Map a birth year to a literary era
+ * Map an active middle year to a literary era
  *
- * @param {number|null} birthYear - Author's birth year
+ * @param {number|null} activeMiddleYear - Active middle year of the author
  * @returns {string} Era ID (e.g., 'romantic', 'unknown')
+ * @internal
  */
-export function mapBirthYearToEra(birthYear) {
-    if (birthYear === null || birthYear === undefined) {
-        return ERAS.UNKNOWN.id;
-    }
-
-    // Loop over alle era's behalve 'all' en 'unknown'
-    for (const era of Object.values(ERAS)) {
-        if (
-            era.id === 'all' ||
-            era.id === 'unknown' ||
-            era.minYear === null ||
-            era.maxYear === null
-        ) {
-            continue;
-        }
-        if (birthYear >= era.minYear && birthYear <= era.maxYear) {
-            return era.id;
-        }
-    }
-
-    return ERAS.UNKNOWN.id;
-}
-
-// Mapping op basis van actief midden
-export function mapActiveMiddleToEra(activeMiddleYear) {
+function mapActiveMiddleToEra(activeMiddleYear) {
     if (activeMiddleYear === null || activeMiddleYear === undefined) {
         return ERAS.UNKNOWN.id;
     }
@@ -177,16 +156,21 @@ export function mapActiveMiddleToEra(activeMiddleYear) {
  *
  * @param {string} authorName - Author name
  * @returns {string} Era ID
+ * @internal
  */
-export function getAuthorEra(authorName) {
+function getAuthorEra(authorName) {
     const activeMiddle = getAuthorActiveMiddle(authorName);
     return mapActiveMiddleToEra(activeMiddle);
 }
 
 /**
- * Haal het actieve midden op voor een auteur
+ * Get the active middle year for an author
+ *
+ * @param {string} authorName - Author name
+ * @returns {number|null} Active middle year or null
+ * @internal
  */
-export function getAuthorActiveMiddle(authorName) {
+function getAuthorActiveMiddle(authorName) {
     if (!authorName) return null;
     const normalized = normalizeAuthorName(authorName);
     const entry = authorLifespans.find(e => normalizeAuthorName(e.author) === normalized);
@@ -213,17 +197,12 @@ export function filterPoemsByEra(poems, selectedEraId) {
 }
 
 /**
- * Get era label by ID
+ * Count the number of authors per era
  *
- * @param {string} eraId - Era ID
- * @returns {string} Era label
+ * @param {Object} options - Options
+ * @param {boolean} options.excludeContemporary - Exclude contemporary era from count
+ * @returns {Object} Object with era IDs as keys and author counts as values
  */
-export function getEraLabel(eraId) {
-    const era = Object.values(ERAS).find(e => e.id === eraId);
-    return era ? era.label : ERAS.ALL.label;
-}
-
-// Nieuwe versie van countAuthorsPerEra
 export function countAuthorsPerEra({ excludeContemporary = false } = {}) {
     const counts = {};
     Object.values(ERAS).forEach(era => {
@@ -239,22 +218,4 @@ export function countAuthorsPerEra({ excludeContemporary = false } = {}) {
         }
     });
     return counts;
-}
-
-// Bepaal het actieve midden van het leven van een dichter
-export function getActiveMiddleYear(birthYear, deathYear) {
-    if (birthYear != null && deathYear != null) {
-        // Beide bekend: gemiddelde
-        return Math.round((birthYear + deathYear) / 2);
-    }
-    if (birthYear != null) {
-        // Alleen geboortejaar bekend
-        return birthYear + 35;
-    }
-    if (deathYear != null) {
-        // Alleen sterfjaar bekend
-        return deathYear - 35;
-    }
-    // Beide onbekend
-    return null;
 }
