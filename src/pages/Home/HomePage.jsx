@@ -143,8 +143,6 @@ function HomePageContent() {
     // Handle canvas navigation from search results
     const handleNavigateToCanvas = (poemData) => {
         try {
-            console.log('🎨 HomePage: Navigating to canvas with poem:', poemData?.title);
-
             // Validate that we have the navigation function
             if (!navigateToCanvas) {
                 throw new Error('Navigation function not available');
@@ -152,7 +150,6 @@ function HomePageContent() {
 
             navigateToCanvas(poemData, {source: 'search'});
         } catch (error) {
-            console.error('❌ Failed to navigate to canvas:', error);
             console.error('Error details:', {
                 message: error.message,
                 stack: error.stack,
@@ -168,8 +165,6 @@ function HomePageContent() {
         if (!poemData) return;
 
         try {
-            console.log('🎤 HomePage: Navigating to Spreekgevel with poem:', poemData.title);
-
             // Navigate to recording page with poem data in state
             navigate('/spreekgevel', {
                 state: {
@@ -178,7 +173,6 @@ function HomePageContent() {
                 }
             });
         } catch (error) {
-            console.error('❌ Failed to navigate to recording page:', error);
             // Fallback: navigate without state
             navigate('/spreekgevel');
         }

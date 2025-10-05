@@ -6,12 +6,6 @@
  */
 
 // Poem card animations
-// UNUSED: export const poemCardVariants = {
-//     initial: {opacity: 0, y: 20},
-//     animate: {opacity: 1, y: 0},
-//     exit: {opacity: 0, y: -20}
-// };
-
 // Poem line animations
 export const poemLineVariants = {
     preview: {
@@ -78,15 +72,6 @@ export const hiddenIndicatorVariants = {
     transition: {delay: 0.3, duration: 0.3}
 };
 
-// UNUSED
-// Toast animations
-// export const toastVariants = {
-//     initial: {opacity: 0, y: 10},
-//     animate: {opacity: 1, y: 0},
-//     exit: {opacity: 0, y: 10},
-//     transition: {duration: 0.2}
-// };
-
 // Non-expandable actions
 export const nonExpandableVariants = {
     initial: {opacity: 0, y: 10},
@@ -95,47 +80,7 @@ export const nonExpandableVariants = {
 };
 
 // Layout animations
-// UNUSED: export const layoutVariants = {
-//     card: {
-//         layout: true,
-//         transition: {
-//             layout: {
-//                 duration: 0.4,
-//                 ease: [0.25, 0.46, 0.45, 0.94]
-//             }
-//         }
-//     },
-//     content: {
-//         layout: true,
-//         transition: {
-//             layout: {
-//                 duration: 0.4,
-//                 ease: [0.25, 0.46, 0.45, 0.94]
-//             }
-//         }
-//     }
-// };
-
 // Expansion container animations (for expand controls)
-// UNUSED: export const expansionVariants = {
-//     initial: {height: 0},
-//     expand: (totalHeight) => ({
-//         height: totalHeight,
-//         transition: {
-//             duration: 0.6,
-//             ease: [0.25, 0.46, 0.45, 0.94],
-//             type: "tween"
-//         }
-//     }),
-//     collapse: {
-//         height: 0,
-//         transition: {
-//             duration: 0.4,
-//             ease: [0.25, 0.46, 0.45, 0.94]
-//         }
-//     }
-// };
-
 // Unified spring configurations for expand/collapse
 export const SPRING_CONFIG = {
     expand: {

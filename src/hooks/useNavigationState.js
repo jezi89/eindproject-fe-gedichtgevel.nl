@@ -25,8 +25,4 @@ export function usePrefilledEmail() {
 /**
  * Hook to get all navigation state
  * @returns {Object} The entire navigation state object
- */
-// UNUSED: export function useAllNavigationState() {
-//     const location = useLocation();
-//     return location.state || {};
-// }
+ */

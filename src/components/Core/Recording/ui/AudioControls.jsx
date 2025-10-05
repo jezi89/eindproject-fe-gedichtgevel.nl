@@ -9,7 +9,7 @@ import {VolumeDownIcon} from '../icons/VolumeDownIcon.jsx';
 import {MuteSoundIcon} from '../icons/MuteSoundIcon.jsx';
 
 export const AudioControls = memo(() => {
-    console.log('🔄 AudioControls re-render');
+
     const {
         isPlaying,
         isAudioMuted,
@@ -23,7 +23,6 @@ export const AudioControls = memo(() => {
 
     // FIXED: Use recordedAudioBlob instead of getDuration() to avoid re-render loops
     const hasAudio = !!recordedAudioBlob;
-    console.log('📊 hasAudio check:', hasAudio, 'recordedAudioBlob exists:', !!recordedAudioBlob);
 
     return (
         <div className={styles.frame}>

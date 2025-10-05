@@ -17,22 +17,21 @@ export class CanvasDataService {
      */
     static storePoemForCanvas(poemData) {
         try {
-            console.log('🔄 CanvasDataService: Storing poem:', poemData?.title);
-            
+
             const standardizedData = this.standardizePoemData(poemData);
             const dataString = JSON.stringify(standardizedData);
             
             // Check size limit
             if (dataString.length > this.MAX_STORAGE_SIZE) {
-                console.warn('⚠️ Poem data exceeds size limit, truncating...');
+
                 standardizedData.lines = standardizedData.lines.slice(0, 100); // Limit to 100 lines
             }
             
             sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(standardizedData));
-            console.log('✅ Poem data stored for canvas:', standardizedData.title);
+
             return standardizedData;
         } catch (error) {
-            console.error('❌ Failed to store poem data:', error);
+
             throw new Error('Failed to store poem data for canvas');
         }
     }
@@ -52,15 +51,14 @@ export class CanvasDataService {
             
             // Validate retrieved data
             if (!this.validatePoemData(poemData)) {
-                console.warn('⚠️ Invalid poem data found in storage, clearing...');
+
                 this.clearPoemData();
                 return null;
             }
-            
-            console.log('✅ Retrieved poem data from storage:', poemData.title);
+
             return poemData;
         } catch (error) {
-            console.error('❌ Failed to retrieve poem data:', error);
+
             this.clearPoemData(); // Clear corrupted data
             return null;
         }
@@ -72,9 +70,9 @@ export class CanvasDataService {
     static clearPoemData() {
         try {
             sessionStorage.removeItem(this.STORAGE_KEY);
-            console.log('🧹 Cleared poem data from storage');
+
         } catch (error) {
-            console.error('❌ Failed to clear poem data:', error);
+
         }
     }   
  
@@ -274,7 +272,7 @@ export class CanvasDataService {
             sessionStorage.removeItem(test);
             return true;
         } catch (error) {
-            console.warn('⚠️ SessionStorage not available:', error);
+
             return false;
         }
     }

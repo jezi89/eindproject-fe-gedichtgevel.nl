@@ -40,7 +40,6 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title', { signal } 
     } catch (error) {
         // Axios throws a 'CanceledError' when a request is aborted.
         if (error.name === 'CanceledError') {
-            console.log(`Request for field "${field}" with query "${query}" was canceled.`);
             // Re-throw the error so TanStack Query can handle it
             throw error;
         }
@@ -48,7 +47,6 @@ async function fetchPoemsFromPoetryDBByField(query, field = 'title', { signal } 
         if (error.response && error.response.status === 404) {
             return [];
         }
-        console.error(`Fout bij ophalen gedichten (veld: ${field}, query: "${query}") uit PoetryDB:`, error);
         throw new Error(`Kon geen gedichten ophalen van PoetryDB voor ${field} "${query}": ${error.message}`);
     }
 }
@@ -101,13 +99,11 @@ async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm, { s
         return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
         if (error.name === 'CanceledError') {
-            console.log(`Combined search for author "${authorTerm}" and title "${titleTerm}" was canceled.`);
             throw error;
         }
         if (error.response && error.response.status === 404) {
             return [];
         }
-        console.error(`Fout bij ophalen gedichten (auteur: "${authorTerm}", titel: "${titleTerm}") uit PoetryDB:`, error);
         throw new Error(`Kon geen gedichten ophalen van PoetryDB voor auteur "${authorTerm}" en titel "${titleTerm}": ${error.message}`);
     }
 }
@@ -139,7 +135,6 @@ async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
     /* Voorbeeld van echte implementatie met Supabase client:
 
     if (!supabase) {
-        console.warn('Supabase client is niet geïnitialiseerd.');
         return [];
     }
 
@@ -150,13 +145,11 @@ async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
             .ilike(field, `%${query}%`);
 
         if (error) {
-            console.error(`Supabase fout bij zoeken op ${field} met query "${query}":`, error);
             throw error;
         }
 
         return data || [];
     } catch (error) {
-        console.error(`Fout bij ophalen van Supabase (veld: ${field}, query: "${query}"):`, error);
         throw new Error(`Kon geen matches ophalen van Supabase: ${error.message}`);
     }
     */
@@ -178,7 +171,6 @@ async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
  */
 async function fetchPoem(title, author) {
     if (!title || !author) {
-        console.warn("fetchPoem vereist zowel titel als auteur.");
         return null;
     }
 
@@ -192,7 +184,6 @@ async function fetchPoem(title, author) {
 
         return null; // Niet gevonden
     } catch (error) {
-        console.error(`Fout bij ophalen specifiek gedicht (titel: "${title}", auteur: "${author}"):`, error);
         return null; // Retourneer null bij een fout
     }
 }
@@ -213,7 +204,6 @@ export async function searchPoemsByTitle(title, { signal } = {}) {
         // Assuming fetchTitleAuthorMatchesFromSupabase is custom and doesn't support it yet.
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(title, 'title');
     } catch (error) {
-        console.warn(`Kon geen titel matches ophalen van Supabase voor "${title}":`, error.message);
     }
 
     // Stap 2: Voor elke Supabase match, haal details op uit PoetryDB
@@ -234,7 +224,6 @@ export async function searchPoemsByTitle(title, { signal } = {}) {
                 }
             } catch (error) {
                  if (error.name !== 'CanceledError') {
-                    console.warn(`Fout bij ophalen details van PoetryDB voor titel "${match.title}" (auteur "${match.author}"):`, error.message);
                  }
             }
         }
@@ -252,7 +241,6 @@ export async function searchPoemsByTitle(title, { signal } = {}) {
         });
     } catch (error) {
         if (error.name !== 'CanceledError') {
-            console.error(`Fout bij direct ophalen van PoetryDB op titel "${title}":`, error.message);
             if (poemsForDisplay.length === 0) throw error;
         } else {
             throw error; // Re-throw cancellation
@@ -277,7 +265,6 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
     try {
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(author, 'author');
     } catch (error) {
-        console.warn(`Kon geen auteur matches ophalen van Supabase voor "${author}":`, error.message);
     }
 
     // Before each Supabase match, retrieve details from PoetryDB
@@ -296,7 +283,6 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
                 }
             } catch (error) {
                 if (error.name !== 'CanceledError') {
-                    console.warn(`Fout bij ophalen details van PoetryDB voor gedicht van auteur "${match.author}" (titel "${match.title}"):`, error.message);
                 }
             }
         }
@@ -314,7 +300,6 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
         });
     } catch (error) {
         if (error.name !== 'CanceledError') {
-            console.error(`Fout bij direct ophalen van PoetryDB op auteur "${author}":`, error.message);
             if (poemsForDisplay.length === 0) throw error;
         } else {
             throw error; // Re-throw cancellation
@@ -331,29 +316,6 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
  * @param {string} title - The title to look up.
  * @returns {Promise<Array<object>>} - An array of unique poems that meet both criteria.
  */
-// UNUSED: export async function searchPoemsByAuthorAndTitle(author, title) {
-//     if (!author || !title) {
-//         throw new Error("Zowel auteur als titel zijn vereist voor deze zoekopdracht.");
-//     }
-//
-//     let poemsForDisplay = [];
-//
-//     // Stap 1: Directe zoekopdracht met AND operator in PoetryDB
-//     try {
-//         const poetryDbResults = await fetchPoemsFromPoetryDBByAuthorAndTitle(author, title);
-//         poetryDbResults.forEach(poem => {
-//             poemsForDisplay.push({...poem, source: 'poetrydb_direct_author_and_title'});
-//         });
-//     } catch (error) {
-//         console.error(`Fout bij gecombineerde zoekopdracht (auteur: "${author}", titel: "${title}"):`, error.message);
-//     }
-//
-//     // Stap 2: Aanvullende geavanceerde implementatie...
-//     // TODO: Implementeer eventueel aanvullende logica met Supabase, fuzzy matching, etc.
-//
-//     return removeDuplicatePoems(poemsForDisplay);
-// }
-
 /**
  * Retrieves one specific poem based on exact title and author.
  *

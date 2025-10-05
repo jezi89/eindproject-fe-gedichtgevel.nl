@@ -54,9 +54,6 @@ export const toRoman = (num) => {
  * @param {string} roman - Roman numeral string
  * @returns {number} The numeric value
  */
-// UNUSED: export const fromRoman = (roman) => {
-//     if (!roman || typeof roman !== 'string') return 0;
-
 //     const cleanRoman = roman.toUpperCase().trim();
 //     let result = 0;
 //     let i = 0;
@@ -200,9 +197,6 @@ export const generateDropdownDecades = (totalCount) => {
  * @param {number} totalCount - Total number of items
  * @returns {Object} Roman numeral display information
  */
-// UNUSED: export const getCarouselRomanDisplay = (currentIndex, totalCount) => {
-//     const currentDecade = Math.floor(currentIndex / 10);
-
 //     if (currentDecade === 0) {
 //         return {
 //             showRoman: false,
@@ -230,9 +224,6 @@ export const generateDropdownDecades = (totalCount) => {
  * @param {string} roman - Roman numeral to validate
  * @returns {boolean} True if valid Roman numeral
  */
-// UNUSED: export const isValidRoman = (roman) => {
-//     if (!roman || typeof roman !== 'string') return false;
-
 //     const cleanRoman = roman.toUpperCase().trim();
 //     const validPattern = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
 
@@ -245,10 +236,6 @@ export const generateDropdownDecades = (totalCount) => {
  * @param {number} num - The number
  * @returns {string} Number with ordinal suffix
  */
-// UNUSED: export const getOrdinal = (num) => {
-//     const j = num % 10;
-//     const k = num % 100;
-
 //     if (j === 1 && k !== 11) return num + 'st';
 //     if (j === 2 && k !== 12) return num + 'nd';
 //     if (j === 3 && k !== 13) return num + 'rd';
@@ -257,4 +244,3 @@ export const generateDropdownDecades = (totalCount) => {
 // };
 
 // Export constants for external use
-// UNUSED: export {ROMAN_NUMERALS};

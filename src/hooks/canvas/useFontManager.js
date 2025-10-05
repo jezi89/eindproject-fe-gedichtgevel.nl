@@ -151,13 +151,12 @@ export function useFontManager() {
         fontStatus[fontName] === "loading" ||
         fontStatus[fontName] === "loaded"
       ) {
-        console.log(`Font "${fontName}" is al geladen of wordt geladen.`);
+
         return;
       }
 
       // 2. Update de state om aan te geven dat we beginnen met laden.
       setFontStatus((prevStatus) => ({ ...prevStatus, [fontName]: "loading" }));
-      console.log(`Start met laden van font: "${fontName}"`);
 
       try {
         // 3. Add Google Fonts CSS if not already present
@@ -187,13 +186,12 @@ export function useFontManager() {
           document.fonts.load(`700 16px "${fontName}"`)
         ]);
 
-        console.log(`Font "${fontName}" volledig geladen en klaar voor gebruik.`);
         setFontStatus((prevStatus) => ({
           ...prevStatus,
           [fontName]: "loaded",
         }));
       } catch (error) {
-        console.error(`Fout bij het laden van font: "${fontName}"`, error);
+
         setFontStatus((prevStatus) => ({ ...prevStatus, [fontName]: "error" }));
       }
     },

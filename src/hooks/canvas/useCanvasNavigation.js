@@ -33,7 +33,7 @@ export function useCanvasNavigation() {
         try {
             // Validate poem data
             if (!poemData) {
-                console.error('❌ Cannot navigate to canvas: No poem data provided');
+
                 throw new Error('Poem data is required for canvas navigation');
             }
             
@@ -45,7 +45,7 @@ export function useCanvasNavigation() {
                              (typeof poemData.body === 'string' && poemData.body.trim());
             
             if (!hasTitle && !hasContent) {
-                console.error('❌ Cannot navigate to canvas: Poem data lacks title and content');
+
                 throw new Error('Poem must have either a title or content');
             }
             
@@ -61,9 +61,7 @@ export function useCanvasNavigation() {
             searchParams.set('source', source);
             
             const fullUrl = `${canvasUrl}?${searchParams.toString()}`;
-            
-            console.log(`🎨 Navigating to canvas: ${fullUrl}`);
-            
+
             // Navigate to canvas
             if (replace) {
                 navigate(fullUrl, { replace: true });
@@ -74,8 +72,7 @@ export function useCanvasNavigation() {
             return standardizedData;
             
         } catch (error) {
-            console.error('❌ Failed to navigate to canvas:', error);
-            
+
             // Re-throw with more context for the calling component
             throw new Error(`Canvas navigation failed: ${error.message}`);
         }
@@ -100,16 +97,16 @@ export function useCanvasNavigation() {
             // Clear poem data from storage if requested
             if (clearData) {
                 CanvasDataService.clearPoemData();
-                console.log('🧹 Cleared canvas data on navigation back');
+
             }
             
             // Try to go back in history first
             if (window.history.length > 1) {
-                console.log('⬅️ Navigating back in history');
+
                 window.history.back();
             } else {
                 // Fallback to specified route
-                console.log(`⬅️ Navigating to fallback route: ${fallback}`);
+
                 if (replace) {
                     navigate(fallback, { replace: true });
                 } else {
@@ -118,14 +115,13 @@ export function useCanvasNavigation() {
             }
             
         } catch (error) {
-            console.error('❌ Failed to navigate back from canvas:', error);
-            
+
             // Emergency fallback - try to navigate to home
             try {
                 navigate('/', { replace: true });
-                console.log('🏠 Emergency navigation to home');
+
             } catch (emergencyError) {
-                console.error('❌ Emergency navigation failed:', emergencyError);
+
                 // Last resort - reload the page
                 window.location.href = '/';
             }
@@ -150,9 +146,7 @@ export function useCanvasNavigation() {
             searchParams.set('source', 'demo');
             
             const demoUrl = `/designgevel?${searchParams.toString()}`;
-            
-            console.log('🎨 Navigating to canvas demo');
-            
+
             const { replace = false } = options;
             if (replace) {
                 navigate(demoUrl, { replace: true });
@@ -161,7 +155,7 @@ export function useCanvasNavigation() {
             }
             
         } catch (error) {
-            console.error('❌ Failed to navigate to canvas demo:', error);
+
             throw new Error(`Canvas demo navigation failed: ${error.message}`);
         }
     };
@@ -178,7 +172,7 @@ export function useCanvasNavigation() {
         try {
             return CanvasDataService.getPoemForCanvas() !== null;
         } catch (error) {
-            console.error('❌ Failed to check canvas data availability:', error);
+
             return false;
         }
     };
@@ -206,7 +200,7 @@ export function useCanvasNavigation() {
                 timestamp: poemData?.timestamp || null
             };
         } catch (error) {
-            console.error('❌ Failed to get canvas data info:', error);
+
             return {
                 hasData: false,
                 hasValidData: false,

@@ -64,7 +64,6 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
             await signOut();
             navigate('/'); // Navigate to homepage after logout
         } catch (error) {
-            console.error('Logout error:', error);
         }
     };
 

@@ -141,9 +141,6 @@ export function SignupForm() {
             const password = formData.get('password') || values.password;
 
             // Submit registration credentials
-            // TODO clog weghalen
-            console.log("Registratie poging met:", {email});
-
             setRegisteredEmail(email);
 
             // Register user with email and password
@@ -164,7 +161,6 @@ export function SignupForm() {
             return result;
         } catch (error) {
             // Handle errors (display user-friendly messages)
-            console.error('Unexpected error during Signup:', error);
             return {success: false, error: error.message || 'Er is een onverwachte fout opgetreden.'};
         }
     });

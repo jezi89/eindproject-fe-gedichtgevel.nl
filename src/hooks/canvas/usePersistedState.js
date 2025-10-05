@@ -87,15 +87,3 @@ export function clearAllPersistedState() {
 /**
  * Get overview of current persisted state for debugging
  */
-// UNUSED: export function getPersistedStateOverview() {
-//   const overview = {};
-//   Object.entries(PERSISTED_KEYS).forEach(([name, key]) => {
-//     try {
-//       const value = localStorage.getItem(key);
-//       overview[name] = value ? 'SET' : 'EMPTY';
-//     } catch (error) {
-//       overview[name] = 'ERROR';
-//     }
-//   });
-//   return overview;
-// }

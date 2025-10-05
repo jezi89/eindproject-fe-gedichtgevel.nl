@@ -31,7 +31,6 @@ export class SearchErrorBoundary extends Component {
 
         // Log to error tracking service
         if (typeof window !== 'undefined' && window.console) {
-            console.error('Search Error Boundary caught an error:', error, errorInfo);
         }
 
         // TODO: Send to error tracking service

@@ -33,16 +33,6 @@ export const calculateHiddenContent = (poem, expandablePreview) => {
     };
 };
 
-// UNUSED
-// /**
-//  * Bepaalt of een gedicht als "kort" wordt beschouwd
-//  * @param {Object} poem - Gedicht object met lines array
-//  * @returns {boolean} True als gedicht 4 of minder regels heeft
-//  */
-// export const isShortPoem = (poem) => {
-//     return poem && poem.lines && poem.lines.length <= 4;
-// };
-
 /**
  * EENVOUDIGE PREVIEW LOGICA: Terug naar originele, werkende implementatie
  * Alleen gedichten > 4 regels zijn expandable

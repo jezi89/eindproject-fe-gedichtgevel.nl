@@ -117,7 +117,6 @@ export function useSupabaseAuth() {
             }
 
 
-            // TODO verwijder console.log hier
             // Check if email confirmation is required
             if (result.data?.user && !result.data.user.confirmed_at) {
                 // Handle unconfirmed user state

@@ -27,7 +27,6 @@ export class GlobalErrorBoundary extends Component {
         });
 
         if (typeof window !== 'undefined' && window.console) {
-            console.error('Global Error Boundary caught an error:', error, errorInfo);
         }
 
         // TODO: Send to error tracking service (e.g., Sentry)

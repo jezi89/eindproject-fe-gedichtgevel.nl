@@ -13,7 +13,6 @@ export function CollectionPage() {
     useEffect(() => {
         // Load designs when component mounts and user is logged in
         if (user) {
-            console.log('📋 CollectionPage: Loading designs for user:', user.id);
             list({ limit: 50, orderBy: 'updated_at', ascending: false });
         }
     }, [user, list]);

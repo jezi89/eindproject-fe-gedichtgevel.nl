@@ -55,9 +55,9 @@ export const useSearchOrchestration = (results, layout) => {
                         // Validate position is within bounds
                         const validPosition = Math.max(0, Math.min(position, results.length - 1));
                         setCurrentIndex(validPosition);
-                        console.log('Loaded carousel position from localStorage:', validPosition);
+
                     } else {
-                        console.warn('Invalid carousel position in localStorage:', savedPosition);
+
                         setCurrentIndex(0);
                         localStorage.setItem(CAROUSEL_POSITION_KEY, '0');
                     }
@@ -66,7 +66,7 @@ export const useSearchOrchestration = (results, layout) => {
                     setCurrentIndex(0);
                 }
             } catch (error) {
-                console.error('Failed to load carousel position:', error);
+
                 setCurrentIndex(0);
             }
             setHasLoadedPosition(true);
@@ -118,7 +118,7 @@ export const useSearchOrchestration = (results, layout) => {
                     );
                     return {index, heightInfo};
                 } catch (error) {
-                    console.error(`Error calculating height for poem ${index}:`, error);
+
                     return null;
                 }
             });
@@ -142,8 +142,6 @@ export const useSearchOrchestration = (results, layout) => {
 
         const newIndex = (currentIndex - 1 + layout.resultCount) % layout.resultCount;
 
-        console.log('🔍 CAROUSEL NAV PREV - State Analysis:');
-        console.log('Current Index:', currentIndex, '→ New Index:', newIndex);
 
         setNavigationDirection('prev');
         setCurrentIndex(newIndex);
@@ -162,8 +160,6 @@ export const useSearchOrchestration = (results, layout) => {
 
         const newIndex = (currentIndex + 1) % layout.resultCount;
 
-        console.log('🔍 CAROUSEL NAV NEXT - State Analysis:');
-        console.log('Current Index:', currentIndex, '→ New Index:', newIndex);
 
         setNavigationDirection('next');
         setCurrentIndex(newIndex);
@@ -179,7 +175,6 @@ export const useSearchOrchestration = (results, layout) => {
 
     // NIEUWE GLOBAL TOGGLE - werkt met unified poem states
     const handleGlobalExpandToggle = useCallback(() => {
-        console.log('Global toggle triggered - current poem states:', poemStates);
 
         // Bepaal welke gedichten relevant zijn - VOOR BESLISSING: gebruik zichtbare gedichten
         const visibleIndices = layout.visibleIndices.map(item => item.actualIndex);
@@ -188,7 +183,7 @@ export const useSearchOrchestration = (results, layout) => {
         const expandableAnalysis = analyzeExpandablePoems(results, visibleIndices);
 
         if (!expandableAnalysis.hasExpandablePoems) {
-            console.log('No expandable poems found - skipping global toggle');
+
             return;
         }
 
@@ -213,8 +208,6 @@ export const useSearchOrchestration = (results, layout) => {
         const shouldExpandAll = !allVisibleExpanded;
         const action = shouldExpandAll ? 'expand' : 'collapse';
 
-        console.log(`Global toggle action: ${action}`);
-
         // Trigger voor alle relevante gedichten die in idle state zijn
         const trigger = {
             action,
@@ -236,12 +229,12 @@ export const useSearchOrchestration = (results, layout) => {
 
                 if (shouldExpandAll && canExpand) {
                     updates[index] = {globalTrigger: trigger};
-                    console.log(`Setting global expand trigger for poem ${index}`);
+
                 } else if (!shouldExpandAll && canCollapse) {
                     updates[index] = {globalTrigger: trigger};
-                    console.log(`Setting global collapse trigger for poem ${index}`);
+
                 } else {
-                    console.log(`Skipping poem ${index} - phase: ${currentPhase}, expanded: ${currentState?.expanded}, action: ${action}`);
+
                 }
             });
 
@@ -262,15 +255,12 @@ export const useSearchOrchestration = (results, layout) => {
                     return newStates;
                 });
 
-                console.log('Applied global triggers to poems:', Object.keys(updates));
-
                 // Voor global collapse: scroll naar resultsOverview na een korte delay
                 if (!shouldExpandAll) {
                     setTimeout(() => {
                         const scrollInfo = calculateCollapseScroll('.resultsOverview', 100);
 
                         if (scrollInfo.shouldScroll) {
-                            console.log('Global collapse: scrolling to resultsOverview');
 
                             // Smooth scroll animatie
                             const startPosition = window.scrollY;
@@ -296,7 +286,7 @@ export const useSearchOrchestration = (results, layout) => {
                     }, 600); // Wacht tot collapse animaties zijn begonnen
                 }
             } else {
-                console.log('No poems available for global toggle (all busy or no state changes needed)');
+
             }
         });
     }, [poemStates, layout.isCarousel, layout.resultCount, layout.visibleIndices, results]);
@@ -344,13 +334,12 @@ export const useSearchOrchestration = (results, layout) => {
         // Validate targetIndex is a valid number
         const validIndex = typeof targetIndex === 'number' ? targetIndex : parseInt(targetIndex, 10);
         if (isNaN(validIndex) || validIndex < 0) {
-            console.error('Invalid targetIndex provided to handleNavigateToIndex:', targetIndex);
+
             return;
         }
         targetIndex = validIndex;
         // FEATURE 1: Auto-collapse all poems when navigating to new series
         if (options.seriesChange) {
-            console.log('Series change detected - collapsing all poems');
 
             // Trigger global collapse for all expanded poems
             const collapseUpdates = {};

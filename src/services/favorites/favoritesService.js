@@ -1,5 +1,3 @@
-// UNUSED - Temporary stub export to prevent import errors
-// Returns silent success responses to prevent error messages in UI
 export const favoritesService = {
     addFavoritePoem: async () => ({
         success: true,
