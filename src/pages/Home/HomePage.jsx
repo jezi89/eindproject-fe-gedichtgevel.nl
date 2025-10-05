@@ -12,14 +12,14 @@ import { DailyPoems } from "@/components/DailyPoems/DailyPoems.jsx";
 import { WelcomeAnimation } from "@/components/ui/WelcomeAnimation/WelcomeAnimation.jsx";
 import { useSearchPoems } from '@/hooks/search';
 import { useCanvasNavigation } from "@/hooks/canvas/useCanvasNavigation.js";
-import { useAuth } from '@/context/auth/AuthContext.jsx';
+import { useAuth } from '@/hooks/auth/useAuth';
 import { DailyPoemsProvider, useDailyPoems } from '@/context/poem/DailyPoemsContext.jsx';
 import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
 import { ERAS, filterPoemsByEra } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
 
 // Plaats hier de Public URL van je video in Supabase Storage
-const WELCOME_ANIMATION_URL = "https://ivzmgjowaqjjpwagesde.supabase.co/storage/v1/object/public/assets/Gedichtgevel%20animatie%20bewerkt%20high%20res.mp4";
+const WELCOME_ANIMATION_URL = "https://fwaxobqcxzrrttzfvdsw.supabase.co/storage/v1/object/public/site-video-assets/Gedichtgevel%20Animatie%20Bewerkt%20optimized%20Res.mp4";
 
 
 /**
@@ -46,24 +46,12 @@ function HomePageContent() {
             return;
         }
 
-        const handleFirstScroll = () => {
-            // 3. Toon de animatie
-            setShowAnimation(true);
+        // 3. Toon de animatie direct bij het laden van de component
+        setShowAnimation(true);
 
-            // 4. Markeer als gezien voor deze sessie
-            sessionStorage.setItem('hasSeenWelcomeAnimation', 'true');
+        // 4. Markeer als gezien voor deze sessie
+        sessionStorage.setItem('hasSeenWelcomeAnimation', 'true');
 
-            // 5. Verwijder de listener om te voorkomen dat het opnieuw wordt geactiveerd
-            window.removeEventListener('scroll', handleFirstScroll);
-        };
-
-        // Voeg de scroll listener toe
-        window.addEventListener('scroll', handleFirstScroll);
-
-        // Cleanup: verwijder de listener als de component unmount
-        return () => {
-            window.removeEventListener('scroll', handleFirstScroll);
-        };
     }, [user]); // Afhankelijk van de user state
 
     const handleAnimationEnd = () => {

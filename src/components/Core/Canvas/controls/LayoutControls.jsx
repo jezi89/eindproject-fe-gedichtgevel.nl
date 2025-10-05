@@ -109,7 +109,7 @@ export default function LayoutControls({
                             className={textAlign === "center" ? styles.active : ""}
                             onClick={() => onTextAlignChange("center")}
                         >
-                            Midden
+                            Mid.
                         </button>
                         <button
                             className={textAlign === "right" ? styles.active : ""}
@@ -164,9 +164,9 @@ export default function LayoutControls({
                         onChange={(e) => setIsOptimizationEnabled(e.target.checked)}
                     />
                     <label htmlFor="textOptimization">
-                        🚀 Geoptimaliseerde Modus Actief
+                        🚀 Toggle scherpere tekst aan
                         <br/>
-                        (Scherpere tekst op high-res displays)
+                        (must voor high-res displays)
                     </label>
                 </div>
 

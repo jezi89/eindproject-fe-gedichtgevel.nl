@@ -326,10 +326,25 @@ flex-basis: 820px;
   background-color: white;
   }
 
+.micPlaceholder {
+  color: $search-placeholder;
+  font-style: italic;
+}
+
+.errorMessage {
+  color: $feedback-error;
+  font-size: $font-size-xs;
+  margin-top: $spacing-xs;
+  text-align: left; // Align with the label
+  width: 100%;
+}
+
 .micSelectWrapper {
   display:        flex;
   flex-direction: column;
   gap:            5px;
+  margin-bottom: 1rem; // Add some space below
+  cursor:         pointer;
   }
 
 .micSelect {

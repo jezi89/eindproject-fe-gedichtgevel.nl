@@ -136,21 +136,35 @@ export function useSupabaseAuth() {
 
     // Logout handler
     const signOut = useCallback(async () => {
-        try {
-            setError(null);
-            const result = await authSignOut();
-            if (!result.success) {
-                throw new Error(result.error);
-            }
+        setError(null);
+        const result = await authSignOut();
 
-            // Clear all form states
-            loginForm.resetForm();
-            signupForm.resetForm();
-            return result;
-        } catch (error) {
-            setError(error.message);
-            throw error;
+        // If sign-out fails, we need to handle it gracefully.
+        // This often happens if the session expired in another tab or window.
+        if (!result.success) {
+            // Check for the specific error that indicates the session was already gone.
+            // The error object might be nested, so we check multiple properties.
+            const isSessionMissingError =
+                result.error?.name === 'AuthSessionMissingError' ||
+                result.error?.message?.includes('Auth session missing');
+
+            if (isSessionMissingError) {
+                console.warn('Sign out failed gracefully: session was already missing.');
+                // This is the crucial part:
+                // Manually update the state to log the user out in the UI,
+                // because the onAuthStateChange listener will not fire.
+                setUser(null);
+                setSession(null);
+            } else {
+                // For any other unexpected errors, update the error state.
+                setError(result.error?.message || 'An unknown error occurred during sign out.');
+            }
         }
+
+        // Always clear form states on any logout attempt.
+        loginForm.resetForm();
+        signupForm.resetForm();
+
     }, [loginForm, signupForm]);
 
     // Google Sign-In handler

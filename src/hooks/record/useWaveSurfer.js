@@ -2,7 +2,7 @@ import {useState, useEffect, useCallback, useRef, useMemo} from 'react';
 import {useWavesurfer} from '@wavesurfer/react';
 import RecordPlugin from 'wavesurfer.js/plugins/record';
 import Timeline from 'wavesurfer.js/plugins/timeline';
-import {useAuth} from "@/context/auth/AuthContext.jsx";
+import {useAuth} from "@/hooks/auth/useAuth";
 
 // Helper to format time from seconds to MM:SS:CS
 const formatTime = (seconds) => {
@@ -26,6 +26,7 @@ export const useRecording = (containerRef) => {
     const [isCountdownActive, setIsCountdownActive] = useState(false);
     const [micDevices, setMicDevices] = useState([]);
     const [selectedMicDeviceId, setSelectedMicDeviceId] = useState('');
+    const [error, setError] = useState(null);
     const recordingTimeRef = useRef(0);
     const recordingIntervalRef = useRef(null);
     const countdownIntervalRef = useRef(null);
@@ -67,16 +68,25 @@ export const useRecording = (containerRef) => {
         plugins: plugins
     });
 
-    // Effect to fetch microphone devices
-    useEffect(() => {
-        if (!wavesurfer) return;
-        RecordPlugin.getAvailableAudioDevices().then(devices => {
+    // New function to request permissions and load devices
+    const requestMicPermission = useCallback(async () => {
+        setError(null);
+        try {
+            // Request permission - this triggers the browser prompt
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            // If permission is granted, get the devices
+            const devices = await RecordPlugin.getAvailableAudioDevices();
             setMicDevices(devices);
-            if (devices.length > 0) {
+            if (devices.length > 0 && !selectedMicDeviceId) {
                 setSelectedMicDeviceId(devices[0].deviceId);
             }
-        }).catch(err => console.error("Error fetching mic devices:", err));
-    }, [wavesurfer]);
+        } catch (err) {
+            console.error("Error requesting mic permission:", err);
+            setError("Microfoontoegang is geweigerd. Sta toegang toe in je browserinstellingen.");
+        }
+    }, [selectedMicDeviceId]);
+
 
     // Effect to attach event listeners
     useEffect(() => {
@@ -222,12 +232,20 @@ export const useRecording = (containerRef) => {
             }, 1000);
         } catch (error) {
             console.error('Error starting microphone:', error);
+            setError("Kon de microfoon niet starten. Controleer of een ander programma het niet gebruikt.");
             setIsCountdownActive(false);
             setCountdownValue(null);
         }
     }, [selectedMicDeviceId]);
 
     const handleRecordClick = useCallback(() => {
+        // Requirement A: Check if a microphone is selected
+        if (!selectedMicDeviceId) {
+            setError("Kies eerst een microfoon uit de lijst.");
+            return;
+        }
+
+        setError(null); // Clear previous errors
         const record = wavesurfer?.getActivePlugins().find(p => p instanceof RecordPlugin);
         if (!record) return;
 
@@ -248,11 +266,12 @@ export const useRecording = (containerRef) => {
             setRecordedAudioBlob(null);
             startCountdownRecording(record);
         }
-    }, [wavesurfer, isCountdownActive, startCountdownRecording]);
+    }, [wavesurfer, isCountdownActive, startCountdownRecording, selectedMicDeviceId]);
 
 
     const handleSelectMic = useCallback((deviceId) => {
         setSelectedMicDeviceId(deviceId);
+        setError(null); // Clear error when user selects a mic
     }, []);
 
     const handlePlayPause = useCallback(() => wavesurfer?.playPause(), [wavesurfer]);
@@ -334,6 +353,8 @@ export const useRecording = (containerRef) => {
         isTimelineVisible,
         micDevices,
         selectedMicDeviceId,
+        error, // Expose the new error state
+        requestMicPermission, // Expose the new permission function
         handleRecordClick,
         handleToggleAudioMute,
         handleDownloadRecording,
@@ -348,8 +369,8 @@ export const useRecording = (containerRef) => {
         subscribeToTimer,
         recordingTimeRef,
     }), [
-        isWaveformReady, isRecording, isPlaying, isAudioMuted, recordedAudioBlob, isTimelineVisible, micDevices, selectedMicDeviceId,
-        handleRecordClick, handleToggleAudioMute, handleDownloadRecording,
+        isWaveformReady, isRecording, isPlaying, isAudioMuted, recordedAudioBlob, isTimelineVisible, micDevices, selectedMicDeviceId, error,
+        requestMicPermission, handleRecordClick, handleToggleAudioMute, handleDownloadRecording,
         handlePlayPause, handleStop, handleZoomIn, handleZoomOut, handleZoomReset, handleVolumeUp, handleVolumeDown, handleSelectMic,
         subscribeToTimer
     ]);
