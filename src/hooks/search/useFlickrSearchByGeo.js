@@ -18,6 +18,9 @@ export function useFlickrSearchByGeo(searchParams, page = 1) {
         photos: data?.photos?.photo.filter(p => p.secret && p.server !== '0').map(p => ({
             id: p.id,
             alt: p.title,
+            photographer: p.ownername || 'Unknown',
+            width: p.width_b || p.o_width || null,
+            height: p.height_b || p.o_height || null,
             src: {
                 large2x: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_b.jpg`,
                 tiny: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_q.jpg`

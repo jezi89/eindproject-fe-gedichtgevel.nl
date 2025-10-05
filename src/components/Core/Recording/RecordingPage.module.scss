@@ -145,7 +145,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 .BookContainer {
   position:        relative;
   display:         flex;
-  align-items:     flex-end;
+  align-items:     stretch;
   flex-grow:       1; /* Take remaining space in MainContent */
   justify-content: center;
   width:           100%;
@@ -153,13 +153,16 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   margin:          0; /* No margins for perfect connection */
   color:           $text-inverse;
   gap:             1.5rem;
+flex-basis: 820px;
+
   }
 
 .SpiralBinding {
+  display: flex;
   position: absolute;
   z-index:  10;
   left:     45%;
-
+  max-height: 100%;
   }
 
 
@@ -168,9 +171,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   display:          flex;
   flex-direction:   column;
   width:            750px;
-  height:           85vh;
-  padding:          2rem;
-  padding-bottom:   0;
+  padding:           2rem  2rem 0 2rem;
   border-radius:    0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
   background-color: $neutral-cream;
   box-shadow:       0 4px 15px rgb(0 0 0 / 20%);
@@ -243,7 +244,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 .PageTitle {
   font-size:   24px;
   font-weight: bold;
-  margin-top:  2rem;
+  margin:  0.5rem auto;
   text-align:  center;
   }
 
@@ -333,11 +334,11 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 
 .micSelect {
   align-self:    flex-start;
-  margin-left:   10px;
-  padding:       5px;
+  padding:       0.5rem;
   color:         #333;
   border:        1px solid #ccc;
   border-radius: 4px;
+  font-size: 80%;
   background:    white;
 
   }

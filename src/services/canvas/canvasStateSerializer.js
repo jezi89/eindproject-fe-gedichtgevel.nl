@@ -45,6 +45,7 @@ export function serializeCanvasState(canvasState, poemData = null) {
                     return {
                         url: canvasState.backgroundImage.url,
                         thumbnail: canvasState.backgroundImage.thumbnail,
+                        alt: canvasState.backgroundImage.alt || null,
                         photographer: canvasState.backgroundImage.photographer,
                         source: canvasState.backgroundImage.source,
                         width: canvasState.backgroundImage.width,

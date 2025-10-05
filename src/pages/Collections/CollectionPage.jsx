@@ -130,6 +130,28 @@ export function CollectionPage() {
                                         </div>
                                     )}
 
+                                    {design.design_settings?.backgroundImage && (
+                                        <div className={styles.photoInfo}>
+                                            {design.design_settings.backgroundImage.alt && (
+                                                <p className={styles.photoAlt}>
+                                                    📸 {design.design_settings.backgroundImage.alt}
+                                                </p>
+                                            )}
+                                            <div className={styles.photoMeta}>
+                                                {design.design_settings.backgroundImage.photographer && (
+                                                    <span className={styles.photographer}>
+                                                        👤 {design.design_settings.backgroundImage.photographer}
+                                                    </span>
+                                                )}
+                                                {design.design_settings.backgroundImage.width && design.design_settings.backgroundImage.height && (
+                                                    <span className={styles.dimensions}>
+                                                        📐 {design.design_settings.backgroundImage.width} × {design.design_settings.backgroundImage.height}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className={styles.designMeta}>
                                         <span className={styles.date}>
                                             {formatDate(design.updated_at)}

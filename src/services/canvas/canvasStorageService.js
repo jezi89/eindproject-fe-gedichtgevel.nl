@@ -231,6 +231,7 @@ export async function listUserDesigns(userId, options = {}) {
                 created_at,
                 updated_at,
                 is_public,
+                design_settings,
                 poem:poem!canvas_designs_poem_id_fkey (
                     title,
                     author

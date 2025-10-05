@@ -6,8 +6,8 @@ export const SpiralBook = ({className}) => {
         <svg
             className={className}
             width="116"
-            height="880"
-            viewBox="0 10 90 812"
+            height="820"
+            viewBox="0 11 90 812"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
