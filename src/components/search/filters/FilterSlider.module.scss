@@ -3,8 +3,8 @@
  * Range slider component for filtering by line count
  */
 
-@import '@styles/_variables.scss';
-@import '@styles/_mixins.scss';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .filterSlider {
     display: flex;

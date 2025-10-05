@@ -53,7 +53,7 @@ function HomePageContent() {
     // ------------------------------------------------------------------
 
     // --- Filter State Management ---
-    const [maxLength, setMaxLength] = useState(150); // Default: no length restriction
+    const [maxLength, setMaxLength] = useState(40); // Default: 40 lines
     const [selectedEra, setSelectedEra] = useState(ERAS.ALL.id); // Default: all eras
     const [language, setLanguage] = useState('en'); // Default: English (only available option)
     const [onlyMyDesigns, setOnlyMyDesigns] = useState(false); // Creative Canvas filter (disabled)

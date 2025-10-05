@@ -61,7 +61,12 @@ export function LoginForm() {
 
     // Authentication
     // - Use signIn from AuthContext
-    const {signIn} = useAuth();
+    const {signIn, signInWithGoogle} = useAuth();
+
+    const handleGoogleSignIn = async () => {
+        await signInWithGoogle();
+        // The onAuthStateChange listener will handle navigation or state updates
+    };
 
     /**
      * Validates form inputs
@@ -183,6 +188,19 @@ export function LoginForm() {
 
                 <SubmitButton type="submit" disabled={isSubmitting} loading={isSubmitting}>
                     {isSubmitting ? 'Bezig met inloggen...' : 'Inloggen'}
+                </SubmitButton>
+
+                <div className={styles.formDivider}>
+                    <span>of</span>
+                </div>
+
+                <SubmitButton
+                    type="button"
+                    onClick={handleGoogleSignIn}
+                    variant="secondary"
+                    disabled={isSubmitting}
+                >
+                    Inloggen met Google
                 </SubmitButton>
             </form>
         </div>

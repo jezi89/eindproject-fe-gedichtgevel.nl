@@ -363,6 +363,25 @@ const updateUser = async (updates) => {
     return updatePassword(updates.password);
 };
 
+/**
+ * Sign in with an OAuth provider
+ * @param {('google'|'github'|'facebook')} provider - The OAuth provider
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+const signInWithProvider = async (provider) => {
+    try {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider,
+        });
+        if (error) {
+            throw error;
+        }
+        return handleAuthSuccess();
+    } catch (error) {
+        return handleAuthError(`Sign in with ${provider}`, error);
+    }
+};
+
 export {
     getSession,
     onAuthStateChange,
@@ -370,6 +389,7 @@ export {
     register,
     sendPasswordResetEmail as resetPasswordForEmail,
     login as signInWithPassword,
+    signInWithProvider,
     logout,
     updateUser,
     updatePassword,
