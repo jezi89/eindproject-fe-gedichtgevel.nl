@@ -4,27 +4,24 @@
 /* Import project variables */
 @use "../../../styles/variables" as *;
 @use "../../../styles/mixins" as *;
-@use "sass:color";
+@use "sass:color"; // For color.adjust() function
 
-/* Canvas theme variables */
-$canvas-bg-dark:      #1d2230;
-$canvas-bg-secondary: #2a3441; // Added: Secondary background for inputs
-$canvas-controls-bg:  #2a3441;
-$canvas-text-primary: #ffffff;
-$canvas-accent:       #3b82f6;
-$canvas-border:       #4a5568;
+/* Canvas theme variables - Figma Design (Cream/Brown Theme) */
+// Using global variables from _variables.scss for consistency
+// Dark background stays for main canvas area, controls get cream theme
 
 /* Basisstijl voor alle control-knoppen */
 .buttonGroup button,
 .resetButton {
   padding:          0.5rem 1rem;
   cursor:           pointer;
-  font-family:      $font-family-button;
+  font-family:      $font-family-section-heading; // Bitter font
   font-size:        $font-size-xs;
   font-weight:      $font-weight-semibold;
-  color:            #a0aec0;
+  color:            $canvas-control-text;
   border:           none;
   background-color: transparent;
+  transition:       all 0.2s ease;
   }
 
 /* Stijl voor de ronde icon reset knoppen */
@@ -38,44 +35,44 @@ $canvas-border:       #4a5568;
   padding:         0;
   cursor:          pointer;
   transition:      all 0.2s ease;
-  color:           #e2e8f0;
-  border:          1px solid $canvas-border;
+  color:           $canvas-control-text;
+  border:          1px solid $canvas-control-border;
   border-radius:   50%;
-  background:      rgba(255, 255, 255, 0.1);
+  background:      $canvas-control-input-bg;
   }
 
 .iconResetButton:hover {
   transform:    rotate(90deg);
-  border-color: #667eea;
-  background:   rgba(255, 255, 255, 0.15);
+  border-color: $canvas-control-accent;
+  background:   $canvas-control-hover;
   }
 
 /* Hover-staat delen */
 .buttonGroup button:hover,
 .resetButton:hover {
-  background-color: $canvas-border;
+  background-color: $canvas-control-hover;
   }
 
-/* Active-staat delen — voeg ook .active als losse class toe (zie hieronder) */
+/* Active-staat delen */
 .buttonGroup button.active,
 .resetButton.active {
-  color:            white;
-  background-color: #02690b;
+  color:            $neutral-cream;
+  background-color: $canvas-control-active;
   }
 
 /* Alleen voor groep-knoppen (scheidingslijnen en container rounding) */
 .buttonGroup {
   display:       flex;
   overflow:      hidden;
-  flex-wrap:     nowrap; /* Prevent wrapping */
-  border:        1px solid $canvas-border;
+  flex-wrap:     nowrap;
+  border:        1px solid $canvas-control-border;
   border-radius: 5px;
   }
 
 .buttonGroup button {
-  font-size:   0.8rem; /* Smaller font */
-  padding:     0.25rem 0.5rem; /* Smaller padding */
-  border-left: 1px solid $canvas-border;
+  font-size:   0.8rem;
+  padding:     0.25rem 0.5rem;
+  border-left: 1px solid $canvas-control-border;
   }
 
 .buttonGroup button:first-child {
@@ -110,16 +107,16 @@ $canvas-border:       #4a5568;
   align-items:      center;
   justify-content:  space-between;
   padding:          8px 16px;
-  border-bottom:    1px solid #3d4a5c;
-  background-color: $canvas-controls-bg;
+  border-bottom:    1px solid $canvas-control-border;
+  background-color: $canvas-control-overlay-shinethrough;
   }
 
 .panelHeader h2, .panelHeader h3 {
-  font-family: $font-family-section-heading;
+  font-family: $font-family-section-heading; // Bitter
   font-size:   $font-size-m;
   font-weight: $font-weight-bold;
   margin:      0;
-  color:       $canvas-text-primary;
+  color:       $canvas-control-text;
   }
 
 .closeButton {
@@ -127,20 +124,21 @@ $canvas-border:       #4a5568;
   line-height: 1;
   padding:     1px;
   cursor:      pointer;
-  color:       #a0a9b8;
+  color:       $canvas-control-text;
   border:      none;
   background:  none;
+  transition:  color 0.2s ease;
   }
 
 .closeButton:hover {
-  color: white;
+  color: $canvas-control-accent;
   }
 
 .controlsWrapper {
   display:        flex;
   flex-direction: column;
   padding:        1rem;
-  background:     $canvas-controls-bg;
+  background:     $canvas-control-bg;
   gap:            12px;
   }
 
@@ -153,12 +151,15 @@ $canvas-border:       #4a5568;
   }
 
 .controlRow label {
-  font-family: $font-family-body;
-  font-size:   $font-size-xs;
-  font-weight: $font-weight-regular;
-  flex-shrink: 0;
-  min-width:   40px;
-  color:       $canvas-text-primary;
+  font-family:    $font-family-section-heading; // Bitter
+  font-size:      $font-size-xs;
+  font-weight:    $font-weight-regular;
+  flex-shrink:    0;
+  min-width:      40px;
+  color:          $canvas-control-text;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  white-space:    nowrap;
   }
 
 .controlRow input[type="range"] {
@@ -169,18 +170,19 @@ $canvas-border:       #4a5568;
 .controlRow input[type="color"] {
   width:         40px;
   height:        30px;
-  border:        none;
+  border:        1px solid $canvas-control-border;
   border-radius: 4px;
+  cursor:        pointer;
   }
 
 .controlRow span {
-  font-family: $font-family-body;
+  font-family: $font-family-section-heading; // Bitter
   font-size:   $font-size-xxs;
   font-weight: $font-weight-regular;
   flex-shrink: 0;
   min-width:   40px;
   text-align:  right;
-  color:       $canvas-text-primary;
+  color:       $canvas-control-text;
   }
 
 /* Vertical layout for controls with lineControls */
@@ -202,11 +204,11 @@ $canvas-border:       #4a5568;
   }
 
 .lineControls span {
-  font-family: $font-family-body;
+  font-family: $font-family-section-heading; // Bitter
   font-size:   $font-size-xxs;
   font-weight: $font-weight-regular;
   align-self:  flex-end;
-  color:       #a0aec0;
+  color:       $canvas-control-text;
   }
 
 /* Vertical layout for wide sliders under the label */
@@ -218,10 +220,10 @@ $canvas-border:       #4a5568;
   }
 
 .controlGroup label {
-  font-family: $font-family-body;
+  font-family: $font-family-section-heading; // Bitter
   font-size:   $font-size-xs;
   font-weight: $font-weight-regular;
-  color:       $canvas-text-primary;
+  color:       $canvas-control-text;
   }
 
 .fullWidthRange {
@@ -229,20 +231,21 @@ $canvas-border:       #4a5568;
   }
 
 .valueRow {
-  font-family:     $font-family-body;
+  font-family:     $font-family-section-heading; // Bitter
   font-size:       $font-size-xxs;
   font-weight:     $font-weight-regular;
   display:         flex;
   justify-content: space-between;
-  color:           $canvas-text-primary;
+  color:           $canvas-control-text;
   }
 
 .selectionInfo {
   margin-bottom: 16px;
   padding:       8px;
-  border:        1px solid #ffcc00;
+  border:        1px solid $canvas-control-accent;
   border-radius: 4px;
-  background:    rgba(255, 204, 0, 0.1);
+  background:    rgba($canvas-control-accent, 0.1);
+  color:         $canvas-control-text;
   }
 
 .modeToggle {
@@ -252,13 +255,19 @@ $canvas-border:       #4a5568;
   }
 
 .clearButton {
+  font-family:   $font-family-section-heading; // Bitter
   font-size:     12px;
   padding:       4px 8px;
   cursor:        pointer;
-  color:         white;
-  border:        none;
+  color:         $neutral-cream;
+  border:        1px solid $feedback-error;
   border-radius: 4px;
-  background:    #ff6b6b;
+  background:    $feedback-error;
+  transition:    all 0.2s ease;
+
+  &:hover {
+    background: color.adjust($feedback-error, $lightness: -10%);
+  }
   }
 
 /* Vertical layout for color controls when a line is selected */
@@ -284,57 +293,64 @@ $canvas-border:       #4a5568;
   }
 
 .controlColumn .hintText {
+  font-family: $font-family-section-heading; // Bitter
   font-size: 0.8rem !important;
   margin:    0.25rem 0;
-  color:     #a0aec0 !important;
+  color:     $canvas-control-overlay !important;
   }
 
 .controlColumn .resetButton {
+  font-family:   $font-family-section-heading; // Bitter
   font-size:     0.85rem;
   align-self:    flex-start;
   margin:        0 !important;
   padding:       0.25rem 0.5rem;
-  border:        1px solid $canvas-border;
+  border:        1px solid $canvas-control-border;
   border-radius: 4px;
-  background:    rgba(255, 255, 255, 0.1);
+  background:    $canvas-control-input-bg;
+  color:         $canvas-control-text;
+  transition:    all 0.2s ease;
   }
 
 .controlColumn .resetButton:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background:   $canvas-control-hover;
+  border-color: $canvas-control-accent;
   }
 
 /* Hierarchical Color System Styling */
 .controlSection {
   margin:           0;
   padding:          1rem;
-  border:           1px solid $canvas-border;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: $canvas-control-overlay-shinethrough;
   }
 
 .controlSection h3 {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   1rem;
   font-weight: 600;
   margin:      0 0 0.75rem 0;
-  color:       #e2e8f0;
+  color:       $canvas-control-text;
   }
 
 .syncButton {
+  font-family:   $font-family-section-heading; // Bitter
   font-size:     0.9rem;
   font-weight:   500;
   padding:       0.6rem 1.2rem;
   cursor:        pointer;
   transition:    all 0.2s ease;
-  color:         white;
-  border:        none;
+  color:         $neutral-cream;
+  border:        1px solid $canvas-control-border;
   border-radius: 5px;
-  background:    linear-gradient(135deg, #4299e1, #3182ce);
+  background:    $canvas-control-accent;
   box-shadow:    0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
 .syncButton:hover {
   transform:  translateY(-1px);
-  background: linear-gradient(135deg, #3182ce, #2c5aa0);
+  background: color.adjust($canvas-control-accent, $lightness: -10%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
@@ -421,9 +437,9 @@ $canvas-border:       #4a5568;
 .controlSection {
   overflow:         hidden;
   margin-bottom:    .5rem;
-  border:           1px solid $canvas-border;
+  border:           1px solid $canvas-control-border;
   border-radius:    8px;
-  background-color: #2d3748;
+  background-color: $canvas-control-bg;
   }
 
 .sectionHeader {
@@ -436,16 +452,17 @@ $canvas-border:       #4a5568;
   user-select:      none;
   transition:       background-color 0.2s ease;
   text-align:       left;
-  color:            #e2e8f0;
+  color:            $canvas-control-text;
   border:           none;
-  background-color: #3d4a5c;
+  background-color: $canvas-control-overlay-shinethrough;
   }
 
 .sectionHeader:hover {
-  background-color: $canvas-border;
+  background-color: $canvas-control-hover;
   }
 
 .sectionHeader h3 {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   1rem;
   font-weight: 600;
   margin:      0;
@@ -454,7 +471,7 @@ $canvas-border:       #4a5568;
 .sectionToggle {
   font-size:  1.2rem;
   transition: transform 0.2s ease;
-  color:      #a0aec0;
+  color:      $canvas-control-text;
   }
 
 .sectionToggle.collapsed {
@@ -463,7 +480,7 @@ $canvas-border:       #4a5568;
 
 .sectionContent {
   padding:          1rem;
-  background-color: #272d37;
+  background-color: $canvas-control-bg;
   }
 
 .sectionContent.collapsed {
@@ -474,12 +491,13 @@ $canvas-border:       #4a5568;
 .subsection {
   overflow:         hidden;
   margin:           1rem 0;
-  border:           1px solid $canvas-border;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: rgba(45, 55, 72, 0.5);
+  background-color: $canvas-control-input-bg;
   }
 
 .subsectionHeader {
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        0.9rem;
   display:          flex;
   align-items:      center;
@@ -490,13 +508,13 @@ $canvas-border:       #4a5568;
   user-select:      none;
   transition:       background-color 0.2s ease;
   text-align:       left;
-  color:            #cbd5e0;
+  color:            $canvas-control-text;
   border:           none;
-  background-color: rgba(61, 74, 92, 0.7);
+  background-color: $canvas-control-overlay-shinethrough;
   }
 
 .subsectionHeader:hover {
-  background-color: rgba(74, 85, 104, 0.7);
+  background-color: $canvas-control-hover;
   }
 
 .subsectionContent {
@@ -509,6 +527,7 @@ $canvas-border:       #4a5568;
 
 /* Styling for choice background button */
 .chooseBackgroundButton {
+  font-family:   $font-family-section-heading; // Bitter
   font-size:     0.95rem;
   font-weight:   600;
   width:         100%;
@@ -516,17 +535,17 @@ $canvas-border:       #4a5568;
   padding:       0.75rem 1.5rem;
   cursor:        pointer;
   transition:    all 0.3s ease;
-  color:         white;
-  border:        none;
+  color:         $neutral-cream;
+  border:        1px solid $canvas-control-border;
   border-radius: 8px;
-  background:    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow:    0 4px 15px rgba(102, 126, 234, 0.4);
+  background:    $canvas-control-accent;
+  box-shadow:    0 4px 15px rgba($canvas-control-accent, 0.4);
   }
 
 .chooseBackgroundButton:hover {
   transform:  translateY(-2px);
-  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  background: color.adjust($canvas-control-accent, $lightness: -10%);
+  box-shadow: 0 6px 20px rgba($canvas-control-accent, 0.6);
   }
 
 .chooseBackgroundButton:active {
@@ -541,40 +560,50 @@ $canvas-border:       #4a5568;
   }
 
 .buttonRow button {
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        0.9rem;
   flex:             1;
   padding:          8px 12px;
   cursor:           pointer;
   transition:       all 0.2s ease;
-  color:            #e2e8f0;
-  border:           none;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    4px;
-  background-color: $canvas-border;
+  background-color: $canvas-control-input-bg;
   }
 
 .buttonRow button:hover {
   transform:        translateY(-1px);
-  background-color: #5a6a7d;
+  background-color: $canvas-control-hover;
+  border-color:     $canvas-control-accent;
   }
 
 .cityDropdown {
+  font-family:      $font-family-section-heading; // Bitter
   width:            100%;
   padding:          8px;
-  color:            #e2e8f0;
-  border:           1px solid $canvas-border;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    4px;
-  background-color: #2d3748;
+  background-color: $canvas-control-bg;
   }
 
 .toggleSearchButton {
+  font-family:      $font-family-section-heading; // Bitter
   width:            100%;
   padding:          8px;
   cursor:           pointer;
   text-align:       center;
-  color:            #e2e8f0;
-  border:           none;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    4px;
-  background-color: $canvas-border;
+  background-color: $canvas-control-input-bg;
+  transition:       all 0.2s ease;
+
+  &:hover {
+    background-color: $canvas-control-hover;
+    border-color:     $canvas-control-accent;
+  }
   }
 
 /* ========== FLOATING PHOTO GRID STYLES ========== */
@@ -612,11 +641,11 @@ $canvas-border:       #4a5568;
   padding:          1.5rem;
   transition:       all 0.3s ease;
   transform:        scale(0.9) translateY(20px);
-  border:           1px solid $canvas-border;
+  border:           1px solid $canvas-control-border;
   border-radius:    12px;
-  background-color: rgba(45, 55, 72, 0.95); /* Semi-transparent for glass effect */
-  box-shadow:       0 20px 50px rgba(0, 0, 0, 0.8); /* Enhanced shadow for better visibility */
-  backdrop-filter:  blur(10px); /* Modern glass effect */
+  background-color: rgba($neutral-cream, 0.98); /* Cream with slight transparency */
+  box-shadow:       0 20px 50px rgba(0, 0, 0, 0.3);
+  backdrop-filter:  blur(10px);
   }
 
 .floatingPhotoGrid.slideIn {
@@ -633,14 +662,15 @@ $canvas-border:       #4a5568;
   justify-content: space-between;
   margin-bottom:   1rem;
   padding-bottom:  0.5rem;
-  border-bottom:   1px solid $canvas-border;
+  border-bottom:   1px solid $canvas-control-border;
   }
 
 .floatingGridHeader h3 {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   1.1rem;
   font-weight: 600;
   margin:      0;
-  color:       #e2e8f0;
+  color:       $canvas-control-text;
   }
 
 .headerButtons {
@@ -660,16 +690,16 @@ $canvas-border:       #4a5568;
   padding:         0.25rem;
   cursor:          pointer;
   transition:      all 0.2s ease;
-  color:           #ffc107;
-  border:          1px solid rgba(255, 193, 7, 0.3);
+  color:           $canvas-control-accent;
+  border:          1px solid $canvas-control-border;
   border-radius:   4px;
-  background:      rgba(255, 193, 7, 0.1);
+  background:      $canvas-control-input-bg;
   }
 
 .resetPhotoButton:hover {
   transform:    rotate(180deg);
-  border-color: rgba(255, 193, 7, 0.5);
-  background:   rgba(255, 193, 7, 0.2);
+  border-color: $canvas-control-accent;
+  background:   $canvas-control-hover;
   }
 
 .floatingPhotoGridContent {
@@ -696,7 +726,7 @@ $canvas-border:       #4a5568;
 
 .floatingPhotoThumbnail:hover {
   transform:    scale(1.05);
-  border-color: #4299e1;
+  border-color: $canvas-control-accent;
   }
 
 .floatingPhotoThumbnail img {
@@ -711,46 +741,49 @@ $canvas-border:       #4a5568;
   justify-content: space-between;
   margin-top:      auto;
   padding-top:     1rem;
-  border-top:      1px solid $canvas-border;
+  border-top:      1px solid $canvas-control-border;
   gap:             1rem;
   }
 
 .paginationButton {
+  font-family:      $font-family-section-heading; // Bitter
   font-weight:      500;
   flex:             1;
   padding:          0.75rem 1rem;
   cursor:           pointer;
   transition:       all 0.2s ease;
-  color:            white;
-  border:           none;
+  color:            $neutral-cream;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: #4a5a6d;
+  background-color: $canvas-control-accent;
   }
 
 .paginationButton:hover:not(:disabled) {
   transform:        translateY(-1px);
-  background-color: #5a6a7d;
+  background-color: color.adjust($canvas-control-accent, $lightness: -10%);
   }
 
 .paginationButton:disabled {
   cursor:           not-allowed;
   transform:        none;
   opacity:          0.5;
-  background-color: #2d3748;
+  color:            $canvas-control-overlay;
+  background-color: $canvas-control-input-bg;
   }
 
 .loadingMessage,
 .noResultsMessage {
+  font-family: $font-family-section-heading; // Bitter
   font-style: italic;
   text-align: center;
-  color:      #a0aec0;
+  color:      $canvas-control-overlay;
   }
 
 .navbarToggleButton {
   font-size:        18px;
   position:         absolute;
   top:              8px;
-  right:            12px; /* Position to right of close button */
+  right:            12px;
   display:          flex;
   align-items:      center;
   justify-content:  center;
@@ -758,35 +791,36 @@ $canvas-border:       #4a5568;
   height:           32px;
   cursor:           pointer;
   transition:       background-color 0.2s ease;
-  animation:        pulseAttention 2s ease-in-out 3; /* Pulse 3 times = ~6 seconds */
-  color:            #cfd4db;
-  border:           none;
+  animation:        pulseAttention 2s ease-in-out 3;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: #3d4a5c;
+  background-color: $canvas-control-input-bg;
 
   // Pulsing hint arrow pointing to button
   &::before {
-	font-size:        20px;
+	font-family:      $font-family-section-heading; // Bitter
+	font-size:        14px;
 	position:         absolute;
 	z-index:          200;
 	right:            calc(100% + 8px);
-	padding:          4px 8px; // Ruimte rond tekst
+	padding:          4px 8px;
 	content:          "Open nav-menu hier: →";
 	animation:        slideHint 2s ease-in-out 3;
 	white-space:      nowrap;
 	opacity:          0;
-	color:            #e35712;
-	border-radius:    4px; // Afgeronde hoeken
-	background-color: rgba(42, 52, 65, 0.95); // Semi-transparante achtergrond
-	box-shadow:       0 2px 8px rgba(0, 0, 0, 0.3); // Schaduw voor diepte
-
+	color:            $primary-cognac;
+	border:           1px solid $canvas-control-border;
+	border-radius:    4px;
+	background-color: rgba($canvas-control-bg, 0.98);
+	box-shadow:       0 2px 8px rgba(0, 0, 0, 0.3);
 	}
   }
 
 .navbarToggleButton:hover {
-  animation:        none; /* Stop animation on hover */
-  color:            #ffffff;
-  background-color: #4a5a6d;
+  animation:        none;
+  color:            $canvas-control-accent;
+  background-color: $canvas-control-hover;
 
   &::before {
 	animation: none;
@@ -799,7 +833,7 @@ $canvas-border:       #4a5568;
 .freeSearchSection {
   margin-top:  1rem;
   padding-top: 1rem;
-  border-top:  1px solid $canvas-border;
+  border-top:  1px solid $canvas-control-border;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -813,11 +847,12 @@ $canvas-border:       #4a5568;
   }
 
 .checkboxLabel {
+  font-family: $font-family-section-heading; // Bitter
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  color: #e2e8f0;
+  color: $canvas-control-text;
   cursor: pointer;
   user-select: none;
 
@@ -829,30 +864,34 @@ $canvas-border:       #4a5568;
 
   span {
 	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	}
 
   &:hover {
-	color: white;
+	color: $canvas-control-accent;
 	}
   }
 
 .searchInput {
+  font-family: $font-family-section-heading; // Bitter
   flex: 1;
   padding: 8px 12px;
   font-size: 0.95rem;
-  color: white;
-  background-color: $canvas-bg-secondary;
-  border: 1px solid $canvas-border;
+  color: $canvas-control-text;
+  background-color: $canvas-control-bg;
+  border: 1px solid $canvas-control-border;
   border-radius: 4px;
   outline: none;
   transition: border-color 0.2s;
 
   &::placeholder {
-	color: #a0aec0;
+	color: $canvas-control-overlay;
 	}
 
   &:focus {
-	border-color: $primary-cognac;
+	border-color: $canvas-control-accent;
 	}
   }
 
@@ -880,8 +919,9 @@ $canvas-border:       #4a5568;
   }
 
 .searchInfo {
+  font-family: $font-family-section-heading; // Bitter
   font-size: 0.85rem;
-  color: #a0aec0;
+  color: $canvas-control-overlay;
   margin: 0;
   padding: 0.25rem 0;
   text-align: center;
@@ -933,55 +973,59 @@ $canvas-border:       #4a5568;
   }
 
 .optimizationButtons button {
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        0.9rem;
   flex:             1;
   padding:          8px 12px;
   cursor:           pointer;
   transition:       all 0.2s ease;
-  color:            #e2e8f0;
-  border:           none;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    4px;
-  background-color: $canvas-border;
+  background-color: $canvas-control-input-bg;
   }
 
 .optimizationButtons button:hover {
-  background-color: #5a6a7d;
+  background-color: $canvas-control-hover;
+  border-color:     $canvas-control-accent;
   }
 
 .optimizationButtons button.active {
-  color:            white;
-  background-color: #02690b;
+  color:            $neutral-cream;
+  background-color: $feedback-success;
+  border-color:     $feedback-success;
   }
 
 .cameraButtons {
   display:       flex;
   overflow:      hidden;
-  align-self:    flex-start; /* Prevent stretching */
-  border:        1px solid $canvas-border;
+  align-self:    flex-start;
+  border:        1px solid $canvas-control-border;
   border-radius: 5px;
   }
 
 .cameraButtons button {
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        0.9rem;
   padding:          8px 12px;
   cursor:           pointer;
   transition:       all 0.2s ease;
-  color:            #e2e8f0;
+  color:            $canvas-control-text;
   border:           none;
-  background-color: $canvas-border;
+  background-color: $canvas-control-input-bg;
   }
 
 .cameraButtons button:not(:last-child) {
-  border-right: 1px solid #2d3748;
+  border-right: 1px solid $canvas-control-border;
   }
 
 .cameraButtons button:hover {
-  background-color: #5a6a7d;
+  background-color: $canvas-control-hover;
   }
 
 .cameraButtons button.active {
-  color:            white;
-  background-color: #02690b;
+  color:            $neutral-cream;
+  background-color: $feedback-success;
   }
 
 /* Optimization section styles */
@@ -1003,40 +1047,14 @@ $canvas-border:       #4a5568;
 
 .optimizationInfo .infoText,
 .optimizationHint .hintText {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   12px;
   line-height: 1.4;
   margin:      0;
-  color:       #e2e8f0;
+  color:       $canvas-control-text;
   }
 
-.optimizationButtons {
-  display:       flex;
-  overflow:      hidden;
-  border:        1px solid $canvas-border;
-  border-radius: 5px;
-  }
-
-.optimizationButtons button {
-  padding:          0.5rem 1rem;
-  cursor:           pointer;
-  color:            #a0aec0;
-  border:           none;
-  border-left:      1px solid $canvas-border;
-  background-color: transparent;
-  }
-
-.optimizationButtons button:first-child {
-  border-left: none;
-  }
-
-.optimizationButtons button:hover {
-  background-color: $canvas-border;
-  }
-
-.optimizationButtons button.active {
-  color:            white;
-  background-color: #02690b;
-  }
+/* Duplicate removed - using earlier definition with proper cream/brown theme */
 
 .controlGroup {
   display:         flex;
@@ -1057,10 +1075,11 @@ $canvas-border:       #4a5568;
   }
 
 .labelWrapper .hintText {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   11px;
   line-height: 1.3;
   display:     block;
-  color:       #a0aec0;
+  color:       $canvas-control-overlay;
   }
 
 /* 3D Transformation Controls */
@@ -1082,9 +1101,10 @@ $canvas-border:       #4a5568;
 
 .transform3DControls h4,
 .global3DSettings h4 {
+  font-family: $font-family-section-heading; // Bitter
   font-size: 14px;
   margin:    0 0 8px 0;
-  color:     #e2e8f0;
+  color:     $canvas-control-text;
   }
 
 .infoBox {
@@ -1096,10 +1116,11 @@ $canvas-border:       #4a5568;
   }
 
 .infoBox .infoText {
+  font-family: $font-family-section-heading; // Bitter
   font-size:   12px;
   line-height: 1.4;
   margin:      0;
-  color:       #cbd5e0;
+  color:       $canvas-control-text;
   }
 
 /* Nieuwe toevoegingen voor hoofdproject integratie */

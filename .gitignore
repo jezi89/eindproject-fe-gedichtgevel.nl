@@ -22,6 +22,9 @@
 .env.test
 .env.production
 
+# Installatiehandleiding (bevat gevoelige informatie)
+README.md
+
 # Debug logs
 npm-debug.log*
 yarn-debug.log*

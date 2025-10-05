@@ -3,7 +3,7 @@
  * Maps authors to literary eras based on their birth year
  */
 
-import authorLifespans from '@/data/canvas/author_lifespans.json';
+import authorLifespans from '@/data/author_lifespans.json';
 
 /**
  * Literary era definitions with year ranges

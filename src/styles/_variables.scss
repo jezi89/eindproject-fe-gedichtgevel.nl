@@ -182,11 +182,17 @@ $poem-text-inverse:                   $neutral-cream;
 $poem-background:                     $neutral-cream;
 $poem-background-inverse:             $neutral-darker;
 
-// Canvas Controls
-$canvas-control-overlay:              $neutral-warm-grey;
-$canvas-control-border:               $accent-brown;
-$canvas-control-items:                $neutral-dark;
-$canvas-control-overlay-shinethrough: $overlay-subtle;
+// Canvas Controls - Figma Design (Cream/Brown Theme)
+$canvas-bg-dark:                      #1a1f2e; // Dark background for main canvas area
+$canvas-control-bg:                   $neutral-cream; // #fff5e1 - Main background
+$canvas-control-border:               $accent-brown; // #856d61 - Borders
+$canvas-control-text:                 $neutral-dark; // #4d5061 - Text color
+$canvas-control-overlay:              $neutral-warm-grey; // #a99489 - Overlay elements
+$canvas-control-overlay-shinethrough: $overlay-subtle; // rgba(169, 148, 137, 0.2) - Subtle overlay
+$canvas-control-accent:               $accent-gold; // #d09a47 - Active states & highlights
+$canvas-control-hover:                rgba($accent-gold, 0.2); // Hover state
+$canvas-control-active:               $accent-gold; // Active button background
+$canvas-control-input-bg:             rgba($accent-brown, 0.05); // Input field background
 
 
 // ==========================================================================

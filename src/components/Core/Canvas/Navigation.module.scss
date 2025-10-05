@@ -1,4 +1,5 @@
 @use "../../../styles/variables" as *;
+@use "sass:color";
 
 .navContainer {
   display:          flex;
@@ -6,17 +7,17 @@
   flex-direction:   column;
   height:           100%;
   padding:          8px;
-  background-color: transparent;
+  background-color: $canvas-control-bg;
   gap:              6px;
   }
 
 
 .navItem:hover {
-  background-color: #4a5a6d;
+  background-color: $canvas-control-hover;
   }
 
 .navItem:active {
-  background-color: #5a6a7d;
+  background-color: color.adjust($canvas-control-hover, $lightness: -5%);
   }
 
 .saveSection {
@@ -24,9 +25,9 @@
   flex-direction:   column;
   align-items:      center;
   padding:          12px;
-  border-top:       1px solid #3d4a5c;
-  border-bottom:    1px solid #3d4a5c;
-  background-color: rgba(45, 55, 72, 0.3);
+  border-top:       1px solid $canvas-control-border;
+  border-bottom:    1px solid $canvas-control-border;
+  background-color: $canvas-control-overlay-shinethrough;
   gap:              12px;
   }
 
@@ -38,7 +39,7 @@
   }
 
 .downloadButton {
-  font-family:      $font-family-body;
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        $font-size-xs;
   font-weight:      $font-weight-semibold;
   display:          flex;
@@ -49,20 +50,20 @@
   padding:          8px 12px;
   cursor:           pointer;
   transition:       background-color 0.2s ease, transform 0.1s ease;
-  color:            #e2e8f0;
-  border:           none;
+  color:            $neutral-cream;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: #3d4a5c;
+  background-color: $canvas-control-accent;
   gap:              4px;
   }
 
 .downloadButton:hover {
-  background-color: #4a5a6d;
+  background-color: color.adjust($canvas-control-accent, $lightness: -10%);
   transform:        translateY(-1px);
   }
 
 .downloadButton:active {
-  background-color: #5a6a7d;
+  background-color: color.adjust($canvas-control-accent, $lightness: -15%);
   transform:        translateY(0);
   }
 
@@ -70,8 +71,8 @@
   display:        flex;
   flex-direction: column;
   padding-top:    16px;
-  transition:     margin-top 0.3s ease; /* Smooth positioning transitions */
-  border-top:     1px solid #4a5a6d;
+  transition:     margin-top 0.3s ease;
+  border-top:     1px solid $canvas-control-border;
   gap:            8px;
   }
 
@@ -89,19 +90,19 @@
   align-items:      center;
   flex-direction:   column;
   padding:          12px;
-  border-top:       1px solid #3d4a5c;
-  background-color: rgba(45, 55, 72, 0.2);
+  border-top:       1px solid $canvas-control-border;
+  background-color: $canvas-control-overlay-shinethrough;
   gap:              8px;
   }
 
 .syncLabel {
-  font-family:    $font-family-nav-item;
+  font-family:    $font-family-section-heading; // Bitter
   font-size:      $font-size-xxxs;
   font-weight:    $font-weight-semibold;
   margin-bottom:  4px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color:          #a0a9b8;
+  color:          $canvas-control-text;
   }
 
 .syncButton {
@@ -113,48 +114,48 @@
   height:           32px;
   cursor:           pointer;
   transition:       background-color 0.2s ease;
-  color:            inherit;
-  border:           none;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: #3d4a5c;
+  background-color: $canvas-control-input-bg;
   }
 
 .syncButton:hover {
-  background-color: #4a5a6d;
+  background-color: $canvas-control-hover;
+  border-color:     $canvas-control-accent;
   }
 
 .syncButton:active {
-  background-color: #5a6a7d;
+  background-color: color.adjust($canvas-control-hover, $lightness: -5%);
   }
 
 .syncButton.toggledOff {
   opacity:          0.6;
-  background-color: #2a2a2a;
+  background-color: color.adjust($canvas-control-input-bg, $lightness: -10%);
   }
 
 .syncButton.toggledOff:hover {
-  background-color: #3a3a3a;
+  background-color: $canvas-control-input-bg;
   }
 
 /* --- Added for consistency with Controls.jsx --- */
 .panelHeader {
-  position:        relative; /* For absolute positioning of buttons */
+  position:        relative;
   display:         flex;
   align-items:     center;
   justify-content: space-between;
-
-
-  padding-top:     28px; /* Extra padding on top for buttons */
-  border-bottom:   1px solid #3d4a5c;
+  padding-top:     28px;
+  border-bottom:   1px solid $canvas-control-border;
   }
 
 .panelHeader h2, .panelHeader h3 {
-  font-family: $font-family-section-heading;
+  font-family: $font-family-section-heading; // Bitter
   font-size:   $font-size-m;
   font-weight: $font-weight-bold;
   flex:        1;
   margin-top:  3rem;
   text-align:  center;
+  color:       $canvas-control-text;
   }
 
 .headerButtons {
@@ -167,7 +168,7 @@
   font-size:        18px;
   position:         absolute;
   top:              8px;
-  right:            12px; /* Position to right of close button */
+  right:            12px;
   display:          flex;
   align-items:      center;
   justify-content:  center;
@@ -175,17 +176,17 @@
   height:           32px;
   cursor:           pointer;
   transition:       background-color 0.2s ease;
-  animation:        pulse-attention 2s ease-in-out 3; /* Pulse 3 times = ~6 seconds */
-  color:            #cfd4db;
-  border:           none;
+  animation:        pulse-attention 2s ease-in-out 3;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
   border-radius:    6px;
-  background-color: #3d4a5c;
+  background-color: $canvas-control-input-bg;
   }
 
 .navbarToggleButton:hover {
-  animation:        none; /* Stop animation on hover */
-  color:            #ffffff;
-  background-color: #4a5a6d;
+  animation:        none;
+  color:            $canvas-control-accent;
+  background-color: $canvas-control-hover;
   }
 
 // Pulse animation for button
@@ -209,72 +210,73 @@
   left:        2px;
   padding:     4px;
   cursor:      pointer;
-  user-select: none; /* Prevents caret on click */
-  color:       #a0a9b8;
+  user-select: none;
+  color:       $canvas-control-text;
   border:      none;
   background:  none;
+  transition:  color 0.2s ease;
   }
 
 .closeButton:hover {
-  color: white;
+  color: $canvas-control-accent;
   }
 
 /* Selection Indicator */
 .selectionIndicator {
   padding:          12px 16px;
-  border-bottom:    1px solid #3d4a5c;
-  background-color: rgba(45, 55, 72, 0.3);
+  border-bottom:    1px solid $canvas-control-border;
+  background-color: $canvas-control-overlay-shinethrough;
   }
 
 .selectionLabel {
-  font-family:    $font-family-nav-item;
+  font-family:    $font-family-section-heading; // Bitter
   font-size:      $font-size-xxxs;
   font-weight:    $font-weight-semibold;
   margin-bottom:  6px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color:          #a0a9b8;
+  color:          $canvas-control-text;
   }
 
 .selectionStatus {
-  font-family:      $font-family-body;
+  font-family:      $font-family-section-heading; // Bitter
   font-size:        $font-size-xxxs;
   font-weight:      $font-weight-regular;
   padding:          4px 8px;
   transition:       all 0.2s ease;
-  color:            #e2e8f0;
-  border-left:      3px solid #4a5a6d;
+  color:            $canvas-control-text;
+  border-left:      3px solid $canvas-control-border;
   border-radius:    4px;
-  background-color: rgba(74, 90, 109, 0.3);
+  background-color: $canvas-control-input-bg;
   }
 
-/* Selection type indicators */
+/* Selection type indicators - using cream/brown theme variations */
 .selectionStatus.none {
-  color:             #a0a9b8;
-  border-left-color: #64748b;
+  color:             $canvas-control-overlay;
+  border-left-color: $canvas-control-border;
   }
 
 .selectionStatus.lines-only {
-  color:             #93c5fd;
-  border-left-color: #3b82f6;
+  color:             $secondary-vibrant;
+  border-left-color: $secondary-carribean-current;
   }
 
 .selectionStatus.all {
-  color:             #fbbf24;
-  border-left-color: #f59e0b;
+  color:             $accent-gold;
+  border-left-color: $canvas-control-accent;
   }
 
 .selectionStatus.lines-title,
 .selectionStatus.lines-author {
-  color:             #a78bfa;
-  border-left-color: #8b5cf6;
+  color:             $accent-sage;
+  border-left-color: $accent-moss;
   }
 
 .selectionStatus.title-only,
 .selectionStatus.author-only,
 .selectionStatus.title-author {
-  color:             #fb7185;
-  border-left-color: #f43f5e;
+  color:             $primary-flame;
+  border-left-color: $primary-cognac;
   }
 
 /* Anchor for XY sliders popover */

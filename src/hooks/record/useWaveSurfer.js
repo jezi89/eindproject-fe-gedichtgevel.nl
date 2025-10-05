@@ -2,6 +2,7 @@ import {useState, useEffect, useCallback, useRef, useMemo} from 'react';
 import {useWavesurfer} from '@wavesurfer/react';
 import RecordPlugin from 'wavesurfer.js/plugins/record';
 import Timeline from 'wavesurfer.js/plugins/timeline';
+import {useAuth} from "@/context/auth/AuthContext.jsx";
 
 // Helper to format time from seconds to MM:SS:CS
 const formatTime = (seconds) => {
@@ -12,10 +13,12 @@ const formatTime = (seconds) => {
 };
 
 export const useRecording = (containerRef) => {
+    const { user } = useAuth();
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState('00:00:00');
     const [recordingTime, setRecordingTime] = useState(0);
+    const [timeWarning, setTimeWarning] = useState('');
     const [isAudioMuted, setIsAudioMuted] = useState(false);
     const [recordedAudioBlob, setRecordedAudioBlob] = useState(null);
     const [isTimelineVisible, setIsTimelineVisible] = useState(false);
@@ -92,6 +95,7 @@ export const useRecording = (containerRef) => {
             record.on('record-start', () => {
                 recordingTimeRef.current = 0;
                 setRecordingTime(0);
+                setTimeWarning(''); // Reset warning on new recording
                 setIsRecording(true);
                 setIsTimelineVisible(false);
 
@@ -116,7 +120,25 @@ export const useRecording = (containerRef) => {
                 // Start interval for recording timer using performance.now()
                 recordingIntervalRef.current = setInterval(() => {
                     const elapsedMs = performance.now() - recordingStartTime.current;
+                    const elapsedSeconds = elapsedMs / 1000;
                     recordingTimeRef.current = elapsedMs;
+
+                    // Enforce recording limits
+                    const maxRecordingTime = user ? 90 : 60; // 90s for logged-in, 60s for anonymous
+
+                    if (elapsedSeconds >= maxRecordingTime) {
+                        const recordPlugin = wavesurfer?.getActivePlugins().find(p => p instanceof RecordPlugin);
+                        if (recordPlugin?.isRecording()) {
+                            recordPlugin.stopRecording();
+                        }
+                    }
+
+                    // Show warning for anonymous users at 30 seconds
+                    if (!user && Math.floor(elapsedSeconds) === 30) {
+                        setTimeWarning('U heeft nog 30 seconden opnametijd.');
+                    }
+
+
                     // Only notify subscribers - NO state update to avoid re-renders!
                     timerSubscribers.current.forEach(callback => callback(elapsedMs));
                 }, 100); // Update every 100ms
@@ -131,6 +153,7 @@ export const useRecording = (containerRef) => {
                 recordingIntervalRef.current = null;
             }
 
+            setTimeWarning(''); // Clear any existing warnings
             setRecordedAudioBlob(blob);
             setIsRecording(false);
             setIsTimelineVisible(true);
@@ -194,7 +217,7 @@ export const useRecording = (containerRef) => {
                     countdownIntervalRef.current = null;
                     setIsCountdownActive(false);
                     setCountdownValue(null);
-                    record.startRecording().catch(e => console.error('Error starting recording after countdown:', e));
+                    record.startRecording({ audioBitsPerSecond: 160000 }).catch(e => console.error('Error starting recording after countdown:', e));
                 }
             }, 1000);
         } catch (error) {
@@ -292,7 +315,8 @@ export const useRecording = (containerRef) => {
     // Memoize the time-related state separately (no recordingTime to avoid re-renders)
     const timeState = useMemo(() => ({
         currentTime,
-    }), [currentTime]);
+        timeWarning,
+    }), [currentTime, timeWarning]);
 
     // Memoize the countdown state separately
     const countdownState = useMemo(() => ({

@@ -294,12 +294,13 @@ export async function searchAllPoems() {
  * @param {Object} filters Optionele filters voor de zoekopdracht (taal, periode, enz.) / Optional filters for the search (language, period, etc.)
  * @returns {Promise<Array<object>>} Een array van gevonden gedichten. / An array of found poems.
  */
-export async function searchPoemsGeneral(searchTerm, filters = {}) {
+export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = {}) {
     console.log("===== New search query =====");
     console.log(`Searching for: "${searchTerm}" with filters:`, filters);
 
     if (!searchTerm || !searchTerm.trim()) {
         console.log("Empty search query, performing wildcard search");
+        // Aborting wildcard search is not implemented as it's a collection of requests
         return searchAllPoems();
     }
 
@@ -310,12 +311,6 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
     // Preparing the promises
     const promises = [];
     const promiseLabels = []; // For logging
-    // UNUSED
-    // let resultsByTitle = [];
-    // let resultsByAuthor = [];
-    // let resultsByAuthorAndTitle = [];
-    // let resultsByOption1 = [];
-    // let resultsByOption2 = [];
 
     // 2. Smart request routing based on analysis
     const shouldSearchTitle = analysis.searchStrategy === 'all' ||
@@ -331,9 +326,13 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
         const titleKey = `title:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(titleKey, () =>
-                searchByTitleInService(searchTerm).catch(error => {
-                    console.error(`Error searching by title with term "${searchTerm}" in service:`, error);
-                    return []; // Return empty array on error
+                searchByTitleInService(searchTerm, { signal }).catch(error => {
+                    if (error.name === 'CanceledError') {
+                        console.log('Title search was canceled.');
+                    } else {
+                        console.error(`Error searching by title with term "${searchTerm}" in service:`, error);
+                    }
+                    return []; // Return empty array on error or cancellation
                 })
             )
         );
@@ -347,8 +346,12 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
         const authorKey = `author:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(authorKey, () =>
-                searchByAuthorInService(searchTerm).catch(error => {
-                    console.error(`Error searching by author with term "${searchTerm}" in service:`, error);
+                searchByAuthorInService(searchTerm, { signal }).catch(error => {
+                     if (error.name === 'CanceledError') {
+                        console.log('Author search was canceled.');
+                    } else {
+                        console.error(`Error searching by author with term "${searchTerm}" in service:`, error);
+                    }
                     return [];
                 })
             )
@@ -369,9 +372,12 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
             dedupeRequest(option1Key, () =>
                 fetchPoemsFromPoetryDBByAuthorAndTitle(
                     analysis.option1.authorTerm,
-                    analysis.option1.titleTerm
+                    analysis.option1.titleTerm,
+                    { signal }
                 ).catch(error => {
-                    console.error(`Error with combined search option 1 with author="${analysis.option1.authorTerm}", title="${analysis.option1.titleTerm}":`, error);
+                    if (error.name !== 'CanceledError') {
+                        console.error(`Error with combined search option 1 with author="${analysis.option1.authorTerm}", title="${analysis.option1.titleTerm}":`, error);
+                    }
                     return [];
                 })
             )
@@ -385,9 +391,12 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
             dedupeRequest(option2Key, () =>
                 fetchPoemsFromPoetryDBByAuthorAndTitle(
                     analysis.option2.authorTerm,
-                    analysis.option2.titleTerm
+                    analysis.option2.titleTerm,
+                    { signal }
                 ).catch(error => {
-                    console.error(`Error with combined search option 2 with author="${analysis.option2.authorTerm}", title="${analysis.option2.titleTerm}":`, error);
+                    if (error.name !== 'CanceledError') {
+                        console.error(`Error with combined search option 2 with author="${analysis.option2.authorTerm}", title="${analysis.option2.titleTerm}":`, error);
+                    }
                     return [];
                 })
             )
@@ -405,9 +414,12 @@ export async function searchPoemsGeneral(searchTerm, filters = {}) {
                 dedupeRequest(combinedKey, () =>
                     fetchPoemsFromPoetryDBByAuthorAndTitle(
                         analysis.authorTerm,
-                        analysis.titleTerm
+                        analysis.titleTerm,
+                        { signal }
                     ).catch(error => {
-                        console.error(`Error with combined search with author="${analysis.authorTerm}", title="${analysis.titleTerm}":`, error);
+                        if (error.name !== 'CanceledError') {
+                            console.error(`Error with combined search with author="${analysis.authorTerm}", title="${analysis.titleTerm}":`, error);
+                        }
                         return [];
                     })
                 )
