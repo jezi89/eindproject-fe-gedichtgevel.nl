@@ -74,12 +74,9 @@ export default function Canvas({
                 if (savedCanvasState.lineOverrides) canvasState.setLineOverrides(savedCanvasState.lineOverrides);
                 if (savedCanvasState.titleColorOverride !== undefined) canvasState.setTitleColorOverride(savedCanvasState.titleColorOverride);
                 if (savedCanvasState.authorColorOverride !== undefined) canvasState.setAuthorColorOverride(savedCanvasState.authorColorOverride);
+                if (savedCanvasState.isOptimizationEnabled !== undefined) canvasState.setIsOptimizationEnabled(savedCanvasState.isOptimizationEnabled);
                 if (savedCanvasState.skewX !== undefined) canvasState.setSkewX(savedCanvasState.skewX);
                 if (savedCanvasState.skewY !== undefined) canvasState.setSkewY(savedCanvasState.skewY);
-                if (savedCanvasState.skewZ !== undefined) canvasState.setSkewZ(savedCanvasState.skewZ);
-                if (savedCanvasState.lineTransforms) canvasState.setLineTransforms(savedCanvasState.lineTransforms);
-                if (savedCanvasState.global3DSettings) canvasState.setGlobal3DSettings(savedCanvasState.global3DSettings);
-                if (savedCanvasState.isOptimizationEnabled !== undefined) canvasState.setIsOptimizationEnabled(savedCanvasState.isOptimizationEnabled);
                 // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
                 // if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
 
@@ -185,46 +182,6 @@ export default function Canvas({
 
     // Use canvas export hook for downloading designs
     const {exportAsPNG, exportAsJPG} = useCanvasExport(canvasState.appRef);
-
-    // 3D transformation handlers
-    const getSelectedTransformValues = useCallback((property, defaultValue) => {
-        if (canvasState.selectedLines.size === 0) {
-            return [];
-        }
-
-        const values = [];
-        canvasState.selectedLines.forEach(lineIndex => {
-            const transform = canvasState.lineTransforms[lineIndex];
-            let value = defaultValue;
-
-            if (transform) {
-                // Handle nested properties (e.g., "lighting.enabled")
-                if (property.includes(".")) {
-                    const [parentProp, childProp] = property.split(".");
-                    if (
-                        transform[parentProp] &&
-                        transform[parentProp][childProp] !== undefined
-                    ) {
-                        value = transform[parentProp][childProp];
-                    }
-                } else if (transform[property] !== undefined) {
-                    value = transform[property];
-                }
-            }
-
-            values.push(value);
-        });
-        return values;
-    }, [canvasState.lineTransforms, canvasState.selectedLines]);
-
-    const handleSelectedTransformChange = useCallback((property, value, isRelative = false) => {
-        canvasState.selectedLines.forEach(lineIndex => {
-            const currentTransform = canvasState.lineTransforms[lineIndex] || {};
-            const currentValue = currentTransform[property] || 0;
-            const newValue = isRelative ? currentValue + value : value;
-            handlers.handleLineTransformChange(lineIndex, property, newValue);
-        });
-    }, [canvasState.lineTransforms, canvasState.selectedLines, handlers]);
 
     // Bepaal welke data we aan de fotogalerij moeten tonen.
     // We checken de search context om te bepalen welke bron actief is.
@@ -336,8 +293,6 @@ export default function Canvas({
                         onSkewXChange={handlers.handleSkewXChange}
                         skewY={canvasState.skewY}
                         onSkewYChange={handlers.handleSkewYChange}
-                        skewZ={canvasState.skewZ}
-                        onSkewZChange={handlers.handleSkewZChange}
                         // Pexels background props
                         photos={canvasState.photos}
                         isLoading={canvasState.isLoading}
@@ -357,15 +312,6 @@ export default function Canvas({
                         hoverFreezeActive={hoverFreezeActive} // Pass hover freeze state for timer
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
-                        // 3D transformation props
-                        lineTransforms={canvasState.lineTransforms}
-                        global3DSettings={canvasState.global3DSettings}
-                        onLineTransformChange={handlers.handleLineTransformChange}
-                        onGlobal3DSettingChange={handlers.handleGlobal3DSettingChange}
-                        onResetLineTransform={handlers.handleResetLineTransform}
-                        onResetAllTransforms={handlers.handleResetAllTransforms}
-                        getSelectedTransformValues={getSelectedTransformValues}
-                        handleSelectedTransformChange={handleSelectedTransformChange}
                         // Canvas-specific props
                         onSave={handleSave}
                         onBack={handleBack}
@@ -401,7 +347,6 @@ export default function Canvas({
                             fontStyle={canvasState.fontStyle}
                             skewX={canvasState.skewX}
                             skewY={canvasState.skewY}
-                            skewZ={canvasState.skewZ}
                             onFontFamilyChange={handlers.handleFontFamilyChange}
                             selectedLines={canvasState.selectedLines}
                             lineOverrides={canvasState.lineOverrides}
@@ -424,9 +369,6 @@ export default function Canvas({
                             setIsDragging={canvasState.setIsDragging}
                             effectiveStyles={canvasState.effectiveStyles}
                             highlightVisible={canvasState.highlightVisible}
-                            // 3D transformation props
-                            lineTransforms={canvasState.lineTransforms}
-                            global3DSettings={canvasState.global3DSettings}
                             // Pass current poem data
                             currentPoem={currentPoem}
                         />

@@ -1,0 +1,130 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.errorBoundary {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  padding: 2rem;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+}
+
+.content {
+  background: white;
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  @include mobile-only {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.errorIcon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.errorTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: $neutral-darker;
+
+  @include mobile-only {
+    font-size: 2rem;
+  }
+}
+
+.errorMessage {
+  font-size: 1.125rem;
+  color: $neutral-mid;
+  margin: 0 0 2.5rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.errorActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.retryButton,
+.homeButton {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.retryButton {
+  background: white;
+  color: #dc2626;
+  border: 2px solid #dc2626;
+
+  &:hover {
+    background: #fef2f2;
+    transform: translateY(-2px);
+  }
+}
+
+.homeButton {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+  }
+}
+
+.errorDetails {
+  margin-top: 2rem;
+  text-align: left;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid $border-subtle;
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: $neutral-darker;
+    padding: 0.5rem;
+
+    &:hover {
+      color: #dc2626;
+    }
+  }
+}
+
+.errorStack {
+  margin: 1rem 0 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  overflow-x: auto;
+  color: #dc2626;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

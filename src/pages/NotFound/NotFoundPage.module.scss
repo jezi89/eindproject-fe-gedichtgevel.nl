@@ -1,0 +1,124 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.notFoundPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.content {
+  background: white;
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  @include mobile-only {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.errorCode {
+  font-size: 8rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+
+  @include mobile-only {
+    font-size: 6rem;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem;
+  color: $neutral-darker;
+
+  @include mobile-only {
+    font-size: 2rem;
+  }
+}
+
+.message {
+  font-size: 1.125rem;
+  color: $neutral-mid;
+  margin: 0 0 2.5rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.actions {
+  margin-bottom: 3rem;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.suggestions {
+  padding-top: 2rem;
+  border-top: 1px solid $border-subtle;
+}
+
+.suggestionsTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: $neutral-darker;
+  margin-bottom: 1rem;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin: 0.75rem 0;
+  }
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+  }
+}

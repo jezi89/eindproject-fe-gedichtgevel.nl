@@ -64,12 +64,9 @@ export const PERSISTED_KEYS = {
   FONT_STYLE: 'canvas_font_style',
   TITLE_COLOR_OVERRIDE: 'canvas_title_color_override',
   AUTHOR_COLOR_OVERRIDE: 'canvas_author_color_override',
+  MOVE_MODE: 'canvas_move_mode',
   SKEW_X: 'canvas_skew_x',
-  SKEW_Y: 'canvas_skew_y',
-  SKEW_Z: 'canvas_skew_z',
-  LINE_TRANSFORMS: 'canvas_line_transforms',
-  GLOBAL_3D_SETTINGS: 'canvas_global_3d_settings',
-  MOVE_MODE: 'canvas_move_mode'
+  SKEW_Y: 'canvas_skew_y'
 };
 
 /**
