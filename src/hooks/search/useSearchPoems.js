@@ -21,9 +21,10 @@ export function useSearchPoems() {
         refetch
     } = useQuery({
         queryKey: ['poems', 'search', searchTerm.trim()],
-        queryFn: async () => {
+        queryFn: async ({ signal }) => { // Destructure the signal from the query context
             const trimmed = searchTerm.trim();
-            const data = await searchPoemsGeneral(trimmed);
+            // Pass the signal to the search function
+            const data = await searchPoemsGeneral(trimmed, { signal });
 
             // Update search history when successful (only for non-empty searches)
             if (trimmed && data && data.length > 0) {
