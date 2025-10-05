@@ -18,3 +18,18 @@
   height: 100%;
   object-fit: contain; // Zorgt dat de hele video zichtbaar is
 }
+
+.skipButton {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  z-index: 10; // Ensure it's above the video
+}
