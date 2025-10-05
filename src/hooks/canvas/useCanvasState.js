@@ -104,34 +104,13 @@ export function useCanvasState() {
 		PERSISTED_KEYS.FONT_STYLE,
 		"normal"
 	);
-	// Skew state (container-level) - PERSISTENT
-	const [skewX, setSkewX] = usePersistedState(PERSISTED_KEYS.SKEW_X, 0);
-	const [skewY, setSkewY] = usePersistedState(PERSISTED_KEYS.SKEW_Y, 0);
-	const [skewZ, setSkewZ] = usePersistedState(PERSISTED_KEYS.SKEW_Z, 0);
-
-	// 3D transformation state (per-text level) - PERSISTENT
-	const [lineTransforms, setLineTransforms] = usePersistedState(
-		PERSISTED_KEYS.LINE_TRANSFORMS,
-		{}
+	const [skewX, setSkewX] = usePersistedState(
+		PERSISTED_KEYS.SKEW_X,
+		0
 	);
-	const [global3DSettings, setGlobal3DSettings] = usePersistedState(
-		PERSISTED_KEYS.GLOBAL_3D_SETTINGS,
-		{
-			perspective: 1000,
-			depthSorting: true,
-			lightingEnabled: false,
-			defaultPivotMode: "center",
-			gevelPreset: "none",
-			globalLighting: {
-				enabled: false,
-				direction: { x: 0, y: 0, z: 1 },
-				intensity: 1.0,
-				ambient: 0.3,
-			},
-			material: {
-				blendMode: "normal",
-			},
-		}
+	const [skewY, setSkewY] = usePersistedState(
+		PERSISTED_KEYS.SKEW_Y,
+		0
 	);
 	const [userHasAdjusted, setUserHasAdjusted] = useState(false);
 
@@ -270,20 +249,12 @@ export function useCanvasState() {
 		setSkewX,
 		skewY,
 		setSkewY,
-		skewZ,
-		setSkewZ,
 		poemOffset,
 		setPoemOffset,
 		moveMode,
 		setMoveMode,
 		userHasAdjusted,
 		setUserHasAdjusted,
-
-		// 3D transformation state
-		lineTransforms,
-		setLineTransforms,
-		global3DSettings,
-		setGlobal3DSettings,
 
 		// Calculated Styles
 		effectiveStyles,

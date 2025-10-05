@@ -5,7 +5,6 @@ import styles from "./Canvas.module.scss";
 import BackgroundControls from "./controls/BackgroundControls.jsx";
 import FontControls from "./controls/FontControls.jsx";
 import LayoutControls from "./controls/LayoutControls.jsx";
-import Transform3DControls from "./controls/Transform3DControls.jsx";
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function Controls({
@@ -54,8 +53,6 @@ export default function Controls({
                                      onSkewXChange,
                                      skewY,
                                      onSkewYChange,
-                                     skewZ,
-                                     onSkewZChange,
 
                                      // Pexels background props
                                      isLoading,
@@ -77,15 +74,6 @@ export default function Controls({
                                      // Text optimization props
                                      isOptimizationEnabled,
                                      setIsOptimizationEnabled,
-
-                                     // 3D transformation props
-                                     lineTransforms,
-                                     global3DSettings,
-                                     onLineTransformChange,
-                                     onGlobal3DSettingChange,
-                                     onResetLineTransform,
-                                     getSelectedTransformValues,
-                                     handleSelectedTransformChange,
                                  }) {
     const {user} = useAuthContext();
 
@@ -109,12 +97,7 @@ export default function Controls({
     const [backgroundSectionOpen, setBackgroundSectionOpen] = useState(true);
     const [fontSectionOpen, setFontSectionOpen] = useState(true);
     const [layoutSectionOpen, setLayoutSectionOpen] = useState(true);
-    const [transform3DSectionOpen, setTransform3DSectionOpen] = useState(false);
-    const [sceneSetupOpen, setSceneSetupOpen] = useState(true); // NEW: For Scène Setup subpanel
     const [colorSubsectionOpen, setColorSubsectionOpen] = useState(false);
-    // NEW: Auto-Z Preview state for intuitive 3D activation
-    const [autoZPreview, setAutoZPreview] = useState(false);
-    const [originalZValues, setOriginalZValues] = useState(new Map());
 
     const selectionCount = selectedLines.size;
     const hasSelection = selectionCount > 0;
@@ -221,12 +204,6 @@ export default function Controls({
         }
     };
 
-    const handleReset3DTransforms = () => {
-        selectedLines.forEach((lineIndex) => {
-            onResetLineTransform?.(lineIndex);
-        });
-    };
-
     const handleDropdownSearch = (e, dropdownType) => {
         const city = e.target.value;
         if (city) {
@@ -330,40 +307,16 @@ export default function Controls({
                 isOptimizationEnabled={isOptimizationEnabled}
                 skewX={skewX}
                 skewY={skewY}
-                skewZ={skewZ}
-                global3DSettings={global3DSettings}
-                autoZPreview={autoZPreview}
                 onLineHeightMultiplierChange={onLineHeightMultiplierChange}
                 onResetLineHeight={onResetLineHeight}
                 onTextAlignChange={onTextAlignChange}
                 onViewportToggle={onViewportToggle}
                 onResetViewport={onResetViewport}
-                setIsOptimizationEnabled={setIsOptimizationEnabled}
                 onSkewXChange={onSkewXChange}
                 onSkewYChange={onSkewYChange}
-                onSkewZChange={onSkewZChange}
-                onGlobal3DSettingChange={onGlobal3DSettingChange}
-                setAutoZPreview={setAutoZPreview}
-                lineTransforms={lineTransforms}
-                onLineTransformChange={onLineTransformChange}
-                originalZValues={originalZValues}
-                setOriginalZValues={setOriginalZValues}
+                setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}
-                sceneSetupOpen={sceneSetupOpen}
-                setSceneSetupOpen={setSceneSetupOpen}
-            />
-
-            <Transform3DControls
-                hasSelection={hasSelection}
-                selectionCount={selectionCount}
-                getSelectedTransformValues={getSelectedTransformValues}
-                handleSelectedTransformChange={handleSelectedTransformChange}
-                handleReset3DTransforms={handleReset3DTransforms}
-                transform3DSectionOpen={transform3DSectionOpen}
-                setTransform3DSectionOpen={setTransform3DSectionOpen}
-                global3DSettings={global3DSettings}
-                onGlobal3DSettingChange={onGlobal3DSettingChange}
             />
         </div>
     );
