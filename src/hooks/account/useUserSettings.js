@@ -55,7 +55,7 @@ export function useUserSettings() {
      * Toggle email notifications
      */
     const toggleEmailNotifications = useCallback(async () => {
-        const newValue = !settings.email_notifications;
+        const newValue = !settings?.email_notifications;
         return await updateSettings({email_notifications: newValue});
     }, [settings, updateSettings]);
 

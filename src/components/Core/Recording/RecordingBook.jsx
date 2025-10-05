@@ -140,9 +140,9 @@ export function RecordingBook() {
 
                                 <div className={`${componentStyles.PagePanel} ${componentStyles.RecordingPanel}`}>
                                     {/* Container for mic selection dropdown */}
-                                    <div className={componentStyles.micSelectWrapper} onClick={controlsState.loadMicDevices}>
+                                    <div className={componentStyles.micSelectWrapper} onClick={controlsState.requestMicPermission}>
                                         <label htmlFor="mic-select">Kies microfoon:</label>
-                                        {controlsState.micDevices.length > 0 && (
+                                        {controlsState.micDevices.length > 0 ? (
                                             <select
                                                 id="mic-select"
                                                 className={componentStyles.micSelect}
@@ -157,8 +157,12 @@ export function RecordingBook() {
                                                     </option>
                                                 ))}
                                             </select>
+                                        ) : (
+                                            <span className={componentStyles.micPlaceholder}>Klik hier om microfoons te laden...</span>
                                         )}
                                     </div>
+                                    {/* Display error messages */}
+                                    {controlsState.error && <p className={componentStyles.errorMessage}>{controlsState.error}</p>}
                                     <div className={componentStyles.micContainer}>
                                         {controlsState.isRecording && <MicOnIcon/>}
                                     </div>

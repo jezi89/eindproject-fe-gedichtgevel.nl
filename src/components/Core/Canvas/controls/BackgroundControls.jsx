@@ -74,7 +74,7 @@ export default function BackgroundControls({
                         onChange={(e) => handleDropdownSearch(e, "anwb")}
                         className={styles.cityDropdown}
                     >
-                        <option value="">ANWB steden...</option>
+                        <option value="">ANWB's mooie steden</option>
                         {anwbCities.sort().map((city) => (
                             <option key={city} value={city}>
                                 {cityDisplayNames[city] || city}
