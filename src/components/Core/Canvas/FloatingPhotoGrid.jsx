@@ -27,12 +27,12 @@ export default function FloatingPhotoGrid({
 
     // Initialize preview system when grid opens
     useEffect(() => {
-        console.log('🖼️ FloatingPhotoGrid mounted, opening preview system');
+
         photoPreview.openGrid(currentBackground);
 
         // Cleanup when component unmounts
         return () => {
-            console.log('🖼️ FloatingPhotoGrid unmounting, closing preview system');
+
             const backgroundToRestore = photoPreview.closeGrid();
 
             // Only restore background if it's different from current
@@ -84,7 +84,6 @@ export default function FloatingPhotoGrid({
     }, []);
 
     const handleClose = () => {
-        console.log('🖼️ Closing FloatingPhotoGrid');
 
         // Clean up preview system and get background to restore
         const backgroundToRestore = photoPreview.closeGrid();
@@ -95,7 +94,7 @@ export default function FloatingPhotoGrid({
         setTimeout(() => {
             // Restore background if needed
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
-                console.log('🖼️ Restoring background:', backgroundToRestore);
+
                 onSetBackground(backgroundToRestore);
             }
             onClose();
@@ -170,17 +169,15 @@ export default function FloatingPhotoGrid({
                             key={photo.id}
                             className={styles.floatingPhotoThumbnail}
                             onClick={() => {
-                                console.log('🖼️ Photo clicked:', photo.src.large2x);
 
                                 // Immediately activate background loading freeze to prevent hover conflicts
                                 if (onSetBackgroundLoadingFreeze) {
                                     onSetBackgroundLoadingFreeze(true);
-                                    console.log('🚫 Background loading freeze activated');
 
                                     // Auto-deactivate freeze after 3 seconds (enough time for background loading)
                                     setTimeout(() => {
                                         onSetBackgroundLoadingFreeze(false);
-                                        console.log('✅ Background loading freeze deactivated');
+
                                     }, 3000);
                                 }
 
@@ -202,10 +199,10 @@ export default function FloatingPhotoGrid({
                             onMouseEnter={() => {
                                 // Check if hover is frozen (e.g., after Alt+J navigation)
                                 if (hoverFreezeActive) {
-                                    console.log('🚫 Photo hover blocked - freeze active');
+
                                     return;
                                 }
-                                console.log('🖼️ Photo hover start:', photo.src.large2x);
+
                                 photoPreview.handlePhotoHover(photo.src.large2x);
                             }}
                             title={photo.alt || 'Hover voor preview, klik om te selecteren'}

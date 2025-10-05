@@ -49,7 +49,6 @@ export default function Canvas({
     // Restore canvas state from loaded design (destructive override)
     useEffect(() => {
         if (savedCanvasState) {
-            console.log("🔄 Canvas: DESTRUCTIVE restore of saved canvas state");
 
             // CRITICAL: Clear ALL persisted state first to ensure clean slate
             clearAllPersistedState();
@@ -58,7 +57,7 @@ export default function Canvas({
             setTimeout(() => {
                 // Restore all serialized state properties
                 if (savedCanvasState.backgroundImage !== undefined) {
-                    console.log("🖼️ Canvas: Setting saved background:", savedCanvasState.backgroundImage);
+
                     canvasState.setBackgroundImage(savedCanvasState.backgroundImage);
                 }
                 if (savedCanvasState.poemOffset) canvasState.setPoemOffset(savedCanvasState.poemOffset);
@@ -80,7 +79,6 @@ export default function Canvas({
                 // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
                 // if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
 
-                console.log("✅ Canvas: State restored successfully (moveMode reset to 'edit')");
             }, 50); // Small delay to ensure localStorage is cleared
         }
     }, [savedCanvasState]); // Only run when savedCanvasState changes
@@ -111,10 +109,10 @@ export default function Canvas({
     // Timer voor hover freeze
     useEffect(() => {
         if (hoverFreezeActive) {
-            console.log('🖱️ Alt+J: Thumbnail hover freeze activated for 2 seconds');
+
             const timer = setTimeout(() => {
                 setHoverFreezeActive(false);
-                console.log('🖱️ Alt+J: Thumbnail hover freeze deactivated');
+
             }, 5000);
             return () => clearTimeout(timer);
         }
@@ -122,7 +120,6 @@ export default function Canvas({
 
     // Handle preview state changes from FloatingPhotoGrid
     const handlePreviewChange = useCallback(({previewMode, previewImage, hasHovered}) => {
-        console.log('🖼️ Canvas preview change:', {previewMode, previewImage, hasHovered});
 
         // Determine the correct preview state based on hasHovered
         let finalPreviewState = previewMode;
@@ -155,7 +152,7 @@ export default function Canvas({
                     await onSave(dataURL, currentPoem);
                 }
             } catch (error) {
-                console.error('Canvas save failed:', error);
+
             }
         }
     }, [onSave, canvasState.viewportRef, currentPoem]);

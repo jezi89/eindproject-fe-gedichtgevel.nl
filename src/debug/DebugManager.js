@@ -42,7 +42,7 @@ class DebugManager {
   initializeDebugTools() {
     // Check if PIXI DevTools is available
     if (window.__PIXI_DEVTOOLS__) {
-      console.log('🔧 PIXI DevTools detected - Enhanced debugging available');
+
     }
 
     // Add development-only global debug commands
@@ -55,11 +55,10 @@ class DebugManager {
         logPositioning: () => this.logDetailedPositioning(),
         resetViewport: () => this.resetViewport(),
       };
-      
-      console.log('🚀 Debug commands available: window.debugCanvas');
-      console.log('   - window.debugCanvas.toggle() - Toggle debug overlay');
-      console.log('   - window.debugCanvas.logPositioning() - Log positioning data');
-      console.log('   - window.debugCanvas.resetViewport() - Reset camera position');
+
+
+
+
     }
   }
 
@@ -90,7 +89,7 @@ class DebugManager {
           contentContainer.label = 'ContentContainer'; // Label for DevTools (v8 compatible)
         }
       } catch (error) {
-        console.warn('PIXI DevTools integration failed:', error);
+
       }
     }
   }
@@ -104,7 +103,7 @@ class DebugManager {
     this.isEnabled = true;
     this.startMonitoring();
     this.createDebugOverlay();
-    console.log('🔧 Debug mode enabled');
+
   }
 
   /**
@@ -114,7 +113,7 @@ class DebugManager {
     this.isEnabled = false;
     this.stopMonitoring();
     this.removeDebugOverlay();
-    console.log('🔧 Debug mode disabled');
+
   }
 
   /**
@@ -186,7 +185,7 @@ class DebugManager {
 
           this.updateDebugOverlay();
         } catch (error) {
-          console.warn('Debug data update failed:', error);
+
         }
       }
 
@@ -314,15 +313,15 @@ class DebugManager {
    */
   logDetailedPositioning() {
     if (!this.debugData) {
-      console.log('No debug data available');
+
       return;
     }
 
     console.group('📊 PIXI Canvas Positioning Analysis');
-    console.log('Screen:', this.debugData.screen);
-    console.log('Viewport:', this.debugData.viewport);
-    console.log('Content:', this.debugData.content);
-    console.log('Positioning Logic:', this.debugData.positioning);
+
+
+
+
     console.groupEnd();
   }
 
@@ -333,7 +332,7 @@ class DebugManager {
     // Use the custom handler if it's registered
     if (this.customResetHandler) {
       this.customResetHandler();
-      console.log('🎯 Custom viewport reset handler executed');
+
       return;
     }
 
@@ -351,8 +350,7 @@ class DebugManager {
         time: 500,
         ease: 'easeInOutCubic'
       });
-      
-      console.log(`🎯 Viewport reset to default center: (${centerX}, ${centerY})`);
+
     }
   }
 }

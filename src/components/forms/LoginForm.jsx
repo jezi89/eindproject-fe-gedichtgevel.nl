@@ -121,7 +121,6 @@ export function LoginForm() {
             }
         } catch (error) {
             // Handle errors (display user-friendly messages)
-            console.error("Login error:", error);
             setErrors({
                 form: typeof error === 'string' ? error :
                     error.message || 'Inloggen mislukt. Controleer je gegevens.'

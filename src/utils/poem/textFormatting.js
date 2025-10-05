@@ -42,14 +42,6 @@ const formatPoemTitle = (title, maxLength = 60) => {
  * @param {number} maxLength - Maximum display length
  * @returns {Object} Formatted author object
  */
-// UNUSED: export const formatAuthorName = (author, maxLength = 30) => {
-//     const formatted = getTitleWithTooltip(author, maxLength);
-//     return {
-//         ...formatted,
-//         displayWithPrefix: formatted.display ? `By ${formatted.display}` : 'Unknown Author'
-//     };
-// };
-
 /**
  * Validate poem object has required properties
  * @param {Object} poem - The poem object to validate

@@ -19,7 +19,6 @@ import {serializeCanvasState} from './canvasStateSerializer';
  */
 export async function saveDesign(userId, poemData, canvasState, title = null, designId = null) {
     try {
-        console.log('💾 Saving canvas design...', {userId, title, designId});
 
         // Step 1: Ensure poem exists in database
         const poemId = await ensurePoemExists(poemData, userId);
@@ -52,7 +51,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
 
             if (error) throw error;
             result = data;
-            console.log('✅ Design updated:', designId);
+
         } else {
             // Create new design
             designData.created_at = new Date().toISOString();
@@ -65,7 +64,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
 
             if (error) throw error;
             result = data;
-            console.log('✅ Design created:', result.id);
+
         }
 
         return {
@@ -74,7 +73,7 @@ export async function saveDesign(userId, poemData, canvasState, title = null, de
         };
 
     } catch (error) {
-        console.error('❌ Failed to save design:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to save design'
@@ -103,7 +102,7 @@ async function ensurePoemExists(poemData, userId) {
         }
 
         if (existingPoem) {
-            console.log('📖 Using existing poem:', existingPoem.id);
+
             return existingPoem.id;
         }
 
@@ -129,11 +128,10 @@ async function ensurePoemExists(poemData, userId) {
 
         if (insertError) throw insertError;
 
-        console.log('📖 Created new poem:', newPoem.id);
         return newPoem.id;
 
     } catch (error) {
-        console.error('❌ Failed to ensure poem exists:', error);
+
         throw new Error('Failed to save poem data');
     }
 }
@@ -146,7 +144,6 @@ async function ensurePoemExists(poemData, userId) {
  */
 export async function loadDesign(designId, userId = null) {
     try {
-        console.log('📂 Loading design:', designId);
 
         let query = supabase
             .from('canvas_design')
@@ -178,8 +175,6 @@ export async function loadDesign(designId, userId = null) {
             throw error;
         }
 
-        console.log('✅ Design loaded:', data.title);
-
         return {
             success: true,
             data: {
@@ -192,7 +187,7 @@ export async function loadDesign(designId, userId = null) {
         };
 
     } catch (error) {
-        console.error('❌ Failed to load design:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to load design'
@@ -215,11 +210,8 @@ export async function listUserDesigns(userId, options = {}) {
             ascending = false
         } = options;
 
-        console.log('📋 Listing designs for user:', userId);
-
         // Debug: Check current auth user
         const {data: {user: authUser}} = await supabase.auth.getUser();
-        console.log('🔐 Current auth user:', authUser?.id);
 
         let query = supabase
             .from('canvas_design')
@@ -253,8 +245,6 @@ export async function listUserDesigns(userId, options = {}) {
             throw error;
         }
 
-        console.log(`✅ Found ${count} designs`, data);
-
         return {
             success: true,
             data: data || [],
@@ -262,7 +252,7 @@ export async function listUserDesigns(userId, options = {}) {
         };
 
     } catch (error) {
-        console.error('❌ Failed to list designs:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to list designs',
@@ -280,7 +270,6 @@ export async function listUserDesigns(userId, options = {}) {
  */
 export async function deleteDesign(designId, userId) {
     try {
-        console.log('🗑️ Deleting design:', designId);
 
         const {error} = await supabase
             .from('canvas_design')
@@ -290,12 +279,10 @@ export async function deleteDesign(designId, userId) {
 
         if (error) throw error;
 
-        console.log('✅ Design deleted');
-
         return {success: true};
 
     } catch (error) {
-        console.error('❌ Failed to delete design:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to delete design'
@@ -312,7 +299,6 @@ export async function deleteDesign(designId, userId) {
  */
 export async function updateDesignMetadata(designId, userId, updates) {
     try {
-        console.log('📝 Updating design metadata:', designId);
 
         // Only allow specific fields to be updated
         const allowedFields = ['title', 'is_public', 'thumbnail_url'];
@@ -336,15 +322,13 @@ export async function updateDesignMetadata(designId, userId, updates) {
 
         if (error) throw error;
 
-        console.log('✅ Metadata updated');
-
         return {
             success: true,
             data
         };
 
     } catch (error) {
-        console.error('❌ Failed to update metadata:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to update design metadata'
@@ -361,7 +345,6 @@ export async function updateDesignMetadata(designId, userId, updates) {
  */
 export async function duplicateDesign(designId, userId, newTitle = null) {
     try {
-        console.log('📋 Duplicating design:', designId);
 
         // Load original design
         const {data: original, error: loadError} = await supabase
@@ -394,44 +377,16 @@ export async function duplicateDesign(designId, userId, newTitle = null) {
 
         if (error) throw error;
 
-        console.log('✅ Design duplicated:', data.id);
-
         return {
             success: true,
             data
         };
 
     } catch (error) {
-        console.error('❌ Failed to duplicate design:', error);
+
         return {
             success: false,
             error: error.message || 'Failed to duplicate design'
         };
     }
 }
-
-// UNUSED
-// /**
-//  * Check if user has access to a design
-//  * @param {string} designId - Design ID
-//  * @param {string} userId - User ID
-//  * @returns {Promise<boolean>}
-//  */
-// async function hasDesignAccess(designId, userId) {
-//     try {
-//         const {data, error} = await supabase
-//             .from('canvas_design')
-//             .select('id, user_id, is_public')
-//             .eq('id', designId)
-//             .single();
-//
-//         if (error) return false;
-//
-//         // User has access if they own it or it's public
-//         return data.user_id === userId || data.is_public;
-//
-//     } catch (error) {
-//         console.error('Failed to check design access:', error);
-//         return false;
-//     }
-// }

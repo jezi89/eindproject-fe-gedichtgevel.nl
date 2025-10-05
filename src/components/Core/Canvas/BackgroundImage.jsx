@@ -15,15 +15,14 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
             try {
                 // Only destroy if it's not a shared/cached texture
                 if (previousTextureRef.current.source && previousTextureRef.current.source.destroyed === false) {
-                    console.log('🧹 Cleaning up previous texture');
+
                 }
             } catch (err) {
-                console.warn('Failed to cleanup texture:', err);
+
             }
         }
 
         const urlToLoad = imageUrl || defaultBackground;
-        console.log('🖼️ Loading background:', urlToLoad === defaultBackground ? 'default' : 'custom');
 
         // Load texture
         Assets.load(urlToLoad)
@@ -34,10 +33,10 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
                 }
             })
             .catch(err => {
-                console.error("❌ Error loading background texture:", err);
+
                 // Fallback to default if custom image fails
                 if (urlToLoad !== defaultBackground) {
-                    console.log('📦 Falling back to default background');
+
                     Assets.load(defaultBackground)
                         .then(loadedTexture => {
                             if (isMounted) {
@@ -46,8 +45,8 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
                             }
                         })
                         .catch(fallbackErr => {
-                            console.error("❌ Failed to load default background:", fallbackErr);
-                            console.warn("⚠️ Both custom and default backgrounds failed to load - will render solid color fallback");
+
+
                             if (isMounted) {
                                 setTexture(Texture.EMPTY);
                             }

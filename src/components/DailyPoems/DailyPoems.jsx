@@ -28,7 +28,7 @@ export const DailyPoems = () => {
                 }
             });
         } catch (error) {
-            console.error('❌ Failed to navigate to canvas:', error);
+
         }
     };
 
@@ -36,7 +36,6 @@ export const DailyPoems = () => {
         if (!poemData) return;
 
         try {
-            console.log('🎤 DailyPoems: Navigating to Spreekgevel with poem:', poemData.title);
 
             // Navigate to recording page with poem data in state
             navigate('/spreekgevel', {
@@ -46,7 +45,7 @@ export const DailyPoems = () => {
                 }
             });
         } catch (error) {
-            console.error('❌ Failed to navigate to recording page:', error);
+
             navigate('/spreekgevel');
         }
     };

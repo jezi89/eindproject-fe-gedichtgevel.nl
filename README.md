@@ -126,7 +126,9 @@ VITE_PEXELS_API_KEY=your_pexels_api_key
 
 **⚠️ BELANGRIJK voor Examinatoren:**
 
-Voor het testen van deze applicatie zijn **test credentials** voorzien (zie sectie [Testgebruikers](#testgebruikers)). U hoeft geen eigen Supabase project aan te maken.
+Voor het testen van deze applicatie zijn **test credentials** voorzien (zie sectie [Testgebruikers](#testgebruikers)). U hoeft geen eigen Supabase project aan te maken. **De benodigde API keys voor Supabase worden separaat aangeleverd.**
+
+Flickr en Pexels API keys zijn **optioneel** - de applicatie werkt ook zonder deze keys met beperkte achtergrond selectie functionaliteit.
 
 **Supabase Configuratie:**
 De test credentials maken gebruik van een vooraf geconfigureerde Supabase instantie met:
@@ -231,7 +233,9 @@ pnpm run lint:css:fix
 pnpm run lint:css:report
 ```
 
-### Code Analyse
+### 🛠️ Ontwikkeltools (Optioneel)
+
+Deze commando's zijn optioneel en bedoeld voor ontwikkelaars die inzage willen in de code kwaliteit tools die tijdens ontwikkeling zijn gebruikt:
 
 **Ongebruikte code detecteren (Knip):**
 ```bash
@@ -243,7 +247,9 @@ pnpm run knip
 pnpm run styles:report-unused-vars
 ```
 
-### Styling Tools
+### 🎨 Styling Ontwikkeltools (Optioneel - Experimenteel)
+
+Deze experimentele scripts zijn gebruikt tijdens development voor SCSS optimalisatie. Niet noodzakelijk voor evaluatie:
 
 **SCSS imports migreren:**
 ```bash
@@ -335,7 +341,7 @@ Na inloggen krijgen gebruikers toegang tot:
 - Toegang tot premium Flickr content
 - Metadata en licentie-informatie
 
-#### 👤 Account Pagina (in ontwikkeling)
+#### 👤 Account Pagina (🚧 In Ontwikkeling)
 - Profielinstellingen
 - Weergavenaam aanpassen
 - Email notificaties configureren
@@ -347,8 +353,8 @@ Na inloggen krijgen gebruikers toegang tot:
 #### ⭐ Favorieten Systeem
 - Favoriete gedichten opslaan
 - Favoriete auteurs bijhouden
-- Verzamelingen beheren
-- Statistieken bekijken:
+- Verzamelingen beheren (🚧 In Ontwikkeling)
+- Statistieken bekijken (🚧 In Ontwikkeling):
   - Totaal aantal favorieten
   - Top gefavoriseerde auteurs
   - Recente activiteit
@@ -359,7 +365,7 @@ Na inloggen krijgen gebruikers toegang tot:
 - Waveform visualisatie tijdens opname
 - Opnames uploaden naar Supabase Storage
 - Opnames downloaden
-- Eerder gemaakte opnames afspelen
+- Eerder gemaakte opnames afspelen (🚧 Alleen meest recente opname)
 
 **Audio Time Limits:**
 - 🔓 **Anonieme gebruikers:** max 2 minuten opname
@@ -394,7 +400,7 @@ De canvas editor ondersteunt uitgebreide sneltoetsen voor efficiënt werken:
 | Toets | Actie |
 |-------|-------|
 | **Alt+H** | Toggle XY sliders zichtbaarheid |
-| **Alt+J** | Focus XY sliders + 5s hover freeze |
+| **Alt+J** | Focus XY sliders + freeze thumbnail hover (5s) |
 
 ### Visuele Effecten
 | Toets | Actie |
@@ -406,7 +412,11 @@ De canvas editor ondersteunt uitgebreide sneltoetsen voor efficiënt werken:
 - **Slepen** - Pan over canvas
 - **Ctrl+Slepen** - Selecteer meerdere elementen
 
-**💡 Tip:** Druk **Alt+J** om de XY sliders te focussen - dit activeert ook een 5-seconden "hover freeze" zodat de controls niet verdwijnen tijdens gebruik.
+**💡 Tip over Alt+J:**
+Tijdens het navigeren in de foto selectie container (achtergronden kiezen) kan de "hover preview" functionaliteit conflicteren met het verplaatsen van gedichten in de gepreviewed achtergrond. Druk **Alt+J** om een 5-seconden "hover freeze" te activeren. Dit:
+- Focust de XY positie sliders
+- Schakelt tijdelijk thumbnail hover uit
+- Voorkomt ongewenste achtergrond preview switches tijdens het positioneren van tekst
 
 ---
 

@@ -45,7 +45,6 @@ const AuthCallback = () => {
                 const hash = window.location.hash;
 
                 if (hash) {
-                    console.log('Processing auth callback...');
 
                     // Supabase will automatically handle the hash and update the session
                     const {data, error} = await supabase.auth.getSession();
@@ -55,19 +54,19 @@ const AuthCallback = () => {
                     }
 
                     if (data.session) {
-                        console.log('Email confirmed successfully!');
+
                         // Redirect to welcome or dashboard
                         navigate('/account', {replace: true});
                     } else {
-                        console.log('No session found');
+
                         navigate('/welkom', {replace: true});
                     }
                 } else {
-                    console.log('No auth hash found');
+
                     navigate('/welkom', {replace: true});
                 }
             } catch (err) {
-                console.error('Auth callback error:', err);
+
                 setError(err.message);
                 // Redirect to login with error message
                 navigate('/welkom?error=' + encodeURIComponent(err.message), {replace: true});

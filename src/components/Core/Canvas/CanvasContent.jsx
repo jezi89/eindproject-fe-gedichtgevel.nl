@@ -116,7 +116,6 @@ export function CanvasContent({
             viewport.scale.set(1, 1);  // Reset zoom to 100%
             viewport.position.set(0, 0);  // Reset pan to origin
 
-            console.log('🔄 Viewport reset to default state (new background)');
         }
     }, [backgroundImage, viewportRef]);
     
@@ -203,7 +202,7 @@ export function CanvasContent({
 
                 return false; // Not over any child
             } catch (error) {
-                console.warn("Error checking poem bounds:", error);
+
                 return false;
             }
         },
@@ -273,7 +272,7 @@ export function CanvasContent({
 
                 return false;
             } catch (error) {
-                console.warn("Error checking selected lines bounds:", error);
+
                 return false;
             }
         },
@@ -312,7 +311,7 @@ export function CanvasContent({
                     viewport.cursor = "default";
                 }
             } catch (error) {
-                console.warn("Error updating cursor:", error);
+
             }
         },
         [checkIfOverPoemContent, checkIfOverSelectedLines] // viewportRef removed - used directly in body
@@ -376,7 +375,6 @@ export function CanvasContent({
             viewport.cursor = 'default';
         }
 
-        console.log(`🖱️ Cursor initialized on viewport ready: ${viewport.cursor} (mode: ${currentMode})`);
     }, [viewportRef.current, selectedLines]);
 
     // Stable memoized event handlers using refs to prevent dependency cycles
@@ -394,7 +392,7 @@ export function CanvasContent({
 
             // Route to appropriate move mode handler
             if (currentMoveMode === "poem" && checkIfOverPoemContent(event)) {
-                console.log("Starting poem drag");
+
                 event.stopPropagation();
                 setDragMode("poem");
                 setIsDraggingBoth(true);
@@ -406,7 +404,7 @@ export function CanvasContent({
                 }
             } else if (currentMoveMode === "line" && checkIfOverSelectedLines(event)) {
                 // Line drag logic remains the same as it uses a different state mechanism
-                console.log("Starting line drag");
+
                 event.stopPropagation();
                 setDragMode("line");
                 setIsDraggingBoth(true);

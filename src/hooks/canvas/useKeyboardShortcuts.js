@@ -93,7 +93,7 @@ export function useKeyboardShortcuts({
   // Helper functie om muiscursor te simuleren naar container centrum
   const moveMouseToContainer = useCallback((container) => {
     if (!container) {
-      console.warn('🖱️ moveMouseToContainer: No container provided');
+
       return false;
     }
 
@@ -128,10 +128,9 @@ export function useKeyboardShortcuts({
         cancelable: true
       }));
 
-      console.log('🖱️ moveMouseToContainer: Mouse move events dispatched successfully');
       return true;
     } catch (error) {
-      console.error('🖱️ moveMouseToContainer: Error simulating mouse movement:', error);
+
       return false;
     }
   }, []);
@@ -145,27 +144,26 @@ export function useKeyboardShortcuts({
 
     // Switch to poem mode if not already active
     if (moveMode !== 'poem') {
-      console.log('🎛️ Alt+J: Switching to poem mode');
+
       setMoveMode('poem');
     }
     
     // Show XY sliders if not visible
     if (!xySlidersVisible) {
-      console.log('🎛️ Alt+J: Making sliders visible');
+
       setXySlidersVisible(true);
     }
 
     // Wacht tot rendering voltooid is (250ms totaal voor state + render + focus)
     setTimeout(() => {
-      console.log('🎛️ Alt+J: Starting focus+mouse sequence after render delay');
-      
+
       // Probeer eerst ref callback (primair pad)
       if (onXyFocusRequest) {
-        console.log('🎛️ Alt+J: Attempting ref callback focus + mouse move');
+
         const focusSuccess = onXyFocusRequest();
         
         if (focusSuccess) {
-          console.log('🎛️ Alt+J: Ref focus successful, now moving mouse');
+
           // Wacht kort voor focus settling, dan mouse move
           setTimeout(() => {
             const container = document.querySelector('[data-testid="xy-move-container"]') ||
@@ -173,15 +171,15 @@ export function useKeyboardShortcuts({
             if (container) {
               moveMouseToContainer(container);
             } else {
-              console.warn('🖱️ Alt+J: Container not found after ref focus for mouse move');
+
             }
           }, 50);
           return;
         } else {
-          console.log('🎛️ Alt+J: Ref callback failed, trying fallback');
+
         }
       } else {
-        console.log('🎛️ Alt+J: No ref callback, using direct fallback');
+
       }
 
       // Fallback: Direct querySelector met retry en mouse move
@@ -190,8 +188,7 @@ export function useKeyboardShortcuts({
       
       const attemptFocusAndMouse = () => {
         retryCount++;
-        console.log(`🔄 Alt+J: Fallback attempt ${retryCount}/${maxRetries} (focus+mouse)`);
-        
+
         const selectors = [
           '[data-testid="xy-move-container"]',
           '[class*="xyMoveContainer"]'
@@ -201,7 +198,7 @@ export function useKeyboardShortcuts({
         for (const selector of selectors) {
           xyContainer = document.querySelector(selector);
           if (xyContainer) {
-            console.log(`🎛️ Alt+J: Found container with selector: ${selector}`);
+
             break;
           }
         }
@@ -210,32 +207,30 @@ export function useKeyboardShortcuts({
           try {
             // Eerst focus
             xyContainer.focus({ preventScroll: true });
-            console.log('🎛️ Alt+J: Focus successful via fallback');
-            
+
             // Dan mouse move naar centrum
             setTimeout(() => {
               moveMouseToContainer(xyContainer);
             }, 50); // Korte delay voor focus settling
-            
-            console.log('🎛️ Alt+J: Complete sequence successful (focus + mouse move)');
+
             return true;
           } catch (error) {
-            console.error('🎛️ Alt+J: Error in focus+mouse sequence:', error);
+
           }
         } else {
-          console.warn(`🎛️ Alt+J: Container not found on attempt ${retryCount}`);
+
         }
         
         if (retryCount < maxRetries) {
           const delay = 150 * retryCount; // 150ms, 300ms, 450ms
           setTimeout(attemptFocusAndMouse, delay);
         } else {
-          console.error('🎛️ Alt+J: All focus+mouse attempts failed');
-          console.log('💡 Alt+J Troubleshooting:');
-          console.log('   - Verify XYMoveSliders renders (moveMode="poem" && xySlidersVisible=true)');
-          console.log('   - Check console for rendering errors');
-          console.log('   - Inspect DOM for [data-testid="xy-move-container"]');
-          console.log('   - Ensure no CSS hides the container (display: none, visibility: hidden)');
+
+
+
+
+
+
         }
       };
 
@@ -245,7 +240,7 @@ export function useKeyboardShortcuts({
 
   useEffect(() => {
     if (import.meta.env.DEV) {
-      console.log('⌨️ KeyboardShortcuts: Hook mounted');
+
     }
 
     const handleKeyDown = (event) => {
@@ -272,7 +267,7 @@ export function useKeyboardShortcuts({
 				!event.shiftKey
 			) {
 				event.preventDefault();
-				console.log("🔄 SPACE: Cycling modes");
+
 				showShortcutFeedback("space", "Space: Cycle modes");
 				cycleModes();
 				return;
@@ -281,7 +276,7 @@ export function useKeyboardShortcuts({
 			// ESCAPE: Reset to edit mode
 			if (event.key === "Escape") {
 				event.preventDefault();
-				console.log("⚡ ESC: Reset to edit mode");
+
 				showShortcutFeedback(
 					"escape",
 					"Esc: Clear selection and return to Edit mode"
@@ -303,7 +298,7 @@ export function useKeyboardShortcuts({
 					currentPoem?.lines?.length > 0
 				) {
 					event.preventDefault();
-					console.log("📝 Alt+A: Select all poem lines only");
+
 					showShortcutFeedback("alta", "Alt+A: Select all poem lines");
 					selectAll(currentPoem.lines.length);
 				}
@@ -323,7 +318,7 @@ export function useKeyboardShortcuts({
 					currentPoem?.lines?.length > 0
 				) {
 					event.preventDefault();
-					console.log("📝 Alt+Shift+A: Select all including title and author");
+
 					showShortcutFeedback(
 						"altshifta",
 						"Alt+Shift+A: Select all + title + author"
@@ -342,7 +337,7 @@ export function useKeyboardShortcuts({
 			) {
 				if (moveMode === "line" || moveMode === "poem") {
 					event.preventDefault();
-					console.log("🎛️ Alt+H: Toggle XY sliders");
+
 					showShortcutFeedback("alth", "Alt+H: Toggle XY sliders visibility");
 					setXySlidersVisible(!xySlidersVisible);
 				}
@@ -357,7 +352,6 @@ export function useKeyboardShortcuts({
 				!event.shiftKey
 			) {
 				event.preventDefault();
-				console.log("🎛️ Alt+J: Focus XY sliders + hover freeze");
 
 				showShortcutFeedback(
 					"altj",
@@ -367,18 +361,18 @@ export function useKeyboardShortcuts({
 				// Activate 5-second hover freeze
 				if (setHoverFreezeActive) {
 					setHoverFreezeActive(true);
-					console.log("🚫 Alt+J: Hover freeze activated for 5 seconds");
+
 				}
 
 				// Switch to poem mode if not already active
 				if (moveMode !== "poem") {
-					console.log("🎛️ Alt+J: Switching to poem mode");
+
 					setMoveMode("poem");
 				}
 
 				// Show XY sliders if not visible
 				if (!xySlidersVisible) {
-					console.log("🎛️ Alt+J: Making sliders visible");
+
 					setXySlidersVisible(true);
 				}
 
@@ -390,9 +384,9 @@ export function useKeyboardShortcuts({
 					if (container) {
 						container.focus();
 						container.scrollIntoView({ behavior: "smooth", block: "center" });
-						console.log("🎛️ Alt+J: Focus and scroll successful");
+
 					} else {
-						console.error("🎛️ Alt+J: Container not found");
+
 					}
 				}, 200);
 				return;
@@ -406,13 +400,13 @@ export function useKeyboardShortcuts({
 				!event.shiftKey
 			) {
 				event.preventDefault();
-				console.log("🎯 R: Reset camera to center");
+
 				showShortcutFeedback("r", "R: Reset camera to center");
 
 				if (window.debugCanvas?.resetViewport) {
 					window.debugCanvas.resetViewport();
 				} else {
-					console.warn("🎯 Camera reset not available - debugCanvas not found");
+
 				}
 				return;
 			}
@@ -425,7 +419,7 @@ export function useKeyboardShortcuts({
 				!event.shiftKey
 			) {
 				event.preventDefault();
-				console.log("🟡 Alt+Y: Toggle highlight visibility");
+
 				showShortcutFeedback("alty", "Alt+Y: Toggle highlight visibility");
 				setHighlightVisible(!highlightVisible);
 				return;

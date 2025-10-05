@@ -33,15 +33,12 @@ const pendingRequests = new Map();
  */
 function analyzeSearchTerm(searchTerm) {
     // Log the original search term for debugging
-    console.log("Search term analysis:", searchTerm);
-
     // 1. Check for explicit patterns "author - title" or "title by author"
     const dashPattern = /(.+?)\s+-\s+(.+)/i;
     const byPattern = /(.+?)\s+(?:door|by|van)\s+(.+)/i;
 
     if (dashPattern.test(searchTerm)) {
         const [_, part1, part2] = searchTerm.match(dashPattern);
-        console.log(`Recognized as 'author - title' pattern: author="${part1}", title="${part2}"`);
         return {
             authorTerm: part1.trim(),
             titleTerm: part2.trim(),
@@ -53,7 +50,6 @@ function analyzeSearchTerm(searchTerm) {
 
     if (byPattern.test(searchTerm)) {
         const [_, part1, part2] = searchTerm.match(byPattern);
-        console.log(`Recognized as 'title by/door/van author' pattern: title="${part1}", author="${part2}"`);
         return {
             authorTerm: part2.trim(),
             titleTerm: part1.trim(),
@@ -80,7 +76,6 @@ function analyzeSearchTerm(searchTerm) {
                 if (knownAuthorsLower.includes(potentialAuthor.toLowerCase())) {
                     const titlePart = words.slice(i).join(" ");
                     // If titlePart is empty, the entire search term is an author's name
-                    console.log(`Known author (prefix/full): author="${potentialAuthor}", title="${titlePart}"`);
                     return {
                         authorTerm: potentialAuthor,
                         titleTerm: titlePart, // Can be empty if the full term is an author
@@ -94,7 +89,6 @@ function analyzeSearchTerm(searchTerm) {
             // Default: first two words = author, rest = title
             const potentialAuthor = words.slice(0, 2).join(" ");
             const potentialTitle = words.slice(2).join(" ");
-            console.log(`Analysis 3+ words: author="${potentialAuthor}", title="${potentialTitle}"`);
             return {
                 authorTerm: potentialAuthor,
                 titleTerm: potentialTitle,
@@ -117,7 +111,6 @@ function analyzeSearchTerm(searchTerm) {
             // 3a. Check if one of the words is a known author name
             const knownAuthors = poetrydbAuthors.map(a => a.toLowerCase());
             if (knownAuthors.includes(word1Lower)) {
-                console.log(`Word 1 is a known author, searching for: author="${words[0]}", title="${words[1]}"`);
                 return {
                     authorTerm: words[0],
                     titleTerm: words[1],
@@ -140,7 +133,6 @@ function analyzeSearchTerm(searchTerm) {
                 const potentialAuthor = words.slice(numWords - i).join(" ");
                 if (knownAuthorsLower.includes(potentialAuthor.toLowerCase())) {
                     const titlePart = words.slice(0, numWords - i).join(" ");
-                    console.log(`Known author (suffix): author="${potentialAuthor}", title="${titlePart}"`);
                     return {
                         authorTerm: potentialAuthor,
                         titleTerm: titlePart,
@@ -160,7 +152,6 @@ function analyzeSearchTerm(searchTerm) {
     if (numWords >= 3) {
         const author = words.slice(0, 2).join(" "); // Default: first two words = author
         const title = words.slice(2).join(" ");     // rest = title
-        console.log(`Fallback 3+ words (default split): author="${author}", title="${title}"`);
         return {
             authorTerm: author,
             titleTerm: title,
@@ -174,7 +165,6 @@ function analyzeSearchTerm(searchTerm) {
     if (numWords === 2) {
         // If the enhanced checks didn't identify a specific author for a 2-word query,
         // it's considered ambiguous.
-        console.log("Fallback 2-words (ambiguous): No specific known author, trying both combinations.");
         return {
             authorTerm: searchTerm, // Original term for broad title/author searches
             titleTerm: searchTerm,
@@ -188,7 +178,6 @@ function analyzeSearchTerm(searchTerm) {
     }
 
     // Fallback for 1 word (if not an exact author match from enhanced check) or empty search
-    console.log("Fallback (unsplit): Treating entire term for both author and title search, or single word.");
     return {
         authorTerm: searchTerm,
         titleTerm: searchTerm,
@@ -219,7 +208,6 @@ function analyzeSearchTerm(searchTerm) {
 async function dedupeRequest(key, requestFn) {
     // Check if request is already pending
     if (pendingRequests.has(key)) {
-        console.log(`Request already pending for: ${key}, returning existing promise`);
         return pendingRequests.get(key);
     }
 
@@ -243,8 +231,6 @@ async function dedupeRequest(key, requestFn) {
  * @returns {Promise<Array<object>>} Array of poems from multiple common searches
  */
 export async function searchAllPoems() {
-    console.log("===== Wildcard search (fetch all poems) =====");
-
     // Common words that appear in many poems
     const commonSearchTerms = [
         'love', 'time', 'life', 'death', 'day', 'night',
@@ -254,7 +240,6 @@ export async function searchAllPoems() {
     const promises = commonSearchTerms.map(term =>
         searchByTitleInService(term)
             .catch(error => {
-                console.warn(`Failed to fetch poems for "${term}":`, error);
                 return [];
             })
     );
@@ -274,11 +259,8 @@ export async function searchAllPoems() {
                 seenKeys.add(key);
             }
         }
-
-        console.log(`Wildcard search found ${uniquePoems.length} unique poems`);
         return uniquePoems;
     } catch (error) {
-        console.error("Error in wildcard search:", error);
         return [];
     }
 }
@@ -295,19 +277,13 @@ export async function searchAllPoems() {
  * @returns {Promise<Array<object>>} Een array van gevonden gedichten. / An array of found poems.
  */
 export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = {}) {
-    console.log("===== New search query =====");
-    console.log(`Searching for: "${searchTerm}" with filters:`, filters);
-
     if (!searchTerm || !searchTerm.trim()) {
-        console.log("Empty search query, performing wildcard search");
         // Aborting wildcard search is not implemented as it's a collection of requests
         return searchAllPoems();
     }
 
     // 1. Analysis of the search term
     const analysis = analyzeSearchTerm(searchTerm.trim());
-    console.log(`Analysis result - confidence: ${analysis.confidence}, strategy: ${analysis.searchStrategy}`);
-
     // Preparing the promises
     const promises = [];
     const promiseLabels = []; // For logging
@@ -328,9 +304,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
             dedupeRequest(titleKey, () =>
                 searchByTitleInService(searchTerm, { signal }).catch(error => {
                     if (error.name === 'CanceledError') {
-                        console.log('Title search was canceled.');
                     } else {
-                        console.error(`Error searching by title with term "${searchTerm}" in service:`, error);
                     }
                     return []; // Return empty array on error or cancellation
                 })
@@ -338,7 +312,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         );
         promiseLabels.push("Title search");
     } else {
-        console.log("Skipping title search based on analysis");
     }
 
     // 2b. Search by author (only if needed)
@@ -348,9 +321,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
             dedupeRequest(authorKey, () =>
                 searchByAuthorInService(searchTerm, { signal }).catch(error => {
                      if (error.name === 'CanceledError') {
-                        console.log('Author search was canceled.');
                     } else {
-                        console.error(`Error searching by author with term "${searchTerm}" in service:`, error);
                     }
                     return [];
                 })
@@ -358,7 +329,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         );
         promiseLabels.push("Author search");
     } else {
-        console.log("Skipping author search based on analysis");
     }
 
     // 3. Adding intelligent AND search action based on analysis
@@ -367,7 +337,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
         // Option 1: Word 1 as author, word 2 as title
         const option1Key = `combined:${analysis.option1.authorTerm.toLowerCase()};${analysis.option1.titleTerm.toLowerCase()}`;
-        console.log(`API call for combined (option 1): /author,title/${encodeURIComponent(analysis.option1.authorTerm)};${encodeURIComponent(analysis.option1.titleTerm)}`);
         promises.push(
             dedupeRequest(option1Key, () =>
                 fetchPoemsFromPoetryDBByAuthorAndTitle(
@@ -376,7 +345,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     { signal }
                 ).catch(error => {
                     if (error.name !== 'CanceledError') {
-                        console.error(`Error with combined search option 1 with author="${analysis.option1.authorTerm}", title="${analysis.option1.titleTerm}":`, error);
                     }
                     return [];
                 })
@@ -386,7 +354,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
         // Option 2: Word 2 as author, word 1 as title
         const option2Key = `combined:${analysis.option2.authorTerm.toLowerCase()};${analysis.option2.titleTerm.toLowerCase()}`;
-        console.log(`API call for combined (option 2): /author,title/${encodeURIComponent(analysis.option2.authorTerm)};${encodeURIComponent(analysis.option2.titleTerm)}`);
         promises.push(
             dedupeRequest(option2Key, () =>
                 fetchPoemsFromPoetryDBByAuthorAndTitle(
@@ -395,7 +362,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     { signal }
                 ).catch(error => {
                     if (error.name !== 'CanceledError') {
-                        console.error(`Error with combined search option 2 with author="${analysis.option2.authorTerm}", title="${analysis.option2.titleTerm}":`, error);
                     }
                     return [];
                 })
@@ -409,7 +375,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
         if (shouldDoCombined) {
             const combinedKey = `combined:${analysis.authorTerm.toLowerCase()};${analysis.titleTerm.toLowerCase()}`;
-            console.log(`API call for combined: /author,title/${encodeURIComponent(analysis.authorTerm)};${encodeURIComponent(analysis.titleTerm)}`);
             promises.push(
                 dedupeRequest(combinedKey, () =>
                     fetchPoemsFromPoetryDBByAuthorAndTitle(
@@ -418,7 +383,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                         { signal }
                     ).catch(error => {
                         if (error.name !== 'CanceledError') {
-                            console.error(`Error with combined search with author="${analysis.authorTerm}", title="${analysis.titleTerm}":`, error);
                         }
                         return [];
                     })
@@ -426,20 +390,17 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
             );
             promiseLabels.push("Combined author-title search");
         } else {
-            console.log("Skipping combined search - no title term or not needed based on strategy");
         }
     }
 
     // 4. Apply filters (if present)
     // This is a concept that can be further developed
     if (Object.keys(filters).length > 0) {
-        console.log("Applying filters:", filters);
         // Here you could add extra filter-specific search logic
     }
 
     // 5. Execute all search queries and collect results
     if (promises.length === 0) {
-        console.log("No searches to perform based on analysis");
         return [];
     }
 
@@ -455,10 +416,8 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
         // Log results
         resultsWithLabels.forEach(({label, data}) => {
-            console.log(`Results from ${label}: ${data.length} poems found`);
         });
     } catch (error) {
-        console.error("Unexpected error during Promise.all in searchPoemsGeneral:", error);
         return [];
     }
 
@@ -504,8 +463,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
         return a.title.localeCompare(b.title);
     });
-
-    console.log(`Total ${uniqueResults.length} unique results found`);
     return uniqueResults;
 }
 
@@ -517,12 +474,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
  * @param {string} title De titel om op te zoeken. / The title to search for.
  * @returns {Promise<Array<object>>} Found poems
  */
-// UNUSED: export async function searchPoemsByTitle(title) {
-//     // This function can continue to exist if you want explicit "search by title only"
-//     // functionality, otherwise it can be removed if searchPoemsGeneral is sufficient.
-//     return searchByTitleInService(title);
-// }
-
 
 /**
  * Zoek gedichten op auteur (behoudt de originele specialisatie als nodig).
@@ -531,10 +482,6 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
  * @param {string} author De auteur om op te zoeken. / The author to search for.
  * @returns {Promise<Array<object>>} Found poems
  */
-// UNUSED: export async function searchPoemsByAuthor(author) {
-//     return searchByAuthorInService(author);
-// }
-
 
 /**
  * Concept voor een functie die zoeken met filters toepast.

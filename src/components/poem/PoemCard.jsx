@@ -29,9 +29,7 @@ export const PoemCard = memo(forwardRef(({
                                              styles,
                                              children
                                          }, ref) => {
-    // TODO debug logging animation states checken en weghalen
     // Debug logging voor animation states
-    console.log('PoemCard render:', {isExpanded, canvasMode});
 
     return (
         <motion.div
