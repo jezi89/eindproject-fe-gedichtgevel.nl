@@ -77,10 +77,10 @@ De applicatie maakt gebruik van de volgende externe diensten:
 2. **PoetryDB API** - Publieke poëzie database (geen API key vereist)
    - Documentatie: [https://poetrydb.org/](https://poetrydb.org/)
 
-3. **Flickr API** (optioneel) - Achtergrondafbeeldingen voor canvas
+3. **Flickr API** - Achtergrondafbeeldingen voor canvas
    - Documentatie: [https://www.flickr.com/services/api/](https://www.flickr.com/services/api/)
 
-4. **Pexels API** (optioneel) - Alternatieve achtergrondafbeeldingen
+4. **Pexels API** - Alternatieve achtergrondafbeeldingen
    - Documentatie: [https://www.pexels.com/api/](https://www.pexels.com/api/)
 
 ---

@@ -23,6 +23,8 @@ import {ProtectedRoute} from './components/ProtectedRoute.jsx';
 import {ContactPage} from './pages/Contact/ContactPage.jsx';
 import {FAQPage} from './pages/FAQ/FAQPage.jsx';
 import {TermsPage} from './pages/Terms/TermsPage.jsx';
+import {NotFoundPage} from './pages/NotFound/NotFoundPage.jsx';
+import {GlobalErrorBoundary} from './components/ErrorBoundary/GlobalErrorBoundary.jsx';
 
 
 
@@ -36,12 +38,13 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
+        errorElement: <GlobalErrorBoundary />,
         children: [
             {index: true, element: <HomePage/>},
             {path: "designgevel", element: <DesignPage/>},
-            {path: "designgevel/:poemId", element: <DesignPage/>}, // Canvas route with poem ID
-            {path: "canvas", element: <DesignPage/>}, // Legacy canvas route for compatibility
-            {path: "canvas/:poemId", element: <DesignPage/>}, // Legacy canvas route with poem ID
+            {path: "designgevel/:poemId", element: <DesignPage/>},
+            {path: "canvas", element: <DesignPage/>},
+            {path: "canvas/:poemId", element: <DesignPage/>},
             {path: "spreekgevel", element: <AudioPage/>},
             {path: "collectiegevel", element: <CollectionPage/>},
             {path: "overmij", element: <AboutPage/>},
@@ -62,8 +65,10 @@ const router = createBrowserRouter([
             {path: "login", element: <LoginAndSignupPage/>},
             {path: "password-reset", element: <PasswordResetPage/>},
             {path: "reset-password", element: <ResetPasswordPage/>},
+
+            // 404 catch-all route - must be last
+            {path: "*", element: <NotFoundPage/>},
         ],
-        // I can define other top-level routes here if App shouldn't be their layout
     },
     // AuthCallback outside the main layout
     {path: "auth/callback", element: <AuthCallback/>},

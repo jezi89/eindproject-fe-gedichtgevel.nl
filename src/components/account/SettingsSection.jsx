@@ -111,7 +111,7 @@ export function SettingsSection() {
             {/* Messages */}
             {error && (
                 <div className={styles.errorMessage}>
-                    <span>{error}</span>
+                    <span>{error?.message || String(error) || 'Er is een fout opgetreden'}</span>
                     <button onClick={clearMessages} className={styles.closeMessage}>
                         ✕
                     </button>
@@ -155,7 +155,7 @@ export function SettingsSection() {
                             type="text"
                             value={displayNameInput}
                             onChange={(e) => setDisplayNameInput(e.target.value)}
-                            placeholder={settings.display_name || 'Voer een weergavenaam in'}
+                            placeholder={settings?.display_name || 'Voer een weergavenaam in'}
                             className={styles.input}
                         />
                         <button
@@ -166,7 +166,7 @@ export function SettingsSection() {
                             Opslaan
                         </button>
                     </div>
-                    {settings.display_name && (
+                    {settings?.display_name && (
                         <p className={styles.helpText}>Huidige naam: {settings.display_name}</p>
                     )}
                 </form>
@@ -237,7 +237,7 @@ export function SettingsSection() {
                                 type="radio"
                                 name="theme"
                                 value="dark"
-                                checked={settings.theme_preference === 'dark'}
+                                checked={settings?.theme_preference === 'dark'}
                                 onChange={() => updateTheme('dark')}
                                 className={styles.radio}
                             />
@@ -248,7 +248,7 @@ export function SettingsSection() {
                                 type="radio"
                                 name="theme"
                                 value="light"
-                                checked={settings.theme_preference === 'light'}
+                                checked={settings?.theme_preference === 'light'}
                                 onChange={() => updateTheme('light')}
                                 className={styles.radio}
                             />
@@ -261,7 +261,7 @@ export function SettingsSection() {
                     <label className={styles.switchLabel}>
                         <input
                             type="checkbox"
-                            checked={settings.email_notifications}
+                            checked={settings?.email_notifications || false}
                             onChange={toggleEmailNotifications}
                             className={styles.checkbox}
                         />

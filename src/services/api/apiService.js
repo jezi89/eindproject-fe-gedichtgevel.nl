@@ -106,10 +106,10 @@ export const supabaseApiService = {
             .from('user_settings')
             .select('*')
             .eq('id', userId)
-            .single();
-        
+            .maybeSingle();
+
         if (error) throw error; // Tanstack Query vangt deze error op.
-        return data;
+        return data; // Returns null if no record exists, instead of throwing error
     },
     // Voeg hier andere Supabase query-functies toe...
 };
