@@ -42,6 +42,8 @@
       }
     ],
 
+    "no-invalid-position-declaration": null,
+
     "scale-unlimited/declaration-strict-value": [
       [
         "color",
@@ -52,8 +54,9 @@
       ],
       {
         "ignoreValues": {
-          "/color/": ["transparent", "currentColor", "inherit"]
+          "/color/": ["transparent", "currentColor", "inherit", "none", "initial", "unset"]
         },
+        "ignoreKeywords": ["inherit", "transparent", "currentColor", "none", "initial", "unset"],
         "disableFix": true,
         "message": "Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren"
       }

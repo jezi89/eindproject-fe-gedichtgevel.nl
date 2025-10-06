@@ -41,7 +41,7 @@ export function SearchBar({
             // Reset height to get accurate scrollHeight
             textareaRef.current.style.height = 'auto';
             // Set height to scrollHeight, but cap it at max. height, defined in CSS
-            textareaRef.current.style.heigh = `$textareaRef.current.scrollHeight}px`;
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
     }, [searchTerm]);
 
