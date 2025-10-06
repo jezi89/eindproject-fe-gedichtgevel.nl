@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import styles from './Searchbar.module.scss';
+import styles from './SearchBar.module.scss';
 
 /**
  * SearchBar Component

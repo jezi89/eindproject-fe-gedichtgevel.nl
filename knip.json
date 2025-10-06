@@ -17,6 +17,12 @@
     "postcss.config.js",
     "eslint.config.mjs"
   ],
+  "ignoreDependencies": [
+    "@sentry/react"
+  ],
+  "ignoreBinaries": [
+    "powershell"
+  ],
   "paths": {
     "@/*": ["src/*"],
     "@styles/*": ["src/styles/*"]

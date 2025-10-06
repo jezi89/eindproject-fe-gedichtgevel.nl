@@ -225,47 +225,6 @@ async function dedupeRequest(key, requestFn) {
 
 
 /**
- * Searches for many poems using common search terms (wildcard search)
- * Used when user searches without entering a search term
- *
- * @returns {Promise<Array<object>>} Array of poems from multiple common searches
- */
-export async function searchAllPoems() {
-    // Common words that appear in many poems
-    const commonSearchTerms = [
-        'love', 'time', 'life', 'death', 'day', 'night',
-        'heart', 'light', 'world', 'beauty', 'soul', 'dream'
-    ];
-
-    const promises = commonSearchTerms.map(term =>
-        searchByTitleInService(term)
-            .catch(error => {
-                return [];
-            })
-    );
-
-    try {
-        const results = await Promise.all(promises);
-        const allPoems = results.flat();
-
-        // Deduplicate poems
-        const uniquePoems = [];
-        const seenKeys = new Set();
-
-        for (const poem of allPoems) {
-            const key = `${poem.title}-${poem.author}`.toLowerCase();
-            if (!seenKeys.has(key)) {
-                uniquePoems.push({...poem, matchType: 'wildcard_search', score: 50});
-                seenKeys.add(key);
-            }
-        }
-        return uniquePoems;
-    } catch (error) {
-        return [];
-    }
-}
-
-/**
  * Voert een algemene zoekopdracht uit op gedichten.
  * Probeert de zoekterm intelligent te matchen tegen zowel titels als auteurs.
  *
