@@ -13,6 +13,7 @@ import {MainNavLink} from "./MainNavLink.jsx";
 import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 import styles from "./NavBar.module.scss"
 import {useAuth} from "@/hooks/auth/useAuth.js";
+import LogoIcon from "@/assets/logo.svg?react";
 
 /**
  * NavBar component for main site navigation
@@ -94,6 +95,7 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
             <div className={styles.navbarContainer}>
                 {/* Logo - always visible */}
                 <Link to="/" className={styles.logo}>
+                    <LogoIcon aria-hidden="true" />
                     GedichtGevel
                 </Link>
 

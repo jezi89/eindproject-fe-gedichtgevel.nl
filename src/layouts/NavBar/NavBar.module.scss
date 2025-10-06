@@ -81,6 +81,9 @@
 
 // Logo - left section
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family:     $font-family-title;
   font-weight:     $font-weight-bold;
   flex-shrink:     0;
@@ -89,6 +92,13 @@
   text-decoration: none;
   color:           $navbar-text;
   @include mixins.fluid-type(1.125, 1.5, $screen-xs, $screen-lg);
+
+  // SVG icon styling
+  svg {
+    width: 2em;  // 2x the font size
+    height: 2em; // 2x the font size
+    flex-shrink: 0;
+  }
 
   &:hover {
 	color: $navbar-text-active;
