@@ -33,25 +33,7 @@
 .searchSection {
   // Main search section container
   width: 100%;
-  }
 
-// Compact mode for header usage
-// TODO Nog implementeren
-
-// Canvas variant - centered input with left padding compensation
-// TODO Nog implementeren
-
-.searchContainer {
-  position: relative;
-  width:    100%;
-  // height: 100%;
-  }
-
-// ===========================
-// SEARCH BAR VARIANTS
-// ===========================
-
-.searchSection {
   // Compact mode for header usage
   &.compact {
 	.searchBar {
@@ -85,6 +67,11 @@
 	  padding-left: $spacing-xxl + $spacing-xs; // ~58px responsive padding for balance (3rem + 0.5rem = 3.5rem approx 56px, close to 3.625rem)
 	  }
 	}
+  }
+
+.searchContainer {
+  position: relative;
+  width:    100%;
   }
 
 // ===========================
