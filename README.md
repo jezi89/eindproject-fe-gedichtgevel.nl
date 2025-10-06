@@ -274,6 +274,11 @@ Voor het testen van de applicatie zijn de volgende testaccounts beschikbaar:
 
 ### Primaire Testgebruiker
 
+Deze applicatie bevat test credentials in de README voor beoordoelingsdoeleinden.
+In een productie omgeving zouden alle credentials worden opgeslagen in:
+- Environment variables (`.env.local`)
+- Secrets management systemen (zoals Supabase Vault)
+- Nooit gecommit in version control
 **Status:** Email bevestigd ✓
 
 **Toegang tot:**
