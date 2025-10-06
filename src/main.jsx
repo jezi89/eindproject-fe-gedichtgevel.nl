@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 // Using createBrowserRouter for React Router v6.4+ because it allows for better data loading and route management
 import {createBrowserRouter, RouterProvider} from 'react-router';
@@ -7,24 +7,38 @@ import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister
 import {AuthProvider} from './context/auth/AuthProvider';
 import App from './App.jsx';
 import queryClient from './services/api/queryClient.js';
-
-// Import Page Components
-import {HomePage} from './pages/Home/HomePage.jsx';
-import {DesignPage} from './pages/Design/DesignPage.jsx';
-import {CollectionPage} from './pages/Collections/CollectionPage.jsx';
-import {AudioPage} from './pages/Audio/AudioPage.jsx';
-import {AboutPage} from './pages/About/AboutPage.jsx';
-import {AccountPage} from './pages/Account/AccountPage.jsx';
-import {LoginAndSignupPage} from './pages/Auth/LoginAndSignup/LoginAndSignupPage.jsx';
-import PasswordResetPage from './pages/Auth/PasswordResetPage.jsx';
-import ResetPasswordPage from './pages/Auth/ResetPasswordPage.jsx';
-import AuthCallback from './pages/Auth/LoginAndSignup/AuthCallBack.jsx';
-import {ProtectedRoute} from './components/ProtectedRoute.jsx';
-import {ContactPage} from './pages/Contact/ContactPage.jsx';
-import {FAQPage} from './pages/FAQ/FAQPage.jsx';
-import {TermsPage} from './pages/Terms/TermsPage.jsx';
-import {NotFoundPage} from './pages/NotFound/NotFoundPage.jsx';
 import {GlobalErrorBoundary} from './components/ErrorBoundary/GlobalErrorBoundary.jsx';
+import {ProtectedRoute} from './components/ProtectedRoute.jsx';
+
+// Lazy load page components for code splitting
+const HomePage = lazy(() => import('./pages/Home/HomePage.jsx').then(m => ({ default: m.HomePage })));
+const DesignPage = lazy(() => import('./pages/Design/DesignPage.jsx').then(m => ({ default: m.DesignPage })));
+const CollectionPage = lazy(() => import('./pages/Collections/CollectionPage.jsx').then(m => ({ default: m.CollectionPage })));
+const AudioPage = lazy(() => import('./pages/Audio/AudioPage.jsx').then(m => ({ default: m.AudioPage })));
+const AboutPage = lazy(() => import('./pages/About/AboutPage.jsx').then(m => ({ default: m.AboutPage })));
+const AccountPage = lazy(() => import('./pages/Account/AccountPage.jsx').then(m => ({ default: m.AccountPage })));
+const LoginAndSignupPage = lazy(() => import('./pages/Auth/LoginAndSignup/LoginAndSignupPage.jsx').then(m => ({ default: m.LoginAndSignupPage })));
+const PasswordResetPage = lazy(() => import('./pages/Auth/PasswordResetPage.jsx'));
+const ResetPasswordPage = lazy(() => import('./pages/Auth/ResetPasswordPage.jsx'));
+const AuthCallback = lazy(() => import('./pages/Auth/LoginAndSignup/AuthCallBack.jsx'));
+const ContactPage = lazy(() => import('./pages/Contact/ContactPage.jsx').then(m => ({ default: m.ContactPage })));
+const FAQPage = lazy(() => import('./pages/FAQ/FAQPage.jsx').then(m => ({ default: m.FAQPage })));
+const TermsPage = lazy(() => import('./pages/Terms/TermsPage.jsx').then(m => ({ default: m.TermsPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFound/NotFoundPage.jsx').then(m => ({ default: m.NotFoundPage })));
+
+// Loading fallback component
+const PageLoader = () => (
+    <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        fontSize: '1.2rem',
+        color: '#666'
+    }}>
+        Laden...
+    </div>
+);
 
 
 
@@ -40,38 +54,40 @@ const router = createBrowserRouter([
         element: <App/>,
         errorElement: <GlobalErrorBoundary />,
         children: [
-            {index: true, element: <HomePage/>},
-            {path: "designgevel", element: <DesignPage/>},
-            {path: "designgevel/:poemId", element: <DesignPage/>},
-            {path: "canvas", element: <DesignPage/>},
-            {path: "canvas/:poemId", element: <DesignPage/>},
-            {path: "spreekgevel", element: <AudioPage/>},
-            {path: "collectiegevel", element: <CollectionPage/>},
-            {path: "overmij", element: <AboutPage/>},
-            {path: "contact", element: <ContactPage/>},
-            {path: "hoedan", element: <FAQPage/>},
-            {path: "voorwaarden", element: <TermsPage/>},
+            {index: true, element: <Suspense fallback={<PageLoader/>}><HomePage/></Suspense>},
+            {path: "designgevel", element: <Suspense fallback={<PageLoader/>}><DesignPage/></Suspense>},
+            {path: "designgevel/:poemId", element: <Suspense fallback={<PageLoader/>}><DesignPage/></Suspense>},
+            {path: "canvas", element: <Suspense fallback={<PageLoader/>}><DesignPage/></Suspense>},
+            {path: "canvas/:poemId", element: <Suspense fallback={<PageLoader/>}><DesignPage/></Suspense>},
+            {path: "spreekgevel", element: <Suspense fallback={<PageLoader/>}><AudioPage/></Suspense>},
+            {path: "collectiegevel", element: <Suspense fallback={<PageLoader/>}><CollectionPage/></Suspense>},
+            {path: "overmij", element: <Suspense fallback={<PageLoader/>}><AboutPage/></Suspense>},
+            {path: "contact", element: <Suspense fallback={<PageLoader/>}><ContactPage/></Suspense>},
+            {path: "hoedan", element: <Suspense fallback={<PageLoader/>}><FAQPage/></Suspense>},
+            {path: "voorwaarden", element: <Suspense fallback={<PageLoader/>}><TermsPage/></Suspense>},
 
             // Auth routes
             {
                 path: "account",
                 element: (
-                    <ProtectedRoute>
-                        <AccountPage/>
-                    </ProtectedRoute>
+                    <Suspense fallback={<PageLoader/>}>
+                        <ProtectedRoute>
+                            <AccountPage/>
+                        </ProtectedRoute>
+                    </Suspense>
                 ),
             },
-            {path: "welkom", element: <LoginAndSignupPage/>},
-            {path: "login", element: <LoginAndSignupPage/>},
-            {path: "password-reset", element: <PasswordResetPage/>},
-            {path: "reset-password", element: <ResetPasswordPage/>},
+            {path: "welkom", element: <Suspense fallback={<PageLoader/>}><LoginAndSignupPage/></Suspense>},
+            {path: "login", element: <Suspense fallback={<PageLoader/>}><LoginAndSignupPage/></Suspense>},
+            {path: "password-reset", element: <Suspense fallback={<PageLoader/>}><PasswordResetPage/></Suspense>},
+            {path: "reset-password", element: <Suspense fallback={<PageLoader/>}><ResetPasswordPage/></Suspense>},
 
             // 404 catch-all route - must be last
-            {path: "*", element: <NotFoundPage/>},
+            {path: "*", element: <Suspense fallback={<PageLoader/>}><NotFoundPage/></Suspense>},
         ],
     },
     // AuthCallback outside the main layout
-    {path: "auth/callback", element: <AuthCallback/>},
+    {path: "auth/callback", element: <Suspense fallback={<PageLoader/>}><AuthCallback/></Suspense>},
 ]);
 
 // Create the root element for React 19
