@@ -8,7 +8,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
-import viteResolver from 'eslint-import-resolver-vite';
+// Vite alias support via Node resolver
 
 // Basisregels voor React componenten en JSX
 const reactRules = {
@@ -140,7 +140,7 @@ const viteRules = {
 // De volledige configuratie exporteren als array van config objecten
 export default [
     // Globale ignores - deze bestanden/mappen worden volledig overgeslagen
-    {ignores: ['dist', 'node_modules', 'build', '**/LEGACY/**']},
+    {ignores: ['dist', 'node_modules', 'build', '**/LEGACY/**', 'AUDIO-PROJECT/**', 'Canvas-Project/**', 'LEGACY-EMPTY/**']},
 
     // Algemene ESLint opties - werken op root niveau
     {
@@ -188,7 +188,17 @@ export default [
         settings: {
             react: {version: 'detect'},
             'import/resolver': {
-                vite: viteResolver
+                node: {
+                    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                    paths: ['src']
+                },
+                alias: {
+                    map: [
+                        ['@', './src'],
+                        ['@styles', './src/styles']
+                    ],
+                    extensions: ['.js', '.jsx', '.ts', '.tsx']
+                }
             }
         },
         // Combineer alle regelsets
@@ -198,7 +208,8 @@ export default [
             ...jsxA11yRules,
             ...importRules,
             ...viteRules,
-            'no-unused-vars': ['warn', {varsIgnorePattern: 'motion|React'}]
+            'no-unused-vars': ['warn', {varsIgnorePattern: 'motion|React'}],
+            'import/no-unresolved': ['error', { caseSensitive: true }],
         }
     },
     // Basis ondersteuning voor TypeScript bestanden
@@ -210,9 +221,11 @@ export default [
     // Specifieke regels voor Vite configuratie bestanden
 
     {
-        files: ['vite.config.js'],
+        files: ['vite.config.js', 'postcss.config.js'],
         rules: {
-            'import/default': 'off'
+            'import/default': 'off',
+            'import/namespace': 'off', // Vite internal exports zijn niet toegankelijk
+            'import/no-unresolved': 'off' // Config files gebruiken speciale imports
         }
     }
 ];

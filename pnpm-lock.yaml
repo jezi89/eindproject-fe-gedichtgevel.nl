@@ -72,9 +72,9 @@ importers:
       eslint:
         specifier: ^9.36.0
         version: 9.36.0(jiti@2.6.1)
-      eslint-import-resolver-vite:
-        specifier: ^2.1.0
-        version: 2.1.0(eslint-plugin-import@2.32.0(eslint@9.36.0(jiti@2.6.1)))
+      eslint-import-resolver-alias:
+        specifier: ^1.1.2
+        version: 1.1.2(eslint-plugin-import@2.32.0(eslint@9.36.0(jiti@2.6.1)))
       eslint-plugin-import:
         specifier: ^2.32.0
         version: 2.32.0(eslint@9.36.0(jiti@2.6.1))
@@ -1778,14 +1778,14 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
+  eslint-import-resolver-alias@1.1.2:
+    resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
+    engines: {node: '>= 4'}
+    peerDependencies:
+      eslint-plugin-import: '>=1.4.0'
+
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
-
-  eslint-import-resolver-vite@2.1.0:
-    resolution: {integrity: sha512-n8JycJFvMqw4GeAPsl4JujpxBQzDrNpHYK1NK2aD1nsZJhNfH9WLhmuCPtafMj+RBxtXcXHgY5yDlQdJcXn5Ug==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      eslint-plugin-import: ^2
 
   eslint-module-utils@2.12.1:
     resolution: {integrity: sha512-L8jSWTze7K2mTg0vos/RuLRS5soomksDPoJLXIslC7c8Wmut3bx7CPpJijDcBZtxQ5lrbUdM+s0OlNbz0DCDNw==}
@@ -5144,18 +5144,14 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
+  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.32.0(eslint@9.36.0(jiti@2.6.1))):
+    dependencies:
+      eslint-plugin-import: 2.32.0(eslint@9.36.0(jiti@2.6.1))
+
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
       is-core-module: 2.16.1
-      resolve: 1.22.10
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-import-resolver-vite@2.1.0(eslint-plugin-import@2.32.0(eslint@9.36.0(jiti@2.6.1))):
-    dependencies:
-      debug: 4.4.3
-      eslint-plugin-import: 2.32.0(eslint@9.36.0(jiti@2.6.1))
       resolve: 1.22.10
     transitivePeerDependencies:
       - supports-color
