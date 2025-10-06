@@ -2,6 +2,8 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 @use "sass:color";
+@use '@styles/variables' as vars;
+
 
 .floatingContainer {
     position: fixed;
@@ -19,14 +21,14 @@
 .toggleButton {
     background: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
+    color: vars.$neutral-white;
     padding: 12px 8px;
     border-radius: 8px 0 0 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
+    font-size: 0.875rem;
     transition: all 0.2s ease;
     min-width: 60px;
     justify-content: center;
@@ -43,11 +45,11 @@
 }
 
 .icon {
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .arrow {
-    font-size: 12px;
+    font-size: 0.75rem;
     opacity: 0.8;
 }
 
@@ -57,7 +59,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px 0 0 12px;
     border-right: none;
-    color: white;
+    color: vars.$neutral-white;
     width: 400px;
     overflow-y: auto;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
@@ -88,13 +90,13 @@
 
 .panelTitle {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
-    color: #fff;
+    color: vars.$neutral-white;
 }
 
 .modeIndicator {
-    font-size: 14px;
+    font-size: 0.875rem;
     opacity: 0.7;
     font-weight: normal;
     margin-left: 8px;
@@ -107,7 +109,7 @@
     padding: 8px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.875rem;
     transition: all 0.2s ease;
 }
 
@@ -129,7 +131,7 @@
 
 .sectionTitle {
     margin: 0 0 12px 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #4ade80;
     display: flex;
@@ -174,7 +176,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     padding: 4px 8px;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-family: $font-family-monospace;
     color: #e5e5e5;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -185,7 +187,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     padding: 4px 8px;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-family: $font-family-monospace;
     color: rgba(229, 229, 229, 0.6);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -224,7 +226,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     transition: all 0.2s ease;
 }
@@ -290,7 +292,7 @@
     }
 
     .panelTitle {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .keys {

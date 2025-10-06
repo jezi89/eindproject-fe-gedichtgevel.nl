@@ -1,3 +1,5 @@
+@use '@styles/variables' as vars;
+
 /**
  * @file _effects.scss
  * @description Definitie van visuele effecten, schaduwen, transities en animaties voor "Gedichtgevel.nl"
@@ -7,14 +9,12 @@
  * @exports SCSS variabelen en mixins voor visuele effecten
  */
 
-/* ======================================================= 
+/* =======================================================
  * EFFECTS
- * ======================================================= 
- * Visuele effecten zoals schaduwen, transities en animaties 
+ * =======================================================
+ * Visuele effecten zoals schaduwen, transities en animaties
  * die de gebruikerservaring verrijken en een coherente visuele hiërarchie creëren.
  */
-
-@use "./variables" as vars;
 
 /* -------------------------------------------------------
  * SCHADUWEN

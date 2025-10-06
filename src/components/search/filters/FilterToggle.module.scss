@@ -1,3 +1,5 @@
+@use '@styles/variables' as vars;
+
 /**
  * FilterToggle Styles
  * Toggle switch component for filter options
@@ -53,22 +55,22 @@
 .labelText {
     flex: 1;
     font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 37.536px;
     letter-spacing: 2.5px;
     text-align: center;
-    color: #EFEFEF;
+    color: vars.$neutral-light;
     user-select: none;
 
     @media (max-width: 768px) {
-        font-size: 24px;
+        font-size: 1.5rem;
         line-height: 1.2;
         letter-spacing: 2px;
     }
 
     @media (max-width: 480px) {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 1.1;
         letter-spacing: 1.5px;
     }
@@ -130,14 +132,14 @@
     left: 2px;
     width: 20px;
     height: 20px;
-    background-color: #EFEFEF;
+    background-color: vars.$neutral-light;
     border-radius: 50%;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
     .checked & {
         transform: translateX(24px);
-        background-color: #FFFFFF;
+        background-color: vars.$neutral-white;
     }
 
     .disabled & {

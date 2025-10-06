@@ -1,6 +1,8 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 @use "sass:color";
+@use '@styles/variables' as vars;
+
 
 .collectionPage {
   max-width: 1400px;
@@ -65,7 +67,7 @@
 	padding:          0.75rem 2rem;
 	cursor:           pointer;
 	transition:       background-color 0.2s;
-	color:            white;
+	color:            vars.$neutral-white;
 	border:           none;
 	border-radius:    8px;
 	background-color: $primary-cognac;
@@ -117,7 +119,7 @@
 	padding:          0.75rem 2rem;
 	cursor:           pointer;
 	transition:       background-color 0.2s;
-	color:            white;
+	color:            vars.$neutral-white;
 	border:           none;
 	border-radius:    8px;
 	background-color: $primary-cognac;
@@ -145,7 +147,7 @@
   cursor:        pointer;
   transition:    transform 0.2s, box-shadow 0.2s;
   border-radius: 12px;
-  background:    white;
+  background:    vars.$neutral-white;
   box-shadow:    0 2px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
@@ -298,12 +300,12 @@
 	}
 
   .confirmBtn {
-	color:      white;
+	color:      vars.$neutral-white;
 	background: #e74c3c;
 	}
 
   .cancelBtn {
-	color:      white;
+	color:      vars.$neutral-white;
 	background: #95a5a6;
 	}
   }

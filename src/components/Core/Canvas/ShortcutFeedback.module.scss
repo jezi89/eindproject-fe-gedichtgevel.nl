@@ -1,5 +1,7 @@
 /* ShortcutFeedback.module.css */
 
+@use '@styles/variables' as vars;
+
 .feedbackContainer {
   position: fixed;
   bottom: 20px;
@@ -14,7 +16,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 12px 16px;
-  color: white;
+  color: vars.$neutral-white;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -24,13 +26,13 @@
 }
 
 .feedbackIcon {
-  font-size: 18px;
+  font-size: 1.125rem;
   animation: pulse-icon 0.8s ease-in-out;
 }
 
 .feedbackText {
   color: #e2e8f0;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.4;
 }
@@ -68,7 +70,7 @@
   }
   
   .feedbackIcon {
-    font-size: 16px;
+    font-size: 1rem;
   }
   
   .feedbackText {
@@ -88,6 +90,6 @@
   }
   
   .feedbackText {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 }

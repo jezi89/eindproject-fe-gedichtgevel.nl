@@ -1,5 +1,7 @@
 @use '@styles/variables' as *;
 @use '@styles/mixins' as *;
+@use '@styles/variables' as vars;
+
 
 .errorBoundary {
   min-height: 100vh;
@@ -16,7 +18,7 @@
 }
 
 .content {
-  background: white;
+  background: vars.$neutral-white;
   border-radius: 16px;
   padding: 4rem 2rem;
   text-align: center;
@@ -74,7 +76,7 @@
 }
 
 .retryButton {
-  background: white;
+  background: vars.$neutral-white;
   color: #dc2626;
   border: 2px solid #dc2626;
 
@@ -86,7 +88,7 @@
 
 .homeButton {
   background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-  color: white;
+  color: vars.$neutral-white;
   border: none;
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 
@@ -119,7 +121,7 @@
 .errorStack {
   margin: 1rem 0 0;
   padding: 1rem;
-  background: white;
+  background: vars.$neutral-white;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
   font-size: 0.875rem;

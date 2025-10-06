@@ -1,5 +1,7 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
+@use '@styles/variables' as vars;
+
 
 /* =======================================================
  * LAYOUT STYLES FOR AUDIO-PROJECT
@@ -66,7 +68,7 @@
 
 .FilterPanel {
   font-family:      $font-family-nav-item;
-  font-size:        24px;
+  font-size:        1.5rem;
   font-weight:      600;
   padding:          1rem;
   color:            $neutral-off-white;
@@ -93,7 +95,7 @@
 
 .TabButton {
   font-family:      $font-family-nav-item;
-  font-size:        20px;
+  font-size:        1.25rem;
   font-weight:      600;
   margin:           0 0.5rem;
   padding:          5px 42px;
@@ -118,8 +120,8 @@
   font-weight:      600;
   padding:          0.75rem 2.5rem;
   cursor:           pointer;
-  color:            white;
-  border:           1.25px solid black;
+  color:            vars.$neutral-white;
+  border:           1.25px solid vars.$neutral-black;
   border-radius:    6.25px;
   background-color: $accent-gold;
   }
@@ -147,7 +149,7 @@
 
 .SideNav button {
   font-family: $font-family-nav-item;
-  font-size:   20px;
+  font-size:   1.25rem;
   font-weight: 600;
   cursor:      pointer;
   text-align:  left;

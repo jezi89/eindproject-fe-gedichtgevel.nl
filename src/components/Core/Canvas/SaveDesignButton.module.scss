@@ -1,6 +1,8 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 @use "sass:color";
+@use '@styles/variables' as vars;
+
 
 .saveButton {
   font-size:     0.95rem;
@@ -10,7 +12,7 @@
   padding:       0.6rem 1.2rem;
   cursor:        pointer;
   transition:    all 0.2s;
-  color:         white;
+  color:         vars.$neutral-white;
   border:        none;
   border-radius: 8px;
   background:    $primary-cognac;
@@ -46,7 +48,7 @@
   max-width:     90vw;
   padding:       2rem;
   border-radius: 12px;
-  background:    white;
+  background:    vars.$neutral-white;
   box-shadow:    0 8px 32px rgba(0, 0, 0, 0.2);
 
   h3 {
@@ -131,7 +133,7 @@
 	}
 
   .cancelBtn {
-	color:      white;
+	color:      vars.$neutral-white;
 	background: #6c757d;
 
 	&:hover:not(:disabled) {
@@ -140,7 +142,7 @@
 	}
 
   .confirmBtn {
-	color:      white;
+	color:      vars.$neutral-white;
 	background: $primary-cognac;
 
 	&:hover:not(:disabled) {

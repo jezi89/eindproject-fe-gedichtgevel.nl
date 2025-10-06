@@ -1,4 +1,6 @@
 @use "../../../styles/variables" as *;
+@use '@styles/variables' as vars;
+
 
 .xyMoveContainer {
   position:        fixed;
@@ -56,7 +58,7 @@
   color:           #666;
   border:          1px solid #ddd;
   border-radius:   6px;
-  background:      #fff;
+  background:      vars.$neutral-white;
   }
 
 .moveButton:hover {
@@ -76,7 +78,7 @@
   color:            #666;
   border:           1px solid #e0e0e0;
   border-radius:    4px;
-  background-color: #fff;
+  background-color: vars.$neutral-white;
   }
 
 .sliderGroup {
@@ -156,18 +158,18 @@
 /* Disabled state */
 .slider:disabled {
   cursor:     not-allowed;
-  background: #f0f0f0;
+  background: vars.$neutral-light;
   }
 
 .slider:disabled::-webkit-slider-thumb {
   cursor:     not-allowed;
   transform:  none;
-  background: #ccc;
+  background: vars.$border-subtle;
   }
 
 .slider:disabled::-moz-range-thumb {
   cursor:     not-allowed;
-  background: #ccc;
+  background: vars.$border-subtle;
   }
 
 /* Removed: duplicate position span styling (no longer in JSX) */
@@ -185,20 +187,20 @@
   cursor:          pointer;
   transition:      all 0.2s ease;
   color:           #666;
-  border:          1px solid #ccc;
+  border:          1px solid vars.$border-subtle;
   border-radius:   4px;
-  background:      #fff;
+  background:      vars.$neutral-white;
   }
 
 .resetButton:not(:disabled):hover {
   color:        #333;
   border-color: #999;
-  background:   #f0f0f0;
+  background:   vars.$neutral-light;
   }
 
 .resetButton:disabled {
   cursor:     not-allowed;
-  color:      #ccc;
+  color:      vars.$border-subtle;
   background: #f9f9f9;
   }
 
@@ -214,17 +216,17 @@
   color:         #2563eb;
   border:        1px solid #2563eb;
   border-radius: 4px;
-  background:    #fff;
+  background:    vars.$neutral-white;
   }
 
 .resetBothButton:not(:disabled):hover {
-  color:      #fff;
+  color:      vars.$neutral-white;
   background: #2563eb;
   }
 
 .resetBothButton:disabled {
   cursor:       not-allowed;
-  color:        #ccc;
+  color:        vars.$border-subtle;
   border-color: #e0e0e0;
   background:   #f9f9f9;
   }
@@ -245,7 +247,7 @@
 	}
 
   .sliderLabel {
-	font-size: 12px;
+	font-size: 0.75rem;
 	}
 
   .status {

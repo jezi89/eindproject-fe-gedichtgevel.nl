@@ -1,3 +1,5 @@
+@use '@styles/variables' as vars;
+
 /**
  * Auth Layout Styles
  *
@@ -33,7 +35,7 @@
   max-width:     400px;
   padding:       2.5rem;
   border-radius: 12px;
-  background:    white;
+  background:    vars.$neutral-white;
   box-shadow:    0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {

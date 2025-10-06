@@ -1,3 +1,5 @@
+@use '@styles/variables' as vars;
+
 /**
  * FilterDropdown Styles
  * Dropdown component for era and language selection
@@ -21,9 +23,9 @@
     padding: 0.5rem 1rem;
     background-color: transparent;
     border: none;
-    color: #EFEFEF;
+    color: vars.$neutral-light;
     font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 37.536px;
     letter-spacing: 2.5px;
@@ -32,14 +34,14 @@
     transition: all 0.2s ease;
 
     @media (max-width: 768px) {
-        font-size: 24px;
+        font-size: 1.5rem;
         line-height: 1.2;
         letter-spacing: 2px;
         padding: 0.4rem 0.8rem;
     }
 
     @media (max-width: 480px) {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 1.1;
         letter-spacing: 1.5px;
         padding: 0.3rem 0.6rem;
@@ -54,7 +56,7 @@
     }
 
     &.active {
-        color: #EFEFEF;
+        color: vars.$neutral-light;
     }
 
     &:focus {
@@ -64,21 +66,21 @@
 
 .dropdownValue {
     font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 37.536px;
     letter-spacing: 2.5px;
     text-align: center;
-    color: #EFEFEF;
+    color: vars.$neutral-light;
 
     @media (max-width: 768px) {
-        font-size: 24px;
+        font-size: 1.5rem;
         line-height: 1.2;
         letter-spacing: 2px;
     }
 
     @media (max-width: 480px) {
-        font-size: 18px;
+        font-size: 1.125rem;
         line-height: 1.1;
         letter-spacing: 1.5px;
     }
@@ -90,9 +92,9 @@
     background-color: var(--primary-color, #FF6B35);
     border: none;
     border-radius: 4px;
-    color: #EFEFEF;
+    color: vars.$neutral-light;
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 700;
     letter-spacing: 1px;
     cursor: pointer;
@@ -108,7 +110,7 @@
     }
 
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 0.75rem;
         padding: 0.2rem 0.6rem;
     }
 
@@ -294,7 +296,7 @@
     margin-left: 0.75em;
     padding: 0 0.5em;
     background: var(--primary-color, #FF6B35);
-    color: #fff;
+    color: vars.$neutral-white;
     font-size: 0.85em;
     font-weight: 700;
     border-radius: 1em;

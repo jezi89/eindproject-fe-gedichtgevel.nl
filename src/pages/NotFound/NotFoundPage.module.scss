@@ -1,5 +1,7 @@
 @use '@styles/variables' as *;
 @use '@styles/mixins' as *;
+@use '@styles/variables' as vars;
+
 
 .notFoundPage {
   min-height: 100vh;
@@ -16,7 +18,7 @@
 }
 
 .content {
-  background: white;
+  background: vars.$neutral-white;
   border-radius: 16px;
   padding: 4rem 2rem;
   text-align: center;
@@ -71,7 +73,7 @@
   display: inline-block;
   padding: 1rem 2.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  color: vars.$neutral-white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;

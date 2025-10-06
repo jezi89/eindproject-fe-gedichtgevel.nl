@@ -117,6 +117,9 @@
   "ignoreFiles": [
     "dist/**/*",
     "build/**/*",
-    "node_modules/**/*"
+    "node_modules/**/*",
+    "src/styles/_reset.scss",
+    "src/styles/_mixins.scss",
+    "src/styles/_module-template.scss"
   ]
 }

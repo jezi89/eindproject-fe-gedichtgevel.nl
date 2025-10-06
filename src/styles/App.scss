@@ -1,3 +1,5 @@
+@use '@styles/variables' as vars;
+
 /**
  * @file Pp.scss
  * @description Hoofdstijlbestand voor de applicatie "Gedichtgevel.nl"
@@ -194,8 +196,8 @@ body {
 @media print {
   // Print-specifieke stijlen
   body {
-	color:            black;
-	background-color: white;
+	color:            vars.$neutral-black;
+	background-color: vars.$neutral-white;
 	}
 
   .no-print {

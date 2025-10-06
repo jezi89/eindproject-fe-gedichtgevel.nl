@@ -1,10 +1,12 @@
+@use '@styles/variables' as vars;
+
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  background-color: vars.$neutral-black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,8 +28,8 @@
   transform: translateX(-50%);
   padding: 10px 20px;
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: 1px solid white;
+  color: vars.$neutral-white;
+  border: 1px solid vars.$neutral-white;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;

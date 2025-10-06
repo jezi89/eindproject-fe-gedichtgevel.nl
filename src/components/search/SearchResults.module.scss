@@ -362,14 +362,34 @@
   flex-shrink:     0;
   justify-content: center;
   width:           100%;
-  margin-top:      $spacing-m; padding-top: $spacing-m; border-top: 1px solid rgba($neutral-mid, 0.1); // Was $grey-500
+  margin-top:      $spacing-m;
+  padding-top:     $spacing-m;
+  border-top:      1px solid rgba($neutral-mid, 0.1); // Was $grey-500
   gap:             $spacing-s; // Was spacing-sm;
+
+  // Side-by-side layout variant (without border-top)
+  &.sideLayout {
+    padding-top: 0;
+    border-top: none;
+    gap: $spacing-m;
+
+    @include respond-to("mobile") {
+      flex-direction: column;
+      gap: $spacing-s;
+    }
+  }
   }
 
 // Collapse button - naturally positioned within expanded content
 .collapseButton {
-  margin-top: $spacing-m; background-color: color.adjust($primary-cognac, $lightness: -5%); // Darker for collapse action
+  margin-top: $spacing-m;
+  background-color: color.adjust($primary-cognac, $lightness: -5%); // Darker for collapse action
   // Positioned naturally at end of expanded content flow
+
+  // Override margin when in buttonContainer
+  &.inContainer {
+    margin-top: 0;
+  }
   }
 
 .fullPoemText {
@@ -477,19 +497,6 @@
 	}
   }
 
-// Button container for side-by-side layout
-.buttonContainer {
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  width:           100%;
-  margin-top:      $spacing-m; gap: $spacing-m;
-  @include respond-to("mobile") {
-	flex-direction: column;
-	gap:            $spacing-s; // Was spacing-sm;
-	}
-  }
-
 // Canvas navigation button with distinct styling
 .canvasButton {
   border-color:     transparent;
@@ -517,12 +524,6 @@
   .expandIcon {
 	font-size: $font-size-xxs; // Was 14px;
 	}
-  }
-
-// Existing collapse button gets specific margin override
-.collapseButton {
-  margin-top:       0; // Override existing margin when in container
-  background-color: color.adjust($primary-cognac, $lightness: -5%);
   }
 
 // Actions for non-expandable poems

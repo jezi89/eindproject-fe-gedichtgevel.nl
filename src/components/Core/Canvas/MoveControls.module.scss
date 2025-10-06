@@ -1,4 +1,6 @@
 /* src/components/Core/Canvas/components/MoveControls.module.css */
+@use '@styles/variables' as vars;
+
 .moveControlsContainer {
   display: flex;
   flex-direction: column;
@@ -30,7 +32,7 @@
   color: #a0aec0;
   padding: 0.4rem 0.5rem;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .buttonGroup button:first-child {
@@ -43,7 +45,7 @@
 
 .buttonGroup button.active {
   background-color: #4299e1; /* Blauwe actieve kleur */
-  color: white;
+  color: vars.$neutral-white;
 }
 
 /* Disabled button styling */

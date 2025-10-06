@@ -303,7 +303,7 @@
 
 .filterText {
   font-family:    $font-family-title;
-  font-size:      32px; // Exact Figma font size
+  font-size:      2rem; // Exact Figma font size
   font-weight:    600;
   font-style:     normal;
   line-height:    37.536px;
@@ -313,13 +313,13 @@
   color:          $neutral-off-white; // Exact Figma color #f9f4ed
 
   @include respond-to("tablet") {
-	font-size:      24px;
+	font-size:      1.5rem;
 	line-height:    1.2;
 	letter-spacing: 2px;
 	}
 
   @include respond-to("mobile") {
-	font-size:      18px;
+	font-size:      1.125rem;
 	line-height:    1.1;
 	letter-spacing: 1.5px;
 	}
@@ -348,7 +348,7 @@
 
 .filterTextAdvanced {
   font-family:          $font-family-title;
-  font-size:            32px; // Exact Figma font size
+  font-size:            2rem; // Exact Figma font size
   font-weight:          600;
   font-style:           normal;
   line-height:          37.536px;
@@ -406,7 +406,7 @@
 
 .showcaseSubtitle {
   @include body-text;
-  font-size:   20px;
+  font-size:   1.25rem;
   line-height: 1.4;
   margin:      0;
   color:       $neutral-off-white;
@@ -519,7 +519,7 @@ a
 
   h3 {
 	font-family:    $font-family-title;
-	font-size:      20px;
+	font-size:      1.25rem;
 	font-weight:    700;
 	font-style:     normal;
 	line-height:    24px;
@@ -533,7 +533,7 @@ a
 
 .uspContent p {
   font-family:    $font-family-title;
-  font-size:      14px;
+  font-size:      0.875rem;
   font-weight:    400;
   line-height:    1.4;
   max-width:      280px;
@@ -652,7 +652,7 @@ a
 	}
 
   .searchCTATagline {
-	font-size:     32px;
+	font-size:     2rem;
 	line-height:   40px;
 	position:      relative;
 	top:           0;
@@ -670,7 +670,7 @@ a
 	}
 
   .searchEmoji {
-	font-size:   32px;
+	font-size:   2rem;
 	line-height: 40px;
 	position:    relative;
 	top:         0;
@@ -723,15 +723,15 @@ a
 	}
 
   .showcaseCardTitle {
-	font-size: 20px;
+	font-size: 1.25rem;
 	}
 
   .showcaseCardAuthor {
-	font-size: 14px;
+	font-size: 0.875rem;
 	}
 
   .showcaseCardLine {
-	font-size: 15px;
+	font-size: 0.9375rem;
 	}
 
   .uspContainer {
@@ -750,19 +750,19 @@ a
 	}
 
   .uspContent p {
-	font-size: 12px;
+	font-size: 0.75rem;
 	max-width: 250px;
 	}
   }
 
 @media (max-width: 480px) {
   .searchCTATagline {
-	font-size:   24px;
+	font-size:   1.5rem;
 	line-height: 32px;
 	}
 
   .searchEmoji {
-	font-size:   24px;
+	font-size:   1.5rem;
 	line-height: 32px;
 	}
 
@@ -773,7 +773,7 @@ a
 	}
 
   .showcaseTitle {
-	font-size: 32px;
+	font-size: 2rem;
 	}
 
   .showcaseSubtitle {
@@ -781,7 +781,7 @@ a
 	}
 
   .showcaseCardTitle {
-	font-size: 18px;
+	font-size: 1.125rem;
 	}
 
   .showcaseCardAuthor {
@@ -789,7 +789,7 @@ a
 	}
 
   .showcaseCardLine {
-	font-size: 14px;
+	font-size: 0.875rem;
 	}
 
   .uspContainer {
@@ -801,7 +801,7 @@ a
 	height:    30px;
 
 	h3 {
-	  font-size:   14px;
+	  font-size:   0.875rem;
 	  line-height: 18px;
 	  }
 	}
@@ -858,7 +858,7 @@ a
 
   .closeButton {
 	@include button-base;
-	font-size:        24px;
+	font-size:        1.5rem;
 	display:          flex;
 	align-items:      center;
 	justify-content:  center;
@@ -878,7 +878,7 @@ a
 	  }
 
 	@include respond-to("mobile") {
-	  font-size: 20px;
+	  font-size: 1.25rem;
 	  width:     40px;
 	  height:    40px;
 	  }
