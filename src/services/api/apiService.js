@@ -1,4 +1,4 @@
-import { poetryDbApi, pexelsApi, flickrApi } from './axios';
+import { pexelsApi, flickrApi } from './axios';
 import { supabase } from '../supabase/supabase';
 
 /**
@@ -86,16 +86,6 @@ export const flickrApiService = {
 
         return fetchWithAxios(flickrApi, { params });
     },
-};
-
-// --- Service Object voor PoetryDB API ---
-export const poetryDbApiService = {
-    searchByAuthor: (author) => fetchWithAxios(poetryDbApi, {
-        url: `/author/${author}`
-    }),
-    searchByTitle: (title) => fetchWithAxios(poetryDbApi, {
-        url: `/title/${title}`
-    }),
 };
 
 // --- Service Object voor Supabase (GEBRUIKT DE JS CLIENT!) ---

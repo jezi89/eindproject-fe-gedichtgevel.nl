@@ -7,21 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-
     "lint": "eslint .",
     "lint:css": "stylelint \"src/**/*.{css,scss}\" --ignore-pattern \"**/LEGACY/**\"",
     "lint:css:fix": "stylelint \"src/**/*.{css,scss}\" --fix --ignore-pattern \"**/LEGACY/**\"",
     "lint:css:report": "stylelint \"src/**/*.{css,scss}\" --ignore-pattern \"**/LEGACY/**\" --formatter verbose --allow-empty-input",
-
     "styles:migrate-imports": "node migrate-scss.js",
     "styles:convert:preview": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview",
     "styles:convert": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview:$false -AutoReplace",
     "styles:report-unused-vars": "find-unused-sass-variables \"src/**/*.scss\" --ignore \"src/styles/_mixins.scss\" \"src/styles/_effects.scss\"",
-
     "knip": "knip"
   },
   "dependencies": {
-    "@googleapis/webfonts": "^5.0.0",
     "@pixi/react": "^8.0.3",
     "@sentry/react": "^10.17.0",
     "@supabase/supabase-js": "^2.58.0",

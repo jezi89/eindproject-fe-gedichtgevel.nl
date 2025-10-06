@@ -28,7 +28,7 @@
  * De bakstenen die staan voor onze gebruikers als borg.
  */
 
-// Standaard container
+// Standaard container met modifiers
 .container {
   width:         100%;
   max-width:     $container-xl;
@@ -36,6 +36,19 @@
   margin-left:   auto;
   padding-right: $spacing-m;
   padding-left:  $spacing-m;
+
+  // Modifiers
+  &--fluid {
+	max-width: 100%;
+	}
+
+  &--narrow {
+	max-width: 800px;
+	}
+
+  &--wide {
+	max-width: 1400px;
+	}
   }
 
 // Container die volledige viewport hoogte gebruikt
@@ -89,21 +102,6 @@
 	}
   }
 
-// Container varianten uit main-layout
-.container {
-  &--fluid {
-	max-width: 100%;
-	}
-
-  &--narrow {
-	max-width: 800px;
-	}
-
-  &--wide {
-	max-width: 1400px;
-	}
-  }
-
 /* -------------------------------------------------------
  * GRID LAYOUT
  * -------------------------------------------------------
@@ -113,11 +111,40 @@
  * Een digitaal raster, zorgvuldig gevrakt.
  */
 
-// Standaard grid container
+// Standaard grid container met modifiers
 .grid {
   display:               grid;
   grid-template-columns: repeat(12, 1fr);
   gap:                   $spacing-m;
+
+  // Modifiers
+  &--2 {
+	grid-template-columns: repeat(2, 1fr);
+
+	@include media-down($screen-md) {
+	  grid-template-columns: 1fr;
+	  }
+	}
+
+  &--3 {
+	grid-template-columns: repeat(3, 1fr);
+
+	@include media-down($screen-md) {
+	  grid-template-columns: 1fr;
+	  }
+	}
+
+  &--4 {
+	grid-template-columns: repeat(4, 1fr);
+
+	@include media-down($screen-lg) {
+	  grid-template-columns: repeat(2, 1fr);
+	  }
+
+	@include media-down($screen-md) {
+	  grid-template-columns: 1fr;
+	  }
+	}
   }
 
 // Grid voor gedichtkaarten op homepage
@@ -180,37 +207,6 @@
 	}
   }
 
-// Grid varianten uit main-layout (met responsive breakpoints)
-.grid {
-  &--2 {
-	grid-template-columns: repeat(2, 1fr);
-
-	@include media-down($screen-md) {
-	  grid-template-columns: 1fr;
-	  }
-	}
-
-  &--3 {
-	grid-template-columns: repeat(3, 1fr);
-
-	@include media-down($screen-md) {
-	  grid-template-columns: 1fr;
-	  }
-	}
-
-  &--4 {
-	grid-template-columns: repeat(4, 1fr);
-
-	@include media-down($screen-lg) {
-	  grid-template-columns: repeat(2, 1fr);
-	  }
-
-	@include media-down($screen-md) {
-	  grid-template-columns: 1fr;
-	  }
-	}
-  }
-
 /* -------------------------------------------------------
  * FLEX LAYOUTS
  * -------------------------------------------------------
@@ -220,9 +216,14 @@
  * Een flexibel systeem voor onze ontwerpsreis.
  */
 
-// Standaard flex container
+// Standaard flex container met modifiers
 .flex {
   display: flex;
+
+  // Modifiers
+  &--wrap {
+	flex-wrap: wrap;
+	}
   }
 
 // Flex container gecentreerd
@@ -274,13 +275,6 @@
   display:   flex;
   flex-wrap: wrap;
   gap:       $spacing-s;
-  }
-
-// Extra flex utilities uit main-layout
-.flex {
-  &--wrap {
-	flex-wrap: wrap;
-	}
   }
 
 /* -------------------------------------------------------
