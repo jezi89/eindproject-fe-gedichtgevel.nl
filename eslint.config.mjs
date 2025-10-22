@@ -19,6 +19,9 @@ const reactRules = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
 
+    // Markeer variabelen gebruikt in JSX als "gebruikt" voor no-unused-vars check
+    'react/jsx-uses-vars': 'error',
+
     // Waarschuw bij gebruik van verouderde React APIs
     'react/no-deprecated': 'warn',
 

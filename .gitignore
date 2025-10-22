@@ -91,5 +91,27 @@ DOCS-TO-CHECK/framer-animations.md
 DOCS-TO-CHECK/framer-motion-animations.md
 DOCS-TO-CHECK/memo-usage-analysis.md
 DOCS-TO-CHECK/ux-trials.md
-CLAUDE.md
-CLAUDE.md
+
+# AI Tools en Development Documentatie (niet inleveren)
+/DEBUG/
+/LEGACY-EMPTY/
+FRAMER_MOTION_SIMPLIFICATION.md
+react-architecture-analysis.md
+react-architecture-analysis-updated.md
+SENTRY_IMPLEMENTATIE.md
+TESTING_COVERAGE.md
+migrate-scss.js
+pnpm-workspace.yaml
+lint-output.txt
+vercel.json
+
+# Cleanup scripts (alleen lokaal gebruiken)
+cleanup-git-history.ps1
+cleanup-commit-messages.ps1
+FILES_TO_REMOVE.txt
+
+# OPTIE OM GLOBAL IGNORE TE OVERSCHRIJVEN:
+# Uncomment de volgende regel als je claude.md WEL wilt tracken in dit project:
+# !claude.md
+# !CLAUDE.md
+/DOCS-TO-CHECK/

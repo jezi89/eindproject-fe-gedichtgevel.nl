@@ -2,6 +2,9 @@ import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path';
 import svgr from 'vite-plugin-svgr'; // Importeer svgr hier
+import { codecovVitePlugin } from "@codecov/vite-plugin";
+import { visualizer } from 'rollup-plugin-visualizer';
+
 
 // TODO: Check React Router v7 Framework Mode vs Library Mode configuration
 // Currently using Library Mode with existing structure
@@ -12,7 +15,21 @@ import svgr from 'vite-plugin-svgr'; // Importeer svgr hier
 export default defineConfig({
     plugins: [
         react(),
-        svgr()
+        svgr(),
+        // Bundle visualizer - generates interactive treemap of bundle
+        visualizer({
+            open: true,              // Open automatically in browser after build
+            filename: 'stats.html',  // Output file in project root
+            gzipSize: true,          // Show gzipped size
+            brotliSize: true,        // Show brotli compressed size
+            template: 'treemap',     // Use treemap visualization
+        }),
+        // Put the Codecov vite plugin after all other plugins
+        codecovVitePlugin({
+            enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
+            bundleName: "gedichtgevel",
+            uploadToken: process.env.CODECOV_TOKEN,
+        })
     ],
     resolve: {
         alias: {

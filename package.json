@@ -15,7 +15,16 @@
     "styles:convert:preview": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview",
     "styles:convert": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview:$false -AutoReplace",
     "styles:report-unused-vars": "find-unused-sass-variables \"src/**/*.scss\" --ignore \"src/styles/_mixins.scss\" \"src/styles/_effects.scss\"",
-    "knip": "knip"
+    "knip": "knip",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:open": "vitest run --coverage && start coverage/index.html",
+    "codecov:upload": "./.codecov/codecov.exe upload-process --fail-on-error",
+    "analyze": "pnpm knip || true && pnpm build && echo \"✓ Analysis complete! Check stats.html for bundle visualization\"",
+    "analyze:bundle": "pnpm build && start stats.html",
+    "analyze:dead-code": "pnpm knip || true",
+    "analyze:all": "pnpm analyze:dead-code && pnpm test:coverage && pnpm analyze:bundle"
   },
   "dependencies": {
     "@pixi/react": "^8.0.3",
@@ -36,9 +45,13 @@
     "wavesurfer.js": "^7.10.3"
   },
   "devDependencies": {
+    "@codecov/vite-plugin": "^1.9.1",
     "@eslint/js": "^9.36.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^5.0.4",
     "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.36.0",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -49,9 +62,11 @@
     "eslint-plugin-react-refresh": "^0.4.22",
     "find-unused-sass-variables": "^6.1.0",
     "globals": "^16.4.0",
+    "jsdom": "^27.0.1",
     "knip": "^5.64.1",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.4.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sass-embedded": "^1.93.2",
     "stylelint": "^16.24.0",
     "stylelint-config-standard-scss": "^16.0.0",

@@ -4,11 +4,17 @@ import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
+import * as Sentry from '@sentry/react';
 import {AuthProvider} from './context/auth/AuthProvider';
 import App from './App.jsx';
 import queryClient from './services/api/queryClient.js';
 import {GlobalErrorBoundary} from './components/ErrorBoundary/GlobalErrorBoundary.jsx';
+import {RouterErrorBoundary} from './components/ErrorBoundary/RouterErrorBoundary.jsx';
 import {ProtectedRoute} from './components/ProtectedRoute.jsx';
+import {initSentry} from './services/sentry/sentryConfig.js';
+
+// Initialiseer Sentry VOOR de router wordt aangemaakt
+initSentry();
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import('./pages/Home/HomePage.jsx').then(m => ({ default: m.HomePage })));
@@ -48,11 +54,14 @@ const localStoragePersister = createSyncStoragePersister({
     key: 'GEDICHTGEVEL_QUERY_CACHE', // Custom key for this app
 });
 
-const router = createBrowserRouter([
+// Wrap createBrowserRouter met Sentry voor performance monitoring
+const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouterV7(createBrowserRouter);
+
+const router = sentryCreateBrowserRouter([
     {
         path: "/",
         element: <App/>,
-        errorElement: <GlobalErrorBoundary />,
+        errorElement: <RouterErrorBoundary />,
         children: [
             {index: true, element: <Suspense fallback={<PageLoader/>}><HomePage/></Suspense>},
             {path: "designgevel", element: <Suspense fallback={<PageLoader/>}><DesignPage/></Suspense>},
@@ -93,13 +102,15 @@ const router = createBrowserRouter([
 // Create the root element for React 19
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <PersistQueryClientProvider
-            client={queryClient}
-            persistOptions={{persister: localStoragePersister}}
-        >
-            <AuthProvider>
-                <RouterProvider router={router}/>
-            </AuthProvider>
-        </PersistQueryClientProvider>
+        <GlobalErrorBoundary>
+            <PersistQueryClientProvider
+                client={queryClient}
+                persistOptions={{persister: localStoragePersister}}
+            >
+                <AuthProvider>
+                    <RouterProvider router={router}/>
+                </AuthProvider>
+            </PersistQueryClientProvider>
+        </GlobalErrorBoundary>
     </React.StrictMode>,
 );

@@ -15,13 +15,15 @@
     "playwright-report/**",
     "vite.config.js",
     "postcss.config.js",
-    "eslint.config.mjs"
+    "eslint.config.mjs",
+    "vitest.config.js"
   ],
   "ignoreDependencies": [
-    "@sentry/react"
+    "@testing-library/jest-dom"
   ],
   "ignoreBinaries": [
-    "powershell"
+    "powershell",
+    "start"
   ],
   "paths": {
     "@/*": ["src/*"],
