@@ -8,6 +8,7 @@
 /dist
 /dist-ssr
 /storybook-static
+stats.html
 
 # Lokale ontwikkelingsomgeving
 *.local
@@ -43,8 +44,13 @@ pnpm-debug.log*
 
 # Testing
 /coverage
+/coverage-final.json
 /playwright-report
 /test-results
+
+# Codecov
+/.codecov
+codecov.exe
 
 # Storybook
 /build-storybook.log
@@ -77,3 +83,13 @@ Inspect/
 /verantwoording/Verantwoordingsdocument_gedichtgevel_REVISED.docx
 /GEMINI.md
 /verantwoording/Eindopdracht Frontend  v3.5.pdf
+DOCS-TO-CHECK/architecture-reorganisation.md
+DOCS-TO-CHECK/architecture-reorganization.md
+DOCS-TO-CHECK/CLAUDE.md
+DOCS-TO-CHECK/error-resolution-guide.md
+DOCS-TO-CHECK/framer-animations.md
+DOCS-TO-CHECK/framer-motion-animations.md
+DOCS-TO-CHECK/memo-usage-analysis.md
+DOCS-TO-CHECK/ux-trials.md
+CLAUDE.md
+CLAUDE.md
