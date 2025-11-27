@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import styles from "./Canvas.module.scss"; // Updated import path
 import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
+import {calculateOptimalImageRequest} from "@/utils/imageOptimization.js";
 
 export default function FloatingPhotoGrid({
                                               photos,
@@ -181,11 +182,14 @@ export default function FloatingPhotoGrid({
                                     }, 3000);
                                 }
 
-                                photoPreview.handlePhotoSelect(photo.src.large2x);
+                                // Calculate optimal image URL based on viewport and DPR
+                                const optimalUrl = calculateOptimalImageRequest(photo);
+
+                                photoPreview.handlePhotoSelect(optimalUrl);
 
                                 // Pass complete photo object with metadata including alt text
                                 onSetBackground({
-                                    url: photo.src.large2x,
+                                    url: optimalUrl,
                                     thumbnail: photo.src.tiny,
                                     alt: photo.alt,
                                     photographer: photo.photographer || 'Unknown',
@@ -203,7 +207,9 @@ export default function FloatingPhotoGrid({
                                     return;
                                 }
 
-                                photoPreview.handlePhotoHover(photo.src.large2x);
+                                // Calculate optimal image URL for preview
+                                const optimalUrl = calculateOptimalImageRequest(photo);
+                                photoPreview.handlePhotoHover(optimalUrl);
                             }}
                             title={photo.alt || 'Hover voor preview, klik om te selecteren'}
                         >

@@ -19,12 +19,17 @@ export function useFlickrSearchByGeo(searchParams, page = 1) {
             id: p.id,
             alt: p.title,
             photographer: p.ownername || 'Unknown',
-            width: p.width_b || p.o_width || null,
-            height: p.height_b || p.o_height || null,
+            width: p.o_width || p.width_b || null,
+            height: p.o_height || p.height_b || null,
+            source: 'flickr',
             src: {
                 large2x: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_b.jpg`,
                 tiny: `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_q.jpg`
-            }
+            },
+            url_b: p.url_b || `https://live.staticflickr.com/${p.server}/${p.id}_${p.secret}_b.jpg`,
+            url_h: p.url_h,
+            url_k: p.url_k,
+            url_o: p.url_o
         })) || [],
         totalPages: data?.photos?.pages || 0,
         isLoading,
