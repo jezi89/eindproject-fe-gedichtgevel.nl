@@ -85,9 +85,9 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
     return (
         <pixiSprite
             texture={texture}
-            anchor={0.5}
+            anchor={{x: 0.5, y: 0}}
             x={canvasWidth / 2}
-            y={canvasHeight / 2}
+            y={0}
             scale={scale}
         />
     );
