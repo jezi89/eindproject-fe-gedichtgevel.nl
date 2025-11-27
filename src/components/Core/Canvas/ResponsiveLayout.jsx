@@ -21,24 +21,16 @@ export const ResponsiveLayout = memo(({
 
     return (
         <div className={getLayoutClass()}>
-            {/* Left Controls Panel */}
-            <div
-                className={controlsPanelClass}
-                style={{width: layout.controlsWidth}}
-            >
-                {React.cloneElement(controls, {toggle: layout.toggleControls})}
-            </div>
-
-            {/* Main Canvas - takes remaining space */}
+            {/* Canvas - Always full size, bottom layer (z-index: 1) */}
             <div className={styles.canvasWrapper}>
                 {canvas}
 
-                {/* Open Buttons - Rendered on top of the canvas */}
+                {/* Open Buttons - Render OVER canvas when panels collapsed */}
                 {!layout.controlsVisible && (
                     <button
                         className={`${styles.openButton} ${styles.openControlsButton}`}
                         onClick={layout.toggleControls}
-                        aria-label="Expand Controls"
+                        aria-label="Open styling controls"
                     >
                         ☰
                     </button>
@@ -48,20 +40,23 @@ export const ResponsiveLayout = memo(({
                     <button
                         className={`${styles.openButton} ${styles.openNavButton}`}
                         onClick={layout.toggleNav}
-                        aria-label="Expand Navigation"
+                        aria-label="Open navigation"
                     >
                         ☰
                     </button>
                 )}
             </div>
 
-            {/* Right Navigation Panel */}
-            <div
-                className={navPanelClass}
-                style={{width: layout.navWidth}}
-            >
+            {/* Left Controls Panel - Overlay (z-index: 10) */}
+            <div className={controlsPanelClass}>
+                {React.cloneElement(controls, {toggle: layout.toggleControls})}
+            </div>
+
+            {/* Right Navigation Panel - Overlay (z-index: 10) */}
+            <div className={navPanelClass}>
                 {React.cloneElement(navigation, {
                     navWidth: layout.navWidth,
+                    navVisible: layout.navVisible,
                     toggle: layout.toggleNav
                 })}
             </div>

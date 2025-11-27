@@ -1,4 +1,4 @@
-// src/components/Core/Canvas/components/controls/LayoutControls.jsx
+ // src/components/Core/Canvas/components/controls/LayoutControls.jsx
 
 import React from "react";
 import styles from "../Canvas.module.scss"; // Updated import path
@@ -165,7 +165,7 @@ export default function LayoutControls({
                 {/* Camera Control */}
                 <div className={styles.controlGroup}>
                     <label>
-                        Camera Control <span className={styles.hintText}>(C key+Drag/scroll)</span>
+                        Camera Control <span className={styles.hintText}>(&lt;Edit/Select Mode&gt; C key+Drag/scroll)</span>
                     </label>
                     <div className={styles.cameraButtons}>
                         <button

@@ -1,33 +1,44 @@
 @use '@styles/variables' as vars;
 
 .layoutContainer {
-  display: flex;
+  position: relative;  // NEW: for absolute children
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-.controlsPanel, .navPanel {
+.controlsPanel {
+  position: fixed;   // NEW: fixed overlay (was flex item)
+  top: 0;
+  left: 0;
+  width: 340px;      // Fixed width (not dynamic)
+  height: 100%;
+  z-index: 10;       // Above canvas
   transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   background-color: vars.$neutral-cream;
   color: #cfd4db;
-  flex-shrink: 0;
   box-sizing: border-box;
-  height: 100%;
-  z-index: 10;
-}
-
-.controlsPanel {
   border-right: 1px solid #3d4a5c;
   overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);  // Subtle depth
 }
 
 .navPanel {
+  position: fixed;   // NEW: fixed overlay (was flex item)
+  top: 0;
+  right: 0;
+  width: 120px;      // Fixed width (not dynamic)
+  height: 100%;
+  z-index: 10;       // Above canvas
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  background-color: vars.$neutral-cream;
+  color: #cfd4db;
+  box-sizing: border-box;
   border-left: 1px solid #3d4a5c;
   overflow: visible; /* Allow hint to overflow */
   display: flex;
   flex-direction: column;
-  z-index: 100; /* Above canvas but below modals */
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);  // Subtle depth
 }
 
 .controlsPanel.collapsed {
@@ -39,14 +50,17 @@
 }
 
 .canvasWrapper {
-  position: relative;
-  flex: 1;
+  position: absolute;  // NEW: overlay instead of flex
+  top: 0;
+  left: 0;
+  width: 100%;        // NEW: always full-width
+  height: 100%;       // NEW: always full-height
   background-color: #1d2230;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
+  z-index: 1;        // NEW: bottom layer
 }
 
 .openButton {

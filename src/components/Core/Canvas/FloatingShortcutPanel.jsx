@@ -75,6 +75,7 @@ export function FloatingShortcutPanel({
                                           activeShortcut = null,
                                           xySlidersVisible = false,
                                           navWidth,
+                                          navVisible = true,
                                       }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [otherShortcutsExpanded, setOtherShortcutsExpanded] = useState(false);
@@ -159,8 +160,8 @@ export function FloatingShortcutPanel({
     const {active, other} = filterShortcutsByMode(shortcuts, moveMode, selectedLines.size > 0, xySlidersVisible);
 
     const containerStyle = useMemo(() => ({
-        right: `${navWidth}px`,
-    }), [navWidth]);
+        right: navVisible ? `${navWidth}px` : '0px',
+    }), [navWidth, navVisible]);
 
     // Keyboard shortcut to toggle panel (Alt + ?)
     useEffect(() => {

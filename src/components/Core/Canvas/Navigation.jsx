@@ -17,6 +17,7 @@ export default function Navigation({
                                        xySlidersVisible,
                                        setXySlidersVisible,
                                        navWidth,
+                                       navVisible,
                                        highlightVisible,
                                        setHighlightVisible,
                                        onToggleNavbarOverlay,
@@ -199,6 +200,7 @@ export default function Navigation({
                 activeShortcut={activeShortcut}
                 xySlidersVisible={xySlidersVisible}
                 navWidth={navWidth}
+                navVisible={navVisible}
             />
         </div>
     );

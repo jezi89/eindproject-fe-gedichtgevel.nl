@@ -12,39 +12,20 @@ export function useResponsiveCanvas() {
     const [navVisible, setNavVisible] = useState(true);
 
     const layout = useMemo(() => {
-        // Fixed dimensions - maintain minimum ratios
-        const baseControlsWidth = 340;
-        const baseNavWidth = 120;
-        const baseScreenWidth = 1920;
-        
-        // Ensure we have valid window dimensions
         const safeWindowWidth = windowWidth || 1920;
         const safeWindowHeight = windowHeight || 1080;
 
-        // Calculate widths - never smaller than base ratios
-        const controlsWidth = controlsVisible
-            ? Math.max(
-                baseControlsWidth,
-                (baseControlsWidth / baseScreenWidth) * safeWindowWidth
-            )
-            : 0;
-        const navWidth = navVisible
-            ? Math.max(baseNavWidth, (baseNavWidth / baseScreenWidth) * safeWindowWidth)
-            : 0;
-
-        // Canvas takes remaining space
-        const canvasWidth = safeWindowWidth - controlsWidth - navWidth;
+        // Canvas ALWAYS full viewport size - ignore panel visibility
+        // Panels are overlays, not part of layout calculation
         return {
             windowWidth: safeWindowWidth,
             windowHeight: safeWindowHeight,
-            controlsWidth: Math.round(controlsWidth),
-            navWidth: Math.round(navWidth),
-            canvasWidth: Math.max(300, Math.round(canvasWidth)), // Minimum canvas width
-            canvasHeight: Math.max(200, Math.round(safeWindowHeight)), // Minimum canvas height
+            controlsWidth: 340,  // Fixed, not dependent on visibility
+            navWidth: 120,       // Fixed
+            canvasWidth: Math.round(safeWindowWidth),   // ALWAYS full width
+            canvasHeight: Math.round(safeWindowHeight), // ALWAYS full height
             controlsVisible,
             navVisible,
-            leftSpacer: 0, // No spacers
-            rightSpacer: 0, // No spacers
         };
     }, [windowWidth, windowHeight, controlsVisible, navVisible]);
 
