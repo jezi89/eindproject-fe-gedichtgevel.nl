@@ -1,7 +1,7 @@
 import {Application, extend} from "@pixi/react";
 import {Container, Graphics, Sprite, Text} from "pixi.js";
 import {Viewport} from "pixi-viewport";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, useRef} from "react";
 import { useNavigate } from "react-router";
 import Controls from "./Controls.jsx";
 import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
@@ -177,8 +177,26 @@ export default function Canvas({
     // Use responsive canvas hook
     const layout = useResponsiveCanvas();
 
+    // Create ref for canvas container (used for html-to-image export)
+    const canvasContainerRef = useRef(null);
+
+    // Create ref for BackgroundImage component (for sprite bounds in export)
+    const backgroundImageRef = useRef(null);
+
     // Use canvas export hook for downloading designs
-    const {exportAsPNG, exportAsJPG} = useCanvasExport(canvasState.appRef);
+    // Pass appRef, backgroundImageRef, and quality mode for PixiJS Extract API
+    const {
+        exportAsPNG,
+        exportAsJPG,
+        exportFullSpriteAsPNG,
+        exportFullSpriteAsJPG,
+        getExportDataUrl
+    } = useCanvasExport(
+        canvasContainerRef,
+        canvasState.appRef,
+        backgroundImageRef,
+        canvasState.imageQualityMode
+    );
 
     // Bepaal welke data we aan de fotogalerij moeten tonen.
     // We checken de search context om te bepalen welke bron actief is.
@@ -309,21 +327,25 @@ export default function Canvas({
                         hoverFreezeActive={hoverFreezeActive} // Pass hover freeze state for timer
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
+                        // Image quality props
+                        imageQualityMode={canvasState.imageQualityMode}
+                        setImageQualityMode={canvasState.setImageQualityMode}
                         // Canvas-specific props
                         onSave={handleSave}
                         onBack={handleBack}
                     />
                 }
                 canvas={
-                    <Application
-                        width={layout.canvasWidth}
-                        height={layout.canvasHeight}
-                        options={{
-                            background: 0x1d2230,
-                            resolution: window.devicePixelRatio || 1,
-                            autoDensity: true,
-                        }}
-                    >
+                    <div ref={canvasContainerRef} style={{width: '100%', height: '100%'}}>
+                        <Application
+                            width={layout.canvasWidth}
+                            height={layout.canvasHeight}
+                            options={{
+                                background: 0x1d2230,
+                                resolution: window.devicePixelRatio || 1,
+                                autoDensity: true,
+                            }}
+                        >
                         <CanvasContent
                             poemData={currentPoem}
                             canvasWidth={layout.canvasWidth}
@@ -352,6 +374,8 @@ export default function Canvas({
                             viewportDragEnabled={canvasState.viewportDragEnabled}
                             isColorPickerActive={canvasState.isColorPickerActive}
                             backgroundImage={previewImage || canvasState.backgroundImage}
+                            imageQualityMode={canvasState.imageQualityMode}
+                            backgroundImageRef={backgroundImageRef}
                             onNextPage={handlers.handleNextPage}
                             onPrevPage={handlers.handlePrevPage}
                             hasNextPage={canvasState.hasNextPage}
@@ -370,6 +394,7 @@ export default function Canvas({
                             currentPoem={currentPoem}
                         />
                     </Application>
+                    </div>
                 }
                 navigation={
                     <Navigation
@@ -390,6 +415,9 @@ export default function Canvas({
                         currentDesignId={currentDesignId}
                         onExportAsPNG={exportAsPNG}
                         onExportAsJPG={exportAsJPG}
+                        onExportFullSpriteAsPNG={exportFullSpriteAsPNG}
+                        onExportFullSpriteAsJPG={exportFullSpriteAsJPG}
+                        getExportDataUrl={getExportDataUrl}
                     />
                 }
             />
@@ -414,6 +442,7 @@ export default function Canvas({
                     currentBackground={canvasState.backgroundImage}
                     onPreviewChange={handlePreviewChange}
                     hoverFreezeActive={hoverFreezeActive || backgroundLoadingFreeze} // Combined freeze state
+                    imageQualityMode={canvasState.imageQualityMode} // Image quality mode
                 />
             )}
 

@@ -748,6 +748,73 @@
   object-fit: cover;
   }
 
+.printQualityBadge {
+  position:   absolute;
+  top:        4px;
+  right:      4px;
+  font-size:  1.2rem;
+  filter:     drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  }
+
+.thumbnailMetadata {
+  position:        absolute;
+  bottom:          0;
+  left:            0;
+  right:           0;
+  background:      rgba(0, 0, 0, 0.85);
+  color:           #fff;
+  padding:         6px 8px;
+  font-size:       0.7rem;
+  font-family:     monospace;
+  line-height:     1.4;
+  opacity:         0;
+  transition:      opacity 0.2s ease;
+  pointer-events:  none;
+  display:         flex;
+  flex-direction:  column;
+  gap:             2px;
+  }
+
+.floatingPhotoThumbnail:hover .thumbnailMetadata {
+  opacity: 1;
+  }
+
+.metadataDimensions {
+  font-weight: 600;
+  font-size:   0.75rem;
+  color:       #4ade80; // Green
+  }
+
+.metadataRow {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  gap:             8px;
+  }
+
+.metadataAspect {
+  color:       #fbbf24; // Amber
+  font-weight: 500;
+  font-size:   0.7rem;
+  }
+
+.metadataSource {
+  color:     #60a5fa; // Blue
+  font-size: 0.65rem;
+  }
+
+.metadataOrientation {
+  color:      #c084fc; // Purple
+  font-size:  0.65rem;
+  font-style: italic;
+  }
+
+.metadataCrop {
+  color:      #ffd700;
+  font-size:  0.65rem;
+  }
+
 .floatingPaginationControls {
   display:         flex;
   justify-content: space-between;
@@ -1136,6 +1203,61 @@
 .thumbnailFreeze {
   pointer-events: none;
   background:     rgba(0, 0, 0, 0.1);
+  }
+
+/* Image Quality Controls */
+.qualityModeContainer {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  }
+
+.qualityOption {
+  display:          flex;
+  align-items:      flex-start;
+  padding:          12px;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  border:           1px solid $canvas-control-border;
+  border-radius:    6px;
+  background-color: $canvas-control-input-bg;
+
+  &:hover {
+	background-color: $canvas-control-hover;
+	border-color:     $canvas-control-accent;
+	}
+
+  &.active {
+	border-color:     $canvas-control-accent;
+	background-color: rgba($canvas-control-accent, 0.1);
+	}
+
+  input[type="radio"] {
+	margin:      4px 12px 0 0;
+	cursor:      pointer;
+	accent-color: $canvas-control-accent;
+	}
+  }
+
+.qualityOptionContent {
+  display:        flex;
+  flex:           1;
+  flex-direction: column;
+  gap:            4px;
+  }
+
+.qualityLabel {
+  font-family: $font-family-section-heading; // Bitter
+  font-size:   0.9rem;
+  font-weight: $font-weight-semibold;
+  color:       $canvas-control-text;
+  }
+
+.qualityDescription {
+  font-family: $font-family-section-heading; // Bitter
+  font-size:   0.75rem;
+  line-height: 1.3;
+  color:       $canvas-control-overlay;
   }
 
 /* Mobile responsive aanpassingen */

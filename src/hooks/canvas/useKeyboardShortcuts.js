@@ -244,13 +244,6 @@ export function useKeyboardShortcuts({
     }
 
     const handleKeyDown = (event) => {
-			if (import.meta.env.DEV) {
-				console.log("⌨️ Keydown:", {
-					key: event.key,
-					altKey: event.altKey,
-					target: event.target.tagName,
-				});
-			}
 
 			if (
 				event.target.tagName === "INPUT" ||

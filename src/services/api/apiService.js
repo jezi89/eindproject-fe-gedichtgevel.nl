@@ -57,7 +57,9 @@ export const flickrApiService = {
             text: searchTerm,
             min_upload_date: minUploadDate,
             sort: 'interestingness-desc',
-            extras: 'geo,owner_name,url_b,url_h,url_k,url_o,o_dims',
+            extras: 'geo,url_q,url_n,url_m,url_b,url_h,url_k,url_o,' +
+                    'width_b,height_b,width_h,height_h,width_k,height_k,width_o,height_o,' +
+                    'o_dims,owner_name,date_taken',
             format: 'json',
             nojsoncallback: 1,
             per_page: 16,
@@ -77,7 +79,9 @@ export const flickrApiService = {
             text: query,
             min_upload_date: minUploadDate,
             sort: 'interestingness-desc',
-            extras: 'owner_name,url_b,url_h,url_k,url_o,o_dims',
+            extras: 'url_q,url_n,url_m,url_b,url_h,url_k,url_o,' +
+                    'width_b,height_b,width_h,height_h,width_k,height_k,width_o,height_o,' +
+                    'o_dims,owner_name,date_taken',
             format: 'json',
             nojsoncallback: 1,
             per_page: 16,

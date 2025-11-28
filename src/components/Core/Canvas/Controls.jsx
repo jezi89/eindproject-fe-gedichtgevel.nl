@@ -5,6 +5,7 @@ import styles from "./Canvas.module.scss";
 import BackgroundControls from "./controls/BackgroundControls.jsx";
 import FontControls from "./controls/FontControls.jsx";
 import LayoutControls from "./controls/LayoutControls.jsx";
+import ImageQualityControls from "./controls/ImageQualityControls.jsx";
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function Controls({
@@ -74,6 +75,10 @@ export default function Controls({
                                      // Text optimization props
                                      isOptimizationEnabled,
                                      setIsOptimizationEnabled,
+
+                                     // Image quality props
+                                     imageQualityMode,
+                                     setImageQualityMode,
                                  }) {
     const {user} = useAuthContext();
 
@@ -97,6 +102,7 @@ export default function Controls({
     const [backgroundSectionOpen, setBackgroundSectionOpen] = useState(true);
     const [fontSectionOpen, setFontSectionOpen] = useState(true);
     const [layoutSectionOpen, setLayoutSectionOpen] = useState(true);
+    const [qualitySectionOpen, setQualitySectionOpen] = useState(true);
     const [colorSubsectionOpen, setColorSubsectionOpen] = useState(false);
 
     const selectionCount = selectedLines.size;
@@ -317,6 +323,13 @@ export default function Controls({
                 setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}
+            />
+
+            <ImageQualityControls
+                imageQualityMode={imageQualityMode}
+                setImageQualityMode={setImageQualityMode}
+                qualitySectionOpen={qualitySectionOpen}
+                setQualitySectionOpen={setQualitySectionOpen}
             />
         </div>
     );

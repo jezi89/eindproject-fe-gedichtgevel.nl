@@ -6,6 +6,7 @@ import { useFontManager } from "./useFontManager";
 import { usePexels } from "./usePexels";
 import { usePersistedState, PERSISTED_KEYS } from "./usePersistedState";
 import { useFlickr } from "./useFlickr";
+import { IMAGE_QUALITY_MODE } from "../../utils/imageOptimization";
 
 export function useCanvasState() {
 	// Refs
@@ -38,6 +39,9 @@ export function useCanvasState() {
 		PERSISTED_KEYS.OPTIMIZATION_ENABLED,
 		false
 	);
+
+	// Image Quality Mode State (session-only, not persisted)
+	const [imageQualityMode, setImageQualityMode] = useState(IMAGE_QUALITY_MODE.AUTO);
 
 	const selection = useSelection();
 	const { fontStatus, loadFont, availableFonts } = useFontManager();
@@ -198,6 +202,8 @@ export function useCanvasState() {
 		setHighlightVisible,
 		isOptimizationEnabled,
 		setIsOptimizationEnabled,
+		imageQualityMode,
+		setImageQualityMode,
 
 		// Font State
 		currentFontFamily,

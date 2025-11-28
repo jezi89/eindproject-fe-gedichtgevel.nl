@@ -5,6 +5,27 @@ import styles from "./Canvas.module.scss"; // Updated import path
 import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
 import {calculateOptimalImageRequest} from "@/utils/imageOptimization.js";
 
+/**
+ * Calculate simplified aspect ratio
+ */
+function calculateAspectRatio(width, height) {
+    if (!width || !height) return 'Unknown';
+
+    const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+    const divisor = gcd(width, height);
+    const ratioW = width / divisor;
+    const ratioH = height / divisor;
+
+    // Common ratios
+    const decimal = (width / height).toFixed(2);
+    const common = {
+        '1.33': '4:3', '1.78': '16:9', '1.50': '3:2',
+        '0.67': '2:3', '0.75': '3:4', '1.00': '1:1', '0.56': '9:16'
+    };
+
+    return common[decimal] || `${ratioW}:${ratioH}`;
+}
+
 export default function FloatingPhotoGrid({
                                               photos,
                                               isLoading,
@@ -19,7 +40,8 @@ export default function FloatingPhotoGrid({
                                               searchContext,
                                               currentBackground,     // NEW: Current background to preserve
                                               onPreviewChange,       // NEW: Callback for preview state changes
-                                              hoverFreezeActive      // NEW: Combined hover freeze state (Alt+J + background loading)
+                                              hoverFreezeActive,     // NEW: Combined hover freeze state (Alt+J + background loading)
+                                              imageQualityMode       // NEW: Image quality mode for smart image fetching
                                           }) {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -165,7 +187,30 @@ export default function FloatingPhotoGrid({
 
                 {/* Photo grid */}
                 <div className={styles.floatingPhotoGridContent}>
-                    {(photos || []).map((photo) => (
+                    {(photos || []).map((photo) => {
+                        // Check if photo meets print-quality threshold (3000px on longest side for A4 @ 300 DPI)
+                        const isPrintQuality = photo.width && photo.height &&
+                            Math.max(photo.width, photo.height) >= 3000;
+
+                        // Calculate crop percentage for "cover" effect
+                        // Viewport aspect ratio is typically 16:9 (or window dimensions)
+                        const viewportWidth = window.innerWidth;
+                        const viewportHeight = window.innerHeight;
+                        const viewportAspect = viewportWidth / viewportHeight;
+                        const photoAspect = photo.width / photo.height;
+
+                        let cropPercentage = 0;
+                        if (photoAspect > viewportAspect) {
+                            // Photo is wider - will crop horizontally
+                            const usedWidth = photo.height * viewportAspect;
+                            cropPercentage = Math.round((1 - usedWidth / photo.width) * 100);
+                        } else {
+                            // Photo is taller - will crop vertically
+                            const usedHeight = photo.width / viewportAspect;
+                            cropPercentage = Math.round((1 - usedHeight / photo.height) * 100);
+                        }
+
+                        return (
                         <div
                             key={photo.id}
                             className={styles.floatingPhotoThumbnail}
@@ -182,21 +227,56 @@ export default function FloatingPhotoGrid({
                                     }, 3000);
                                 }
 
-                                // Calculate optimal image URL based on viewport and DPR
-                                const optimalUrl = calculateOptimalImageRequest(photo);
+                                // Calculate optimal image URL based on viewport and quality mode
+                                const optimalUrl = calculateOptimalImageRequest(
+                                    photo,
+                                    window.innerWidth,
+                                    window.innerHeight,
+                                    imageQualityMode
+                                );
 
                                 photoPreview.handlePhotoSelect(optimalUrl);
 
-                                // Pass complete photo object with metadata including alt text
-                                onSetBackground({
+                                // Pass complete photo object with ALL metadata for reactive quality switching
+                                const backgroundData = {
                                     url: optimalUrl,
                                     thumbnail: photo.src.tiny,
                                     alt: photo.alt,
                                     photographer: photo.photographer || 'Unknown',
                                     source: searchContext?.source || 'custom',
                                     width: photo.width || null,
-                                    height: photo.height || null
+                                    height: photo.height || null,
+
+                                    // CRITICAL: For Flickr - store ALL URL variants for quality recalculation
+                                    ...(photo.source === 'flickr' && {
+                                        url_b: photo.url_b,
+                                        url_h: photo.url_h,
+                                        url_k: photo.url_k,
+                                        url_o: photo.url_o,
+                                        width_b: photo.width_b,
+                                        height_b: photo.height_b,
+                                        width_h: photo.width_h,
+                                        height_h: photo.height_h,
+                                        width_k: photo.width_k,
+                                        height_k: photo.height_k,
+                                        width_o: photo.width_o,
+                                        height_o: photo.height_o,
+                                    }),
+
+                                    // For Pexels - store src object for dynamic URL generation
+                                    ...(searchContext?.source === 'pexels' && photo.src && {
+                                        src: photo.src
+                                    })
+                                };
+
+                                console.log('📸 FloatingPhotoGrid: Storing photo data for quality switching:', {
+                                    source: backgroundData.source,
+                                    hasFlickrVariants: !!(photo.url_b || photo.url_h || photo.url_k),
+                                    hasPexelsSrc: !!(photo.src),
+                                    dimensions: `${backgroundData.width}×${backgroundData.height}`
                                 });
+
+                                onSetBackground(backgroundData);
 
                                 handleClose(); // Close grid after selecting
                             }}
@@ -208,14 +288,47 @@ export default function FloatingPhotoGrid({
                                 }
 
                                 // Calculate optimal image URL for preview
-                                const optimalUrl = calculateOptimalImageRequest(photo);
+                                const optimalUrl = calculateOptimalImageRequest(
+                                    photo,
+                                    window.innerWidth,
+                                    window.innerHeight,
+                                    imageQualityMode
+                                );
                                 photoPreview.handlePhotoHover(optimalUrl);
                             }}
                             title={photo.alt || 'Hover voor preview, klik om te selecteren'}
                         >
                             <img src={photo.src.tiny} alt={photo.alt}/>
+                            {isPrintQuality && (
+                                <span
+                                    className={styles.printQualityBadge}
+                                    title="Print-kwaliteit (>3000px)"
+                                >
+                                    ⭐
+                                </span>
+                            )}
+                            {/* Enhanced Metadata Overlay */}
+                            {photo.width && photo.height && (
+                                <div className={styles.thumbnailMetadata}>
+                                    <div className={styles.metadataDimensions}>
+                                        {photo.width} × {photo.height}
+                                    </div>
+                                    <div className={styles.metadataRow}>
+                                        <span className={styles.metadataAspect}>
+                                            {calculateAspectRatio(photo.width, photo.height)}
+                                        </span>
+                                        <span className={styles.metadataSource}>
+                                            {searchContext?.source === 'flickr' ? '📸 Flickr' : '🔍 Pexels'}
+                                        </span>
+                                    </div>
+                                    <div className={styles.metadataOrientation}>
+                                        {photo.height > photo.width ? '📱 Portrait (fit-width)' : '🖼️ Landscape (contain)'}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* Pagination controls */}

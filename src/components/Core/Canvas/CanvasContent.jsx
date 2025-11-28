@@ -50,6 +50,10 @@ export function CanvasContent({
                                   highlightVisible = true, // <-- NEW: Highlight toggle
                                   // Poem data prop (takes priority over URL params)
                                   poemData,
+                                  // Image quality props for reactive quality switching
+                                  imageQualityMode,
+                                  // Ref for BackgroundImage (for export functionality)
+                                  backgroundImageRef,
                               }) {
     const width = canvasWidth;
     const height = canvasHeight;
@@ -624,7 +628,10 @@ export function CanvasContent({
         >
             {/* Render de achtergrond EERST, zodat hij achter de tekst komt */}
             <BackgroundImage
+                ref={backgroundImageRef}
                 imageUrl={typeof backgroundImage === 'string' ? backgroundImage : backgroundImage?.url}
+                photoData={typeof backgroundImage === 'object' ? backgroundImage : null}
+                imageQualityMode={imageQualityMode}
                 canvasWidth={width}
                 canvasHeight={height}
             />
