@@ -11,8 +11,10 @@ export default function FontControls({
                                          fontStyle,
                                          fontSize,
                                          hasSelection,
+                                         isSelectAll, // <-- NIEUW
                                          selectionCount,
                                          displayedFontSize,
+                                         letterSpacing, // <-- NIEUW (Global value needed for delta)
                                          displayedLetterSpacing,
 
                                          // Color System State
@@ -113,30 +115,28 @@ export default function FontControls({
                     </div>
                 </div>
 
-                {/* Font Size - Global */}
-                <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                    <label htmlFor="fontSize">Lettergrootte</label>
-                    <div className={styles.lineControls}>
-                        <input
-                            type="range"
-                            id="fontSize"
-                            min="6"
-                            max="120"
-                            value={fontSize}
-                            onChange={(e) => onFontSizeChange(Number(e.target.value))}
-                        />
-                        <span>{fontSize}px</span>
+                {/* Font Size Controls */}
+                {(!hasSelection || isSelectAll) ? (
+                    // Global Font Size
+                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
+                        <label htmlFor="fontSize">Lettergrootte</label>
+                        <div className={styles.lineControls}>
+                            <input
+                                type="range"
+                                id="fontSize"
+                                min="6"
+                                max="120"
+                                value={fontSize}
+                                onChange={(e) => onFontSizeChange(Number(e.target.value))}
+                            />
+                            <span>{fontSize}px</span>
+                        </div>
                     </div>
-                </div>
-
-                {/* Font Size - Selection (conditional) */}
-                {hasSelection && (
-                    <div
-                        className={`${styles.controlRow} ${styles.verticalControlRow}`}
-                    >
+                ) : (
+                    // Selection Font Size (Relative Display)
+                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
                         <label htmlFor="lineFontSize">
-                            Lettergrootte ({selectionCount}{" "}
-                            {selectionCount === 1 ? "regel" : "regels"})
+                            Lettergrootte ({selectionCount} {selectionCount === 1 ? "regel" : "regels"})
                         </label>
                         <div className={styles.lineControls}>
                             <input
@@ -147,39 +147,59 @@ export default function FontControls({
                                 value={displayedFontSize}
                                 onChange={(e) => onLineFontSizeChange(Number(e.target.value))}
                             />
-                            <span>{displayedFontSize}px</span>
+                            <span>
+                                {displayedFontSize}px
+                                <span className={styles.deltaValue}>
+                                    ({displayedFontSize - fontSize > 0 ? "+" : ""}
+                                    {displayedFontSize - fontSize}px)
+                                </span>
+                            </span>
                         </div>
                     </div>
                 )}
 
-                {/* Letter Spacing */}
-                <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                    <label htmlFor="letterSpacing">
-                        {hasSelection
-                            ? `Afstand (${selectionCount} ${
-                                selectionCount === 1 ? "regel" : "regels"
-                            })`
-                            : "Letterafstand"}
-                    </label>
-                    <div className={styles.lineControls}>
-                        <input
-                            type="range"
-                            id="letterSpacing"
-                            min="-5"
-                            max="15"
-                            value={`${displayedLetterSpacing}`}
-                            onChange={(e) => {
-                                const newSpacing = Number(e.target.value);
-                                if (hasSelection) {
-                                    onLineLetterSpacingChange(newSpacing);
-                                } else {
-                                    onLetterSpacingChange(newSpacing);
-                                }
-                            }}
-                        />
-                        <span>{displayedLetterSpacing}px</span>
+                {/* Letter Spacing Controls */}
+                {(!hasSelection || isSelectAll) ? (
+                     // Global Letter Spacing
+                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
+                        <label htmlFor="letterSpacing">Letterafstand</label>
+                        <div className={styles.lineControls}>
+                            <input
+                                type="range"
+                                id="letterSpacing"
+                                min="-5"
+                                max="15"
+                                value={displayedLetterSpacing}
+                                onChange={(e) => onLetterSpacingChange(Number(e.target.value))}
+                            />
+                            <span>{displayedLetterSpacing}px</span>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    // Selection Letter Spacing (Relative Display)
+                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
+                        <label htmlFor="lineLetterSpacing">
+                            Afstand ({selectionCount} {selectionCount === 1 ? "regel" : "regels"})
+                        </label>
+                        <div className={styles.lineControls}>
+                            <input
+                                type="range"
+                                id="lineLetterSpacing"
+                                min="-5"
+                                max="15"
+                                value={displayedLetterSpacing}
+                                onChange={(e) => onLineLetterSpacingChange(Number(e.target.value))}
+                            />
+                            <span>
+                                {displayedLetterSpacing}px
+                                <span className={styles.deltaValue}>
+                                    ({(displayedLetterSpacing - letterSpacing) > 0 ? "+" : ""}
+                                    {displayedLetterSpacing - letterSpacing}px)
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                )}
 
                 {/* --- KLEUR CONTROLS SUBSECTIE --- */}
                 <div className={styles.subsection}>

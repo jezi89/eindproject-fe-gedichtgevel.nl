@@ -13,6 +13,10 @@ export default function LayoutControls({
                                            isOptimizationEnabled,
                                            skewX,
                                            skewY,
+                                           globalSkewX, // <-- NIEUW
+                                           globalSkewY, // <-- NIEUW
+                                           hasSelection, // <-- NIEUW
+                                           isSelectAll, // <-- NIEUW
 
                                            // Handlers
                                            onLineHeightMultiplierChange,
@@ -106,61 +110,131 @@ export default function LayoutControls({
                     </div>
                 </div>
 
-                {/* Horizontal Skew */}
-                <div className={styles.controlGroup}>
-                    <label htmlFor="skewX">
-                        Horizontale Skew
-                    </label>
-                    <input
-                        className={styles.fullWidthRange}
-                        type="range"
-                        id="skewX"
-                        min={-45}
-                        max={45}
-                        step={0.1}
-                        value={skewX || 0}
-                        onChange={(e) => onSkewXChange(parseFloat(e.target.value))}
-                    />
-                    <div className={styles.valueRow}>
-                        <span>{(skewX || 0).toFixed(1)}°</span>
-                        <button
-                            type="button"
-                            className={styles.iconResetButton}
-                            onClick={() => onSkewXChange(0)}
-                            title="Reset horizontale skew"
-                        >
-                            ↺
-                        </button>
+                {/* Horizontale Skew */}
+                {(!hasSelection || isSelectAll) ? (
+                    <div className={styles.controlGroup}>
+                        <label htmlFor="skewX">
+                            Horizontale Skew
+                        </label>
+                        <input
+                            className={styles.fullWidthRange}
+                            type="range"
+                            id="skewX"
+                            min={-45}
+                            max={45}
+                            step={0.1}
+                            value={skewX || 0}
+                            onChange={(e) => onSkewXChange(parseFloat(e.target.value))}
+                        />
+                        <div className={styles.valueRow}>
+                            <span>{(skewX || 0).toFixed(1)}°</span>
+                            <button
+                                type="button"
+                                className={styles.iconResetButton}
+                                onClick={() => onSkewXChange(0)}
+                                title="Reset horizontale skew"
+                            >
+                                ↺
+                            </button>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className={styles.controlGroup}>
+                        <label htmlFor="lineSkewX">
+                            Horizontale Skew (Selectie)
+                        </label>
+                        <input
+                            className={styles.fullWidthRange}
+                            type="range"
+                            id="lineSkewX"
+                            min={-45}
+                            max={45}
+                            step={0.1}
+                            value={skewX || 0}
+                            onChange={(e) => onSkewXChange(parseFloat(e.target.value))}
+                        />
+                        <div className={styles.valueRow}>
+                            <span>
+                                {(skewX || 0).toFixed(1)}°
+                                <span className={styles.deltaValue}>
+                                    ({(skewX - globalSkewX).toFixed(1) > 0 ? "+" : ""}
+                                    {(skewX - globalSkewX).toFixed(1)}°)
+                                </span>
+                            </span>
+                            <button
+                                type="button"
+                                className={styles.iconResetButton}
+                                onClick={() => onSkewXChange(globalSkewX)}
+                                title="Reset naar globale skew"
+                            >
+                                ↺
+                            </button>
+                        </div>
+                    </div>
+                )}
 
-                {/* Vertical Skew */}
-                <div className={styles.controlGroup}>
-                    <label htmlFor="skewY">
-                        Verticale Skew
-                    </label>
-                    <input
-                        className={styles.fullWidthRange}
-                        type="range"
-                        id="skewY"
-                        min={-45}
-                        max={45}
-                        step={0.1}
-                        value={skewY || 0}
-                        onChange={(e) => onSkewYChange(parseFloat(e.target.value))}
-                    />
-                    <div className={styles.valueRow}>
-                        <span>{(skewY || 0).toFixed(1)}°</span>
-                        <button
-                            type="button"
-                            className={styles.iconResetButton}
-                            onClick={() => onSkewYChange(0)}
-                            title="Reset verticale skew"
-                        >
-                            ↺
-                        </button>
+                {/* Verticale Skew */}
+                {(!hasSelection || isSelectAll) ? (
+                    <div className={styles.controlGroup}>
+                        <label htmlFor="skewY">
+                            Verticale Skew
+                        </label>
+                        <input
+                            className={styles.fullWidthRange}
+                            type="range"
+                            id="skewY"
+                            min={-45}
+                            max={45}
+                            step={0.1}
+                            value={skewY || 0}
+                            onChange={(e) => onSkewYChange(parseFloat(e.target.value))}
+                        />
+                        <div className={styles.valueRow}>
+                            <span>{(skewY || 0).toFixed(1)}°</span>
+                            <button
+                                type="button"
+                                className={styles.iconResetButton}
+                                onClick={() => onSkewYChange(0)}
+                                title="Reset verticale skew"
+                            >
+                                ↺
+                            </button>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className={styles.controlGroup}>
+                        <label htmlFor="lineSkewY">
+                            Verticale Skew (Selectie)
+                        </label>
+                        <input
+                            className={styles.fullWidthRange}
+                            type="range"
+                            id="lineSkewY"
+                            min={-45}
+                            max={45}
+                            step={0.1}
+                            value={skewY || 0}
+                            onChange={(e) => onSkewYChange(parseFloat(e.target.value))}
+                        />
+                        <div className={styles.valueRow}>
+                            <span>
+                                {(skewY || 0).toFixed(1)}°
+                                <span className={styles.deltaValue}>
+                                    ({(skewY - globalSkewY).toFixed(1) > 0 ? "+" : ""}
+                                    {(skewY - globalSkewY).toFixed(1)}°)
+                                </span>
+                            </span>
+                            <button
+                                type="button"
+                                className={styles.iconResetButton}
+                                onClick={() => onSkewYChange(globalSkewY)}
+                                title="Reset naar globale skew"
+                            >
+                                ↺
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Camera Control */}
                 <div className={styles.controlGroup}>

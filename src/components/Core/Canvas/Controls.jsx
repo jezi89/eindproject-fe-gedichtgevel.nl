@@ -6,6 +6,7 @@ import BackgroundControls from "./controls/BackgroundControls.jsx";
 import FontControls from "./controls/FontControls.jsx";
 import LayoutControls from "./controls/LayoutControls.jsx";
 import ImageQualityControls from "./controls/ImageQualityControls.jsx";
+
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function Controls({
@@ -52,8 +53,11 @@ export default function Controls({
                                      // Skew props
                                      skewX,
                                      onSkewXChange,
+                                     onLineSkewXChange, // <-- NIEUW
                                      skewY,
                                      onSkewYChange,
+                                     onLineSkewYChange, // <-- NIEUW
+                                     onLineTextAlignChange, // <-- NIEUW
 
                                      // Pexels background props
                                      isLoading,
@@ -79,6 +83,9 @@ export default function Controls({
                                      // Image quality props
                                      imageQualityMode,
                                      setImageQualityMode,
+
+                                     totalLineCount = 0, // <-- NIEUW
+
                                  }) {
     const {user} = useAuthContext();
 
@@ -103,10 +110,16 @@ export default function Controls({
     const [fontSectionOpen, setFontSectionOpen] = useState(true);
     const [layoutSectionOpen, setLayoutSectionOpen] = useState(true);
     const [qualitySectionOpen, setQualitySectionOpen] = useState(true);
+
     const [colorSubsectionOpen, setColorSubsectionOpen] = useState(false);
 
     const selectionCount = selectedLines.size;
     const hasSelection = selectionCount > 0;
+    // Check of alles geselecteerd is (behalve titel/auteur die -1/-2 zijn)
+    // We tellen alleen de positieve indices voor "Select All" logica van regels
+    const selectedLineIndices = Array.from(selectedLines).filter(i => i >= 0);
+    const isSelectAll = totalLineCount > 0 && selectedLineIndices.length === totalLineCount;
+
     const singleSelectedLineIndex =
         selectionCount === 1 ? Array.from(selectedLines)[0] : null;
 
@@ -150,16 +163,18 @@ export default function Controls({
     ]);
 
     // Bepaal welke letterafstand getoond wordt
-    const displayedLetterSpacing =
-        singleSelectedLineIndex !== null
-            ? lineOverrides[singleSelectedLineIndex]?.letterSpacing ?? letterSpacing
-            : letterSpacing;
+    const displayedLetterSpacing = useMemo(() => {
+        if (!hasSelection) return letterSpacing;
+        const firstIndex = Array.from(selectedLines)[0];
+        return lineOverrides[firstIndex]?.letterSpacing ?? letterSpacing;
+    }, [hasSelection, selectedLines, lineOverrides, letterSpacing]);
 
     // Bepaal welke lettergrootte getoond wordt voor geselecteerde regel
-    const displayedFontSize =
-        singleSelectedLineIndex !== null
-            ? lineOverrides[singleSelectedLineIndex]?.fontSize ?? fontSize
-            : fontSize;
+    const displayedFontSize = useMemo(() => {
+        if (!hasSelection) return fontSize;
+        const firstIndex = Array.from(selectedLines)[0];
+        return lineOverrides[firstIndex]?.fontSize ?? fontSize;
+    }, [hasSelection, selectedLines, lineOverrides, fontSize]);
 
     // ✅ CORRECT: Bepaal hier welk lettertype getoond wordt
     const displayedFontFamily =
@@ -174,6 +189,41 @@ export default function Controls({
         } else {
             onFillColorChange(color);
         }
+    };
+
+    // NIEUW: Bepaal displayed Skew & Align
+    const displayedSkewX = useMemo(() => {
+        if (!hasSelection) return skewX;
+        const firstIndex = Array.from(selectedLines)[0];
+        return lineOverrides[firstIndex]?.skewX ?? skewX;
+    }, [hasSelection, selectedLines, lineOverrides, skewX]);
+
+    const displayedSkewY = useMemo(() => {
+        if (!hasSelection) return skewY;
+        const firstIndex = Array.from(selectedLines)[0];
+        return lineOverrides[firstIndex]?.skewY ?? skewY;
+    }, [hasSelection, selectedLines, lineOverrides, skewY]);
+
+    const displayedTextAlign = useMemo(() => {
+        if (!hasSelection) return textAlign;
+        const firstIndex = Array.from(selectedLines)[0];
+        return lineOverrides[firstIndex]?.textAlign ?? textAlign;
+    }, [hasSelection, selectedLines, lineOverrides, textAlign]);
+
+    // NIEUW: Wrapped Handlers
+    const handleSkewXInput = (val) => {
+        if (hasSelection) onLineSkewXChange(val);
+        else onSkewXChange(val);
+    };
+
+    const handleSkewYInput = (val) => {
+        if (hasSelection) onLineSkewYChange(val);
+        else onSkewYChange(val);
+    };
+
+    const handleTextAlignInput = (val) => {
+        if (hasSelection) onLineTextAlignChange(val);
+        else onTextAlignChange(val);
     };
 
     const handleSearchClick = () => {
@@ -244,6 +294,22 @@ export default function Controls({
                 </button>
             </div>
 
+            {/* NIEUW: Selection Indicator */}
+            {hasSelection && (
+                <div style={{
+                    backgroundColor: '#eab308',
+                    color: 'black',
+                    padding: '8px',
+                    marginBottom: '10px',
+                    borderRadius: '4px',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    fontSize: '0.9rem'
+                }}>
+                    ✏️ Editing {selectionCount} Selected Line{selectionCount !== 1 ? 's' : ''}
+                </div>
+            )}
+
             <BackgroundControls
                 query={query}
                 setQuery={setQuery}
@@ -277,7 +343,9 @@ export default function Controls({
                 fontStyle={fontStyle}
                 fontSize={fontSize}
                 hasSelection={hasSelection}
+                isSelectAll={isSelectAll} // <-- NIEUW
                 selectionCount={selectionCount}
+                letterSpacing={letterSpacing} // <-- NIEUW
                 displayedFontSize={displayedFontSize}
                 displayedLetterSpacing={displayedLetterSpacing}
                 displayedColor={displayedColor}
@@ -308,18 +376,22 @@ export default function Controls({
             <LayoutControls
                 lineHeightMultiplier={lineHeightMultiplier}
                 fontSize={fontSize}
-                textAlign={textAlign}
+                isSelectAll={isSelectAll} // <-- NIEUW
+                hasSelection={hasSelection} // <-- NIEUW
+                textAlign={displayedTextAlign} // <-- Updated
                 viewportDragEnabled={viewportDragEnabled}
                 isOptimizationEnabled={isOptimizationEnabled}
-                skewX={skewX}
-                skewY={skewY}
+                skewX={displayedSkewX} // <-- Updated
+                skewY={displayedSkewY} // <-- Updated
+                globalSkewX={skewX} // <-- NIEUW
+                globalSkewY={skewY} // <-- NIEUW
                 onLineHeightMultiplierChange={onLineHeightMultiplierChange}
                 onResetLineHeight={onResetLineHeight}
-                onTextAlignChange={onTextAlignChange}
+                onTextAlignChange={handleTextAlignInput} // <-- Updated
                 onViewportToggle={onViewportToggle}
                 onResetViewport={onResetViewport}
-                onSkewXChange={onSkewXChange}
-                onSkewYChange={onSkewYChange}
+                onSkewXChange={handleSkewXInput} // <-- Updated
+                onSkewYChange={handleSkewYInput} // <-- Updated
                 setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}

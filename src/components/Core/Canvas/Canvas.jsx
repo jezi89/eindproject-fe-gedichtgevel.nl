@@ -306,8 +306,11 @@ export default function Canvas({
                         // Skew props
                         skewX={canvasState.skewX}
                         onSkewXChange={handlers.handleSkewXChange}
+                        onLineSkewXChange={handlers.handleLineSkewXChange} // <-- NIEUW
                         skewY={canvasState.skewY}
                         onSkewYChange={handlers.handleSkewYChange}
+                        onLineSkewYChange={handlers.handleLineSkewYChange} // <-- NIEUW
+                        onLineTextAlignChange={handlers.handleLineTextAlignChange} // <-- NIEUW
                         // Pexels background props
                         photos={canvasState.photos}
                         isLoading={canvasState.isLoading}
@@ -327,6 +330,7 @@ export default function Canvas({
                         hoverFreezeActive={hoverFreezeActive} // Pass hover freeze state for timer
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
+
                         // Image quality props
                         imageQualityMode={canvasState.imageQualityMode}
                         setImageQualityMode={canvasState.setImageQualityMode}
@@ -390,8 +394,10 @@ export default function Canvas({
                             setIsDragging={canvasState.setIsDragging}
                             effectiveStyles={canvasState.effectiveStyles}
                             highlightVisible={canvasState.highlightVisible}
+
                             // Pass current poem data
                             currentPoem={currentPoem}
+                            totalLineCount={currentPoem?.lines?.length || 0}
                         />
                     </Application>
                     </div>
