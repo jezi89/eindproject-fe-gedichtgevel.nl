@@ -47,6 +47,8 @@ export function usePersistedState(key, defaultValue, options = {}) {
  */
 export const PERSISTED_KEYS = {
   BACKGROUND_IMAGE: 'canvas_background_image',
+  TEXT_MATERIAL: 'canvas_text_material',
+  TEXT_PADDING: 'canvas_text_padding',
   TEXT_STYLES: 'canvas_text_styles',
   LINE_OVERRIDES: 'canvas_line_overrides',
   FONT_FAMILY: 'canvas_font_family',
@@ -66,6 +68,7 @@ export const PERSISTED_KEYS = {
   AUTHOR_COLOR_OVERRIDE: 'canvas_author_color_override',
   MOVE_MODE: 'canvas_move_mode',
   SKEW_X: 'canvas_skew_x',
+  SKEW_Y: 'canvas_skew_y',
   SKEW_Y: 'canvas_skew_y'
 };
 

@@ -118,6 +118,16 @@ export default function Canvas({
         }
     }, [hoverFreezeActive]);
 
+    // Expose PixiJS app for DevTools
+    useEffect(() => {
+        if (canvasState.viewportRef.current?.app) {
+            window.__PIXI_APP__ = canvasState.viewportRef.current.app;
+        }
+        return () => {
+            delete window.__PIXI_APP__;
+        };
+    }, [canvasState.viewportRef]);
+
     // Handle preview state changes from FloatingPhotoGrid
     const handlePreviewChange = useCallback(({previewMode, previewImage, hasHovered}) => {
 
@@ -331,6 +341,12 @@ export default function Canvas({
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
 
+                        // Text Background Props
+                        textMaterial={canvasState.textMaterial}
+                        onTextMaterialChange={canvasState.setTextMaterial}
+                        textPadding={canvasState.textPadding}
+                        onTextPaddingChange={canvasState.setTextPadding}
+
                         // Image quality props
                         imageQualityMode={canvasState.imageQualityMode}
                         setImageQualityMode={canvasState.setImageQualityMode}
@@ -394,6 +410,12 @@ export default function Canvas({
                             setIsDragging={canvasState.setIsDragging}
                             effectiveStyles={canvasState.effectiveStyles}
                             highlightVisible={canvasState.highlightVisible}
+
+                            // Text Background Props
+                            textMaterial={canvasState.textMaterial}
+                            onTextMaterialChange={canvasState.setTextMaterial}
+                            textPadding={canvasState.textPadding}
+                            onTextPaddingChange={canvasState.setTextPadding}
 
                             // Pass current poem data
                             currentPoem={currentPoem}

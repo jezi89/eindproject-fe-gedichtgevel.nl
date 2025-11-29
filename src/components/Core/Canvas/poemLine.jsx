@@ -3,6 +3,8 @@ import React, {useEffect, useRef} from "react";
 import {useLineStyle} from "@/hooks/canvas/useTextStyles.js";
 // import { useDraggableLine } from "../hooks/useDraggableLine"; // REMOVED: Will use viewport-level event handling
 
+
+
 export const PoemLine = ({
                              line,
                              x,
@@ -11,23 +13,26 @@ export const PoemLine = ({
                              lineOverrides,
                              isSelected,
                              onSelect,
-                             fontStatus, // <-- Deze prop komt al binnen van CanvasContent
-                             globalFontFamily, // <-- Deze prop komt ook al binnen
+                             fontStatus,
+                             globalFontFamily,
                              anchorX = 0.5,
                              isColorPickerActive = false,
-                             highlightVisible = true, // <-- NEW: Highlight toggle
-                             // New props for drag functionality
+                             highlightVisible = true,
                              moveMode,
                              index,
                              selectedLines,
                              onDragLineStart,
                              onDragLineMove,
                              onDragLineEnd,
-                             // Resolution optimization prop
                              resolution = 1,
+                             skewX = 0,
+                             skewY = 0,
+                             overrideTextAlign,
+
                          }) => {
     const textRef = useRef();
-    const containerRef = useRef(); // For line drag functionality
+    const containerRef = useRef();
+    const [textBounds, setTextBounds] = React.useState({ width: 0, height: 0 });
 
     // Use the new useLineStyle hook to compute the final style
     const computedStyle = useLineStyle(
@@ -35,10 +40,39 @@ export const PoemLine = ({
         lineOverrides,
         isSelected,
         isColorPickerActive,
-        fontStatus, // <-- Geef de status door
-        globalFontFamily, // <-- Geef de globale font door als fallback
-        highlightVisible // <-- NEW: Pass highlight toggle
+        fontStatus,
+        globalFontFamily,
+        highlightVisible
     );
+
+    // Calculate effective anchor based on override or global setting
+    const effectiveAnchorX = React.useMemo(() => {
+        if (overrideTextAlign) {
+            return {
+                left: 0,
+                center: 0.5,
+                right: 1,
+            }[overrideTextAlign];
+        }
+        return anchorX;
+    }, [overrideTextAlign, anchorX]);
+
+    // Calculate effective skew in radians
+    const effectiveSkew = React.useMemo(() => {
+        return {
+            x: (skewX * Math.PI) / 180,
+            y: (skewY * Math.PI) / 180,
+        };
+    }, [skewX, skewY]);
+
+    // Measure text dimensions when content or style changes
+    useEffect(() => {
+        if (textRef.current) {
+            // Force update to ensure metrics are correct
+            const { width, height } = textRef.current;
+            setTextBounds({ width, height });
+        }
+    }, [line, computedStyle, resolution, fontStatus]);
 
     // Mode-based interaction: only in edit mode
     useEffect(() => {
@@ -83,27 +117,22 @@ export const PoemLine = ({
         }
     }, [onSelect, moveMode]);
 
-    // REMOVED: Line drag functionality - will use viewport-level event handling
-    // useDraggableLine(containerRef, {
-    //   enabled: moveMode === 'line' && selectedLines && selectedLines.has(index),
-    //   onDragStart: () => onDragLineStart && onDragLineStart(index, selectedLines),
-    //   onDragMove: (offset) => onDragLineMove && onDragLineMove(index, offset, selectedLines),
-    //   onDragEnd: onDragLineEnd
-    // });
-
     return (
         <pixiContainer
             ref={containerRef}
             x={x}
             y={y}
+            skew={effectiveSkew}
             eventMode="passive"
             interactiveChildren={moveMode === "edit"}
         >
+
+
             <pixiText
                 ref={textRef}
                 text={line}
                 style={computedStyle}
-                anchor={{x: anchorX, y: 0}}
+                anchor={{x: effectiveAnchorX, y: 0}}
                 resolution={resolution}
             />
         </pixiContainer>

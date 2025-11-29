@@ -5,6 +5,7 @@ import styles from "./Canvas.module.scss";
 import BackgroundControls from "./controls/BackgroundControls.jsx";
 import FontControls from "./controls/FontControls.jsx";
 import LayoutControls from "./controls/LayoutControls.jsx";
+import MaterialControls from "./controls/MaterialControls.jsx";
 import ImageQualityControls from "./controls/ImageQualityControls.jsx";
 
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
@@ -84,6 +85,12 @@ export default function Controls({
                                      imageQualityMode,
                                      setImageQualityMode,
 
+                                     // Text Background Props
+                                     textMaterial,
+                                     onTextMaterialChange,
+                                     textPadding,
+                                     onTextPaddingChange,
+
                                      totalLineCount = 0, // <-- NIEUW
 
                                  }) {
@@ -110,6 +117,7 @@ export default function Controls({
     const [fontSectionOpen, setFontSectionOpen] = useState(true);
     const [layoutSectionOpen, setLayoutSectionOpen] = useState(true);
     const [qualitySectionOpen, setQualitySectionOpen] = useState(true);
+    const [materialSectionOpen, setMaterialSectionOpen] = useState(false); // <-- RESTORED
 
     const [colorSubsectionOpen, setColorSubsectionOpen] = useState(false);
 
@@ -336,6 +344,15 @@ export default function Controls({
                 setBackgroundSectionOpen={setBackgroundSectionOpen}
             />
 
+            {/* Material & Background Controls */}
+            <MaterialControls
+                textMaterial={textMaterial}
+                onTextMaterialChange={onTextMaterialChange}
+                textPadding={textPadding}
+                onTextPaddingChange={onTextPaddingChange}
+                isOpen={materialSectionOpen} // Using existing state or need to restore it?
+                setIsOpen={setMaterialSectionOpen} // Need to check if this state exists
+            />
             <FontControls
                 availableFonts={availableFonts}
                 displayedFontFamily={displayedFontFamily}

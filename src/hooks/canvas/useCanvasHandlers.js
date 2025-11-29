@@ -247,6 +247,62 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [canvasState]
     );
 
+    // NIEUW: Line-specific Skew Handlers
+    const handleLineSkewXChange = useCallback(
+        (value) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            skewX: value,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
+    const handleLineSkewYChange = useCallback(
+        (value) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            skewY: value,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
+    // NIEUW: Line-specific Text Align Handler
+    const handleLineTextAlignChange = useCallback(
+        (align) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            textAlign: align,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
     const handleLineFontSizeChange = useCallback(
         (size) => {
             if (selectedLines.size > 0) {
@@ -598,7 +654,8 @@ export function useCanvasHandlers(canvasState, poemData = null) {
             if (event.altKey && event.key === "a") {
                 event.preventDefault(); // Prevent browser Alt-A behavior
                 if (currentPoem?.lines) {
-                    selectAll(currentPoem.lines.length);
+                    // FIX: Use selectAllIncludingTitleAuthor instead of selectAll
+                    canvasState.selectAllIncludingTitleAuthor(currentPoem.lines.length);
                 }
             }
 
@@ -636,6 +693,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         currentPoem,
         setViewportDragEnabled,
         moveMode,
+        canvasState.selectAllIncludingTitleAuthor, // Add dependency
     ]);
 
 
@@ -668,6 +726,9 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         // Skew handlers
         handleSkewXChange,
         handleSkewYChange,
+        handleLineSkewXChange, // <-- EXPORT
+        handleLineSkewYChange, // <-- EXPORT
+        handleLineTextAlignChange, // <-- EXPORT
 
         handleSearchBackground,
         handlePremiumSearch, // <-- NEW: Export premium search handler

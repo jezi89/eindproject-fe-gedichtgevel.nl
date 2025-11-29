@@ -55,9 +55,19 @@ export function useCanvasState() {
 
 	// Background State
 	const [backgroundImage, setBackgroundImage, clearBackgroundImage] = usePersistedState(
-		PERSISTED_KEYS.BACKGROUND_IMAGE,
-		null
-	);
+        PERSISTED_KEYS.BACKGROUND_IMAGE,
+        null
+    );
+
+    // Text Background State - PERSISTENT
+    const [textMaterial, setTextMaterial] = usePersistedState(
+        PERSISTED_KEYS.TEXT_MATERIAL,
+        null
+    );
+    const [textPadding, setTextPadding] = usePersistedState(
+        PERSISTED_KEYS.TEXT_PADDING,
+        20
+    );
 
 	const pexels = usePexels();
 	const flickr = useFlickr();
@@ -117,6 +127,8 @@ export function useCanvasState() {
 		0
 	);
 	const [userHasAdjusted, setUserHasAdjusted] = useState(false);
+	
+
 
 	// Hierarchical color system - PERSISTENT
 	const [titleColorOverride, setTitleColorOverride] = usePersistedState(
@@ -219,10 +231,13 @@ export function useCanvasState() {
 		...pexels,
 		...flickr,
 
-		// Background State
-		backgroundImage,
-		setBackgroundImage,
-		clearBackgroundImage,
+		// Background
+        backgroundImage,
+        setBackgroundImage,
+        textMaterial, // <-- RESTORED
+        setTextMaterial, // <-- RESTORED
+        textPadding, // <-- RESTORED
+        setTextPadding, // <-- RESTORED
 		searchContext,
 		setSearchContext,
 
@@ -261,6 +276,8 @@ export function useCanvasState() {
 		setMoveMode,
 		userHasAdjusted,
 		setUserHasAdjusted,
+
+
 
 		// Calculated Styles
 		effectiveStyles,
