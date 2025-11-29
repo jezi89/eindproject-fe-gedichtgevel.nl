@@ -16,7 +16,8 @@ export const CarouselArrows = memo(({
                                         hasAnyExpanded = false,
                                         searchResultsRef = null,
                                         onCollapseEvent = null,
-                                        canvasMode = false
+                                        canvasMode = false,
+                                        className = ''
                                     }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [dynamicPosition, setDynamicPosition] = useState(0);
@@ -224,6 +225,7 @@ export const CarouselArrows = memo(({
 
     const containerClasses = useMemo(() => {
         const classes = [styles.arrowsContainer];
+        if (className) classes.push(className);
 
         if (isVisible) {
             classes.push(styles.arrowsVisible);

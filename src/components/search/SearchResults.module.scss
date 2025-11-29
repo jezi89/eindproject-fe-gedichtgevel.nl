@@ -1199,3 +1199,68 @@
     outline-offset: 2px;
   }
 }
+
+// Overlay Mode Styling
+.overlayMode {
+    padding: $spacing-m 0;
+    width: 100%;
+    max-width: 100%; // Ensure it fits in container
+
+    .resultsList {
+        gap: 0.5rem; // Tighter gap
+        max-width: 100%; // Use full container width
+        justify-content: center;
+    }
+
+    .resultCard {
+        width: 250px; // Fixed width that fits 3 in 820px (820 - 2*8 gap = 804 / 3 = 268 max)
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    // Override column specific widths
+    &.threeColumns,
+    &.threeColumnsCarousel {
+        .resultsList {
+            gap: 0.5rem;
+            max-width: 100%;
+        }
+        .resultCard {
+            width: 250px;
+        }
+    }
+
+    // Carousel Arrows positioning
+    // We want them above the middle poem
+    // Since arrows are at the bottom in DOM, we need absolute positioning
+    :global(.Carrousel_arrowsContainer__1hJq_) {
+        position: absolute;
+        top: 50%; // Center vertically relative to container
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        justify-content: space-between; // Spread to edges
+        padding: 0 1rem; // Padding from edges
+        width: 100%;
+        pointer-events: none; // Let clicks pass through center
+        z-index: 10;
+
+        button {
+            pointer-events: auto; // Re-enable clicks on buttons
+            background-color: rgba($secondary-carribean-current, 0.8);
+            
+            &:hover {
+                background-color: $secondary-carribean-current;
+            }
+        }
+    }
+
+    // Button styling overrides for overlay
+    :global(.SearchResults_expandButton__3F8q_) {
+        font-size: 0.8rem; // Smaller font
+        text-transform: none; // No uppercase
+        padding: 0.4rem 0.8rem; // Smaller padding
+        width: auto; // Auto width
+        min-width: unset; // Remove min-width
+    }
+}

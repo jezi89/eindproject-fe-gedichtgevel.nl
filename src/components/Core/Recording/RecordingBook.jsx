@@ -8,6 +8,9 @@ import layoutStyles from '@/pages/Audio/AudioPage.module.scss';
 import componentStyles from './RecordingPage.module.scss';
 import {ControlsContext, TimeContext, CountdownContext} from './context/RecordingContext';
 import {useRecording} from '../../../hooks/record/useWaveSurfer.js';
+import {useRecordingStorage} from '../../../hooks/record/useRecordingStorage.js';
+import {useSearchPoems} from '../../../hooks/search/useSearchPoems.js';
+import {SearchResults} from '../../search/SearchResults';
 import HighlightIcon from './icons/Higlight-icon.svg?react';
 import DownArrowIcon from './icons/Down-arrow-icon.svg?react';
 import {MicOnIcon} from './icons/MicOnIcon.jsx';
@@ -86,12 +89,24 @@ const RecordButton = () => {
 
 export function RecordingBook() {
     const waveformRef = useRef(null);
+    const timelineRef = useRef(null);
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('Geselecteerd Gedicht');
     const [selectedPoem, setSelectedPoem] = useState(INSTRUCTION_POEM);
+    const [showOverlay, setShowOverlay] = useState(false);
+    const storage = useRecordingStorage();
+
+    // Search hook
+    const { 
+        searchTerm, 
+        updateSearchTerm, 
+        results, 
+        loading: searchLoading, 
+        handleSearch: searchPoems 
+    } = useSearchPoems();
 
     // All complex logic is now in the custom hook, split into three state objects
-    const {timeState, controlsState, countdownState} = useRecording(waveformRef);
+    const {timeState, controlsState, countdownState} = useRecording(waveformRef, timelineRef);
 
     // Load poem from navigation state on mount
     useEffect(() => {
@@ -109,6 +124,7 @@ export function RecordingBook() {
     const handlePoemSelect = (poem) => {
         if (poem) {
             setSelectedPoem(poem);
+            setShowOverlay(false);
             console.log('📝 Selected poem:', poem);
         } else {
             // No results found
@@ -121,11 +137,38 @@ export function RecordingBook() {
         }
     };
 
+    const handleManualSearch = () => {
+        console.log('🔍 Manual search triggered');
+        searchPoems();
+        setShowOverlay(true);
+        console.log('🔍 showOverlay set to true, current results length:', results.length);
+    };
+
     const handleSearchStart = () => {
         // Clear instruction text when search starts
         if (selectedPoem?.isInstruction) {
             setSelectedPoem(null);
         }
+    };
+
+    const handleSaveRecording = async () => {
+        if (controlsState.recordedAudioBlob) {
+            try {
+                await storage.saveRecording(controlsState.recordedAudioBlob, {
+                    title: selectedPoem?.title || 'Naamloze Opname',
+                    author: selectedPoem?.author || 'Onbekend',
+                    duration: 0 // You might want to calculate this
+                });
+                alert("Opname opgeslagen in 'Mijn Opnames'!");
+                setActiveTab('Beluister Opnames');
+            } catch (e) {
+                alert("Fout bij opslaan: " + e.message);
+            }
+        }
+    };
+
+    const handleComingSoon = () => {
+        alert("Binnenkort beschikbaar (v2)");
     };
 
     return (
@@ -137,6 +180,41 @@ export function RecordingBook() {
                             <TopNavigation activeTab={activeTab} setActiveTab={setActiveTab}/>
                             <div className={componentStyles.BookContainer}>
                                 <SpiralBook className={componentStyles.SpiralBinding}/>
+
+                                {showOverlay && (
+                                    <div className={componentStyles.SearchResultsOverlay}>
+                                        <div className={componentStyles.OverlayHeader}>
+                                            <div style={{display: 'flex', alignItems: 'baseline', gap: '1rem'}}>
+                                                <h3>Zoekresultaten</h3>
+                                                <span style={{fontSize: '0.9rem', color: '#666'}}>
+                                                    {results.length} {results.length === 1 ? 'gedicht' : 'gedichten'} gevonden
+                                                </span>
+                                            </div>
+                                            <button 
+                                                className={componentStyles.CloseOverlayButton}
+                                                onClick={() => setShowOverlay(false)}
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                        {results.length > 0 ? (
+                                            <SearchResults 
+                                                results={results}
+                                                layoutMode="search"
+                                                cardSize="compact"
+                                                showGlobalToggle={false}
+                                                onPoemSelect={handlePoemSelect}
+                                                isOverlay={true}
+                                                ResultsOverviewComponent={null}
+                                            />
+                                        ) : (
+                                            <div style={{padding: '2rem', textAlign: 'center', color: '#666'}}>
+                                                <p>Geen gedichten gevonden voor "{searchTerm}".</p>
+                                                <p style={{fontSize: '0.9rem', marginTop: '0.5rem'}}>Probeer een andere zoekterm.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
 
                                 <div className={`${componentStyles.PagePanel} ${componentStyles.RecordingPanel}`}>
                                     {/* Container for mic selection dropdown */}
@@ -160,9 +238,9 @@ export function RecordingBook() {
                                         ) : (
                                             <span className={componentStyles.micPlaceholder}>Klik hier om microfoons te laden...</span>
                                         )}
+                                        {/* Display error messages */}
+                                        {controlsState.error && <p className={componentStyles.errorMessage}>{controlsState.error}</p>}
                                     </div>
-                                    {/* Display error messages */}
-                                    {controlsState.error && <p className={componentStyles.errorMessage}>{controlsState.error}</p>}
                                     <div className={componentStyles.micContainer}>
                                         {controlsState.isRecording && <MicOnIcon/>}
                                     </div>
@@ -174,6 +252,7 @@ export function RecordingBook() {
 
                                     <div className={componentStyles.waveformWrapper}>
                                         <div ref={waveformRef} className={componentStyles.waveform}></div>
+                                        <div ref={timelineRef} className={componentStyles.timelineContainer}></div>
                                     </div>
 
                                     <div className={componentStyles.TimeDisplay}>
@@ -186,9 +265,9 @@ export function RecordingBook() {
                                     <div className={componentStyles.SaveButtonSection}>
                                         <button
                                             className={componentStyles.SaveButton}
-                                            onClick={controlsState.handleDownloadRecording}
+                                            onClick={handleSaveRecording}
                                             disabled={!controlsState.recordedAudioBlob}
-                                            title={controlsState.recordedAudioBlob ? 'Download opgenomen audio' : 'Geen opname beschikbaar'}
+                                            title={controlsState.recordedAudioBlob ? 'Sla opname op in browser' : 'Geen opname beschikbaar'}
                                         >
                                             {controlsState.recordedAudioBlob ? '💾 OPSLAAN' : 'GEEN OPNAME'}
                                         </button>
@@ -196,36 +275,68 @@ export function RecordingBook() {
                                 </div>
 
                                 <div className={`${componentStyles.PagePanel} ${componentStyles.PoemPanel}`}>
-                                    <div className={componentStyles.SearchSection}>
-                                        <AltSearchBar onPoemSelect={handlePoemSelect} onSearchStart={handleSearchStart}/>
-                                    </div>
-                                    <div className={componentStyles.PoemPanel_header}>
-                                        <h2 className={componentStyles.PoemPanel_title}>
-                                            {selectedPoem?.title || ''}
-                                        </h2>
-                                        {selectedPoem?.author && (
-                                            <p className={componentStyles.PoemPanel_author}>
-                                                door {selectedPoem.author}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div className={componentStyles.PoemPanel_content}>
-                                        {selectedPoem?.lines?.map((line, i) => (
-                                            <React.Fragment key={i}>
-                                                {line}<br/>
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                    <div className={componentStyles.BottomButtonWrapper}>
-                                        <button className={componentStyles.BrowseButton}>
-                                            <span>Klik voor text highlight</span>
-                                            <HighlightIcon className={componentStyles.ButtonIcon}/>
-                                        </button>
-                                        <button className={componentStyles.ListenButton}>
-                                            <span>Klik om te auto-scrollen</span>
-                                            <DownArrowIcon className={componentStyles.ButtonIcon}/>
-                                        </button>
-                                    </div>
+                                    {activeTab === 'Beluister Opnames' ? (
+                                        <div className={componentStyles.PoemPanel_content}>
+                                            <h2 className={componentStyles.PoemPanel_title}>Mijn Opnames</h2>
+                                            {storage.recordings.length === 0 ? (
+                                                <p>Hier komen jouw opgeslagen opnames te staan.</p>
+                                            ) : (
+                                                <ul style={{listStyle: 'none', padding: 0, width: '100%', overflowY: 'auto', maxHeight: '400px'}}>
+                                                    {storage.recordings.map(rec => (
+                                                        <li key={rec.id} style={{marginBottom: '1rem', borderBottom: '1px solid #ccc', paddingBottom: '0.5rem'}}>
+                                                            <div style={{fontWeight: 'bold'}}>{rec.title}</div>
+                                                            <div style={{fontSize: '0.8rem', color: '#666'}}>{new Date(rec.date).toLocaleString()}</div>
+                                                            <div style={{display: 'flex', gap: '0.5rem', marginTop: '0.5rem'}}>
+                                                                <audio controls src={URL.createObjectURL(rec.blob)} style={{height: '40px', width: '100%', maxWidth: '350px'}} />
+                                                                <button onClick={() => storage.deleteRecording(rec.id)} style={{background: 'red', color: 'white', border: 'none', padding: '0.25rem 0.5rem', borderRadius: '4px', cursor: 'pointer'}}>
+                                                                    🗑️
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className={componentStyles.SearchSection}>
+                                                <AltSearchBar 
+                                                    searchTerm={searchTerm}
+                                                    onSearchTermChange={updateSearchTerm}
+                                                    onSearch={handleManualSearch}
+                                                    loading={searchLoading}
+                                                />
+                                            </div>
+                                            
+                                            <div className={componentStyles.PoemPanel_header}>
+                                                <h2 className={componentStyles.PoemPanel_title}>
+                                                    {selectedPoem?.title || INSTRUCTION_POEM.title}
+                                                </h2>
+                                                {selectedPoem?.author && (
+                                                    <p className={componentStyles.PoemPanel_author}>
+                                                        door {selectedPoem.author}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <div className={componentStyles.PoemPanel_content}>
+                                                {(selectedPoem?.lines || INSTRUCTION_POEM.lines)?.map((line, i) => (
+                                                    <React.Fragment key={i}>
+                                                        {line}<br/>
+                                                    </React.Fragment>
+                                                ))}
+                                            </div>
+                                            <div className={componentStyles.BottomButtonWrapper}>
+                                                <button className={componentStyles.BrowseButton} onClick={handleComingSoon}>
+                                                    <span>Klik voor text highlight</span>
+                                                    <HighlightIcon className={componentStyles.ButtonIcon}/>
+                                                </button>
+                                                <button className={componentStyles.ListenButton}>
+                                                    <span>Klik om te auto-scrollen</span>
+                                                    <DownArrowIcon className={componentStyles.ButtonIcon}/>
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>

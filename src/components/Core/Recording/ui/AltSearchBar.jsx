@@ -1,24 +1,18 @@
 import styles from '../RecordingPage.module.scss';
 import {useSearchPoems} from '@/hooks/search';
 
-export function AltSearchBar({onPoemSelect, onSearchStart}) {
-    const {searchTerm, updateSearchTerm, handleSearch, results, loading} = useSearchPoems();
-
-    const handleSearchClick = async () => {
-        await handleSearch();
-        // Return first result to parent if available, otherwise null (no results)
-        if (onPoemSelect) {
-            onPoemSelect(results.length > 0 ? results[0] : null);
+export function AltSearchBar({ searchTerm, onSearchTermChange, onSearch, loading }) {
+    
+    const handleSearchClick = () => {
+        if (onSearch) {
+            onSearch();
         }
     };
 
     const handleInputChange = (e) => {
         const value = e.target.value;
-        updateSearchTerm(value);
-
-        // Notify parent when typing starts (first character typed)
-        if (value.length === 1 && onSearchStart) {
-            onSearchStart();
+        if (onSearchTermChange) {
+            onSearchTermChange(value);
         }
     };
 
@@ -26,6 +20,19 @@ export function AltSearchBar({onPoemSelect, onSearchStart}) {
         if (e.key === 'Enter') {
             handleSearchClick();
         }
+    };
+
+    const handleCheckboxChange = (e) => {
+        e.preventDefault();
+        alert("Binnenkort beschikbaar (v2)");
+    };
+
+    const handleFocus = (e) => {
+        e.target.placeholder = "";
+    };
+
+    const handleBlur = (e) => {
+        e.target.placeholder = "Verschuur: De Gevel van Mijn Dromen";
     };
 
     return (
@@ -37,6 +44,7 @@ export function AltSearchBar({onPoemSelect, onSearchStart}) {
                     id="toggle-search-options"
                     className={styles['AltSearchBar-checkbox']}
                     style={{display: 'none'}}
+                    onChange={handleCheckboxChange}
                 />
                 <label htmlFor="toggle-search-options" className={styles['CustomCheckbox']}></label></div>
             <div className={styles['AltSearchBar-separator']}>
@@ -47,6 +55,8 @@ export function AltSearchBar({onPoemSelect, onSearchStart}) {
                     value={searchTerm}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                     disabled={loading}
                 />
                 <button

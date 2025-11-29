@@ -152,11 +152,12 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   justify-content: center;
   width:           100%;
   max-width:       1524px; /* Match TopNavContainer max-width */
-  margin:          0; /* No margins for perfect connection */
+  margin:          0 auto; /* No margins for perfect connection */
   color:           $text-inverse;
   gap:             1.5rem;
-flex-basis: 820px;
-
+  flex-basis: 820px;
+  max-height: 85vh; /* Constrain height to viewport */
+  overflow: hidden; /* Prevent container from scrolling, force internal scroll */
   }
 
 .SpiralBinding {
@@ -299,11 +300,12 @@ flex-basis: 820px;
   font-size:    1.25rem;
   line-height:  1.4;
   display:      flex;
+  flex-direction: column; /* Ensure content stacks vertically */
   overflow-y:   auto;
   align-items:  flex-start;
   flex-grow:    1;
   padding-left: 1rem;
-
+  gap:          1rem;
   }
 
 .RecordButton {
@@ -339,6 +341,11 @@ flex-basis: 820px;
   margin-top: $spacing-xs;
   text-align: left; // Align with the label
   width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+  z-index: 100;
 }
 
 .micSelectWrapper {
@@ -347,6 +354,7 @@ flex-basis: 820px;
   gap:            5px;
   margin-bottom: 1rem; // Add some space below
   cursor:         pointer;
+  position: relative;
   }
 
 .micSelect {
@@ -411,10 +419,21 @@ flex-basis: 820px;
   }
 
 .waveformWrapper {
+  position:      relative; /* For absolute timeline positioning */
   width:         100%; /* Added width */
   border:        2px solid #333;
   border-radius: 8px;
   background:    transparent; /* Changed from #000 */
+  }
+
+.timelineContainer {
+  position: absolute;
+  bottom:   0;
+  left:     0;
+  width:    100%;
+  height:   20px; /* Match timeline height */
+  z-index:  20;
+  pointer-events: none; /* Let clicks pass through if needed, though timeline usually needs interaction */
   }
 
 .waveform {
@@ -646,3 +665,45 @@ flex-basis: 820px;
   transform:  translateY(0);
   box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
   }
+
+.SearchResultsOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.98);
+    z-index: 50;
+    padding: 1rem;
+    overflow-y: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    .OverlayHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+
+        h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    }
+
+    .CloseOverlayButton {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        padding: 0.2rem 0.5rem;
+        
+        &:hover {
+            color: #000;
+        }
+    }
+}

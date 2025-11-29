@@ -12,7 +12,7 @@ const formatTime = (seconds) => {
     return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
 };
 
-export const useRecording = (containerRef) => {
+export const useRecording = (containerRef, timelineRef) => {
     const { user } = useAuth();
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -178,8 +178,9 @@ export const useRecording = (containerRef) => {
                 });
 
                 // Register timeline plugin after recording ends (no separate container)
-                if (!timelinePluginRef.current) {
+                if (!timelinePluginRef.current && timelineRef?.current) {
                     timelinePluginRef.current = wavesurfer.registerPlugin(Timeline.create({
+                        container: timelineRef.current,
                         height: 20,
                         timeInterval: 0.2,
                         primaryLabelInterval: 5,

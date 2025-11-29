@@ -53,7 +53,7 @@ export const PoemActionButtons = memo(({
                     whileTap={buttonVariants.button.tap}
                 >
                     <span className={styles.expandIcon}>🎤</span>
-                    Declameer!
+                    Declameer hier
                 </motion.button>
             )}
 

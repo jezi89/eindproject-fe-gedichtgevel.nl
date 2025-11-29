@@ -25,7 +25,14 @@ export default function TextEffectControls({
                     <label>Stijl</label>
                     <select
                         value={effectMode}
-                        onChange={(e) => onEffectModeChange(e.target.value)}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            if (val !== 'none') {
+                                alert("Binnenkort beschikbaar (v2)");
+                                return;
+                            }
+                            onEffectModeChange(val);
+                        }}
                         className={styles.select}
                         style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
                     >
