@@ -27,10 +27,6 @@ export default function TextEffectControls({
                         value={effectMode}
                         onChange={(e) => {
                             const val = e.target.value;
-                            if (val !== 'none') {
-                                alert("Binnenkort beschikbaar (v2)");
-                                return;
-                            }
                             onEffectModeChange(val);
                         }}
                         className={styles.select}

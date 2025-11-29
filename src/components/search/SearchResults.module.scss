@@ -1213,20 +1213,22 @@
     }
 
     .resultCard {
-        width: 250px; // Fixed width that fits 3 in 820px (820 - 2*8 gap = 804 / 3 = 268 max)
+        width: calc(100% - 4rem); // Full width with margins
+        max-width: 600px; // Cap width for very large screens
         flex-shrink: 0;
-        margin-bottom: 0;
+        margin: 0 auto; // Center the card
     }
 
     // Override column specific widths
     &.threeColumns,
     &.threeColumnsCarousel {
         .resultsList {
-            gap: 0.5rem;
+            gap: 0; // No gap needed for single view
             max-width: 100%;
         }
         .resultCard {
-            width: 250px;
+            width: calc(100% - 4rem);
+            max-width: 600px;
         }
     }
 
@@ -1257,10 +1259,24 @@
 
     // Button styling overrides for overlay
     :global(.SearchResults_expandButton__3F8q_) {
-        font-size: 0.8rem; // Smaller font
-        text-transform: none; // No uppercase
-        padding: 0.4rem 0.8rem; // Smaller padding
-        width: auto; // Auto width
-        min-width: unset; // Remove min-width
+        font-size: 1rem; // Larger icon size
+        padding: 0.5rem; // Square-ish padding
+        width: 36px; // Fixed width
+        height: 36px; // Fixed height
+        min-width: unset;
+        border-radius: 50%; // Circular button
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.5rem;
+        position: relative; // Ensure z-index works
+        z-index: 20; // Ensure clickable above arrows container
+        cursor: pointer;
+
+        // Ensure icon is centered and visible
+        .SearchResults_expandIcon__3F8q_ {
+            margin-right: 0; // Remove margin
+            font-size: 1.2rem; // Adjust icon size
+        }
     }
 }

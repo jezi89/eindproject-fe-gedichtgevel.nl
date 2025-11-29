@@ -51,6 +51,7 @@ export const PoemResultItem = memo(
     onNavigateToCanvas,
     onNavigateToRecording,
     onCollapseEvent,
+    showLabels = true,
   }) => {
     // Calling hooks before any other logic
     const contentContainerRef = useRef(null);
@@ -185,6 +186,7 @@ export const PoemResultItem = memo(
             onNavigateToRecording={() => onNavigateToRecording?.(poem)}
             onToggle={handleIndividualToggle}
             styles={styles}
+            showLabels={showLabels}
           />
 
           {/* Expansion container */}
@@ -238,6 +240,7 @@ export const PoemResultItem = memo(
                   onNavigateToRecording={() => onNavigateToRecording?.(poem)}
                   onToggle={handleIndividualToggle}
                   styles={styles}
+                  showLabels={showLabels}
                 />
               )}
             </motion.div>
@@ -261,6 +264,7 @@ export const PoemResultItem = memo(
                 onToggle={handleIndividualToggle}
                 styles={styles}
                 className={styles.nonExpandableActions}
+                showLabels={showLabels}
               />
             </motion.div>
           )}

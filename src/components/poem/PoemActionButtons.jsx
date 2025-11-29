@@ -20,7 +20,8 @@ export const PoemActionButtons = memo(({
                                            onNavigateToRecording,
                                            onToggle,
                                            styles,
-                                           className = ''
+                                           className = '',
+                                           showLabels = true
                                        }) => {
 
     // Animation delay for expanded state buttons
@@ -53,7 +54,7 @@ export const PoemActionButtons = memo(({
                     whileTap={buttonVariants.button.tap}
                 >
                     <span className={styles.expandIcon}>🎤</span>
-                    Declameer hier
+                    {showLabels && <span className={styles.buttonText}>Declameer hier</span>}
                 </motion.button>
             )}
 
@@ -69,7 +70,7 @@ export const PoemActionButtons = memo(({
                             whileTap={buttonVariants.button.tap}
                         >
                             <span className={styles.expandIcon}>📋</span>
-                            Laad in canvas
+                            {showLabels && <span className={styles.buttonText}>Laad in canvas</span>}
                         </motion.button>
                     ) : (
                         <motion.button
@@ -80,7 +81,7 @@ export const PoemActionButtons = memo(({
                             whileTap={buttonVariants.button.tap}
                         >
                             <span className={styles.expandIcon}>🎨</span>
-                            Open in canvas
+                            {showLabels && <span className={styles.buttonText}>Open in canvas</span>}
                         </motion.button>
                     )}
                 </>
@@ -99,12 +100,16 @@ export const PoemActionButtons = memo(({
                     <span className={styles.expandIcon}>
                         {isExpanded ? '▲' : '▼'}
                     </span>
-                    {isExpanded ? (
-                        'Verberg volledig gedicht'
-                    ) : (
-                        animationPhase === 'expanding' ? 'Uitklappen...' :
-                            animationPhase === 'scrolling' ? 'Plaatsen...' :
-                                'Toon volledig gedicht'
+                    {showLabels && (
+                        <span className={styles.buttonText}>
+                            {isExpanded ? (
+                                'Verberg volledig gedicht'
+                            ) : (
+                                animationPhase === 'expanding' ? 'Uitklappen...' :
+                                    animationPhase === 'scrolling' ? 'Plaatsen...' :
+                                        'Toon volledig gedicht'
+                            )}
+                        </span>
                     )}
                 </motion.button>
             )}

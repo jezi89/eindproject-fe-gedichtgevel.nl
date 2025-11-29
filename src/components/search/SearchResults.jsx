@@ -163,6 +163,7 @@ export const SearchResults = memo(({
                                         onNavigateToCanvas={onNavigateToCanvas}
                                         onNavigateToRecording={onNavigateToRecording}
                                         onCollapseEvent={handleCollapseEvent}
+                                        showLabels={!isOverlay}
                                     />
                                 </motion.div>
                             );

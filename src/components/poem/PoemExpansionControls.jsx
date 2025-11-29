@@ -32,7 +32,8 @@ export const PoemExpansionControls = ({
                                           onNavigateToCanvas,
                                           onNavigateToRecording,
                                           onToggle,
-                                          styles
+                                          styles,
+                                          showLabels = true
                                       }) => {
     if (!canExpand) return null;
 
@@ -59,6 +60,7 @@ export const PoemExpansionControls = ({
                         onNavigateToRecording={onNavigateToRecording}
                         onToggle={onToggle}
                         styles={styles}
+                        showLabels={showLabels}
                     />
                 </motion.div>
             )}

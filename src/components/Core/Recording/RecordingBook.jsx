@@ -1,5 +1,5 @@
 import React, {useRef, useState, useContext, useEffect} from 'react';
-import {useLocation} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 import {AltSearchBar} from './ui/AltSearchBar';
 import {AudioControls} from './ui/AudioControls';
 import {TopNavigation} from './layout/TopNavigation';
@@ -91,6 +91,7 @@ export function RecordingBook() {
     const waveformRef = useRef(null);
     const timelineRef = useRef(null);
     const location = useLocation();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('Geselecteerd Gedicht');
     const [selectedPoem, setSelectedPoem] = useState(INSTRUCTION_POEM);
     const [showOverlay, setShowOverlay] = useState(false);
@@ -206,6 +207,10 @@ export function RecordingBook() {
                                                 onPoemSelect={handlePoemSelect}
                                                 isOverlay={true}
                                                 ResultsOverviewComponent={null}
+                                                onNavigateToRecording={handlePoemSelect}
+                                                onNavigateToCanvas={(poem) => {
+                                                    navigate('/ontwerpgevel', { state: { selectedPoem: poem } });
+                                                }}
                                             />
                                         ) : (
                                             <div style={{padding: '2rem', textAlign: 'center', color: '#666'}}>
