@@ -258,13 +258,51 @@ export default function Canvas({
         }
     }, [canvasState.moveMode, canvasState.selectedLines.size, keyboardShortcuts, canvasState.restoreSelection]);
 
+    // Layout position state (standard = controls left, swapped = controls right)
+    const [layoutPosition, setLayoutPosition] = useState('standard');
+
+    const handleToggleLayoutPosition = useCallback(() => {
+        setLayoutPosition(prev => prev === 'standard' ? 'swapped' : 'standard');
+    }, []);
+
+    const handleResetAllText = useCallback(() => {
+        // Reset all line overrides
+        canvasState.setLineOverrides({});
+        // Clear selection
+        canvasState.clearSelection();
+        // Reset global styles to defaults (optional, but "Reset All" implies a fresh start)
+        // We can keep global styles or reset them. Let's reset them to reasonable defaults.
+        canvasState.setFontSize(40);
+        canvasState.setLineHeight(1.2);
+        canvasState.setLetterSpacing(0);
+        canvasState.setTextAlign('center');
+        canvasState.setFillColor('#ffffff');
+        canvasState.setSkewX(0);
+        canvasState.setSkewY(0);
+        canvasState.setFontWeight('normal');
+        canvasState.setFontStyle('normal');
+        
+        // Reset hierarchical colors
+        handlers.handleResetTitleColor();
+        handlers.handleResetAuthorColor();
+
+        // Reset viewport
+        handleResetViewport();
+
+    }, [canvasState, handlers, handleResetViewport]);
+
     return (
         <>
             <ResponsiveLayout
                 layout={layout}
                 previewState={previewState}
+                layoutPosition={layoutPosition}
+                onToggleLayoutPosition={handleToggleLayoutPosition}
                 controls={
                     <Controls
+                        layoutPosition={layoutPosition} // <-- NIEUW
+                        onResetAllText={handleResetAllText}
+                        onToggleLayoutPosition={handleToggleLayoutPosition}
                         onResetViewport={handleResetViewport}
                         fontSize={canvasState.fontSize}
                         onFontSizeChange={handlers.handleFontSizeChange}
@@ -340,6 +378,7 @@ export default function Canvas({
                         hoverFreezeActive={hoverFreezeActive} // Pass hover freeze state for timer
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
+                        totalLineCount={currentPoem?.lines?.length || 0}
 
                         // Text Background Props
                         textMaterial={canvasState.textMaterial}

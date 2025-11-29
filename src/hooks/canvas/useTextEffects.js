@@ -12,32 +12,33 @@ import { DropShadowFilter } from 'pixi-filters';
 export const useTextEffects = (mode, params) => {
     return useMemo(() => {
         if (!mode || mode === 'none') {
-            return { style: {}, blendMode: 'normal', alpha: 1 };
+            return { filters: [], style: {}, blendMode: 'normal', alpha: 1 };
         }
 
         const effectParams = params || {};
 
         if (mode === 'painted') {
             return {
-                style: {
-                    filters: [new BlurFilter(effectParams.blur || 0)],
-                },
+                filters: [new BlurFilter(effectParams.blur || 0)],
+                style: {},
                 blendMode: 'multiply',
                 alpha: effectParams.opacity || 0.8
             };
         }
 
         if (mode === 'raised') {
+            const shadow = new DropShadowFilter({
+                distance: effectParams.distance || 6,
+                blur: 2, // Sharper shadow for more "pop"
+                alpha: 0.8, // Darker shadow
+                rotation: 45,
+                color: 0x000000
+            });
+            shadow.padding = 30; // Prevent clipping
+
             return {
-                style: {
-                    filters: [new DropShadowFilter({
-                        distance: effectParams.distance || 6,
-                        blur: 2, // Sharper shadow for more "pop"
-                        alpha: 0.8, // Darker shadow
-                        rotation: 45,
-                        color: 0x000000
-                    })]
-                },
+                filters: [shadow],
+                style: {},
                 blendMode: 'normal',
                 alpha: 1
             };
@@ -52,6 +53,7 @@ export const useTextEffects = (mode, params) => {
                 rotation: 225, // Top-Left (Shadow)
                 color: 0x000000
             });
+            shadow.padding = 30; // Prevent clipping
             
             const highlight = new DropShadowFilter({
                 distance: depth,
@@ -60,16 +62,16 @@ export const useTextEffects = (mode, params) => {
                 rotation: 45, // Bottom-Right (Highlight)
                 color: 0xffffff
             });
+            highlight.padding = 30; // Prevent clipping
 
             return {
-                style: {
-                    filters: [shadow, highlight]
-                },
+                filters: [shadow, highlight],
+                style: {},
                 blendMode: 'normal',
                 alpha: 1
             };
         }
 
-        return { style: {}, blendMode: 'normal', alpha: 1 };
+        return { filters: [], style: {}, blendMode: 'normal', alpha: 1 };
     }, [mode, params]);
 };

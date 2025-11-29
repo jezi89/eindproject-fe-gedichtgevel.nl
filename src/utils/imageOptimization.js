@@ -52,6 +52,12 @@ function calculatePexelsOptimalURL(photo, viewportWidth, viewportHeight, quality
     viewportHeight = Math.round(viewportHeight * qualityMultiplier);
     const isPortrait = photo.height > photo.width;
 
+    // Safety check: if src is missing (legacy/broken data), fallback to url
+    if (!photo.src) {
+        console.warn('⚠️ Pexels: Missing src object, using fallback url');
+        return photo.url || photo.src?.original;
+    }
+
     let url = photo.src.original;
     let targetDimension, dimensionType;
 
@@ -125,7 +131,7 @@ function calculateFlickrOptimalURL(photo, viewportWidth, viewportHeight, quality
         }
     }
 
-    const fallback = photo.url_o || photo.url_k || photo.url_h || photo.url_b || photo.src?.large2x;
+    const fallback = photo.url_o || photo.url_k || photo.url_h || photo.url_b || photo.src?.large2x || photo.url;
     console.log(`📐 Flickr: Fallback (${isPortrait ? 'portrait' : 'landscape'})`);
     return fallback;
 }
@@ -164,5 +170,5 @@ export function calculateOptimalImageRequest(
 
     // Fallback
     console.warn('⚠️ Unknown photo source, using fallback');
-    return photo.src?.large2x || photo.url_b || photo.src?.original;
+    return photo.src?.large2x || photo.url_b || photo.src?.original || photo.url;
 }

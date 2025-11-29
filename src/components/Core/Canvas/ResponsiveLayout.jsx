@@ -6,7 +6,9 @@ export const ResponsiveLayout = memo(({
                                           controls,
                                           canvas,
                                           navigation,
-                                          previewState = 'normal'
+                                          previewState = 'normal',
+                                          layoutPosition = 'standard', // 'standard' (Controls Left) or 'swapped' (Controls Right)
+                                          onToggleLayoutPosition
                                       }) => {
 
     const getLayoutClass = () => {
@@ -16,8 +18,13 @@ export const ResponsiveLayout = memo(({
         return className;
     };
 
-    const controlsPanelClass = `${styles.controlsPanel} ${!layout.controlsVisible ? styles.collapsed : ''}`;
-    const navPanelClass = `${styles.navPanel} ${!layout.navVisible ? styles.collapsed : ''}`;
+    const isSwapped = layoutPosition === 'swapped';
+
+    const controlsPanelClass = `${styles.controlsPanel} ${!layout.controlsVisible ? styles.collapsed : ''} ${isSwapped ? styles.swapped : ''}`;
+    const navPanelClass = `${styles.navPanel} ${!layout.navVisible ? styles.collapsed : ''} ${isSwapped ? styles.swapped : ''}`;
+    
+    const openControlsBtnClass = `${styles.openButton} ${styles.openControlsButton} ${isSwapped ? styles.swapped : ''}`;
+    const openNavBtnClass = `${styles.openButton} ${styles.openNavButton} ${isSwapped ? styles.swapped : ''}`;
 
     return (
         <div className={getLayoutClass()}>
@@ -28,7 +35,7 @@ export const ResponsiveLayout = memo(({
                 {/* Open Buttons - Render OVER canvas when panels collapsed */}
                 {!layout.controlsVisible && (
                     <button
-                        className={`${styles.openButton} ${styles.openControlsButton}`}
+                        className={openControlsBtnClass}
                         onClick={layout.toggleControls}
                         aria-label="Open styling controls"
                     >
@@ -38,7 +45,7 @@ export const ResponsiveLayout = memo(({
 
                 {!layout.navVisible && (
                     <button
-                        className={`${styles.openButton} ${styles.openNavButton}`}
+                        className={openNavBtnClass}
                         onClick={layout.toggleNav}
                         aria-label="Open navigation"
                     >
@@ -47,12 +54,15 @@ export const ResponsiveLayout = memo(({
                 )}
             </div>
 
-            {/* Left Controls Panel - Overlay (z-index: 10) */}
+            {/* Controls Panel */}
             <div className={controlsPanelClass}>
-                {React.cloneElement(controls, {toggle: layout.toggleControls})}
+                {React.cloneElement(controls, {
+                    toggle: layout.toggleControls,
+                    onToggleLayoutPosition: onToggleLayoutPosition // Pass toggle handler
+                })}
             </div>
 
-            {/* Right Navigation Panel - Overlay (z-index: 10) */}
+            {/* Navigation Panel */}
             <div className={navPanelClass}>
                 {React.cloneElement(navigation, {
                     navWidth: layout.navWidth,

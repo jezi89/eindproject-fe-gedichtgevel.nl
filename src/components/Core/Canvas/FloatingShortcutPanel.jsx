@@ -100,16 +100,16 @@ export function FloatingShortcutPanel({
         }
     };
 
-    // Auto-hide panel after inactivity if not pinned
-    useEffect(() => {
-        if (isExpanded && !isPinned) {
-            const timeout = setTimeout(() => {
-                setIsExpanded(false);
-            }, 5000); // 5 seconds inactivity
-
-            return () => clearTimeout(timeout);
-        }
-    }, [isExpanded, isPinned]);
+    // Auto-hide panel logic removed as per user request
+    // useEffect(() => {
+    //     if (isExpanded && !isPinned) {
+    //         const timeout = setTimeout(() => {
+    //             setIsExpanded(false);
+    //         }, 5000); // 5 seconds inactivity
+    //
+    //         return () => clearTimeout(timeout);
+    //     }
+    // }, [isExpanded, isPinned]);
 
     // Enhanced context-aware shortcut filtering
     const filterShortcutsByMode = (shortcuts, mode, hasSelection, xySlidersVisible) => {

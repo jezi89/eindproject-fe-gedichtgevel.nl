@@ -200,3 +200,14 @@ export function useFontManager() {
 
   return { availableFonts, fontStatus, loadFont };
 }
+
+// Helper to generate optimized preview URL
+export function getFontPreviewUrl(fontName) {
+    if (!fontApiValues[fontName]) return null;
+    // Remove weights for preview to keep it even smaller, or keep them? 
+    // Let's keep 400 (Regular) for preview.
+    const familyBase = fontApiValues[fontName].split(':')[0];
+    // Encode the text (font name)
+    const text = encodeURIComponent(fontName);
+    return `https://fonts.googleapis.com/css2?family=${familyBase}&text=${text}&display=swap`;
+}

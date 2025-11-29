@@ -96,7 +96,9 @@ export default function Controls({
                                      setTextEffectParams,
 
                                      totalLineCount = 0, // <-- NIEUW
-
+                                     onResetAllText, // <-- NIEUW: Reset alle tekst edits
+                                     onToggleLayoutPosition, // <-- NIEUW: Wissel layout positie
+                                     layoutPosition, // <-- NIEUW: Voor dropdown positioning
                                  }) {
     const {user} = useAuthContext();
 
@@ -296,7 +298,17 @@ export default function Controls({
     return (
         <div className={styles.controlsWrapper}>
             <div className={styles.panelHeader}>
-                <h2>Styling Controls</h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <h2>Styling Controls</h2>
+                    <button
+                        onClick={onToggleLayoutPosition}
+                        className={styles.layoutToggleButton}
+                        title="Wissel paneel positie (Links/Rechts)"
+                        style={{ marginTop: '2px' }} // Visual alignment
+                    >
+                        ⇄
+                    </button>
+                </div>
                 <button
                     onClick={toggle}
                     className={styles.closeButton}
@@ -306,21 +318,38 @@ export default function Controls({
                 </button>
             </div>
 
-            {/* NIEUW: Selection Indicator */}
+            {/* NIEUW: Selection Indicator - Compact Design */}
             {hasSelection && (
-                <div style={{
-                    backgroundColor: '#eab308',
-                    color: 'black',
-                    padding: '8px',
-                    marginBottom: '10px',
-                    borderRadius: '4px',
-                    fontWeight: 'bold',
-                    textAlign: 'center',
-                    fontSize: '0.9rem'
-                }}>
-                    ✏️ Editing {selectionCount} Selected Line{selectionCount !== 1 ? 's' : ''}
+                <div className={styles.selectionIndicator}>
+                    <div className={styles.selectionInfo}>
+                        <span className={styles.selectionIcon}>✏️</span>
+                        <span className={styles.selectionText}>
+                            {selectionCount} {selectionCount === 1 ? 'regel' : 'regels'} geselecteerd
+                        </span>
+                    </div>
+                    <button
+                        onClick={handleResetSelectedLines}
+                        className={styles.resetSelectionButton}
+                        title="Reset selectie naar standaard waarden"
+                    >
+                        Reset Selectie
+                    </button>
                 </div>
             )}
+
+            {/* Global Reset Button */}
+            <button
+                onClick={() => {
+                    if (window.confirm("Weet je zeker dat je alle tekstbewerkingen wilt resetten? Dit kan niet ongedaan worden gemaakt.")) {
+                        if (onResetAllText) onResetAllText();
+                        if (onResetViewport) onResetViewport();
+                    }
+                }}
+                className={styles.globalResetButton}
+                title="Reset alle tekstbewerkingen en camera"
+            >
+                🔄 Reset Alles
+            </button>
 
             <BackgroundControls
                 query={query}
@@ -396,6 +425,7 @@ export default function Controls({
                 setFontSectionOpen={setFontSectionOpen}
                 colorSubsectionOpen={colorSubsectionOpen}
                 setColorSubsectionOpen={setColorSubsectionOpen}
+                layoutPosition={layoutPosition} // <-- NIEUW
             />
 
             <LayoutControls

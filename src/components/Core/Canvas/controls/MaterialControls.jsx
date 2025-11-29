@@ -43,7 +43,7 @@ export default function MaterialControls({
                 onClick={toggle}
                 aria-expanded={isOpen}
             >
-                <span>Materia & Achtergrond</span>
+                <h3>🧱 Materiaal & Achtergrond</h3>
                 <span className={styles.arrow}>{isOpen ? '▼' : '▶'}</span>
             </button>
 

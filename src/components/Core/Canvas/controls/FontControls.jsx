@@ -1,7 +1,153 @@
-// src/components/Core/Canvas/components/controls/FontControls.jsx
+import React, { useState, useEffect, useRef } from "react";
+import styles from "../Canvas.module.scss";
+import { getFontPreviewUrl } from "../../../../hooks/canvas/useFontManager";
 
-import React from "react";
-import styles from "../Canvas.module.scss"; // Updated import path
+// Helper component for individual font options with lazy preview loading
+const FontOption = ({ font, onSelect, isSelected }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        const url = getFontPreviewUrl(font.value);
+        if (url) {
+            const link = document.createElement('link');
+            link.href = url;
+            link.rel = 'stylesheet';
+            link.onload = () => setIsLoaded(true);
+            document.head.appendChild(link);
+            // We don't remove the link to keep the font available
+        }
+    }, [font.value]);
+
+    return (
+        <div
+            className={`${styles.fontOption} ${isSelected ? styles.selected : ''}`}
+            onClick={() => onSelect(font.value)}
+            style={{ 
+                fontFamily: isLoaded ? font.value : 'inherit',
+                opacity: isLoaded ? 1 : 0.7 
+            }}
+            title={font.label}
+        >
+            {font.label}
+        </div>
+    );
+};
+
+import { createPortal } from "react-dom";
+
+const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+    const triggerRef = useRef(null);
+
+    // Update position when opening
+    useEffect(() => {
+        if (isOpen && triggerRef.current) {
+            const updatePosition = () => {
+                const rect = triggerRef.current.getBoundingClientRect();
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                
+                // Determine direction based on layoutPosition or space available
+                // For now, simple logic: if swapped (right side), align right edge.
+                
+                let left = rect.left;
+                if (layoutPosition === 'swapped') {
+                    // Align right edge of dropdown with right edge of trigger
+                    // But since the dropdown is wider (300px), we need to adjust
+                    // rect.right - 300px
+                    left = rect.right - 300; 
+                }
+
+                setDropdownPosition({
+                    top: rect.bottom + scrollTop,
+                    left: left,
+                    width: rect.width
+                });
+            };
+
+            updatePosition();
+            window.addEventListener('resize', updatePosition);
+            window.addEventListener('scroll', updatePosition, true); // Capture scroll to handle parent scrolling
+
+            return () => {
+                window.removeEventListener('resize', updatePosition);
+                window.removeEventListener('scroll', updatePosition, true);
+            };
+        }
+    }, [isOpen, layoutPosition]);
+
+    // Close on click outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (triggerRef.current && !triggerRef.current.contains(event.target)) {
+                // Check if click is inside the portal content (which is not a child in DOM tree but is in React tree? 
+                // No, for Portal we need a specific check or just rely on the fact that the portal is at body level)
+                // Actually, checking if target is closest to .optionsList might be needed if we don't stop propagation.
+                // But simpler: if it's not the trigger, close it. 
+                // Wait, if we click inside the dropdown, we don't want to close immediately unless an option is selected.
+                // The dropdown content is in a portal, so `triggerRef.current.contains` will return false.
+                
+                // We can check if the click target is inside the dropdown by ID or class
+                if (!event.target.closest(`.${styles.optionsList}`)) {
+                     setIsOpen(false);
+                }
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [isOpen]);
+
+    // Find current label
+    const currentLabel = options.flatMap(g => g.fonts).find(f => f.value === value)?.label || value;
+
+    return (
+        <div className={styles.customSelect}>
+            <button 
+                ref={triggerRef}
+                className={styles.selectTrigger} 
+                onClick={() => setIsOpen(!isOpen)}
+                style={{ fontFamily: value }}
+            >
+                {currentLabel}
+                <span className={styles.arrow}>▼</span>
+            </button>
+
+            {isOpen && createPortal(
+                <div 
+                    className={styles.optionsList}
+                    style={{
+                        position: 'absolute',
+                        top: `${dropdownPosition.top}px`,
+                        left: `${dropdownPosition.left}px`,
+                        // width: '300px', // Defined in CSS
+                        zIndex: 9999 // Ensure it's on top of everything
+                    }}
+                >
+                    {options.map((group) => (
+                        <div key={group.label} className={styles.optGroup}>
+                            <div className={styles.groupLabel}>{group.label}</div>
+                            {group.fonts.map((font) => (
+                                <FontOption 
+                                    key={font.value} 
+                                    font={font} 
+                                    onSelect={(val) => {
+                                        onChange(val);
+                                        setIsOpen(false);
+                                    }}
+                                    isSelected={font.value === value}
+                                />
+                            ))}
+                        </div>
+                    ))}
+                </div>,
+                document.body
+            )}
+        </div>
+    );
+};
 
 export default function FontControls({
                                          // State & Derived Values
@@ -11,10 +157,10 @@ export default function FontControls({
                                          fontStyle,
                                          fontSize,
                                          hasSelection,
-                                         isSelectAll, // <-- NIEUW
+                                         isSelectAll,
                                          selectionCount,
                                          displayedFontSize,
-                                         letterSpacing, // <-- NIEUW (Global value needed for delta)
+                                         letterSpacing,
                                          displayedLetterSpacing,
 
                                          // Color System State
@@ -47,6 +193,7 @@ export default function FontControls({
                                          setFontSectionOpen,
                                          colorSubsectionOpen,
                                          setColorSubsectionOpen,
+                                         layoutPosition, // <-- Received from Controls
                                      }) {
     return (
         <div className={styles.controlSection}>
@@ -72,33 +219,24 @@ export default function FontControls({
                 {/* Font Family */}
                 <div className={styles.controlRow}>
                     <label htmlFor="fontFamily">Lettertype</label>
-                    <select
-                        id="fontFamily"
+                    <CustomFontSelect
                         value={displayedFontFamily}
-                        onChange={(e) => onFontFamilyChange(e.target.value)}
-                        style={{width: "100%", padding: "4px"}}
-                    >
-                        {availableFonts.map((group) => (
-                            <optgroup key={group.label} label={group.label}>
-                                {group.fonts.map((font) => (
-                                    <option key={font.value} value={font.value}>
-                                        {font.label}
-                                    </option>
-                                ))}
-                            </optgroup>
-                        ))}
-                    </select>
+                        onChange={onFontFamilyChange}
+                        options={availableFonts}
+                        layoutPosition={layoutPosition}
+                    />
                 </div>
 
-                {/* Font Style Controls (Bold/Italic) */}
+                {/* Font Style Controls (Bold/Italic + Weight) */}
                 <div className={styles.controlRow}>
                     <label>Tekststijl</label>
-                    <div className={styles.buttonGroup}>
+                    <div className={styles.buttonGroup} style={{ flexWrap: 'wrap', gap: '4px' }}>
                         <button
-                            className={fontWeight === "bold" ? styles.active : ""}
+                            className={fontWeight === "bold" || fontWeight === "700" ? styles.active : ""}
                             onClick={() =>
-                                onFontWeightChange(fontWeight === "bold" ? "normal" : "bold")
+                                onFontWeightChange(fontWeight === "bold" || fontWeight === "700" ? "normal" : "bold")
                             }
+                            title="Snel Vetgedrukt (700)"
                         >
                             <strong>B</strong>
                         </button>
@@ -109,9 +247,29 @@ export default function FontControls({
                                     fontStyle === "italic" ? "normal" : "italic"
                                 )
                             }
+                            title="Cursief"
                         >
                             <em>I</em>
                         </button>
+                        
+                        {/* Specific Weight Dropdown */}
+                        <select
+                            value={fontWeight === "bold" ? "700" : (fontWeight === "normal" ? "400" : fontWeight)}
+                            onChange={(e) => onFontWeightChange(e.target.value)}
+                            className={styles.weightSelect}
+                            style={{ width: 'auto', flex: 1, minWidth: '60px' }}
+                            title="Specifieke dikte (100-900)"
+                        >
+                            <option value="100">100 (Thin)</option>
+                            <option value="200">200 (Extra Light)</option>
+                            <option value="300">300 (Light)</option>
+                            <option value="400">400 (Normal)</option>
+                            <option value="500">500 (Medium)</option>
+                            <option value="600">600 (Semi Bold)</option>
+                            <option value="700">700 (Bold)</option>
+                            <option value="800">800 (Extra Bold)</option>
+                            <option value="900">900 (Black)</option>
+                        </select>
                     </div>
                 </div>
 

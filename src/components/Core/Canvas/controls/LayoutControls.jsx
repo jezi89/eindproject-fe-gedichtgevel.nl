@@ -53,6 +53,29 @@ export default function LayoutControls({
                     !layoutSectionOpen ? styles.collapsed : ""
                 }`}
             >
+                {/* Tekst Optimalisatie - Prominent bovenaan */}
+                {/* Tekst Optimalisatie - Prominent bovenaan */}
+                <div className={styles.optimizationContainer}>
+                    <div className={styles.optimizationHeader}>
+                        <input
+                            type="checkbox"
+                            id="textOptimization"
+                            checked={isOptimizationEnabled}
+                            onChange={(e) => setIsOptimizationEnabled(e.target.checked)}
+                            className={styles.optimizationCheckbox}
+                        />
+                        <label htmlFor="textOptimization" className={styles.optimizationTitle}>
+                            <span>✨ Scherper Tekst</span>
+                            <span>(Print Kwaliteit)</span>
+                        </label>
+                    </div>
+                    <div className={styles.optimizationDescription}>
+                        Zet dit AAN voor haarscherpe export.
+                        <br/>
+                        <em>(Standaard uit voor betere performance)</em>
+                    </div>
+                </div>
+
                 {/* Line Height */}
                 <div className={styles.controlGroup}>
                     <label htmlFor="lineHeightMultiplier">
@@ -271,20 +294,7 @@ export default function LayoutControls({
                     </button>
                 </div>
 
-                {/* Tekst Optimalisatie */}
-                <div className={`${styles.controlRow} ${styles.optimizationToggle}`}>
-                    <input
-                        type="checkbox"
-                        id="textOptimization"
-                        checked={isOptimizationEnabled}
-                        onChange={(e) => setIsOptimizationEnabled(e.target.checked)}
-                    />
-                    <label htmlFor="textOptimization">
-                        🚀 Toggle scherpere tekst aan
-                        <br/>
-                        (must voor high-res displays)
-                    </label>
-                </div>
+                {/* Line Height */}
             </div>
         </div>
     );

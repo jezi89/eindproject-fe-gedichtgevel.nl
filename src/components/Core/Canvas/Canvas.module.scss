@@ -1293,3 +1293,128 @@
 	gap:                   8px;
 	}
   }
+
+/* Optimization Toggle Styling */
+.optimizationContainer {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.optimizationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.optimizationCheckbox {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: $accent-gold;
+}
+
+.optimizationTitle {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1rem;
+  color: $primary-cognac; /* Using primary color for prominence */
+  line-height: 1.2;
+}
+
+.optimizationDescription {
+  font-size: 0.85em;
+  font-weight: normal;
+  opacity: 0.8;
+  margin-left: 36px; /* Indent to align with text above */
+  color: $neutral-dark;
+}
+
+/* Custom Font Select Styling */
+.customSelect {
+  position: relative;
+  width:    100%;
+  }
+
+.selectTrigger {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  width:           100%;
+  padding:         8px;
+  cursor:          pointer;
+  text-align:      left;
+  color:           $canvas-control-text;
+  border:          1px solid $canvas-control-border;
+  border-radius:   4px;
+  background:      $canvas-control-input-bg;
+  }
+
+.selectTrigger:hover {
+  border-color: $canvas-control-accent;
+  }
+
+.arrow {
+  font-size: 0.8em;
+  color:     $canvas-control-text-muted;
+  }
+
+.optionsList {
+  position:         absolute;
+  z-index:          3000;
+  top:              100%;
+  width:            300px; /* Wider than trigger to show long names */
+  max-height:       400px;
+  overflow-y:       auto;
+  border:           1px solid $canvas-control-border;
+  border-radius:    4px;
+  background-color: $canvas-control-bg;
+  box-shadow:       0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+/* Positioning logic based on layout */
+.alignLeft {
+  left: 0;
+  }
+
+.alignRight {
+  right: 0;
+  left:  auto;
+  }
+
+.optGroup {
+  border-bottom: 1px solid $canvas-control-border;
+  }
+
+.optGroup:last-child {
+  border-bottom: none;
+  }
+
+.groupLabel {
+  font-size:      0.75rem;
+  font-weight:    bold;
+  padding:        8px 12px;
+  text-transform: uppercase;
+  color:          $neutral-dark; /* Darker text for visibility */
+  background:     rgba(0, 0, 0, 0.05); /* Slightly darker background */
+  letter-spacing: 0.05em;
+  }
+
+.fontOption {
+  font-size:  1.1rem; /* Larger for preview */
+  padding:    8px 12px;
+  cursor:     pointer;
+  transition: background 0.2s;
+  color:      $neutral-black; /* Black for clear preview */
+  }
+
+.fontOption:hover {
+  background-color: $canvas-control-hover;
+  }
+
+.fontOption.selected {
+  color:            $canvas-control-accent;
+  background-color: rgba($canvas-control-accent, 0.1);
+  }

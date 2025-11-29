@@ -43,13 +43,7 @@ export function serializeCanvasState(canvasState, poemData = null) {
                 // It's already an object
                 if (canvasState.backgroundImage.url) {
                     return {
-                        url: canvasState.backgroundImage.url,
-                        thumbnail: canvasState.backgroundImage.thumbnail,
-                        alt: canvasState.backgroundImage.alt || null,
-                        photographer: canvasState.backgroundImage.photographer,
-                        source: canvasState.backgroundImage.source,
-                        width: canvasState.backgroundImage.width,
-                        height: canvasState.backgroundImage.height
+                        ...canvasState.backgroundImage // Preserve all properties (including Flickr variants)
                     };
                 }
 
@@ -104,6 +98,19 @@ export function serializeCanvasState(canvasState, poemData = null) {
                 }
             },
 
+            // Text Effects & Material (New)
+            textEffect: {
+                mode: canvasState.textEffectMode ?? 'none',
+                params: canvasState.textEffectParams ?? {
+                    opacity: 0.8,
+                    blur: 0.5,
+                    distance: 2,
+                    depth: 2
+                },
+                material: canvasState.textMaterial ?? null,
+                padding: canvasState.textPadding ?? 20
+            },
+
             // UI preferences
             preferences: {
                 isOptimizationEnabled: canvasState.isOptimizationEnabled ?? false,
@@ -123,13 +130,13 @@ export function serializeCanvasState(canvasState, poemData = null) {
         const sizeInKB = (jsonString.length / 1024).toFixed(2);
 
         if (jsonString.length > 1024 * 1024) { // 1MB limit
-
+             console.warn(`⚠️ Serialized canvas state is large: ${sizeInKB}KB`);
         }
 
         return serialized;
 
     } catch (error) {
-
+        console.error('❌ Serialization failed:', error);
         throw new Error('Failed to serialize canvas state for storage');
     }
 }
@@ -149,7 +156,7 @@ export function deserializeCanvasState(designSettings) {
         const version = designSettings.version || '1.0.0';
 
         if (version !== '1.0.0') {
-
+             console.log(`ℹ️ Migrating design from version ${version} to 1.0.0`);
         }
 
         // Return state object matching useCanvasState structure
@@ -200,6 +207,17 @@ export function deserializeCanvasState(designSettings) {
                 }
             },
 
+            // Text Effects & Material (New)
+            textEffectMode: designSettings.textEffect?.mode ?? 'none',
+            textEffectParams: designSettings.textEffect?.params ?? {
+                opacity: 0.8,
+                blur: 0.5,
+                distance: 2,
+                depth: 2
+            },
+            textMaterial: designSettings.textEffect?.material ?? null,
+            textPadding: designSettings.textEffect?.padding ?? 20,
+
             // Preferences
             isOptimizationEnabled: designSettings.preferences?.isOptimizationEnabled ?? false,
             moveMode: designSettings.preferences?.moveMode ?? 'edit',
@@ -215,7 +233,7 @@ export function deserializeCanvasState(designSettings) {
         return canvasState;
 
     } catch (error) {
-
+        console.error('❌ Deserialization failed:', error);
         throw new Error('Failed to deserialize canvas state from storage');
     }
 }

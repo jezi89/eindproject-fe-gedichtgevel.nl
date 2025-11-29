@@ -93,3 +93,36 @@
 .openNavButton {
   right: 16px;
 }
+
+/* Swapped Layout Overrides */
+.controlsPanel.swapped {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid #3d4a5c;
+}
+
+.navPanel.swapped {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid #3d4a5c;
+}
+
+.controlsPanel.swapped.collapsed {
+  transform: translateX(100%);
+}
+
+.navPanel.swapped.collapsed {
+  transform: translateX(-100%);
+}
+
+.openControlsButton.swapped {
+  left: auto;
+  right: 16px;
+}
+
+.openNavButton.swapped {
+  right: auto;
+  left: 16px;
+}

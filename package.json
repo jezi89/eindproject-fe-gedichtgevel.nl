@@ -36,6 +36,7 @@
     "@wavesurfer/react": "^1.0.11",
     "axios": "^1.12.2",
     "framer-motion": "^12.23.22",
+    "html-to-image": "^1.11.13",
     "pixi-filters": "^6.1.4",
     "pixi-viewport": "^6.0.3",
     "pixi.js": "^8.13.2",

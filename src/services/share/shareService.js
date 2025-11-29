@@ -1,187 +1,114 @@
-/**
- * Share Service - Upload exports to Supabase storage for sharing
- *
- * Uploads poem canvas exports to a public bucket for social media sharing.
- * Returns shareable URLs that can be used for OG meta tags.
- *
- * @module services/share/shareService
- */
-
-import { supabase } from '../supabase/supabase.js';
-
-// Storage bucket name for shared images
-const SHARE_BUCKET = 'shared-poems';
+import { supabase } from '../supabase/supabase';
 
 /**
- * Convert base64 data URL to Blob for upload
- * @param {string} dataUrl - Base64 data URL (e.g., data:image/png;base64,...)
- * @returns {Blob} File blob
- */
-function dataUrlToBlob(dataUrl) {
-    const arr = dataUrl.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
-}
-
-/**
- * Generate unique filename for shared image
- * @param {string} format - Image format (png or jpg)
- * @returns {string} Unique filename
- */
-function generateShareFilename(format = 'png') {
-    const timestamp = Date.now();
-    const randomId = Math.random().toString(36).substring(2, 8);
-    return `gedicht-${timestamp}-${randomId}.${format}`;
-}
-
-/**
- * Upload exported image to Supabase storage
- *
- * @param {string} dataUrl - Base64 data URL of the exported image
- * @param {string} format - Image format ('png' or 'jpg')
+ * Uploads a base64 image to Supabase Storage
+ * @param {string} dataUrl - The base64 data URL of the image
+ * @param {string} format - 'png' or 'jpeg' (default: 'jpeg')
  * @returns {Promise<{success: boolean, url?: string, error?: string}>}
  */
-export async function uploadSharedImage(dataUrl, format = 'png') {
+export const uploadSharedImage = async (dataUrl, format = 'jpeg') => {
     try {
-        console.log('📤 Uploading shared image to Supabase storage...');
+        // Enforce JPEG if requested or default
+        const isJpeg = format === 'jpeg' || format === 'jpg';
+        const contentType = isJpeg ? 'image/jpeg' : 'image/png';
+        const fileExt = isJpeg ? 'jpg' : 'png';
 
-        // Convert data URL to blob
-        const blob = dataUrlToBlob(dataUrl);
-        const filename = generateShareFilename(format);
-        const filePath = `public/${filename}`;
+        // Convert base64 to Blob
+        const base64Data = dataUrl.split(',')[1];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: contentType });
 
-        // Upload to Supabase storage
+        // Generate unique filename
+        const timestamp = Date.now();
+        const randomId = Math.random().toString(36).substring(2, 10);
+        const fileName = `share_${timestamp}_${randomId}.${fileExt}`;
+        const filePath = `public/${fileName}`;
+
+        // Upload to 'shared-poems' bucket
         const { data, error } = await supabase.storage
-            .from(SHARE_BUCKET)
+            .from('shared-poems')
             .upload(filePath, blob, {
-                contentType: format === 'jpg' ? 'image/jpeg' : 'image/png',
-                cacheControl: '3600', // Cache for 1 hour
+                contentType: contentType,
+                cacheControl: '3600',
                 upsert: false
             });
 
         if (error) {
-            console.error('❌ Upload failed:', error);
-            return { success: false, error: error.message };
+            console.error('Supabase upload error:', error);
+            throw error;
         }
 
         // Get public URL
-        const { data: urlData } = supabase.storage
-            .from(SHARE_BUCKET)
+        const { data: { publicUrl } } = supabase.storage
+            .from('shared-poems')
             .getPublicUrl(filePath);
 
-        const publicUrl = urlData?.publicUrl;
-
-        console.log('✅ Upload successful:', publicUrl);
-
-        return {
-            success: true,
-            url: publicUrl,
-            filename: filename,
-            path: filePath
-        };
+        return { success: true, url: publicUrl };
 
     } catch (error) {
-        console.error('❌ Share upload error:', error);
+        console.error('Share upload failed:', error);
         return { success: false, error: error.message };
     }
-}
+};
 
 /**
- * Share to social media platforms
- *
- * @param {string} imageUrl - Public URL of the shared image
- * @param {Object} options - Share options
- * @param {string} options.title - Share title
- * @param {string} options.text - Share description
- * @returns {Promise<boolean>} Success status
+ * Shares a URL via Web Share API or returns it
+ * @param {string} url - The URL to share
+ * @param {object} options - Title and text
+ * @returns {Promise<boolean>} - True if shared via API, False if not supported (caller should show copy/social buttons)
  */
-export async function shareToSocialMedia(imageUrl, options = {}) {
-    const {
-        title = 'Mijn Gedicht op Gedichtgevel.nl',
-        text = 'Bekijk mijn visualisatie op Gedichtgevel.nl!'
-    } = options;
-
-    // Use Web Share API if available (mobile)
+export const shareToSocialMedia = async (url, { title = 'Mijn Gedicht', text = 'Bekijk dit gedicht!' } = {}) => {
     if (navigator.share) {
         try {
             await navigator.share({
                 title,
                 text,
-                url: imageUrl
+                url
             });
-            console.log('✅ Shared via Web Share API');
             return true;
         } catch (error) {
             if (error.name !== 'AbortError') {
-                console.error('Share failed:', error);
+                console.error('Web Share API error:', error);
             }
             return false;
         }
     }
-
-    // Fallback: Copy URL to clipboard
-    try {
-        await navigator.clipboard.writeText(imageUrl);
-        console.log('📋 URL copied to clipboard');
-        return true;
-    } catch (error) {
-        console.error('Clipboard copy failed:', error);
-        return false;
-    }
-}
+    return false;
+};
 
 /**
- * Open share dialog for specific platform
- *
- * @param {string} platform - Platform name ('twitter', 'facebook', 'linkedin', 'whatsapp')
- * @param {string} imageUrl - Public URL of the shared image
- * @param {string} text - Share text
+ * Opens a social media share dialog
+ * @param {string} platform - 'twitter', 'facebook', 'whatsapp'
+ * @param {string} url - URL to share
+ * @param {string} text - Optional text
  */
-export function openShareDialog(platform, imageUrl, text = 'Bekijk mijn gedicht!') {
-    const encodedUrl = encodeURIComponent(imageUrl);
+export const openShareDialog = (platform, url, text = '') => {
+    const encodedUrl = encodeURIComponent(url);
     const encodedText = encodeURIComponent(text);
+    let shareUrl = '';
 
-    const shareUrls = {
-        twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`,
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-        whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
-        pinterest: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedText}`
-    };
-
-    const url = shareUrls[platform];
-    if (url) {
-        window.open(url, '_blank', 'width=600,height=400');
+    switch (platform) {
+        case 'twitter':
+        case 'x':
+            shareUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+            break;
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
+            break;
+        case 'linkedin':
+             shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+             break;
+        default:
+            return;
     }
-}
 
-/**
- * Delete shared image from storage (cleanup)
- *
- * @param {string} filePath - Path in storage bucket
- * @returns {Promise<boolean>} Success status
- */
-export async function deleteSharedImage(filePath) {
-    try {
-        const { error } = await supabase.storage
-            .from(SHARE_BUCKET)
-            .remove([filePath]);
-
-        if (error) {
-            console.error('Delete failed:', error);
-            return false;
-        }
-
-        console.log('🗑️ Shared image deleted:', filePath);
-        return true;
-    } catch (error) {
-        console.error('Delete error:', error);
-        return false;
-    }
-}
+    window.open(shareUrl, '_blank', 'width=600,height=400,noopener,noreferrer');
+};

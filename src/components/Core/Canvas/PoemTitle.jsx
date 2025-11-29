@@ -115,7 +115,7 @@ export const PoemTitle = ({
     }, [onSelect, moveMode]);
 
     // Calculate Text Effects using the custom hook
-    const { style: effectStyle, blendMode, alpha } = useTextEffects(textEffectMode, textEffectParams);
+    const { filters, style: effectStyle, blendMode, alpha } = useTextEffects(textEffectMode, textEffectParams);
 
     // Merge computed style with effect style
     const finalStyle = React.useMemo(() => {
@@ -123,6 +123,8 @@ export const PoemTitle = ({
         const style = computedStyle.clone();
         // Apply effect styles (filters, dropShadow, etc.)
         Object.assign(style, effectStyle);
+        // Ensure sufficient padding for effects
+        style.padding = 30;
         return style;
     }, [computedStyle, effectStyle]);
 
@@ -139,6 +141,7 @@ export const PoemTitle = ({
                 ref={textRef}
                 text={title}
                 style={finalStyle}
+                filters={filters}
                 anchor={{x: effectiveAnchorX, y: 0}}
                 resolution={resolution}
                 blendMode={blendMode}
