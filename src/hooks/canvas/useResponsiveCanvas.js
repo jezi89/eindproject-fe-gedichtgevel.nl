@@ -29,8 +29,8 @@ export function useResponsiveCanvas() {
         };
     }, [windowWidth, windowHeight, controlsVisible, navVisible]);
 
-    const toggleControls = () => setControlsVisible(!controlsVisible);
-    const toggleNav = () => setNavVisible(!navVisible);
+    const toggleControls = () => setControlsVisible(prev => !prev);
+    const toggleNav = () => setNavVisible(prev => !prev);
 
     return {
         ...layout,

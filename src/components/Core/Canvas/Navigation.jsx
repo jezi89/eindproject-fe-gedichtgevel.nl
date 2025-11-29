@@ -30,6 +30,9 @@ export default function Navigation({
                                        onExportFullSpriteAsPNG,
                                        onExportFullSpriteAsJPG,
                                        getExportDataUrl,
+                                       layoutPosition,
+                                       controlsVisible, // <-- NIEUW
+                                       controlsWidth,   // <-- NIEUW
                                    }) {
     const navbarToggleRef = useRef(null);
     const [isSharing, setIsSharing] = useState(false);
@@ -310,6 +313,9 @@ export default function Navigation({
                 xySlidersVisible={xySlidersVisible}
                 navWidth={navWidth}
                 navVisible={navVisible}
+                controlsVisible={controlsVisible}
+                controlsWidth={controlsWidth}
+                layoutPosition={layoutPosition}
             />
         </div>
     );

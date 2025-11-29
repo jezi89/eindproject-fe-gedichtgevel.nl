@@ -109,6 +109,11 @@ export function RecordingBook() {
     // All complex logic is now in the custom hook, split into three state objects
     const {timeState, controlsState, countdownState} = useRecording(waveformRef, timelineRef);
 
+    // Auto-scroll refs
+    const poemContentRef = useRef(null);
+    const scrollIntervalRef = useRef(null);
+    const [isScrolling, setIsScrolling] = useState(false);
+
     // Load poem from navigation state on mount
     useEffect(() => {
         try {
@@ -172,6 +177,46 @@ export function RecordingBook() {
         alert("Binnenkort beschikbaar (v2)");
     };
 
+    // Auto-scroll functionality
+    const handleAutoScroll = () => {
+        if (isScrolling) {
+            stopAutoScroll();
+            return;
+        }
+
+        const element = poemContentRef.current;
+        if (!element) return;
+
+        setIsScrolling(true);
+        const speed = 1; // pixels per frame
+
+        const scrollStep = () => {
+            if (element) {
+                // Check if we've reached the bottom
+                if (Math.ceil(element.scrollTop + element.clientHeight) >= element.scrollHeight) {
+                    stopAutoScroll();
+                    return;
+                }
+                
+                element.scrollTop += speed;
+                scrollIntervalRef.current = requestAnimationFrame(scrollStep);
+            }
+        };
+        scrollIntervalRef.current = requestAnimationFrame(scrollStep);
+    };
+
+    const stopAutoScroll = () => {
+        if (scrollIntervalRef.current) {
+            cancelAnimationFrame(scrollIntervalRef.current);
+        }
+        setIsScrolling(false);
+    };
+
+    // Clean up scroll on unmount
+    useEffect(() => {
+        return () => stopAutoScroll();
+    }, []);
+
     return (
         <ControlsContext.Provider value={controlsState}>
             <TimeContext.Provider value={timeState}>
@@ -209,7 +254,8 @@ export function RecordingBook() {
                                                 ResultsOverviewComponent={null}
                                                 onNavigateToRecording={handlePoemSelect}
                                                 onNavigateToCanvas={(poem) => {
-                                                    navigate('/ontwerpgevel', { state: { selectedPoem: poem } });
+                                                    console.log('🎨 Navigating to canvas with poem:', poem);
+                                                    navigate('/designgevel', { state: { selectedPoem: poem } });
                                                 }}
                                             />
                                         ) : (
@@ -323,7 +369,7 @@ export function RecordingBook() {
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className={componentStyles.PoemPanel_content}>
+                                            <div className={componentStyles.PoemPanel_content} ref={poemContentRef}>
                                                 {(selectedPoem?.lines || INSTRUCTION_POEM.lines)?.map((line, i) => (
                                                     <React.Fragment key={i}>
                                                         {line}<br/>
@@ -335,8 +381,12 @@ export function RecordingBook() {
                                                     <span>Klik voor text highlight</span>
                                                     <HighlightIcon className={componentStyles.ButtonIcon}/>
                                                 </button>
-                                                <button className={componentStyles.ListenButton}>
-                                                    <span>Klik om te auto-scrollen</span>
+                                                <button 
+                                                    className={componentStyles.ListenButton} 
+                                                    onClick={handleAutoScroll}
+                                                    style={{backgroundColor: isScrolling ? '#e6b85c' : undefined}}
+                                                >
+                                                    <span>{isScrolling ? 'Stop auto-scroll' : 'Klik om te auto-scrollen'}</span>
                                                     <DownArrowIcon className={componentStyles.ButtonIcon}/>
                                                 </button>
                                             </div>

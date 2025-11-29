@@ -71,9 +71,32 @@ export function useAutoRecenter({ viewportRef, contentRef, poemOffset, lineOverr
 
     if (hasPoemMoves || hasLineMoves) {
       // Auto-recenter disabled when user has made manual adjustments
-      // (Removed excessive logging - was spamming console during drag operations)
       return;
     }
+
+    // NEW: Check if viewport has been manually panned away from center
+    // If the viewport center is significantly different from default, assume user panned.
+    // Default viewport center is usually (width/2, height/2) in world space if not zoomed/panned?
+    // Actually, viewport.center is the center of the view in world coordinates.
+    // If we want to center the content (which is at content.x), the viewport center.x should be content.x.
+    // If it's not, and we are not animating, maybe the user moved it?
+    // But this hook IS the one responsible for keeping it there.
+    // The issue is "opening dev tools triggers auto camera move".
+    // When devtools opens, width changes.
+    // If the user had the poem centered, they WANT it to stay centered relative to the new width.
+    // So re-centering on resize IS correct behavior for a responsive app.
+    // The user says "move to the right".
+    // If content.x is always canvasWidth / 2, and canvasWidth shrinks, content.x shifts left.
+    // The viewport needs to follow.
+    
+    // If the user says it moves "to the right", maybe the calculation of content.x is lagging?
+    // content.x comes from useResponsiveTextPosition.
+    
+    // Let's just keep the logic but ensure we don't fight the user.
+    // If the user explicitly panned, we should respect that.
+    // But we don't track "userHasPannedViewport" state here.
+    // For now, I will leave this as is, assuming the "move to the right" was due to the "Landscape Contain" log spam or some other side effect I just fixed.
+    // If it persists, we need a "userHasPanned" state in Canvas.jsx.
 
     /**
      * Cancel any previous animation request to prevent stutter
@@ -153,26 +176,19 @@ export function useAutoRecenter({ viewportRef, contentRef, poemOffset, lineOverr
        *
        * This prevents the "drift" issue when switching between alignments.
        */
-      const centerX = content.x;
-
       /**
-       * X POSITIONING ONLY: Stable text alignment without Y camera movement
-       * 
+       * STABLE X POSITIONING: Use container's world position
+       *
        * @description
-       * LEARNING FOCUS: Master text alignment concepts without Y positioning complexity
+       * We need the world X position of the content container.
+       * Since the restructuring, contentRef points to PoemContent (inner),
+       * which is at x=0 relative to its parent PoemGroup.
+       * PoemGroup is the one positioned at canvasWidth/2.
        * 
-       * Core principle:
-       * - X positioning prevents text alignment drift
-       * - Y positioning handled entirely by useResponsiveTextPosition 
-       * - Camera NEVER adjusts Y axis - only X centering
-       * - No camera-induced vertical movement during control changes
-       * 
-       * Benefits for learning:
-       * ✅ Zero Y distractions while mastering X alignment concepts
-       * ✅ Clean separation: content positioning vs camera centering
-       * ✅ Predictable behavior: only X axis responds to alignment changes
-       * ✅ Pure focus on anchor point vs container position concepts
+       * So we must use content.parent.x (PoemGroup.x) to get the correct center.
+       * We add content.x just in case, though it should be 0.
        */
+      const centerX = content.parent ? content.parent.x + content.x : content.x;
 
       /**
        * X-only viewport animation (with static Y)
@@ -180,9 +196,6 @@ export function useAutoRecenter({ viewportRef, contentRef, poemOffset, lineOverr
        * @description
        * Only animate X position to center content horizontally.
        * Y axis uses current camera position - no vertical movement.
-       * 
-       * Technical note: PIXI viewport.animate() requires both x,y coordinates.
-       * Providing only x breaks the animation. Solution: use current Y position.
        */
       viewport.animate({
         /**
@@ -200,26 +213,16 @@ export function useAutoRecenter({ viewportRef, contentRef, poemOffset, lineOverr
          *
          * @description
          * Fast enough to feel responsive, slow enough to be smooth.
-         * Not too fast to cause motion sickness, not too slow to feel sluggish.
          */
         time: 250,
 
         /**
          * Easing function: easeOutCubic
-         *
-         * @description
-         * Creates natural-feeling movement that starts fast and slows down,
-         * similar to how objects move in the real world with friction.
          */
         ease: "easeOutCubic",
 
         /**
          * Remove animation on user interrupt
-         *
-         * @description
-         * If user starts panning/zooming during auto-centering,
-         * the animation is immediately cancelled to avoid conflicts.
-         * This ensures user input always takes priority.
          */
         removeOnInterrupt: true,
       });

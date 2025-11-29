@@ -11,12 +11,19 @@
   flex-shrink:     0;
   justify-content: space-between;
   width:           100%;
-  max-width:       1524px;
+  max-width:       1800px;
   height:          5rem;
   margin:          0;
   padding:         0 3rem;
   border-radius:   0.625rem 0.625rem 0 0;
   background:      $primary-cognac; // Was #933512 in AUDIO-PROJECT
+
+  @media screen and (max-width: 900px) {
+    padding: 0 1rem;
+    height: auto;
+    min-height: 5rem;
+    flex-wrap: wrap;
+  }
   }
 
 .TopNavigation {
@@ -151,21 +158,33 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   flex-grow:       1; /* Take remaining space in MainContent */
   justify-content: center;
   width:           100%;
-  max-width:       1524px; /* Match TopNavContainer max-width */
-  margin:          0 auto; /* No margins for perfect connection */
+  max-width:       1800px; /* Increased for high-res screens */
+  margin:          0; /* Remove margin to stick to TopNav */
   color:           $text-inverse;
   gap:             1.5rem;
-  flex-basis: 820px;
-  max-height: 85vh; /* Constrain height to viewport */
+  /* flex-basis: 820px; Removed to allow width to be controlled by max-width */
+  /* max-height: 85vh; Removed to prevent spiral misalignment */
   overflow: hidden; /* Prevent container from scrolling, force internal scroll */
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    gap: 0;
+  }
   }
 
 .SpiralBinding {
   display: flex;
   position: absolute;
   z-index:  10;
-  left:     45%;
-  max-height: 100%;
+  left:     49.5%;
+  transform: translateX(-50%);
+  height: 100%;
+
+  @media screen and (max-width: 900px) {
+    display: none; /* Hide spiral on mobile stack */
+  }
   }
 
 
@@ -173,22 +192,33 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   z-index:          5;
   display:          flex;
   flex-direction:   column;
-  width:            750px;
+  flex:             1; /* Allow panels to grow to fill container */
+  width:            auto; /* Reset fixed width */
   padding:           2rem  2rem 0 2rem;
   border-radius:    0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
   background-color: $neutral-cream;
   box-shadow:       0 4px 15px rgb(0 0 0 / 20%);
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    border-radius: 0;
+    padding: 1rem;
+
+    &:last-child {
+      border-radius: 0 0 5px 5px;
+    }
+  }
   }
 
 .RecordingPanel {
   position:        relative;
-
+align-items:     center;
   /* align-items:      center; */
 
   /* This was causing the wrapper to shrink */
   justify-content: space-between;
-  padding:         3rem;
-
+  padding:         1.5rem;
+  overflow-y:      auto; /* Allow scrolling if content is too tall */
   }
 
 .micContainer {
@@ -313,14 +343,15 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   display:          flex;
   align-items:      center;
   justify-content:  center;
-  width:            80px;
-  height:           80px;
+  width:            65px;
+  height:           65px;
   margin:           0 auto;
   cursor:           pointer;
   transition:       all 0.2s ease;
   border:           4px solid vars.$neutral-black;
   border-radius:    50%;
   background-color: #c24818;
+  flex-shrink:      0; /* Prevent button from being squashed */
   }
 
 .RecordButton_inner {
@@ -355,7 +386,8 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   margin-bottom: 1rem; // Add some space below
   cursor:         pointer;
   position: relative;
-  }
+  align-self: flex-start;
+}
 
 .micSelect {
   align-self:    flex-start;
@@ -420,7 +452,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
 
 .waveformWrapper {
   position:      relative; /* For absolute timeline positioning */
-  width:         100%; /* Added width */
+  width:         90%; /* Added width */
   border:        2px solid #333;
   border-radius: 8px;
   background:    transparent; /* Changed from #000 */

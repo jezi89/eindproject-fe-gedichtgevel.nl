@@ -12,7 +12,7 @@ class SpreekgevelDB extends Dexie {
   }
 }
 
-export const db = new SpreekgevelDB();
+const db = new SpreekgevelDB();
 
 export const useRecordingStorage = () => {
   // useLiveQuery automatically updates the component when the database changes

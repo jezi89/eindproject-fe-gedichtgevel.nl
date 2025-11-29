@@ -86,6 +86,21 @@
     padding: 16px 20px 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
+
+    .closeButton {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+      transition: color 0.2s;
+
+      &:hover {
+        color: white;
+      }
+    }
 }
 
 .panelTitle {
@@ -287,7 +302,6 @@
     }
 
     .floatingContainer {
-        right: 20px; /* Closer to edge on tablets */
         bottom: 20px;
     }
 

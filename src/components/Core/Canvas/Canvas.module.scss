@@ -111,7 +111,57 @@
   padding:          8px 16px;
   border-bottom:    1px solid $canvas-control-border;
   background-color: $canvas-control-overlay-shinethrough;
+  transition:       all 0.3s ease;
   }
+
+/* Quality Status Overlay - Integrated into Header */
+.qualityStatusOverlay {
+  position:      absolute;
+  top:           0;
+  left:          50%;
+  transform:     translateX(-50%) translateY(-100%);
+  transition:    transform 0.3s ease;
+  pointer-events: none;
+  opacity:       0;
+  
+  &.visible {
+    transform: translateX(-50%) translateY(50%); // Slide down into view
+    opacity:   1;
+  }
+}
+
+// Alternative: If we want it IN the header flow, we might need to adjust the header structure.
+// But user asked for "temporarily higher" header.
+// Let's try positioning it absolutely relative to the header for now, or inject it.
+
+.qualityStatusContent {
+  display:          flex;
+  align-items:      center;
+  gap:              8px;
+  padding:          4px 12px;
+  border-radius:    16px;
+  background-color: rgba($canvas-control-bg, 0.95);
+  border:           1px solid $canvas-control-accent;
+  box-shadow:       0 2px 8px rgba(0,0,0,0.2);
+  font-size:        0.75rem;
+  font-family:      $font-family-section-heading;
+  color:            $canvas-control-text;
+  white-space:      nowrap;
+}
+
+.qualityLabel, .dimensionsLabel {
+  opacity: 0.7;
+}
+
+.qualityValue, .dimensionsValue {
+  font-weight: 600;
+  color:       $canvas-control-accent;
+}
+
+.separator {
+  opacity: 0.3;
+  margin:  0 4px;
+}
 
 .panelHeader h2, .panelHeader h3 {
   font-family: $font-family-section-heading; // Bitter
@@ -749,12 +799,57 @@
   }
 
 .printQualityBadge {
-  position:   absolute;
-  top:        4px;
-  right:      4px;
   font-size:  1.2rem;
   filter:     drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  }
+
+.lowQualityBadge {
+  font-family:      $font-family-section-heading; // Bitter
+  font-size:        0.7rem;
+  font-weight:      bold;
+  padding:          2px 4px;
+  color:            $neutral-cream;
+  border:           1px solid rgba(255, 255, 255, 0.5);
+  border-radius:    4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter:  blur(2px);
+  }
+
+.badgeContainer {
+  position:       absolute;
+  top:            4px;
+  right:          4px;
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            4px;
   pointer-events: none;
+  }
+
+.thumbnailLoader {
+  position:        absolute;
+  z-index:         1;
+  top:             0;
+  right:           0;
+  bottom:          0;
+  left:            0;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      rgba(0, 0, 0, 0.1);
+  }
+
+.spinner {
+  width:             20px;
+  height:            20px;
+  animation:         spin 1s linear infinite;
+  border:            2px solid rgba($canvas-control-accent, 0.3);
+  border-top-color:  $canvas-control-accent;
+  border-radius:     50%;
+  }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
   }
 
 .thumbnailMetadata {

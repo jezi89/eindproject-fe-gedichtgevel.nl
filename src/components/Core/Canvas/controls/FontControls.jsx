@@ -1,6 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../Canvas.module.scss";
 import { getFontPreviewUrl } from "../../../../hooks/canvas/useFontManager";
+import fontMetadata from "../../../../data/font-metadata.json";
+
+const getWeightLabel = (weight) => {
+    const labels = {
+        100: 'Thin',
+        200: 'Extra Light',
+        300: 'Light',
+        400: 'Normal',
+        500: 'Medium',
+        600: 'Semi Bold',
+        700: 'Bold',
+        800: 'Extra Bold',
+        900: 'Black'
+    };
+    return labels[weight] || '';
+};
 
 // Helper component for individual font options with lazy preview loading
 const FontOption = ({ font, onSelect, isSelected }) => {
@@ -257,18 +273,26 @@ export default function FontControls({
                             value={fontWeight === "bold" ? "700" : (fontWeight === "normal" ? "400" : fontWeight)}
                             onChange={(e) => onFontWeightChange(e.target.value)}
                             className={styles.weightSelect}
-                            style={{ width: 'auto', flex: 1, minWidth: '60px' }}
+                            style={{ width: 'auto', flex: 1, minWidth: '60px', fontFamily: 'var(--font-family-section-heading)' }}
                             title="Specifieke dikte (100-900)"
                         >
-                            <option value="100">100 (Thin)</option>
-                            <option value="200">200 (Extra Light)</option>
-                            <option value="300">300 (Light)</option>
-                            <option value="400">400 (Normal)</option>
-                            <option value="500">500 (Medium)</option>
-                            <option value="600">600 (Semi Bold)</option>
-                            <option value="700">700 (Bold)</option>
-                            <option value="800">800 (Extra Bold)</option>
-                            <option value="900">900 (Black)</option>
+                            {[100, 200, 300, 400, 500, 600, 700, 800, 900].map(weight => {
+                                const weightStr = weight.toString();
+                                // Check availability
+                                const availableWeights = fontMetadata[displayedFontFamily] || ['400', '700']; // Default fallback
+                                const isAvailable = availableWeights.includes(weightStr);
+                                
+                                return (
+                                    <option 
+                                        key={weight} 
+                                        value={weightStr}
+                                        disabled={!isAvailable}
+                                        style={{ color: isAvailable ? 'inherit' : '#aaa' }}
+                                    >
+                                        {weight} ({getWeightLabel(weight)}) {isAvailable ? '' : '(N/A)'}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
                 </div>

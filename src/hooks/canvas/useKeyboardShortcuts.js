@@ -29,6 +29,10 @@ export function useKeyboardShortcuts({
   onXyFocusRequest, // Callback om focus handler van XYMoveSliders te ontvangen
   setHoverFreezeActive, // NEW: Callback to activate hover freeze
   setActiveShortcut, // NEW: Callback to show shortcut visualization
+  onToggleLayoutPosition, // NEW: Alt+S
+  onToggleUIVisibility, // NEW: Alt+.
+  onToggleNav, // NEW: Alt+N
+  onCycleQuality, // NEW: Alt+Q
 }) {
   // Keep track of previous selection to restore when returning to edit/line mode
   const previousSelectionRef = useRef(new Set());
@@ -238,11 +242,9 @@ export function useKeyboardShortcuts({
     }, 250); // Langere totale delay voor volledige render cycle
   }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, onXyFocusRequest, moveMouseToContainer]);
 
+
+
   useEffect(() => {
-    if (import.meta.env.DEV) {
-
-    }
-
     const handleKeyDown = (event) => {
 
 			if (
@@ -417,11 +419,82 @@ export function useKeyboardShortcuts({
 				setHighlightVisible(!highlightVisible);
 				return;
 			}
+
+            // ALT+S: Swap Layout Position
+            if (
+                event.key.toLowerCase() === "s" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("swap-layout", "Alt+S: Swap panel position");
+                if (onToggleLayoutPosition) onToggleLayoutPosition();
+                return;
+            }
+
+            // ALT+. (Dot): Toggle UI Visibility (Controls + Nav)
+            if (
+                event.key === "." &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("toggle-ui", "Alt+.: Toggle UI visibility");
+                if (onToggleUIVisibility) onToggleUIVisibility();
+                return;
+            }
+
+            // ALT+N: Toggle Navigation
+            if (
+                event.key.toLowerCase() === "n" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("toggle-nav", "Alt+N: Toggle Navigation");
+                if (onToggleNav) onToggleNav();
+                return;
+            }
+
+            // ALT+Q: Cycle Quality
+            if (
+                event.key.toLowerCase() === "q" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("cycle-quality", "Alt+Q: Cycle image quality");
+                if (onCycleQuality) onCycleQuality();
+                return;
+            }
 		};
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, highlightVisible, setHighlightVisible, setHoverFreezeActive, setActiveShortcut, cycleModes, resetToEditMode, selectAll, selectAllIncludingTitleAuthor, currentPoem, showShortcutFeedback]);
+  }, [
+    moveMode, 
+    setMoveMode, 
+    xySlidersVisible, 
+    setXySlidersVisible, 
+    highlightVisible, 
+    setHighlightVisible, 
+    setHoverFreezeActive, 
+    setActiveShortcut, 
+    cycleModes, 
+    resetToEditMode, 
+    selectAll, 
+    selectAllIncludingTitleAuthor, 
+    currentPoem, 
+    showShortcutFeedback,
+    onToggleLayoutPosition,
+    onToggleUIVisibility,
+    onToggleNav,
+    onCycleQuality
+  ]);
 
   // Return function to restore previous selection (to be used by parent component)
   const restorePreviousSelection = () => {

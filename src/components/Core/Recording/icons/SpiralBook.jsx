@@ -5,9 +5,10 @@ export const SpiralBook = ({className}) => {
     return (
         <svg
             className={className}
-            width="116"
+            width="90"
             height="100%"
-            viewBox="0 11 90 814"
+            viewBox="10 11 90 814"
+            preserveAspectRatio="none"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >

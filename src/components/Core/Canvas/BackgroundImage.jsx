@@ -9,7 +9,8 @@ export const BackgroundImage = forwardRef(({
     photoData,          // Volledig photo object met metadata
     imageQualityMode = IMAGE_QUALITY_MODE.AUTO,   // Quality mode state
     canvasWidth,
-    canvasHeight
+    canvasHeight,
+    onTextureLoaded // <-- New prop
 }, ref) => {
     const [texture, setTexture] = useState(null);
     const previousTextureRef = useRef(null);
@@ -77,6 +78,13 @@ export const BackgroundImage = forwardRef(({
                 if (isMounted) {
                     setTexture(loadedTexture);
                     previousTextureRef.current = loadedTexture;
+                    // Report actual dimensions to parent
+                    if (onTextureLoaded) {
+                        onTextureLoaded({
+                            width: loadedTexture.width,
+                            height: loadedTexture.height
+                        });
+                    }
                 }
             })
             .catch(err => {
@@ -128,13 +136,11 @@ export const BackgroundImage = forwardRef(({
     if (isPortrait) {
         // Portrait: Fit to canvas width
         scale = canvasWidth / texture.width;
-        console.log(`🖼️ BackgroundImage: Portrait fit-width (scale: ${scale.toFixed(2)})`);
     } else {
         // Landscape: Contain
         const scaleX = canvasWidth / texture.width;
         const scaleY = canvasHeight / texture.height;
         scale = Math.min(scaleX, scaleY);
-        console.log(`🖼️ BackgroundImage: Landscape contain (scale: ${scale.toFixed(2)})`);
     }
 
     return (

@@ -99,6 +99,22 @@ export const SearchResults = memo(({
                 </div>
             )}
 
+            {/* Carousel arrows - moved above dots for overlay positioning */}
+            {!isDailyMode && updatedLayout.isCarousel && (
+                <CarouselArrows
+                    onPrevious={orchestration.handlePrevious}
+                    onNext={orchestration.handleNext}
+                    hasMultiple={updatedLayout.hasMultiple}
+                    allowDynamicPositioning={!isOverlay} // Disable dynamic positioning in overlay
+                    hasAnyExpanded={orchestration.hasAnyExpanded}
+                    searchResultsRef={searchResultsRef}
+                    onCollapseEvent={handleCollapseEvent}
+                    canvasMode={canvasMode}
+                    className={isOverlay ? styles.overlayArrows : ''}
+                    isOverlay={isOverlay}
+                />
+            )}
+
             {/* Carousel dots/indicators - show above results container */}
             {!isDailyMode && updatedLayout.isCarousel && (
                 <CarouselDots
@@ -170,20 +186,6 @@ export const SearchResults = memo(({
                         })}
                     </motion.div>
                 </LayoutGroup>
-
-                {/* Carousel arrows - only in search mode */}
-                {!isDailyMode && updatedLayout.isCarousel && (
-                    <CarouselArrows
-                    onPrevious={orchestration.handlePrevious}
-                    onNext={orchestration.handleNext}
-                    hasMultiple={updatedLayout.hasMultiple}
-                    allowDynamicPositioning={!isOverlay} // Disable dynamic positioning in overlay
-                    hasAnyExpanded={orchestration.hasAnyExpanded}
-                    searchResultsRef={searchResultsRef}
-                    onCollapseEvent={handleCollapseEvent}
-                    canvasMode={canvasMode}
-                    className={isOverlay ? styles.overlayArrows : ''}
-                />)}
             </div>
         </div>
     );

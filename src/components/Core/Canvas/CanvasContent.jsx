@@ -55,8 +55,9 @@ export function CanvasContent({
                                   textMaterial, // <-- NIEUW
                                   textPadding, // <-- NIEUW
                                   textEffectMode,
-                                  textEffectParams,
 
+                                  textEffectParams,
+                                  onTextureLoaded, // <-- NIEUW
                               }) {
     const width = canvasWidth;
     const height = canvasHeight;
@@ -603,6 +604,7 @@ export function CanvasContent({
                 imageQualityMode={imageQualityMode}
                 canvasWidth={width}
                 canvasHeight={height}
+                onTextureLoaded={onTextureLoaded} // <-- Pass callback
             />
 
             <pixiContainer

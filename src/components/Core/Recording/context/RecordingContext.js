@@ -9,5 +9,4 @@ export const ControlsContext = createContext(null);
 // Context specifically for countdown state to prevent re-renders
 export const CountdownContext = createContext(null);
 
-// Context for storage operations (save/load recordings)
-export const StorageContext = createContext(null);
+

@@ -141,15 +141,4 @@ export function initSentry({
     });
 }
 
-/**
- * Logger interface voor Sentry logs
- * Gebruik dit in plaats van console.log voor belangrijke logs
- */
-export const logger = Sentry.logger || {
-    trace: (...args) => console.trace(...args),
-    debug: (...args) => console.debug(...args),
-    info: (...args) => console.info(...args),
-    warn: (...args) => console.warn(...args),
-    error: (...args) => console.error(...args),
-    fatal: (...args) => console.error('[FATAL]', ...args),
-};
+

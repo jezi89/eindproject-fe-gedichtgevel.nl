@@ -4,68 +4,120 @@ import {createPortal} from 'react-dom';
 import styles from './FloatingShortcutPanel.module.scss';
 
 const shortcuts = [
+    // --- MAIN SHORTCUTS (Global) ---
     {
-        id: 'altj',
-        keys: ['Alt', 'J'],
-        description: 'Focus XY sliders (poem mode) + 5s hover freeze',
-        category: 'Navigation',
-        modes: ['all']
+        id: 'toggle-ui',
+        keys: ['Alt', '.'],
+        description: 'Toggle UI visibility (Controls + Nav)',
+        category: 'Main',
+        modes: ['all'],
+        priority: 100
+    },
+    {
+        id: 'toggle-nav',
+        keys: ['Alt', 'N'],
+        description: 'Toggle Navigation bar',
+        category: 'Main',
+        modes: ['all'],
+        priority: 95
+    },
+    {
+        id: 'toggle-menu',
+        keys: ['M'],
+        description: 'Toggle Main Menu Overlay',
+        category: 'Main',
+        modes: ['all'],
+        priority: 94
+    },
+    {
+        id: 'swap-layout',
+        keys: ['Alt', 'S'],
+        description: 'Swap panel position (Left/Right)',
+        category: 'Main',
+        modes: ['all'],
+        priority: 90
+    },
+    {
+        id: 'cycle-quality',
+        keys: ['Alt', 'Q'],
+        description: 'Cycle image quality (Low/High/Max)',
+        category: 'Main',
+        modes: ['all'],
+        priority: 85
     },
     {
         id: 'space',
         keys: ['Space'],
         description: 'Cycle modes: Edit → Line → Poem → Edit',
-        category: 'Mode',
-        modes: ['all']
+        category: 'Main',
+        modes: ['all'],
+        priority: 80
+    },
+    {
+        id: 'toggle-highlight',
+        keys: ['Alt', 'Y'],
+        description: 'Toggle highlight visibility',
+        category: 'Main',
+        modes: ['all'],
+        priority: 75
+    },
+    {
+        id: 'toggle-shortcuts',
+        keys: ['Alt', '?'],
+        description: 'Toggle this shortcuts panel',
+        category: 'Main',
+        modes: ['all'],
+        priority: 70
+    },
+
+    // --- MODE SPECIFIC / OTHER ---
+    {
+        id: 'altj',
+        keys: ['Alt', 'J'],
+        description: 'Focus XY sliders (poem mode) + 5s hover freeze',
+        category: 'Navigation',
+        modes: ['all'],
+        priority: 60
     },
     {
         id: 'escape',
         keys: ['Esc'],
         description: 'Clear selection and return to Edit mode',
         category: 'Mode',
-        modes: ['all']
+        modes: ['all'],
+        priority: 50
     },
     {
         id: 'alta',
         keys: ['Alt', 'A'],
         description: 'Select all lines (Edit mode)',
         category: 'Selection',
-        modes: ['edit']
+        modes: ['edit'],
+        priority: 40
     },
     {
         id: 'alth',
         keys: ['Alt', 'H'],
         description: 'Toggle XY sliders visibility',
         category: 'UI',
-        modes: ['line', 'poem']
+        modes: ['line', 'poem'],
+        priority: 30
     },
     {
         id: 'shift-click',
         keys: ['Shift', 'Click'],
         description: 'Range select lines',
         category: 'Selection',
-        modes: ['edit']
+        modes: ['edit'],
+        priority: 20
     },
     {
         id: 'ctrl-click',
         keys: ['Alt', 'Shift', 'Click'],
         description: 'Multi-select lines (non-adjacent)',
         category: 'Selection',
-        modes: ['edit']
-    },
-    {
-        id: 'alt-question',
-        keys: ['Alt', '?'],
-        description: 'Toggle this shortcuts panel',
-        category: 'UI',
-        modes: ['all']
-    },
-    {
-        id: 'alty',
-        keys: ['Alt', 'Y'],
-        description: 'Toggle highlight visibility',
-        category: 'UI',
-        modes: ['all']
+        modes: ['edit'],
+        priority: 10
     }
 ];
 
@@ -76,111 +128,98 @@ export function FloatingShortcutPanel({
                                           xySlidersVisible = false,
                                           navWidth,
                                           navVisible = true,
+                                          controlsVisible = true,
+                                          controlsWidth = 340,
+                                          layoutPosition = 'standard' // 'standard' (left) or 'swapped' (right)
                                       }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [otherShortcutsExpanded, setOtherShortcutsExpanded] = useState(false);
-    const [isPinned, setIsPinned] = useState(() => {
-        // Load pinned state from localStorage
-        try {
-            const saved = localStorage.getItem('floatingShortcutPanel.isPinned');
-            return saved ? JSON.parse(saved) : false;
-        } catch {
-            return false;
-        }
-    });
 
-    // Handle pin toggle with localStorage persistence
-    const handlePinToggle = () => {
-        const newPinnedState = !isPinned;
-        setIsPinned(newPinnedState);
-        try {
-            localStorage.setItem('floatingShortcutPanel.isPinned', JSON.stringify(newPinnedState));
-        } catch (error) {
-            console.warn('Failed to save pin state to localStorage:', error);
-        }
-    };
-
-    // Auto-hide panel logic removed as per user request
-    // useEffect(() => {
-    //     if (isExpanded && !isPinned) {
-    //         const timeout = setTimeout(() => {
-    //             setIsExpanded(false);
-    //         }, 5000); // 5 seconds inactivity
-    //
-    //         return () => clearTimeout(timeout);
-    //     }
-    // }, [isExpanded, isPinned]);
-
-    // Enhanced context-aware shortcut filtering
-    const filterShortcutsByMode = (shortcuts, mode, hasSelection, xySlidersVisible) => {
+    // Filter shortcuts into sections
+    const {mainShortcuts, activeModeShortcuts, otherShortcuts} = useMemo(() => {
+        const main = [];
         const active = [];
         const other = [];
 
         shortcuts.forEach(shortcut => {
-            const isRelevant = shortcut.modes.includes('all') || shortcut.modes.includes(mode);
-            let contextualPriority = 0;
-
-            // Context-based priority scoring
-            if (shortcut.id === 'space') {
-                contextualPriority = 100; // Always highest priority - mode switching
-            } else if (shortcut.id === 'escape') {
-                contextualPriority = hasSelection ? 90 : 40; // High priority when selection exists
-            } else if (shortcut.id === 'altj') {
-                contextualPriority = mode === 'poem' ? 80 : 60; // Higher priority in poem mode
-            } else if (shortcut.id === 'alth') {
-                contextualPriority = (mode === 'line' || mode === 'poem') ? 70 : 20; // Context-dependent
-            } else if (shortcut.id === 'alt-question') {
-                contextualPriority = 30; // Medium priority - utility shortcut
-            } else if (['alta', 'shift-click', 'ctrl-click'].includes(shortcut.id)) {
-                contextualPriority = (mode === 'edit' && !hasSelection) ? 50 : 10; // Lower when not applicable
+            // 1. Main Shortcuts (Always visible in top section)
+            if (shortcut.category === 'Main') {
+                main.push(shortcut);
+                return;
             }
 
-            // Determine if shortcut should be in active section
-            const shouldBeActive = isRelevant && (
-                contextualPriority >= 50 || // High priority shortcuts
-                (mode === 'edit' && ['space', 'escape', 'alta'].includes(shortcut.id)) ||
-                (mode === 'line' && ['space', 'escape', 'alth'].includes(shortcut.id)) ||
-                (mode === 'poem' && ['space', 'escape', 'altj', 'alth'].includes(shortcut.id))
-            );
+            // 2. Determine relevance for current mode
+            const isRelevant = shortcut.modes.includes('all') || shortcut.modes.includes(moveMode);
 
-            if (shouldBeActive) {
-                active.push({...shortcut, priority: contextualPriority});
+            // 3. Active Mode Shortcuts (High priority context-aware)
+            // Logic: If it's relevant AND not in Main, put in Active or Other based on context
+            if (isRelevant) {
+                // Specific high-value shortcuts for current context go to Active
+                const isHighValue =
+                    (moveMode === 'edit' && ['escape', 'alta'].includes(shortcut.id)) ||
+                    (moveMode === 'line' && ['escape', 'alth'].includes(shortcut.id)) ||
+                    (moveMode === 'poem' && ['escape', 'altj', 'alth'].includes(shortcut.id));
+
+                if (isHighValue) {
+                    active.push(shortcut);
+                } else {
+                    other.push(shortcut);
+                }
             } else {
-                other.push({...shortcut, priority: contextualPriority});
+                // Not relevant for current mode -> Other (dimmed/hidden usually, but here we put all rest in Other)
+                other.push(shortcut);
             }
         });
 
-        // Sort by priority within each section
+        // Sort by priority
+        main.sort((a, b) => b.priority - a.priority);
         active.sort((a, b) => b.priority - a.priority);
         other.sort((a, b) => b.priority - a.priority);
 
-        return {active, other};
-    };
+        return {mainShortcuts: main, activeModeShortcuts: active, otherShortcuts: other};
+    }, [moveMode]);
 
-    const {active, other} = filterShortcutsByMode(shortcuts, moveMode, selectedLines.size > 0, xySlidersVisible);
 
-    const containerStyle = useMemo(() => ({
-        right: navVisible ? `${navWidth}px` : '0px',
-    }), [navWidth, navVisible]);
+    const containerStyle = useMemo(() => {
+        const style = {};
+        
+        // Determine which panel is on the right side
+        // Standard: Navigation is on Right
+        // Swapped: Controls are on Right
+        
+        let rightOffset = 0;
+        
+        if (layoutPosition === 'swapped') {
+            // Controls are on the Right
+            rightOffset = controlsVisible ? controlsWidth : 0;
+        } else {
+            // Navigation is on the Right (Standard)
+            rightOffset = navVisible ? navWidth : 0;
+        }
+        
+        // Apply the calculated offset
+        style.right = `${rightOffset}px`;
+        style.bottom = '20px';
+        style.left = 'auto'; // Ensure left is auto
+        
+        return style;
+    }, [navWidth, navVisible, controlsWidth, controlsVisible, layoutPosition]);
 
     // Keyboard shortcut to toggle panel (Alt + ?)
     useEffect(() => {
         const handleKeyDown = (event) => {
-            // Skip if focused on input elements
-            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
-                return;
-            }
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
 
-            // ONLY handle Alt + ? - don't interfere with other shortcuts
-            if (event.altKey && event.key === '?' && !event.ctrlKey && !event.shiftKey) {
+            // Allow Shift key because ? is often Shift+/
+            if (event.altKey && (event.key === '?' || event.key === '/') && !event.ctrlKey) {
                 event.preventDefault();
-                setIsExpanded(!isExpanded);
+                setIsExpanded(prev => !prev);
             }
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isExpanded]);
+    }, []);
 
     const toggleButton = (
         <div className={styles.toggleContainer}>
@@ -191,7 +230,7 @@ export function FloatingShortcutPanel({
             >
                 <span className={styles.icon}>⌨️</span>
                 <span className={styles.arrow}>
-          {isExpanded ? '◀' : '▶'}
+          {isExpanded ? (layoutPosition === 'swapped' ? '▶' : '◀') : (layoutPosition === 'swapped' ? '◀' : '▶')}
         </span>
             </button>
         </div>
@@ -203,29 +242,25 @@ export function FloatingShortcutPanel({
             <div className={styles.panelHeader}>
                 <h4 className={styles.panelTitle}>
                     Keyboard Shortcuts
-                    <span className={styles.modeIndicator}>({moveMode} mode)</span>
                 </h4>
-                <button
-                    className={`${styles.pinButton} ${isPinned ? styles.pinned : ''}`}
-                    onClick={handlePinToggle}
-                    title={isPinned ? 'Unpin panel (auto-hide)' : 'Pin panel (keep open)'}
+                <button 
+                    className={styles.closeButton}
+                    onClick={() => setIsExpanded(false)}
+                    title="Close panel"
                 >
-                    📌
+                    ×
                 </button>
             </div>
 
-            {/* Active Shortcuts */}
+            {/* Main Shortcuts (All Modes) */}
             <div className={styles.activeSection}>
                 <h5 className={styles.sectionTitle}>
-                    🟢 Active ({moveMode}
-                    {selectedLines.size > 0 && `, ${selectedLines.size} selected`}
-                    {xySlidersVisible && ', XY visible'}
-                    )
+                    ⭐ Main Shortcuts (All modes)
                 </h5>
-                {active.map((shortcut) => (
+                {mainShortcuts.map((shortcut) => (
                     <div
                         key={shortcut.id}
-                        className={`${styles.shortcutItem} ${activeShortcut === shortcut.id ? styles.highlighted : ''}`}
+                        className={`${styles.shortcutItem} ${activeShortcut === shortcut.description ? styles.highlighted : ''}`}
                     >
                         <div className={styles.keys}>
                             {shortcut.keys.map((key, index) => (
@@ -242,6 +277,33 @@ export function FloatingShortcutPanel({
                 ))}
             </div>
 
+            {/* Active Mode Specific Shortcuts */}
+            {activeModeShortcuts.length > 0 && (
+                <div className={styles.activeSection} style={{marginTop: '12px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '12px'}}>
+                    <h5 className={styles.sectionTitle}>
+                        🟢 Active ({moveMode} mode only)
+                    </h5>
+                    {activeModeShortcuts.map((shortcut) => (
+                        <div
+                            key={shortcut.id}
+                            className={`${styles.shortcutItem} ${activeShortcut === shortcut.description ? styles.highlighted : ''}`}
+                        >
+                            <div className={styles.keys}>
+                                {shortcut.keys.map((key, index) => (
+                                    <React.Fragment key={key}>
+                                        <kbd className={styles.key}>{key}</kbd>
+                                        {index < shortcut.keys.length - 1 && (
+                                            <span className={styles.plus}>+</span>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                            <span className={styles.description}>{shortcut.description}</span>
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {/* Other Shortcuts - Collapsible */}
             <div className={styles.otherSection}>
                 <button
@@ -256,7 +318,7 @@ export function FloatingShortcutPanel({
 
                 {otherShortcutsExpanded && (
                     <div className={styles.collapsibleContent}>
-                        {other.map((shortcut) => (
+                        {otherShortcuts.map((shortcut) => (
                             <div
                                 key={shortcut.id}
                                 className={`${styles.shortcutItem} ${styles.dimmed}`}

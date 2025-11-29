@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: vars.$primary-cognac;
   padding: 2rem;
 }
 
@@ -33,7 +33,7 @@
   font-size: 8rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: vars.$primary-cognac;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -72,7 +72,7 @@
 .homeButton {
   display: inline-block;
   padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: vars.$primary-cognac;
   color: vars.$neutral-white;
   text-decoration: none;
   border-radius: 8px;
@@ -113,13 +113,13 @@
   }
 
   a {
-    color: #667eea;
+    color: vars.$primary-cognac;
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.2s ease;
 
     &:hover {
-      color: #764ba2;
+      color: vars.$primary-darker;
       text-decoration: underline;
     }
   }

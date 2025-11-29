@@ -1,10 +1,12 @@
+
 import {Application, extend} from "@pixi/react";
 import {Container, Graphics, Sprite, Text} from "pixi.js";
 import {Viewport} from "pixi-viewport";
-import {useCallback, useEffect, useState, useRef} from "react";
+import {useCallback, useEffect, useState, useRef, useMemo} from "react";
 import { useNavigate } from "react-router";
 import Controls from "./Controls.jsx";
 import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
+import {IMAGE_QUALITY_MODE} from "../../../utils/imageOptimization.js";
 import {useCanvasState} from "../../../hooks/canvas/useCanvasState";
 import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
@@ -19,6 +21,7 @@ import styles from "./Canvas.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";
 import {clearAllPersistedState} from "../../../hooks/canvas/usePersistedState";
+import { QualityStatusOverlay } from "./components/QualityStatusOverlay.jsx";
 
 // CRITICAL: extend() MUST be called at module level, outside components
 extend({Text, Container, Graphics, Sprite, Viewport});
@@ -44,7 +47,10 @@ export default function Canvas({
 
     // Use custom hooks for state and handlers
     const canvasState = useCanvasState();
-    const handlers = useCanvasHandlers(canvasState, currentPoem);
+
+
+    // Use responsive canvas hook - MUST be called early to be available for handlers
+    const layout = useResponsiveCanvas();
 
     // Restore canvas state from loaded design (destructive override)
     useEffect(() => {
@@ -98,6 +104,18 @@ export default function Canvas({
 
     // Active shortcut visualization state
     const [activeShortcut, setActiveShortcut] = useState(null);
+
+    // Layout position state (standard = controls left, swapped = controls right)
+    const [layoutPosition, setLayoutPosition] = useState('standard');
+
+    const handleToggleLayoutPosition = useCallback(() => {
+        setLayoutPosition(prev => prev === 'standard' ? 'swapped' : 'standard');
+    }, []);
+
+    const handleToggleUIVisibility = useCallback(() => {
+        layout.toggleControls();
+        layout.toggleNav();
+    }, [layout]);
 
     // Set initial background if provided
     useEffect(() => {
@@ -167,6 +185,57 @@ export default function Canvas({
         }
     }, [onSave, canvasState.viewportRef, currentPoem]);
 
+    // Use responsive canvas hook
+
+
+    // Quality Status Overlay State
+    const [qualityOverlayVisible, setQualityOverlayVisible] = useState(false);
+    const [currentDimensions, setCurrentDimensions] = useState(null);
+
+    // Trigger overlay when background image changes
+    useEffect(() => {
+        if (canvasState.backgroundImage) {
+             setQualityOverlayVisible(true);
+        }
+    }, [canvasState.backgroundImage]);
+
+    // Handler for when texture is actually loaded with real dimensions
+    const handleTextureLoaded = useCallback((dimensions) => {
+        setCurrentDimensions(dimensions);
+    }, []);
+
+    // Trigger overlay when quality mode changes
+    useEffect(() => {
+        setQualityOverlayVisible(true);
+    }, [canvasState.imageQualityMode]);
+
+
+    // Wrapper for setting image quality mode with side effects
+    const handleSetImageQualityMode = useCallback((mode) => {
+        canvasState.setImageQualityMode(mode);
+        // Automatically enable text optimization (Scherper Tekst) when High quality is selected
+        if (mode === IMAGE_QUALITY_MODE.HIGH) {
+            canvasState.setIsOptimizationEnabled(true);
+        }
+        setQualityOverlayVisible(true); // Ensure overlay shows on manual change
+    }, [canvasState]);
+
+    // ... existing code
+
+
+
+    const handleCycleQuality = useCallback(() => {
+        const modes = [IMAGE_QUALITY_MODE.ECO, IMAGE_QUALITY_MODE.AUTO, IMAGE_QUALITY_MODE.HIGH];
+        const currentIndex = modes.indexOf(canvasState.imageQualityMode);
+        // If current mode is not found (e.g. undefined), default to 0 (Eco)
+        const validCurrentIndex = currentIndex === -1 ? 0 : currentIndex;
+        const nextIndex = (validCurrentIndex + 1) % modes.length;
+        
+        handleSetImageQualityMode(modes[nextIndex]);
+    }, [canvasState.imageQualityMode, handleSetImageQualityMode]);
+
+
+
     // Use keyboard shortcuts hook for mode cycling and selection management
     const keyboardShortcuts = useKeyboardShortcuts({
         moveMode: canvasState.moveMode,
@@ -182,10 +251,13 @@ export default function Canvas({
         setHighlightVisible: canvasState.setHighlightVisible,
         setHoverFreezeActive,
         setActiveShortcut,
+        onToggleLayoutPosition: handleToggleLayoutPosition,
+        onToggleUIVisibility: handleToggleUIVisibility,
+        onToggleNav: layout.toggleNav,
+        onCycleQuality: handleCycleQuality,
     });
 
-    // Use responsive canvas hook
-    const layout = useResponsiveCanvas();
+
 
     // Create ref for canvas container (used for html-to-image export)
     const canvasContainerRef = useRef(null);
@@ -207,6 +279,31 @@ export default function Canvas({
         backgroundImageRef,
         canvasState.imageQualityMode
     );
+
+    // Use canvas handlers hook - MUST be called after useCanvasExport
+    const canvasHandlers = useCanvasHandlers({
+        canvasState,
+        currentPoem,
+        currentDesignId,
+        navigate,
+        exportAsPNG,
+        exportAsJPG,
+        exportFullSpriteAsPNG,
+        exportFullSpriteAsJPG,
+        getExportDataUrl,
+        layoutPosition
+    });
+
+    // Combine all handlers
+    const handlers = useMemo(() => {
+        return {
+            ...canvasHandlers,
+            onToggleLayoutPosition: handleToggleLayoutPosition,
+            onToggleUIVisibility: handleToggleUIVisibility,
+            onToggleNav: layout.toggleNav,
+            onCycleQuality: handleCycleQuality,
+        };
+    }, [canvasHandlers, handleToggleLayoutPosition, handleToggleUIVisibility, layout.toggleNav, handleCycleQuality]);
 
     // Bepaal welke data we aan de fotogalerij moeten tonen.
     // We checken de search context om te bepalen welke bron actief is.
@@ -258,25 +355,22 @@ export default function Canvas({
         }
     }, [canvasState.moveMode, canvasState.selectedLines.size, keyboardShortcuts, canvasState.restoreSelection]);
 
-    // Layout position state (standard = controls left, swapped = controls right)
-    const [layoutPosition, setLayoutPosition] = useState('standard');
 
-    const handleToggleLayoutPosition = useCallback(() => {
-        setLayoutPosition(prev => prev === 'standard' ? 'swapped' : 'standard');
-    }, []);
 
     const handleResetAllText = useCallback(() => {
         // Reset all line overrides
         canvasState.setLineOverrides({});
         // Clear selection
         canvasState.clearSelection();
-        // Reset global styles to defaults (optional, but "Reset All" implies a fresh start)
-        // We can keep global styles or reset them. Let's reset them to reasonable defaults.
+        
+        // Reset global styles to defaults
         canvasState.setFontSize(40);
-        canvasState.setLineHeight(1.2);
+        // Use the handler to correctly reset line height based on the new font size
+        handlers.handleResetLineHeight();
+        
         canvasState.setLetterSpacing(0);
         canvasState.setTextAlign('center');
-        canvasState.setFillColor('#ffffff');
+        canvasState.setFillColor('#000000');
         canvasState.setSkewX(0);
         canvasState.setSkewY(0);
         canvasState.setFontWeight('normal');
@@ -300,6 +394,14 @@ export default function Canvas({
                 onToggleLayoutPosition={handleToggleLayoutPosition}
                 controls={
                     <Controls
+                        qualityOverlay={
+                            <QualityStatusOverlay 
+                                isVisible={qualityOverlayVisible}
+                                qualityMode={canvasState.imageQualityMode}
+                                currentDimensions={currentDimensions}
+                                onClose={() => setQualityOverlayVisible(false)}
+                            />
+                        }
                         layoutPosition={layoutPosition} // <-- NIEUW
                         onResetAllText={handleResetAllText}
                         onToggleLayoutPosition={handleToggleLayoutPosition}
@@ -392,7 +494,7 @@ export default function Canvas({
 
                         // Image quality props
                         imageQualityMode={canvasState.imageQualityMode}
-                        setImageQualityMode={canvasState.setImageQualityMode}
+                        setImageQualityMode={handleSetImageQualityMode}
                         // Canvas-specific props
                         onSave={handleSave}
                         onBack={handleBack}
@@ -407,6 +509,7 @@ export default function Canvas({
                                 background: 0x1d2230,
                                 resolution: window.devicePixelRatio || 1,
                                 autoDensity: true,
+                                preserveDrawingBuffer: true, // Required for html-to-image to capture WebGL canvas
                             }}
                         >
                         <CanvasContent
@@ -465,6 +568,7 @@ export default function Canvas({
                             // Pass current poem data
                             currentPoem={currentPoem}
                             totalLineCount={currentPoem?.lines?.length || 0}
+                            onTextureLoaded={handleTextureLoaded} // <-- Pass callback
                         />
                     </Application>
                     </div>
@@ -491,6 +595,9 @@ export default function Canvas({
                         onExportFullSpriteAsPNG={exportFullSpriteAsPNG}
                         onExportFullSpriteAsJPG={exportFullSpriteAsJPG}
                         getExportDataUrl={getExportDataUrl}
+                        layoutPosition={layoutPosition}
+                        controlsVisible={layout.controlsVisible}
+                        controlsWidth={layout.controlsWidth}
                     />
                 }
             />
@@ -541,7 +648,7 @@ export default function Canvas({
             {/* Globale thumbnail hover freeze overlay */}
             {hoverFreezeActive && (
                 <div
-                    className={`${styles.thumbnailFreeze}`}
+                    className={styles.thumbnailFreeze}
                     style={{
                         position: "fixed",
                         top: 0,

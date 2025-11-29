@@ -12,6 +12,7 @@
   align-items:      center;
   flex-direction:   column;
   justify-content:  center; // Added for proper vertical centering
+  position:         relative; // Ensure absolute children (arrows) are positioned relative to this
   width:            100%;
   padding:          $spacing-m 0 $spacing-xxl 0; // Add bottom padding for animations
   background-color: transparent; // Inherit from parent
@@ -539,7 +540,7 @@
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -560,7 +561,7 @@
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -596,7 +597,7 @@
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -1213,7 +1214,7 @@
     }
 
     .resultCard {
-        width: calc(100% - 4rem); // Full width with margins
+        min-width: calc(100% - 4rem); // Full width with margins
         max-width: 600px; // Cap width for very large screens
         flex-shrink: 0;
         margin: 0 auto; // Center the card

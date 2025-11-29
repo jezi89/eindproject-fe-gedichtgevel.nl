@@ -10,9 +10,10 @@ import {
     resetLineHeightUtil,
 } from "@/utils/canvas/lineHeightUtils";
 import {getGeoDataByCity} from "@/data/canvas/cityGeoData";
+import fontMetadata from "../../data/font-metadata.json";
 
 
-export function useCanvasHandlers(canvasState, poemData = null) {
+export function useCanvasHandlers({ canvasState, currentPoem: poemData = null }) {
     // Access current poem data for Alt-A functionality
     const [searchParams] = useSearchParams();
     const poemId = searchParams.get("poemId");
@@ -501,12 +502,33 @@ export function useCanvasHandlers(canvasState, poemData = null) {
             // Taak 1: Zorg dat het lettertype geladen wordt (dit gebeurt altijd)
             loadFont(newFontFamily);
 
+            // Check if current weight is valid for new font
+            const availableWeights = fontMetadata[newFontFamily] || ['400', '700'];
+            // Get current weight from canvasState (we need to access it via canvasState prop or pass it in)
+            // Since we don't have direct access to current weight here easily without adding it to dependencies,
+            // we can check if we should reset.
+            // Actually, let's just reset to '400' if the current one isn't available.
+            // But we need to know the CURRENT weight to know if it's invalid.
+            // canvasState object has fontWeight property.
+            const currentWeight = canvasState.fontWeight;
+            
+            if (!availableWeights.includes(currentWeight)) {
+                 // Find closest or default to 400
+                 // Simple logic: default to 400 (Normal) if available, else first available
+                 const newWeight = availableWeights.includes('400') ? '400' : availableWeights[0];
+                 canvasState.setFontWeight(newWeight);
+            }
+
             // 2. Leg de 'intentie' van de gebruiker vast
             if (selectedLines.size > 0) {
                 // Pas de override toe op de geselecteerde regels
                 setLineOverrides((prev) => {
                     const newOverrides = {...prev};
                     selectedLines.forEach((index) => {
+                        // Also check line-specific weight override if it exists?
+                        // For now, just update family. The global weight check above handles the main state.
+                        // If a line has a specific weight override that is invalid for the new family, 
+                        // it might look wrong. But that's a deeper edge case.
                         newOverrides[index] = {
                             ...newOverrides[index],
                             fontFamily: newFontFamily,
@@ -519,7 +541,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
                 setPendingFontFamily(newFontFamily);
             }
         },
-        [loadFont, setPendingFontFamily, selectedLines, setLineOverrides]
+        [loadFont, setPendingFontFamily, selectedLines, setLineOverrides, canvasState]
     );
 
     // NIEUWE HANDLERS

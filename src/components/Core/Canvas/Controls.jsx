@@ -12,6 +12,7 @@ import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function Controls({
                                      toggle, // <-- NEW: For collapsing the panel
+                                     qualityOverlay, // <-- NEW: Quality Status Overlay
                                      fontSize,
                                      onFontSizeChange,
                                      fillColor,
@@ -300,6 +301,7 @@ export default function Controls({
             <div className={styles.panelHeader}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <h2>Styling Controls</h2>
+                    {qualityOverlay}
                     <button
                         onClick={onToggleLayoutPosition}
                         className={styles.layoutToggleButton}

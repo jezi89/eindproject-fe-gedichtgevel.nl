@@ -7,7 +7,10 @@
 
 import {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './Carrousel.module.scss';
+import ArrowLeft from '@/assets/icons/arrow-left.svg?react';
+import ArrowRight from '@/assets/icons/arrow-right.svg?react';
 
+// CarouselArrows component definition
 export const CarouselArrows = memo(({
                                         onPrevious,
                                         onNext,
@@ -17,7 +20,8 @@ export const CarouselArrows = memo(({
                                         searchResultsRef = null,
                                         onCollapseEvent = null,
                                         canvasMode = false,
-                                        className = ''
+                                        className = '',
+                                        isOverlay = false
                                     }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [dynamicPosition, setDynamicPosition] = useState(0);
@@ -253,18 +257,18 @@ export const CarouselArrows = memo(({
             style={containerStyle}
         >
             <button
-                className={styles.arrowButton}
+                className={`${styles.arrowButton} ${isOverlay ? styles.overlayArrow : styles.homeArrow}`}
                 onClick={() => handleNavigation('prev')}
                 aria-label="Vorig gedicht"
             >
-                ‹
+                {isOverlay ? '‹' : <ArrowLeft />}
             </button>
             <button
-                className={styles.arrowButton}
+                className={`${styles.arrowButton} ${isOverlay ? styles.overlayArrow : styles.homeArrow}`}
                 onClick={() => handleNavigation('next')}
                 aria-label="Volgend gedicht"
             >
-                ›
+                {isOverlay ? '›' : <ArrowRight />}
             </button>
         </div>
     );

@@ -20,6 +20,19 @@ export function DesignPage() {
 	const [loadedDesignId, setLoadedDesignId] = useState(null);
 	const [savedCanvasState, setSavedCanvasState] = useState(null);
 	const { load } = useCanvasStorage();
+	// Keyboard shortcut to toggle navbar overlay
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			// Check if 'm' or 'M' is pressed and not in an input field
+			if ((event.key === 'm' || event.key === 'M') && 
+				!['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+				toggleNavbarOverlay();
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [toggleNavbarOverlay]);
 
 	// Priority-based data loading: saved design → sessionStorage → demo poem → fallback
 	useEffect(() => {
