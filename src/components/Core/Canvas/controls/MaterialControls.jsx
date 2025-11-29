@@ -20,11 +20,17 @@ const AVAILABLE_MATERIALS = [
     { name: 'Pleisterwerk (Geel)', value: '/textures/webp/yellow_plaster_diff_2k.webp' },
 ];
 
+import TextEffectControls from './TextEffectControls';
+
 export default function MaterialControls({
     textMaterial,
     onTextMaterialChange,
     textPadding,
     onTextPaddingChange,
+    textEffectMode,
+    setTextEffectMode,
+    textEffectParams,
+    setTextEffectParams,
     isOpen,
     setIsOpen
 }) {
@@ -71,6 +77,13 @@ export default function MaterialControls({
                             />
                         </div>
                     )}
+
+                    <TextEffectControls
+                        effectMode={textEffectMode}
+                        onEffectModeChange={setTextEffectMode}
+                        effectParams={textEffectParams}
+                        onEffectParamsChange={setTextEffectParams}
+                    />
                 </div>
             )}
         </div>

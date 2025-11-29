@@ -1,9 +1,6 @@
-// src/components/Core/Canvas/components/PoemAuthor.jsx
 import React, {useEffect, useRef} from "react";
 import {useLineStyle} from "@/hooks/canvas/useTextStyles.js";
-// import { useDraggableLine } from "../hooks/useDraggableLine"; // REMOVED: Will use viewport-level event handling
-
-
+import {useTextEffects} from "@/hooks/canvas/useTextEffects.js";
 
 export const PoemAuthor = ({
                                author,
@@ -18,6 +15,8 @@ export const PoemAuthor = ({
                                anchorX = 0.5,
                                isColorPickerActive = false,
                                highlightVisible = true,
+                               textEffectMode, // NEW: Text effect mode
+                               textEffectParams, // NEW: Text effect parameters
                                // Drag functionality props
                                moveMode,
                                index, // This will be -1
@@ -119,6 +118,18 @@ export const PoemAuthor = ({
         }
     }, [onSelect, moveMode]);
 
+    // Calculate Text Effects using the custom hook
+    const { style: effectStyle, blendMode, alpha } = useTextEffects(textEffectMode, textEffectParams);
+
+    // Merge computed style with effect style
+    const finalStyle = React.useMemo(() => {
+        if (!computedStyle) return null;
+        const style = computedStyle.clone();
+        // Apply effect styles (filters, dropShadow, etc.)
+        Object.assign(style, effectStyle);
+        return style;
+    }, [computedStyle, effectStyle]);
+
     return (
         <pixiContainer
             ref={containerRef}
@@ -128,14 +139,14 @@ export const PoemAuthor = ({
             eventMode="passive"
             interactiveChildren={moveMode === "edit"}
         >
-
-
             <pixiText
                 ref={textRef}
                 text={author}
-                style={computedStyle}
+                style={finalStyle}
                 anchor={{x: effectiveAnchorX, y: 0}} // <-- Apply anchor here
                 resolution={resolution}
+                blendMode={blendMode}
+                alpha={alpha}
             />
         </pixiContainer>
     );

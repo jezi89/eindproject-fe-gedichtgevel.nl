@@ -90,6 +90,10 @@ export default function Controls({
                                      onTextMaterialChange,
                                      textPadding,
                                      onTextPaddingChange,
+                                     textEffectMode,
+                                     setTextEffectMode,
+                                     textEffectParams,
+                                     setTextEffectParams,
 
                                      totalLineCount = 0, // <-- NIEUW
 
@@ -350,6 +354,10 @@ export default function Controls({
                 onTextMaterialChange={onTextMaterialChange}
                 textPadding={textPadding}
                 onTextPaddingChange={onTextPaddingChange}
+                textEffectMode={textEffectMode}
+                setTextEffectMode={setTextEffectMode}
+                textEffectParams={textEffectParams}
+                setTextEffectParams={setTextEffectParams}
                 isOpen={materialSectionOpen} // Using existing state or need to restore it?
                 setIsOpen={setMaterialSectionOpen} // Need to check if this state exists
             />

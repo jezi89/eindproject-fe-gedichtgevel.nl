@@ -59,15 +59,18 @@ export function useCanvasState() {
         null
     );
 
-    // Text Background State - PERSISTENT
-    const [textMaterial, setTextMaterial] = usePersistedState(
-        PERSISTED_KEYS.TEXT_MATERIAL,
-        null
-    );
-    const [textPadding, setTextPadding] = usePersistedState(
-        PERSISTED_KEYS.TEXT_PADDING,
-        20
-    );
+    // Text Material State (Global)
+    const [textMaterial, setTextMaterial] = useState(null); // URL of texture
+    const [textPadding, setTextPadding] = useState(20);
+
+    // Text Effect State (Global)
+    const [textEffectMode, setTextEffectMode] = useState('none'); // 'none', 'painted', 'raised', 'engraved'
+    const [textEffectParams, setTextEffectParams] = useState({
+        opacity: 0.8, // For Painted
+        blur: 0.5,    // For Painted
+        distance: 2,  // For Raised/Engraved
+        depth: 2,     // For Engraved
+    });
 
 	const pexels = usePexels();
 	const flickr = useFlickr();
@@ -238,6 +241,10 @@ export function useCanvasState() {
         setTextMaterial, // <-- RESTORED
         textPadding, // <-- RESTORED
         setTextPadding, // <-- RESTORED
+        textEffectMode,
+        setTextEffectMode,
+        textEffectParams,
+        setTextEffectParams,
 		searchContext,
 		setSearchContext,
 

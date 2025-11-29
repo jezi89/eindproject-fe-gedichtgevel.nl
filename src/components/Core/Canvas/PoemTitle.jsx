@@ -1,9 +1,6 @@
-// src/components/Core/Canvas/components/PoemTitle.jsx
 import React, {useEffect, useRef} from "react";
 import {useLineStyle} from "@/hooks/canvas/useTextStyles.js";
-// import { useDraggableLine } from "../hooks/useDraggableLine"; // REMOVED: Will use viewport-level event handling
-
-
+import {useTextEffects} from "@/hooks/canvas/useTextEffects.js";
 
 export const PoemTitle = ({
                               title,
@@ -28,7 +25,8 @@ export const PoemTitle = ({
                               skewX = 0,
                               skewY = 0,
                               overrideTextAlign,
-
+                              textEffectMode,
+                              textEffectParams,
                           }) => {
     const textRef = useRef();
     const containerRef = useRef();
@@ -116,6 +114,18 @@ export const PoemTitle = ({
         }
     }, [onSelect, moveMode]);
 
+    // Calculate Text Effects using the custom hook
+    const { style: effectStyle, blendMode, alpha } = useTextEffects(textEffectMode, textEffectParams);
+
+    // Merge computed style with effect style
+    const finalStyle = React.useMemo(() => {
+        if (!computedStyle) return null;
+        const style = computedStyle.clone();
+        // Apply effect styles (filters, dropShadow, etc.)
+        Object.assign(style, effectStyle);
+        return style;
+    }, [computedStyle, effectStyle]);
+
     return (
         <pixiContainer
             ref={containerRef}
@@ -125,17 +135,15 @@ export const PoemTitle = ({
             eventMode="passive"
             interactiveChildren={moveMode === "edit"}
         >
-
-
             <pixiText
                 ref={textRef}
                 text={title}
-                style={computedStyle}
+                style={finalStyle}
                 anchor={{x: effectiveAnchorX, y: 0}}
                 resolution={resolution}
+                blendMode={blendMode}
+                alpha={alpha}
             />
         </pixiContainer>
     );
 };
-
-

@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import { extend } from '@pixi/react';
 import { BevelFilter } from 'pixi-filters';
-import { DropShadowFilter } from 'pixi-filters';
+
 
 // Register TilingSprite with @pixi/react
 extend({ TilingSprite: PIXI.TilingSprite });
@@ -65,22 +65,7 @@ export const TextBackground = ({
         };
     }, [textureUrl]);
 
-    // Create filters - Split into Container filters (Shadow) and Sprite filters (Bevel)
-    const containerFilters = useMemo(() => {
-        try {
-            const dropShadow = new DropShadowFilter({
-                distance: shadowDistance,
-                blur: shadowBlur,
-                alpha: shadowAlpha,
-                rotation: 45,
-            });
-            return [dropShadow];
-        } catch (error) {
-            console.warn('Failed to create shadow filter:', error);
-            return [];
-        }
-    }, [shadowDistance, shadowBlur, shadowAlpha]);
-
+    // Create filters - Sprite filters (Bevel)
     const spriteFilters = useMemo(() => {
         try {
             const bevel = new BevelFilter({
@@ -111,7 +96,7 @@ export const TextBackground = ({
     if (!textureUrl) return null;
 
     return (
-        <pixiContainer filters={containerFilters}>
+        <pixiContainer>
             {/* Mask for the tiling sprite */}
             <pixiGraphics ref={maskRef} />
 

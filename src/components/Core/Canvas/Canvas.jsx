@@ -346,6 +346,10 @@ export default function Canvas({
                         onTextMaterialChange={canvasState.setTextMaterial}
                         textPadding={canvasState.textPadding}
                         onTextPaddingChange={canvasState.setTextPadding}
+                        textEffectMode={canvasState.textEffectMode}
+                        setTextEffectMode={canvasState.setTextEffectMode}
+                        textEffectParams={canvasState.textEffectParams}
+                        setTextEffectParams={canvasState.setTextEffectParams}
 
                         // Image quality props
                         imageQualityMode={canvasState.imageQualityMode}
@@ -416,6 +420,8 @@ export default function Canvas({
                             onTextMaterialChange={canvasState.setTextMaterial}
                             textPadding={canvasState.textPadding}
                             onTextPaddingChange={canvasState.setTextPadding}
+                            textEffectMode={canvasState.textEffectMode}
+                            textEffectParams={canvasState.textEffectParams}
 
                             // Pass current poem data
                             currentPoem={currentPoem}

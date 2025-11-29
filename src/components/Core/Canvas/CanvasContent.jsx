@@ -14,6 +14,8 @@ import {debugManager} from "@/debug/DebugManager.js";
 import {BackgroundImage} from "./BackgroundImage.jsx";
 import {TextBackground} from "./TextBackground.jsx"; // <-- Import TextBackground
 
+import { DropShadowFilter } from 'pixi-filters';
+
 export function CanvasContent({
                                   canvasWidth,
                                   canvasHeight,
@@ -52,6 +54,8 @@ export function CanvasContent({
                                   backgroundImageRef,
                                   textMaterial, // <-- NIEUW
                                   textPadding, // <-- NIEUW
+                                  textEffectMode,
+                                  textEffectParams,
 
                               }) {
     const width = canvasWidth;
@@ -549,7 +553,19 @@ export function CanvasContent({
         // Exclude backgroundBounds to prevent loops
     ]);
 
-
+    // Create DropShadow filter for the PoemGroup
+    const groupFilters = useMemo(() => {
+        // Only apply if textMaterial is active (meaning we have a "stone slab")
+        if (textMaterial) {
+            return [new DropShadowFilter({
+                distance: 5,
+                blur: 4,
+                alpha: 0.5,
+                rotation: 45,
+            })];
+        }
+        return [];
+    }, [textMaterial]);
 
 
     if (!fontLoaded || !currentPoem) {
@@ -599,6 +615,7 @@ export function CanvasContent({
                 eventMode={moveMode === "poem" ? "dynamic" : "passive"}
                 interactive={moveMode === "poem"}
                 interactiveChildren={moveMode === "edit"}
+                filters={groupFilters}
             >
                 {/* Node 4: TextBackground (Sibling of Content) */}
                 {textMaterial && (
@@ -639,6 +656,8 @@ export function CanvasContent({
                         skewX={lineOverrides[-2]?.skewX}
                         skewY={lineOverrides[-2]?.skewY}
                         overrideTextAlign={lineOverrides[-2]?.textAlign}
+                        textEffectMode={textEffectMode}
+                        textEffectParams={textEffectParams}
                     />
 
                     <PoemAuthor
@@ -661,6 +680,8 @@ export function CanvasContent({
                         skewX={lineOverrides[-1]?.skewX}
                         skewY={lineOverrides[-1]?.skewY}
                         overrideTextAlign={lineOverrides[-1]?.textAlign}
+                        textEffectMode={textEffectMode}
+                        textEffectParams={textEffectParams}
                     />
 
                     {currentPoem.lines.map((line, index) => {
@@ -689,6 +710,8 @@ export function CanvasContent({
                                 skewX={lineOverrides[index]?.skewX}
                                 skewY={lineOverrides[index]?.skewY}
                                 overrideTextAlign={lineOverrides[index]?.textAlign}
+                                textEffectMode={textEffectMode}
+                                textEffectParams={textEffectParams}
                             />
                         );
                     })}
