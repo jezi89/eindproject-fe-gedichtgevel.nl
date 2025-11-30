@@ -1,21 +1,59 @@
-@use '@styles/variables' as vars;
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
 
 .searchBar {
     display: flex;
-    margin-bottom: 1rem;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto $spacing-m;
+    gap: $spacing-s;
+}
+
+.searchInputContainer {
+    flex: 1;
+    position: relative;
 }
 
 .searchInput {
-    flex-grow: 1;
-    padding: 0.5rem;
-    border: 1px solid vars.$border-subtle;
-    border-radius: 4px;
+    @include input-base;
+    padding: $spacing-xs $spacing-m;
+    font-size: $font-size-m;
+    border-radius: $border-radius-md;
+    border-color: $border-subtle;
+    
+    &:focus {
+        border-color: $primary-cognac;
+        box-shadow: 0 0 0 2px rgba($primary-cognac, 0.2);
+    }
 }
 
 .searchButton {
-    padding: 0.5rem 1rem;
-    border: 1px solid vars.$border-subtle;
-    border-radius: 4px;
-    background-color: vars.$neutral-light;
-    cursor: pointer;
+    // Reusing button-base mixin but overriding specific styles for the "slim" look
+    @include button-base($button-tertiary-background, $neutral-white, $neutral-white);
+    padding: $spacing-xs $spacing-m;
+    min-width: 3rem;
+    height: 100%;
+    border-radius: $border-radius-md;
+    
+    // Slimmer shadow as requested
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    
+    &:hover:not(:disabled) {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .searchIcon {
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: currentColor;
+    }
 }

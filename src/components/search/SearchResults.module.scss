@@ -1219,6 +1219,7 @@
         max-width: 600px; // Cap width for very large screens
         flex-shrink: 0;
         margin: 0 auto; // Center the card
+        border: $border-width-thick solid $border-warm;
     }
 
     // Override column specific widths

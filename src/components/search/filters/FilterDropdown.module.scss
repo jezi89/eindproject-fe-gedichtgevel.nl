@@ -126,6 +126,11 @@
     height: 16px;
     margin-left: 0.75rem;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.dropdownButton.open .dropdownArrow {
+    transform: rotate(180deg);
 }
 
 .arrowVector {
