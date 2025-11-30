@@ -286,3 +286,96 @@
   width:      0;
   height:     0;
   }
+
+/* Share Section */
+.shareSection {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  width:          100%;
+  padding-top:    12px;
+  border-top:     1px solid $canvas-control-border;
+  gap:            8px;
+  }
+
+.shareButton {
+  font-family:      $font-family-section-heading;
+  font-size:        $font-size-xs;
+  font-weight:      $font-weight-semibold;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            100%;
+  padding:          10px 16px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease, transform 0.1s ease;
+  color:            $neutral-cream;
+  border:           1px solid $canvas-control-accent;
+  border-radius:    6px;
+  background-color: $canvas-control-accent;
+  gap:              6px;
+  }
+
+.shareButton:hover:not(:disabled) {
+  background-color: color.adjust($canvas-control-accent, $lightness: -8%);
+  transform:        translateY(-1px);
+  }
+
+.shareButton:active:not(:disabled) {
+  background-color: color.adjust($canvas-control-accent, $lightness: -12%);
+  transform:        translateY(0);
+  }
+
+.shareButton:disabled,
+.shareButton.sharing {
+  cursor:           wait;
+  opacity:          0.7;
+  background-color: $canvas-control-overlay;
+  }
+
+.shareOptions {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  width:                 100%;
+  gap:                   6px;
+  }
+
+.socialButton {
+  font-family:      $font-family-section-heading;
+  font-size:        $font-size-s;
+  font-weight:      $font-weight-bold;
+  display:          flex;
+  flex:             1;
+  align-items:      center;
+  justify-content:  center;
+  min-width:        40px;
+  height:           36px;
+  padding:          6px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease, transform 0.1s ease;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
+  border-radius:    6px;
+  background-color: $canvas-control-input-bg;
+  }
+
+.socialButton:hover {
+  background-color: $canvas-control-hover;
+  transform:        translateY(-1px);
+  }
+
+.socialButton:active {
+  background-color: color.adjust($canvas-control-hover, $lightness: -5%);
+  transform:        translateY(0);
+  }
+
+.shareError {
+  font-family:      $font-family-section-heading;
+  font-size:        $font-size-xxxs;
+  width:            100%;
+  padding:          6px 8px;
+  text-align:       center;
+  color:            $primary-flame;
+  border-radius:    4px;
+  background-color: rgba($primary-flame, 0.1);
+  }

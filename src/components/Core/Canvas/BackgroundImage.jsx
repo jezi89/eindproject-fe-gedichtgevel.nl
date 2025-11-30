@@ -1,19 +1,50 @@
-// src/components/Core/Canvas/components/BackgroundImage.jsx
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useMemo, forwardRef, useImperativeHandle} from 'react';
 import {Assets, Texture} from 'pixi.js';
 import defaultBackground from '@/assets/default-poem-background.png';
+import {calculateOptimalImageRequest, IMAGE_QUALITY_MODE} from '@/utils/imageOptimization';
 
-export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
+export const BackgroundImage = forwardRef(({
+    imageUrl,
+    photoData,
+    imageQualityMode = IMAGE_QUALITY_MODE.AUTO,
+    canvasWidth,
+    canvasHeight,
+    onTextureLoaded
+}, ref) => {
     const [texture, setTexture] = useState(null);
     const previousTextureRef = useRef(null);
+    const spriteRef = useRef(null);
+
+    useImperativeHandle(ref, () => ({
+        getSpriteBounds: () => {
+            if (!spriteRef.current) return null;
+            return spriteRef.current.getBounds();
+        },
+        getSpriteScale: () => {
+            if (!spriteRef.current) return 1;
+            return spriteRef.current.scale.x;
+        },
+        getTexture: () => texture
+    }), [texture]);
+
+    const effectiveUrl = useMemo(() => {
+        if (!photoData) {
+            return imageUrl;
+        }
+
+        return calculateOptimalImageRequest(
+            photoData,
+            canvasWidth,
+            canvasHeight,
+            imageQualityMode
+        );
+    }, [photoData, canvasWidth, canvasHeight, imageQualityMode, imageUrl]);
 
     useEffect(() => {
         let isMounted = true;
 
-        // Cleanup previous texture
         if (previousTextureRef.current && previousTextureRef.current !== Texture.EMPTY) {
             try {
-                // Only destroy if it's not a shared/cached texture
                 if (previousTextureRef.current.source && previousTextureRef.current.source.destroyed === false) {
 
                 }
@@ -22,21 +53,23 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
             }
         }
 
-        const urlToLoad = imageUrl || defaultBackground;
+        const urlToLoad = effectiveUrl || defaultBackground;
 
-        // Load texture
         Assets.load(urlToLoad)
             .then(loadedTexture => {
                 if (isMounted) {
                     setTexture(loadedTexture);
                     previousTextureRef.current = loadedTexture;
+                    if (onTextureLoaded) {
+                        onTextureLoaded({
+                            width: loadedTexture.width,
+                            height: loadedTexture.height
+                        });
+                    }
                 }
             })
             .catch(err => {
-
-                // Fallback to default if custom image fails
                 if (urlToLoad !== defaultBackground) {
-
                     Assets.load(defaultBackground)
                         .then(loadedTexture => {
                             if (isMounted) {
@@ -45,8 +78,6 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
                             }
                         })
                         .catch(fallbackErr => {
-
-
                             if (isMounted) {
                                 setTexture(Texture.EMPTY);
                             }
@@ -57,40 +88,41 @@ export const BackgroundImage = ({imageUrl, canvasWidth, canvasHeight}) => {
         return () => {
             isMounted = false;
         };
-    }, [imageUrl]);
+    }, [effectiveUrl]);
 
-    // If texture failed to load, render a solid color fallback instead of nothing
     if (!texture || texture === Texture.EMPTY) {
         return (
             <pixiGraphics
                 draw={(graphics) => {
                     graphics.clear();
                     graphics.rect(0, 0, canvasWidth, canvasHeight);
-                    graphics.fill({ color: 0xE5E5E5 }); // Light gray fallback
+                    graphics.fill({ color: 0xE5E5E5 });
                 }}
             />
         );
     }
 
-    // "Cover" effect logica: schaal de afbeelding om het canvas te vullen zonder vervorming
-    const canvasAspect = canvasWidth / canvasHeight;
-    const imageAspect = texture.width / texture.height;
+    const isPortrait = texture.height > texture.width;
     let scale = 1;
-    if (canvasAspect > imageAspect) {
-        scale = canvasWidth / texture.width; // Fit to width
+
+    if (isPortrait) {
+        scale = canvasWidth / texture.width;
     } else {
-        scale = canvasHeight / texture.height; // Fit to height
+        const scaleX = canvasWidth / texture.width;
+        const scaleY = canvasHeight / texture.height;
+        scale = Math.min(scaleX, scaleY);
     }
 
     return (
         <pixiSprite
+            ref={spriteRef}
             texture={texture}
-            anchor={0.5}
+            anchor={{x: 0.5, y: 0}}
             x={canvasWidth / 2}
-            y={canvasHeight / 2}
+            y={0}
             scale={scale}
         />
     );
-};
+});
 
-
+BackgroundImage.displayName = 'BackgroundImage';

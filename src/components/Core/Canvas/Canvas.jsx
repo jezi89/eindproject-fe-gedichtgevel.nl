@@ -1,10 +1,12 @@
+
 import {Application, extend} from "@pixi/react";
 import {Container, Graphics, Sprite, Text} from "pixi.js";
 import {Viewport} from "pixi-viewport";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, useRef, useMemo} from "react";
 import { useNavigate } from "react-router";
 import Controls from "./Controls.jsx";
 import {useResponsiveCanvas} from "../../../hooks/canvas/useResponsiveCanvas";
+import {IMAGE_QUALITY_MODE} from "../../../utils/imageOptimization.js";
 import {useCanvasState} from "../../../hooks/canvas/useCanvasState";
 import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
@@ -19,6 +21,7 @@ import styles from "./Canvas.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";
 import {clearAllPersistedState} from "../../../hooks/canvas/usePersistedState";
+import { QualityStatusOverlay } from "./components/QualityStatusOverlay.jsx";
 
 // CRITICAL: extend() MUST be called at module level, outside components
 extend({Text, Container, Graphics, Sprite, Viewport});
@@ -42,9 +45,11 @@ export default function Canvas({
         lines: ["Selecteer een gedicht om te visualiseren"]
     };
 
-    // Use custom hooks for state and handlers
     const canvasState = useCanvasState();
-    const handlers = useCanvasHandlers(canvasState, currentPoem);
+
+
+    // Use responsive canvas hook - MUST be called early to be available for handlers
+    const layout = useResponsiveCanvas();
 
     // Restore canvas state from loaded design (destructive override)
     useEffect(() => {
@@ -83,44 +88,59 @@ export default function Canvas({
         }
     }, [savedCanvasState]); // Only run when savedCanvasState changes
 
-    // Photo preview state management
     const [previewState, setPreviewState] = useState('normal'); // 'normal' | 'dimmed' | 'preview'
     const [previewImage, setPreviewImage] = useState(null);
 
-    // State voor XY focus callback
+    // State for XY focus callback
     const [onXyFocusRequest, setOnXyFocusRequest] = useState(null);
 
-    // Thumbnail hover freeze state voor 2 seconden na Alt+J
+    // Thumbnail hover freeze state for 5 seconds after Alt+J
     const [hoverFreezeActive, setHoverFreezeActive] = useState(false);
 
     // Background loading freeze state - blocks hover during image loading
     const [backgroundLoadingFreeze, setBackgroundLoadingFreeze] = useState(false);
 
-    // Active shortcut visualization state
     const [activeShortcut, setActiveShortcut] = useState(null);
 
-    // Set initial background if provided
+    // Layout position state (standard = controls left, swapped = controls right)
+    const [layoutPosition, setLayoutPosition] = useState('standard');
+
+    const handleToggleLayoutPosition = useCallback(() => {
+        setLayoutPosition(prev => prev === 'standard' ? 'swapped' : 'standard');
+    }, []);
+
+    const handleToggleUIVisibility = useCallback(() => {
+        layout.toggleControls();
+        layout.toggleNav();
+    }, [layout]);
+
     useEffect(() => {
         if (backgroundUrl && !canvasState.backgroundImage) {
             canvasState.setBackgroundImage(backgroundUrl);
         }
     }, [backgroundUrl, canvasState]);
 
-    // Timer voor hover freeze
+    // Timer for hover freeze
     useEffect(() => {
         if (hoverFreezeActive) {
-
             const timer = setTimeout(() => {
                 setHoverFreezeActive(false);
-
             }, 5000);
             return () => clearTimeout(timer);
         }
     }, [hoverFreezeActive]);
 
-    // Handle preview state changes from FloatingPhotoGrid
-    const handlePreviewChange = useCallback(({previewMode, previewImage, hasHovered}) => {
+    // Expose PixiJS app for DevTools
+    useEffect(() => {
+        if (canvasState.viewportRef.current?.app) {
+            window.__PIXI_APP__ = canvasState.viewportRef.current.app;
+        }
+        return () => {
+            delete window.__PIXI_APP__;
+        };
+    }, [canvasState.viewportRef]);
 
+    const handlePreviewChange = useCallback(({previewMode, previewImage, hasHovered}) => {
         // Determine the correct preview state based on hasHovered
         let finalPreviewState = previewMode;
         if (previewMode === 'dimmed' && hasHovered) {
@@ -132,7 +152,6 @@ export default function Canvas({
         setPreviewImage(previewImage);
     }, []);
 
-    // Handle navigation back
     const handleBack = useCallback(() => {
         if (onBack) {
             onBack();
@@ -141,7 +160,6 @@ export default function Canvas({
         }
     }, [onBack, navigate]);
 
-    // Handle save functionality
     const handleSave = useCallback(async () => {
         if (onSave) {
             try {
@@ -157,7 +175,47 @@ export default function Canvas({
         }
     }, [onSave, canvasState.viewportRef, currentPoem]);
 
-    // Use keyboard shortcuts hook for mode cycling and selection management
+    const [qualityOverlayVisible, setQualityOverlayVisible] = useState(false);
+    const [currentDimensions, setCurrentDimensions] = useState(null);
+
+    // Trigger overlay when background image changes
+    useEffect(() => {
+        if (canvasState.backgroundImage) {
+             setQualityOverlayVisible(true);
+        }
+    }, [canvasState.backgroundImage]);
+
+    // Handler for when texture is actually loaded with real dimensions
+    const handleTextureLoaded = useCallback((dimensions) => {
+        setCurrentDimensions(dimensions);
+    }, []);
+
+    // Trigger overlay when quality mode changes
+    useEffect(() => {
+        setQualityOverlayVisible(true);
+    }, [canvasState.imageQualityMode]);
+
+
+    // Wrapper for setting image quality mode with side effects
+    const handleSetImageQualityMode = useCallback((mode) => {
+        canvasState.setImageQualityMode(mode);
+        // Automatically enable text optimization (Scherper Tekst) when High quality is selected
+        if (mode === IMAGE_QUALITY_MODE.HIGH) {
+            canvasState.setIsOptimizationEnabled(true);
+        }
+        setQualityOverlayVisible(true); // Ensure overlay shows on manual change
+    }, [canvasState]);
+
+    const handleCycleQuality = useCallback(() => {
+        const modes = [IMAGE_QUALITY_MODE.ECO, IMAGE_QUALITY_MODE.AUTO, IMAGE_QUALITY_MODE.HIGH];
+        const currentIndex = modes.indexOf(canvasState.imageQualityMode);
+        // If current mode is not found (e.g. undefined), default to 0 (Eco)
+        const validCurrentIndex = currentIndex === -1 ? 0 : currentIndex;
+        const nextIndex = (validCurrentIndex + 1) % modes.length;
+        
+        handleSetImageQualityMode(modes[nextIndex]);
+    }, [canvasState.imageQualityMode, handleSetImageQualityMode]);
+
     const keyboardShortcuts = useKeyboardShortcuts({
         moveMode: canvasState.moveMode,
         setMoveMode: canvasState.setMoveMode,
@@ -172,16 +230,58 @@ export default function Canvas({
         setHighlightVisible: canvasState.setHighlightVisible,
         setHoverFreezeActive,
         setActiveShortcut,
+        onToggleLayoutPosition: handleToggleLayoutPosition,
+        onToggleUIVisibility: handleToggleUIVisibility,
+        onToggleNav: layout.toggleNav,
+        onCycleQuality: handleCycleQuality,
     });
 
-    // Use responsive canvas hook
-    const layout = useResponsiveCanvas();
+    // Create ref for canvas container (used for html-to-image export)
+    const canvasContainerRef = useRef(null);
+
+    // Create ref for BackgroundImage component (for sprite bounds in export)
+    const backgroundImageRef = useRef(null);
 
     // Use canvas export hook for downloading designs
-    const {exportAsPNG, exportAsJPG} = useCanvasExport(canvasState.appRef);
+    // Pass appRef, backgroundImageRef, and quality mode for PixiJS Extract API
+    const {
+        exportAsPNG,
+        exportAsJPG,
+        exportFullSpriteAsPNG,
+        exportFullSpriteAsJPG,
+        getExportDataUrl
+    } = useCanvasExport(
+        canvasContainerRef,
+        canvasState.appRef,
+        backgroundImageRef,
+        canvasState.imageQualityMode
+    );
 
-    // Bepaal welke data we aan de fotogalerij moeten tonen.
-    // We checken de search context om te bepalen welke bron actief is.
+    // Use canvas handlers hook - MUST be called after useCanvasExport
+    const canvasHandlers = useCanvasHandlers({
+        canvasState,
+        currentPoem,
+        currentDesignId,
+        navigate,
+        exportAsPNG,
+        exportAsJPG,
+        exportFullSpriteAsPNG,
+        exportFullSpriteAsJPG,
+        getExportDataUrl,
+        layoutPosition
+    });
+
+    const handlers = useMemo(() => {
+        return {
+            ...canvasHandlers,
+            onToggleLayoutPosition: handleToggleLayoutPosition,
+            onToggleUIVisibility: handleToggleUIVisibility,
+            onToggleNav: layout.toggleNav,
+            onCycleQuality: handleCycleQuality,
+        };
+    }, [canvasHandlers, handleToggleLayoutPosition, handleToggleUIVisibility, layout.toggleNav, handleCycleQuality]);
+
+    // Determine which data to show in photo gallery based on active search source
     const isFlickrActive = canvasState.searchContext?.source === 'flickr' &&
         (canvasState.isFlickrLoading || (canvasState.flickrPhotos && canvasState.flickrPhotos.length > 0));
     const photosToShow = isFlickrActive ? canvasState.flickrPhotos : canvasState.photos;
@@ -189,8 +289,6 @@ export default function Canvas({
     const error = canvasState.flickrError || canvasState.error;
     const hasNextPage = isFlickrActive ? canvasState.hasNextFlickrPage : canvasState.hasNextPage;
     const hasPrevPage = isFlickrActive ? canvasState.hasPrevFlickrPage : canvasState.hasPrevPage;
-
-    // Photo grid data ready for rendering
 
     const textPosition = useResponsiveTextPosition(
         layout.canvasWidth,
@@ -214,7 +312,6 @@ export default function Canvas({
 
     useEffect(() => {
         debugManager.registerResetHandler(handleResetViewport);
-        // Cleanup on unmount
         return () => debugManager.registerResetHandler(null);
     }, [handleResetViewport]);
 
@@ -230,13 +327,49 @@ export default function Canvas({
         }
     }, [canvasState.moveMode, canvasState.selectedLines.size, keyboardShortcuts, canvasState.restoreSelection]);
 
+
+
+    const handleResetAllText = useCallback(() => {
+        canvasState.setLineOverrides({});
+        canvasState.clearSelection();
+
+        canvasState.setFontSize(40);
+        // Use the handler to correctly reset line height based on the new font size
+        handlers.handleResetLineHeight();
+
+        canvasState.setLetterSpacing(0);
+        canvasState.setTextAlign('center');
+        canvasState.setFillColor('#000000');
+        canvasState.setSkewX(0);
+        canvasState.setSkewY(0);
+        canvasState.setFontWeight('normal');
+        canvasState.setFontStyle('normal');
+
+        handlers.handleResetTitleColor();
+        handlers.handleResetAuthorColor();
+        handleResetViewport();
+    }, [canvasState, handlers, handleResetViewport]);
+
     return (
         <>
             <ResponsiveLayout
                 layout={layout}
                 previewState={previewState}
+                layoutPosition={layoutPosition}
+                onToggleLayoutPosition={handleToggleLayoutPosition}
                 controls={
                     <Controls
+                        qualityOverlay={
+                            <QualityStatusOverlay 
+                                isVisible={qualityOverlayVisible}
+                                qualityMode={canvasState.imageQualityMode}
+                                currentDimensions={currentDimensions}
+                                onClose={() => setQualityOverlayVisible(false)}
+                            />
+                        }
+                        layoutPosition={layoutPosition}
+                        onResetAllText={handleResetAllText}
+                        onToggleLayoutPosition={handleToggleLayoutPosition}
                         onResetViewport={handleResetViewport}
                         fontSize={canvasState.fontSize}
                         onFontSizeChange={handlers.handleFontSizeChange}
@@ -265,7 +398,6 @@ export default function Canvas({
                         viewportDragEnabled={canvasState.viewportDragEnabled}
                         onViewportToggle={handlers.handleViewportToggle}
                         onColorPickerActiveChange={handlers.handleColorPickerActiveChange}
-                        // Hierarchical color system props
                         effectiveTitleColor={canvasState.effectiveTitleColor}
                         effectiveAuthorColor={canvasState.effectiveAuthorColor}
                         hasTitleColorOverride={canvasState.hasTitleColorOverride}
@@ -280,23 +412,23 @@ export default function Canvas({
                         availableFonts={canvasState.availableFonts}
                         fontFamily={canvasState.fontFamily}
                         onFontFamilyChange={handlers.handleFontFamilyChange}
-                        // Font style props
                         fontWeight={canvasState.fontWeight}
                         onFontWeightChange={handlers.handleFontWeightChange}
                         fontStyle={canvasState.fontStyle}
                         onFontStyleChange={handlers.handleFontStyleChange}
-                        // Skew props
                         skewX={canvasState.skewX}
                         onSkewXChange={handlers.handleSkewXChange}
+                        onLineSkewXChange={handlers.handleLineSkewXChange}
                         skewY={canvasState.skewY}
                         onSkewYChange={handlers.handleSkewYChange}
-                        // Pexels background props
+                        onLineSkewYChange={handlers.handleLineSkewYChange}
+                        onLineTextAlignChange={handlers.handleLineTextAlignChange}
                         photos={canvasState.photos}
                         isLoading={canvasState.isLoading}
                         error={canvasState.error}
-                        onSearch={handlers.handleSearchBackground} // De bestaande voor vrij zoeken
+                        onSearch={handlers.handleSearchBackground}
                         onCitySearch={handlers.handleCitySearch}
-                        onPremiumSearch={handlers.handlePremiumSearch} // NEW: Premium Flickr text search
+                        onPremiumSearch={handlers.handlePremiumSearch}
                         onSetBackground={handlers.handleSetBackground}
                         onNextPage={handlers.handleNextPage}
                         onPrevPage={handlers.handlePrevPage}
@@ -309,21 +441,33 @@ export default function Canvas({
                         hoverFreezeActive={hoverFreezeActive} // Pass hover freeze state for timer
                         isOptimizationEnabled={canvasState.isOptimizationEnabled}
                         setIsOptimizationEnabled={canvasState.setIsOptimizationEnabled}
-                        // Canvas-specific props
+                        totalLineCount={currentPoem?.lines?.length || 0}
+                        textMaterial={canvasState.textMaterial}
+                        onTextMaterialChange={canvasState.setTextMaterial}
+                        textPadding={canvasState.textPadding}
+                        onTextPaddingChange={canvasState.setTextPadding}
+                        textEffectMode={canvasState.textEffectMode}
+                        setTextEffectMode={canvasState.setTextEffectMode}
+                        textEffectParams={canvasState.textEffectParams}
+                        setTextEffectParams={canvasState.setTextEffectParams}
+                        imageQualityMode={canvasState.imageQualityMode}
+                        setImageQualityMode={handleSetImageQualityMode}
                         onSave={handleSave}
                         onBack={handleBack}
                     />
                 }
                 canvas={
-                    <Application
-                        width={layout.canvasWidth}
-                        height={layout.canvasHeight}
-                        options={{
-                            background: 0x1d2230,
-                            resolution: window.devicePixelRatio || 1,
-                            autoDensity: true,
-                        }}
-                    >
+                    <div ref={canvasContainerRef} style={{width: '100%', height: '100%'}}>
+                        <Application
+                            width={layout.canvasWidth}
+                            height={layout.canvasHeight}
+                            options={{
+                                background: 0x1d2230,
+                                resolution: window.devicePixelRatio || 1,
+                                autoDensity: true,
+                                preserveDrawingBuffer: true, // Required for html-to-image to capture WebGL canvas
+                            }}
+                        >
                         <CanvasContent
                             poemData={currentPoem}
                             canvasWidth={layout.canvasWidth}
@@ -352,13 +496,15 @@ export default function Canvas({
                             viewportDragEnabled={canvasState.viewportDragEnabled}
                             isColorPickerActive={canvasState.isColorPickerActive}
                             backgroundImage={previewImage || canvasState.backgroundImage}
+                            imageQualityMode={canvasState.imageQualityMode}
+                            backgroundImageRef={backgroundImageRef}
                             onNextPage={handlers.handleNextPage}
                             onPrevPage={handlers.handlePrevPage}
                             hasNextPage={canvasState.hasNextPage}
                             hasPrevPage={canvasState.hasPrevPage}
-                            onSearch={handlers.handleSearchBackground} // De bestaande voor vrij zoeken
-                            onCitySearch={handlers.handleCitySearch} // De nieuwe voor de dropdowns
-                            onPremiumSearch={handlers.handlePremiumSearch} // NEW: Premium Flickr text search
+                            onSearch={handlers.handleSearchBackground}
+                            onCitySearch={handlers.handleCitySearch}
+                            onPremiumSearch={handlers.handlePremiumSearch}
                             poemOffset={canvasState.poemOffset}
                             setPoemOffset={canvasState.setPoemOffset}
                             moveMode={canvasState.moveMode}
@@ -366,10 +512,18 @@ export default function Canvas({
                             setIsDragging={canvasState.setIsDragging}
                             effectiveStyles={canvasState.effectiveStyles}
                             highlightVisible={canvasState.highlightVisible}
-                            // Pass current poem data
+                            textMaterial={canvasState.textMaterial}
+                            onTextMaterialChange={canvasState.setTextMaterial}
+                            textPadding={canvasState.textPadding}
+                            onTextPaddingChange={canvasState.setTextPadding}
+                            textEffectMode={canvasState.textEffectMode}
+                            textEffectParams={canvasState.textEffectParams}
                             currentPoem={currentPoem}
+                            totalLineCount={currentPoem?.lines?.length || 0}
+                            onTextureLoaded={handleTextureLoaded}
                         />
                     </Application>
+                    </div>
                 }
                 navigation={
                     <Navigation
@@ -390,14 +544,18 @@ export default function Canvas({
                         currentDesignId={currentDesignId}
                         onExportAsPNG={exportAsPNG}
                         onExportAsJPG={exportAsJPG}
+                        onExportFullSpriteAsPNG={exportFullSpriteAsPNG}
+                        onExportFullSpriteAsJPG={exportFullSpriteAsJPG}
+                        getExportDataUrl={getExportDataUrl}
+                        layoutPosition={layoutPosition}
+                        controlsVisible={layout.controlsVisible}
+                        controlsWidth={layout.controlsWidth}
                     />
                 }
             />
 
-            {/* Canvas Shortcut Feedback */}
             <ShortcutFeedback activeShortcut={activeShortcut}/>
 
-            {/* Floating Photo Grid */}
             {canvasState.photoGridVisible && (
                 <FloatingPhotoGrid
                     photos={photosToShow}
@@ -414,6 +572,7 @@ export default function Canvas({
                     currentBackground={canvasState.backgroundImage}
                     onPreviewChange={handlePreviewChange}
                     hoverFreezeActive={hoverFreezeActive || backgroundLoadingFreeze} // Combined freeze state
+                    imageQualityMode={canvasState.imageQualityMode}
                 />
             )}
 
@@ -436,10 +595,10 @@ export default function Canvas({
                     />
                 )}
 
-            {/* Globale thumbnail hover freeze overlay */}
+            {/* Global thumbnail hover freeze overlay */}
             {hoverFreezeActive && (
                 <div
-                    className={`${styles.thumbnailFreeze}`}
+                    className={styles.thumbnailFreeze}
                     style={{
                         position: "fixed",
                         top: 0,

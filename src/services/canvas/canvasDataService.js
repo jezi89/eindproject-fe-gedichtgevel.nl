@@ -30,7 +30,7 @@ export class CanvasDataService {
             sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(standardizedData));
 
             return standardizedData;
-        } catch (error) {
+        } catch {
 
             throw new Error('Failed to store poem data for canvas');
         }
@@ -57,7 +57,7 @@ export class CanvasDataService {
             }
 
             return poemData;
-        } catch (error) {
+        } catch {
 
             this.clearPoemData(); // Clear corrupted data
             return null;
@@ -71,8 +71,8 @@ export class CanvasDataService {
         try {
             sessionStorage.removeItem(this.STORAGE_KEY);
 
-        } catch (error) {
-
+        } catch {
+            // Ignore storage errors
         }
     }   
  
@@ -87,15 +87,16 @@ export class CanvasDataService {
         }
         
         // Extract lines from various possible formats
+        // Extract lines from various possible formats
         let lines = [];
         if (Array.isArray(poemData.lines)) {
             lines = poemData.lines.filter(line => typeof line === 'string');
         } else if (typeof poemData.text === 'string') {
-            lines = poemData.text.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.text.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         } else if (typeof poemData.content === 'string') {
-            lines = poemData.content.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.content.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         } else if (typeof poemData.body === 'string') {
-            lines = poemData.body.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.body.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         }
         
         // Ensure we have at least some content
@@ -209,7 +210,7 @@ export class CanvasDataService {
             // Normalize whitespace
             .replace(/\s+/g, ' ')
             // Remove any null bytes or control characters (except newlines and tabs)
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
     }
     
     /**
@@ -271,7 +272,7 @@ export class CanvasDataService {
             sessionStorage.setItem(test, test);
             sessionStorage.removeItem(test);
             return true;
-        } catch (error) {
+        } catch {
 
             return false;
         }

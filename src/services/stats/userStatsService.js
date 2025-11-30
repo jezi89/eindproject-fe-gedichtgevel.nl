@@ -7,16 +7,7 @@
  * @module services/stats/userStatsService
  */
 
-// Helper for consistent error handling
-const handleError = (operation, error) => {
-    console.error(`${operation} error:`, error);
-    return {success: false, error: error.message};
-};
 
-// Helper for successful responses
-const handleSuccess = (data = null) => {
-    return {success: true, ...(data && {data})};
-};
 
 export const userStatsService = {
     getUserStats: async () => ({

@@ -7,90 +7,65 @@
 @use "@styles/variables" as vars;
 @use "@styles/mixins" as mix;
 
-/* =======================================================
- * CAROUSEL DOTS INDICATOR
- * ======================================================= */
+/* -------------------------------------------------------
+ * INDICATOR WRAPPER & DOTS
+ * ------------------------------------------------------- */
 
 .indicatorWrapper {
-  @include mix.flex-container(row, center, center, nowrap);
-  margin:  vars.$spacing-m auto;
-  padding: vars.$spacing-s vars.$spacing-m;
-  gap:     vars.$spacing-xs;
-
-  @include mix.tablet-up {
-	padding: vars.$spacing-m vars.$spacing-l;
-	gap:     vars.$spacing-s;
-	}
-  }
-
-/* -------------------------------------------------------
- * DOTS
- * ------------------------------------------------------- */
+  @include mix.flex-container(row, center, center, wrap);
+  padding:          vars.$spacing-s vars.$spacing-m;
+  border-radius:    vars.$border-radius-pill;
+  background-color: vars.$neutral-cream; // Creamy background
+  gap:              vars.$spacing-xs;
+  width:            fit-content;
+  margin:           0 auto; // Center the wrapper itself
+  box-shadow:       vars.$shadow-sm;
+}
 
 .dot {
   @include mix.button-reset;
-  @include mix.circle(12px);
+  width:            12px;
+  height:           12px;
+  border-radius:    50%;
+  background-color: vars.$neutral-mid-light; // Default inactive color
+  transition:       all vars.$transition-fast vars.$ease-out;
   cursor:           pointer;
-  border:           vars.$border-width-thin solid vars.$border-subtle;
-  background-color: vars.$neutral-mid-light;
-  @include mix.transition(all, vars.$transition-fast, vars.$ease-out);
 
   &:hover {
-	transform:        scale(1.1);
-	background-color: vars.$neutral-mid;
-	}
-
-  &:focus {
-	outline:        2px solid vars.$border-focus;
-	outline-offset: 2px;
-	}
-
-  @include mix.tablet-up {
-	@include mix.circle(16px);
-	}
+    background-color: vars.$accent-gold;
+    transform:        scale(1.2);
   }
+}
 
 .dotActive {
+  background-color: vars.$accent-gold; // Orange/Gold highlight
   transform:        scale(1.2);
-  border-color:     vars.$primary-cognac;
-  background-color: vars.$primary-light;
-
-  &:hover {
-	background-color: vars.$primary-cognac;
-	}
-  }
+}
 
 .dotPlaceholder {
+  width:            8px;
+  height:           8px;
+  background-color: vars.$neutral-light;
   cursor:           default;
   opacity:          0.5;
-  border-color:     vars.$neutral-light;
-  background-color: vars.$neutral-light;
-
+  
   &:hover {
-	transform:        none;
-	background-color: vars.$neutral-light;
-	}
+    background-color: vars.$neutral-light;
+    transform:        none;
   }
-
-/* -------------------------------------------------------
- * ROMAN NUMERALS
- * ------------------------------------------------------- */
+}
 
 .roman {
   @include mix.text-style(vars.$body-text-normal);
   font-weight: vars.$font-weight-semibold;
-  padding:     0 vars.$spacing-xs;
-  color:       vars.$text-primary;
-
-  @include mix.tablet-up {
-	@include mix.text-style(vars.$body-text-bigger);
-	}
-  }
+  color:       vars.$neutral-mid-dark;
+  padding:     0 vars.$spacing-xxs;
+}
 
 .romanDecade {
   font-weight: vars.$font-weight-bold;
   color:       vars.$accent-gold;
-  }
+}
 
 /* -------------------------------------------------------
  * SEPARATORS
@@ -100,13 +75,13 @@
   font-size: vars.$font-size-s;
   padding:   0 vars.$spacing-xxs;
   color:     vars.$neutral-mid;
-  }
+}
 
 .decadeSeparator {
   font-size:   vars.$font-size-m;
   font-weight: vars.$font-weight-bold;
   color:       vars.$accent-gold;
-  }
+}
 
 /* -------------------------------------------------------
  * SERIES BUTTON & DROPDOWN
@@ -114,9 +89,9 @@
 
 .seriesButton {
   @include mix.button-base(
-				  vars.$button-secondary-background,
-				  vars.$button-secondary-text,
-				  vars.$button-secondary-border
+    vars.$button-secondary-background,
+    vars.$button-secondary-text,
+    vars.$button-secondary-border
   );
   @include mix.flex-container(row, center, center, nowrap);
   margin-left:   vars.$spacing-m;
@@ -125,42 +100,42 @@
   gap:           vars.$spacing-xxs;
 
   @include mix.tablet-up {
-	padding: vars.$spacing-s vars.$spacing-m;
-	gap:     vars.$spacing-xs;
-	}
+    padding: vars.$spacing-s vars.$spacing-m;
+    gap:     vars.$spacing-xs;
   }
+}
 
 .seriesButtonActive {
   color:            vars.$neutral-white;
   border-color:     vars.$primary-cognac;
   background-color: vars.$primary-light;
-  }
+}
 
 .seriesIcon {
   font-size: vars.$font-size-s;
 
   @include mix.tablet-up {
-	font-size: vars.$font-size-m;
-	}
+    font-size: vars.$font-size-m;
   }
+}
 
 .seriesText {
   @include mix.text-style(vars.$body-text-normal);
   font-weight: vars.$font-weight-semibold;
 
   @include mix.mobile-only {
-	@include mix.visually-hidden;
-	}
+    @include mix.visually-hidden;
   }
+}
 
 .seriesArrow {
   font-size: vars.$font-size-xs;
   @include mix.transition(transform, vars.$transition-fast, vars.$ease-out);
-  }
+}
 
 .seriesArrowUp {
   transform: rotate(180deg);
-  }
+}
 
 /* -------------------------------------------------------
  * SERIES DROPDOWN
@@ -180,10 +155,10 @@
   @include mix.custom-scrollbar();
 
   @include mix.tablet-up {
-	min-width:  320px;
-	max-height: 400px;
-	}
+    min-width:  320px;
+    max-height: 400px;
   }
+}
 
 .seriesHeader {
   padding:          vars.$spacing-m;
@@ -192,25 +167,25 @@
   background-color: vars.$neutral-off-white;
 
   h3 {
-	@include mix.text-style(vars.$heading-section);
-	font-size: vars.$font-size-m;
-	margin:    0 0 vars.$spacing-xs 0;
-	color:     vars.$text-heading;
-	}
+    @include mix.text-style(vars.$heading-section);
+    font-size: vars.$font-size-m;
+    margin:    0 0 vars.$spacing-xs 0;
+    color:     vars.$text-heading;
+  }
 
   p {
-	@include mix.text-style(vars.$body-text-normal);
-	font-size: vars.$font-size-xs;
-	margin:    0;
-	color:     vars.$text-secondary;
-	}
+    @include mix.text-style(vars.$body-text-normal);
+    font-size: vars.$font-size-xs;
+    margin:    0;
+    color:     vars.$text-secondary;
   }
+}
 
 .seriesOptions {
   padding: vars.$spacing-s;
   @include mix.flex-container(column, flex-start, stretch, nowrap);
   gap:     vars.$spacing-xxs;
-  }
+}
 
 .seriesOption {
   @include mix.button-reset;
@@ -222,51 +197,118 @@
   @include mix.transition(all, vars.$transition-fast, vars.$ease-out);
 
   &:hover {
-	border-color:     vars.$border-accent;
-	background-color: vars.$neutral-cream;
-	}
+    border-color:     vars.$border-accent;
+    background-color: vars.$neutral-cream;
+  }
 
   &:focus {
-	outline:        2px solid vars.$border-focus;
-	outline-offset: 2px;
-	}
+    outline:        2px solid vars.$border-focus;
+    outline-offset: 2px;
+  }
 
   &:active {
-	color:            vars.$neutral-white;
-	background-color: vars.$accent-gold;
-	}
+    color:            vars.$neutral-white;
+    background-color: vars.$accent-gold;
   }
+}
 
 .seriesRoman {
   @include mix.text-style(vars.$body-text-normal);
   font-size:   vars.$font-size-m;
   font-weight: vars.$font-weight-bold;
   color:       vars.$accent-gold;
-  }
+}
 
 .seriesRange {
   @include mix.text-style(vars.$body-text-normal);
   font-size: vars.$font-size-xs;
   color:     vars.$text-secondary;
-  }
+}
+
 
 /* -------------------------------------------------------
- * RANGE INDICATOR
+ * CAROUSEL ARROWS
  * ------------------------------------------------------- */
 
-.rangeIndicator {
-  @include mix.text-style(vars.$body-text-normal);
-  font-size:   vars.$font-size-xs;
-  font-weight: vars.$font-weight-regular;
-  margin-top:  vars.$spacing-xs;
-  text-align:  center;
-  color:       vars.$text-tertiary;
-
-  @include mix.tablet-up {
-	font-size:  vars.$font-size-xxs;
-	margin-top: vars.$spacing-s;
-	}
+.arrowsContainer {
+  position: absolute;
+  z-index:  vars.$z-mid;
+  left:     0;
+  right:    0;
+  width:    auto; // Fix for 100vw overflow
+  pointer-events: none; // Allow clicking through container
+  
+  // Default static positioning (HomePage)
+  &.arrowsStatic {
+    // Positioned relative to the results list
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 vars.$spacing-m;
   }
+
+  // Overlay positioning
+  &.arrowsOverlay {
+    position: relative;
+    top: auto;
+    transform: none;
+    display: flex;
+    justify-content: center;
+    gap: vars.$spacing-m;
+    margin-bottom: vars.$spacing-xs;
+    pointer-events: auto;
+    padding: 0;
+  }
+}
+
+.arrowButton {
+  @include mix.button-reset;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform vars.$transition-fast vars.$ease-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+
+  // HomePage styling (Big SVGs)
+  &.homeArrow {
+    width: 67px;
+    height: 133px;
+    
+    svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+  }
+
+  // Overlay styling (Small buttons)
+  &.overlayArrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: vars.$neutral-white;
+    border: 1px solid vars.$neutral-mid-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: vars.$neutral-soft-black;
+    box-shadow: vars.$shadow-sm;
+
+    &:hover {
+      background-color: vars.$neutral-cream;
+      border-color: vars.$primary-cognac;
+      color: vars.$primary-cognac;
+    }
+  }
+}
 
 /* -------------------------------------------------------
  * RESPONSIVE ADJUSTMENTS
@@ -274,40 +316,45 @@
 
 @include mix.mobile-only {
   .indicatorWrapper {
-	padding: vars.$spacing-xs vars.$spacing-s;
-	gap:     vars.$spacing-xxs;
-	}
+    padding: vars.$spacing-xs vars.$spacing-s;
+    gap:     vars.$spacing-xxs;
+  }
 
   .seriesDropdown {
-	min-width:  260px;
-	max-height: 280px;
-	}
+    min-width:  260px;
+    max-height: 280px;
+  }
 
   .seriesHeader {
-	padding: vars.$spacing-s;
+    padding: vars.$spacing-s;
 
-	h3 {
-	  font-size: vars.$font-size-s;
-	  }
+    h3 {
+      font-size: vars.$font-size-s;
+    }
 
-	p {
-	  font-size: vars.$font-size-xxxs;
-	  }
-	}
+    p {
+      font-size: vars.$font-size-xxxs;
+    }
   }
+    
+  .arrowButton.homeArrow {
+    width: 40px;
+    height: 80px;
+  }
+}
 
 @include mix.large-desktop-up {
   .indicatorWrapper {
-	padding: vars.$spacing-l vars.$spacing-xl;
-	gap:     vars.$spacing-m;
-	}
+    padding: vars.$spacing-l vars.$spacing-xl;
+    gap:     vars.$spacing-m;
+  }
 
   .dot {
-	@include mix.circle(18px);
-	}
+    @include mix.circle(18px);
+  }
 
   .seriesDropdown {
-	min-width:  360px;
-	max-height: 450px;
-	}
+    min-width:  360px;
+    max-height: 450px;
   }
+}

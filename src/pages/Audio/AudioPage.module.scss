@@ -19,39 +19,34 @@
   }
 
 .SpreekgevelApp {
-  position:              relative;
-  display:               grid;
-  align-items:           stretch;
-  box-sizing:            border-box;
-  background-color:      $background-page;
-  grid-template-columns: 181px 1fr 213px;
-  grid-template-rows: auto 1fr auto;
-  gap:                   0;
-  grid-template-areas:
-    "nav header  filters"
-    "nav main    filters"
-    "nav main    bottom";
+  position:         relative;
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  justify-content:  center;
+  box-sizing:       border-box;
+  background-color: $background-page;
+  min-height:       calc(100vh - 6rem); /* Full height minus NavBar (approx 80px) */
+  /* overflow: hidden;  Removed to allow natural scrolling if content is too tall */
   }
 
+/* Mobile Portrait Rotation */
+/* Mobile Portrait Rotation removed in favor of vertical stack */
+
 .Header {
-  z-index:        10;
-  display:        flex;
-  align-items:    center;
-  flex-direction: column;
-  grid-area:      header;
-  gap:            1rem;
+  display: none;
   }
 
 .MainContent {
   position:        relative;
   display:         flex;
-
   flex-direction:  column;
-  justify-content: flex-start;
-
-  padding-top:     0;
-  grid-area:       main;
-  margin-top:  0.5rem;
+  justify-content: center; /* Center children vertically */
+  align-items:     center; /* Center children (BookContainer) */
+  width:           100%;
+  padding: 1rem;
+  flex-grow:       1; /* Remove padding to ensure tight fit */
+  gap:             0;
   }
 
 
@@ -181,7 +176,7 @@
 
   flex-shrink:     0; /* Don't shrink */
   width:           100%; /* Full width of MainContent */
-  max-width:       1524px; /* Match BookContainer width */
+  max-width:       1800px; /* Match BookContainer width */
   height:          5rem;
   margin:          0 0 0 0; /* No margins, direct connection */
   padding:         0 3rem;

@@ -12,7 +12,7 @@ const formatTime = (seconds) => {
     return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
 };
 
-export const useRecording = (containerRef) => {
+export const useRecording = (containerRef, timelineRef) => {
     const { user } = useAuth();
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -33,6 +33,7 @@ export const useRecording = (containerRef) => {
     const recordingStartTime = useRef(0);
     const timelinePluginRef = useRef(null);
     const timerSubscribers = useRef(new Set());
+    const isRecordingRef = useRef(false);
 
 
     // Create a memoized canvas gradient for the recorded waveform
@@ -68,6 +69,16 @@ export const useRecording = (containerRef) => {
         plugins: plugins
     });
 
+    const isMounted = useRef(true);
+
+    // Track mount status
+    useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
+
     // New function to request permissions and load devices
     const requestMicPermission = useCallback(async () => {
         setError(null);
@@ -75,13 +86,19 @@ export const useRecording = (containerRef) => {
             // Request permission - this triggers the browser prompt
             await navigator.mediaDevices.getUserMedia({ audio: true });
 
+            if (!isMounted.current) return;
+
             // If permission is granted, get the devices
             const devices = await RecordPlugin.getAvailableAudioDevices();
+            
+            if (!isMounted.current) return;
+
             setMicDevices(devices);
             if (devices.length > 0 && !selectedMicDeviceId) {
                 setSelectedMicDeviceId(devices[0].deviceId);
             }
         } catch (err) {
+            if (!isMounted.current) return;
             console.error("Error requesting mic permission:", err);
             setError("Microfoontoegang is geweigerd. Sta toegang toe in je browserinstellingen.");
         }
@@ -101,12 +118,18 @@ export const useRecording = (containerRef) => {
         const unsubscribe = [
             wavesurfer.on('play', () => setIsPlaying(true)),
             wavesurfer.on('pause', () => setIsPlaying(false)),
-            wavesurfer.on('timeupdate', (time) => setCurrentTime(formatTime(time))),
+            wavesurfer.on('timeupdate', (time) => {
+                // Prevent state updates during recording to avoid re-renders
+                if (!isRecordingRef.current) {
+                    setCurrentTime(formatTime(time));
+                }
+            }),
             record.on('record-start', () => {
                 recordingTimeRef.current = 0;
                 setRecordingTime(0);
                 setTimeWarning(''); // Reset warning on new recording
                 setIsRecording(true);
+                isRecordingRef.current = true;
                 setIsTimelineVisible(false);
 
                 // Store the start time using performance.now()
@@ -166,6 +189,7 @@ export const useRecording = (containerRef) => {
             setTimeWarning(''); // Clear any existing warnings
             setRecordedAudioBlob(blob);
             setIsRecording(false);
+            isRecordingRef.current = false;
             setIsTimelineVisible(true);
 
             const onReady = () => {
@@ -178,8 +202,9 @@ export const useRecording = (containerRef) => {
                 });
 
                 // Register timeline plugin after recording ends (no separate container)
-                if (!timelinePluginRef.current) {
+                if (!timelinePluginRef.current && timelineRef?.current) {
                     timelinePluginRef.current = wavesurfer.registerPlugin(Timeline.create({
+                        container: timelineRef.current,
                         height: 20,
                         timeInterval: 0.2,
                         primaryLabelInterval: 5,
@@ -207,6 +232,22 @@ export const useRecording = (containerRef) => {
                 clearInterval(countdownIntervalRef.current);
                 countdownIntervalRef.current = null;
             }
+            
+            // Explicitly stop mic/recording on unmount to prevent "InvalidStateError"
+            // We need to find the plugin again because 'record' variable is closed over from the effect scope
+            // but the plugin instance should be the same.
+            const currentRecordPlugin = wavesurfer?.getActivePlugins().find(p => p instanceof RecordPlugin);
+            if (currentRecordPlugin) {
+                try {
+                    if (currentRecordPlugin.isRecording()) {
+                        currentRecordPlugin.stopRecording();
+                    } else {
+                        // If just mic is active (e.g. during countdown or paused), stop it
+                        currentRecordPlugin.stopMic(); 
+                    }
+                } catch (e) {
+                }
+            }
         };
     }, [wavesurfer, gradient]);
 
@@ -217,8 +258,20 @@ export const useRecording = (containerRef) => {
             setIsCountdownActive(true);
             setCountdownValue(3);
             await record.startMic({deviceId: selectedMicDeviceId});
+            
+            if (!isMounted.current) {
+                // If unmounted during startMic, stop it immediately
+                try { record.stopMic(); } catch(e) {}
+                return;
+            }
+
             let countdown = 3;
             countdownIntervalRef.current = setInterval(() => {
+                if (!isMounted.current) {
+                    clearInterval(countdownIntervalRef.current);
+                    return;
+                }
+
                 countdown--;
                 if (countdown > 0) {
                     setCountdownValue(countdown);
@@ -231,6 +284,7 @@ export const useRecording = (containerRef) => {
                 }
             }, 1000);
         } catch (error) {
+            if (!isMounted.current) return;
             console.error('Error starting microphone:', error);
             setError("Kon de microfoon niet starten. Controleer of een ander programma het niet gebruikt.");
             setIsCountdownActive(false);
@@ -247,7 +301,10 @@ export const useRecording = (containerRef) => {
 
         setError(null); // Clear previous errors
         const record = wavesurfer?.getActivePlugins().find(p => p instanceof RecordPlugin);
-        if (!record) return;
+        if (!record) {
+            console.error('❌ RecordPlugin not found when clicking record!');
+            return;
+        }
 
         if (isCountdownActive) {
             if (countdownIntervalRef.current) {
@@ -256,12 +313,19 @@ export const useRecording = (containerRef) => {
             }
             setIsCountdownActive(false);
             setCountdownValue(null);
-            record.stopMic();
+            try {
+                record.stopMic();
+            } catch (e) {
+            }
             return;
         }
 
         if (record.isRecording() || record.isPaused()) {
-            record.stopRecording();
+            try {
+                record.stopRecording();
+            } catch (e) {
+                console.error('Error stopping recording:', e);
+            }
         } else {
             setRecordedAudioBlob(null);
             startCountdownRecording(record);

@@ -1,48 +1,57 @@
-// src/components/Core/Canvas/components/FloatingPhotoGrid.jsx
-
 import React, {useState, useEffect} from "react";
-import styles from "./Canvas.module.scss"; // Updated import path
+import styles from "./Canvas.module.scss";
 import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
+import {calculateOptimalImageRequest} from "@/utils/imageOptimization.js";
+
+function calculateAspectRatio(width, height) {
+    if (!width || !height) return 'Unknown';
+
+    const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+    const divisor = gcd(width, height);
+    const ratioW = width / divisor;
+    const ratioH = height / divisor;
+
+    const decimal = (width / height).toFixed(2);
+    const common = {
+        '1.33': '4:3', '1.78': '16:9', '1.50': '3:2',
+        '0.67': '2:3', '0.75': '3:4', '1.00': '1:1', '0.56': '9:16'
+    };
+
+    return common[decimal] || `${ratioW}:${ratioH}`;
+}
 
 export default function FloatingPhotoGrid({
                                               photos,
                                               isLoading,
                                               error,
                                               onSetBackground,
-                                              onSetBackgroundLoadingFreeze, // NEW: Callback to control background loading freeze
+                                              onSetBackgroundLoadingFreeze,
                                               onClose,
                                               onNextPage,
                                               onPrevPage,
                                               hasNextPage,
                                               hasPrevPage,
                                               searchContext,
-                                              currentBackground,     // NEW: Current background to preserve
-                                              onPreviewChange,       // NEW: Callback for preview state changes
-                                              hoverFreezeActive      // NEW: Combined hover freeze state (Alt+J + background loading)
+                                              currentBackground,
+                                              onPreviewChange,
+                                              hoverFreezeActive,
+                                              imageQualityMode
                                           }) {
     const [isVisible, setIsVisible] = useState(false);
-
-    // Photo preview functionality
     const photoPreview = usePhotoPreview();
 
-    // Initialize preview system when grid opens
     useEffect(() => {
-
         photoPreview.openGrid(currentBackground);
 
-        // Cleanup when component unmounts
         return () => {
-
             const backgroundToRestore = photoPreview.closeGrid();
 
-            // Only restore background if it's different from current
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
                 onSetBackground(backgroundToRestore);
             }
         };
-    }, []); // Only run on mount/unmount
+    }, []);
 
-    // Update parent when preview state changes
     useEffect(() => {
         if (onPreviewChange) {
             onPreviewChange({
@@ -53,9 +62,6 @@ export default function FloatingPhotoGrid({
         }
     }, [photoPreview.previewMode, photoPreview.previewImage, photoPreview.hasHovered, onPreviewChange]);
 
-    // FloatingPhotoGrid component ready
-
-    // Generate title based on search context with source indicator
     const getTitle = () => {
         if (!searchContext) return "Achtergronden";
 
@@ -77,24 +83,17 @@ export default function FloatingPhotoGrid({
         }
     };
 
-    // Animate in when component mounts
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), 10);
         return () => clearTimeout(timer);
     }, []);
 
     const handleClose = () => {
-
-        // Clean up preview system and get background to restore
         const backgroundToRestore = photoPreview.closeGrid();
-
         setIsVisible(false);
 
-        // Wait for animation before actually closing
         setTimeout(() => {
-            // Restore background if needed
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
-
                 onSetBackground(backgroundToRestore);
             }
             onClose();
@@ -102,7 +101,6 @@ export default function FloatingPhotoGrid({
     };
 
     const handleBackgroundClick = (e) => {
-        // Close if clicking on backdrop (not the grid itself)
         if (e.target === e.currentTarget) {
             handleClose();
         }
@@ -162,54 +160,102 @@ export default function FloatingPhotoGrid({
                 )}
 
 
-                {/* Photo grid */}
                 <div className={styles.floatingPhotoGridContent}>
-                    {(photos || []).map((photo) => (
-                        <div
-                            key={photo.id}
-                            className={styles.floatingPhotoThumbnail}
-                            onClick={() => {
+                    {(photos || []).map((photo) => {
+                        const isPrintQuality = photo.width && photo.height &&
+                            Math.max(photo.width, photo.height) >= 3000;
 
-                                // Immediately activate background loading freeze to prevent hover conflicts
-                                if (onSetBackgroundLoadingFreeze) {
-                                    onSetBackgroundLoadingFreeze(true);
+                        const isLowQuality = photo.width && photo.height &&
+                            Math.max(photo.width, photo.height) <= 1024;
 
-                                    // Auto-deactivate freeze after 3 seconds (enough time for background loading)
-                                    setTimeout(() => {
-                                        onSetBackgroundLoadingFreeze(false);
+                        const viewportWidth = window.innerWidth;
+                        const viewportHeight = window.innerHeight;
+                        const viewportAspect = viewportWidth / viewportHeight;
+                        const photoAspect = photo.width / photo.height;
 
-                                    }, 3000);
-                                }
+                        let cropPercentage = 0;
+                        if (photoAspect > viewportAspect) {
+                            const usedWidth = photo.height * viewportAspect;
+                            cropPercentage = Math.round((1 - usedWidth / photo.width) * 100);
+                        } else {
+                            const usedHeight = photo.width / viewportAspect;
+                            cropPercentage = Math.round((1 - usedHeight / photo.height) * 100);
+                        }
 
-                                photoPreview.handlePhotoSelect(photo.src.large2x);
+                        return (
+                            <PhotoThumbnail
+                                key={photo.id}
+                                photo={photo}
+                                isPrintQuality={isPrintQuality}
+                                isLowQuality={isLowQuality}
+                                styles={styles}
+                                onClick={() => {
+                                    if (onSetBackgroundLoadingFreeze) {
+                                        onSetBackgroundLoadingFreeze(true);
 
-                                // Pass complete photo object with metadata including alt text
-                                onSetBackground({
-                                    url: photo.src.large2x,
-                                    thumbnail: photo.src.tiny,
-                                    alt: photo.alt,
-                                    photographer: photo.photographer || 'Unknown',
-                                    source: searchContext?.source || 'custom',
-                                    width: photo.width || null,
-                                    height: photo.height || null
-                                });
+                                        setTimeout(() => {
+                                            onSetBackgroundLoadingFreeze(false);
+                                        }, 3000);
+                                    }
 
-                                handleClose(); // Close grid after selecting
-                            }}
-                            onMouseEnter={() => {
-                                // Check if hover is frozen (e.g., after Alt+J navigation)
-                                if (hoverFreezeActive) {
+                                    const optimalUrl = calculateOptimalImageRequest(
+                                        photo,
+                                        window.innerWidth,
+                                        window.innerHeight,
+                                        imageQualityMode
+                                    );
 
-                                    return;
-                                }
+                                    photoPreview.handlePhotoSelect(optimalUrl);
 
-                                photoPreview.handlePhotoHover(photo.src.large2x);
-                            }}
-                            title={photo.alt || 'Hover voor preview, klik om te selecteren'}
-                        >
-                            <img src={photo.src.tiny} alt={photo.alt}/>
-                        </div>
-                    ))}
+                                    const backgroundData = {
+                                        url: optimalUrl,
+                                        thumbnail: photo.src.tiny,
+                                        alt: photo.alt,
+                                        photographer: photo.photographer || 'Unknown',
+                                        source: searchContext?.source || 'custom',
+                                        width: photo.width || null,
+                                        height: photo.height || null,
+
+                                        ...(photo.source === 'flickr' && {
+                                            url_b: photo.url_b,
+                                            url_h: photo.url_h,
+                                            url_k: photo.url_k,
+                                            url_o: photo.url_o,
+                                            width_b: photo.width_b,
+                                            height_b: photo.height_b,
+                                            width_h: photo.width_h,
+                                            height_h: photo.height_h,
+                                            width_k: photo.width_k,
+                                            height_k: photo.height_k,
+                                            width_o: photo.width_o,
+                                            height_o: photo.height_o,
+                                        }),
+
+                                        ...(searchContext?.source === 'pexels' && photo.src && {
+                                            src: photo.src
+                                        })
+                                    };
+
+                                    onSetBackground(backgroundData);
+                                    handleClose();
+                                }}
+                                onMouseEnter={() => {
+                                    if (hoverFreezeActive) {
+                                        return;
+                                    }
+
+                                    const optimalUrl = calculateOptimalImageRequest(
+                                        photo,
+                                        window.innerWidth,
+                                        window.innerHeight,
+                                        imageQualityMode
+                                    );
+                                    photoPreview.handlePhotoHover(optimalUrl);
+                                }}
+                                searchContext={searchContext}
+                            />
+                        );
+                    })}
                 </div>
 
                 {/* Pagination controls */}
@@ -239,6 +285,73 @@ export default function FloatingPhotoGrid({
                     </div>
                 )}
             </div>
+        </div>
+    );
+}
+
+function PhotoThumbnail({ photo, isPrintQuality, isLowQuality, styles, onClick, onMouseEnter, searchContext }) {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    return (
+        <div
+            className={styles.floatingPhotoThumbnail}
+            onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            title={photo.alt || 'Hover voor preview, klik om te selecteren'}
+        >
+            {/* Loading Spinner */}
+            {!isLoaded && (
+                <div className={styles.thumbnailLoader}>
+                    <div className={styles.spinner}></div>
+                </div>
+            )}
+
+            <img
+                src={photo.src.tiny}
+                alt={photo.alt}
+                onLoad={() => setIsLoaded(true)}
+                style={{ opacity: isLoaded ? 1 : 0 }}
+            />
+
+            {/* Badges */}
+            <div className={styles.badgeContainer}>
+                {isPrintQuality && (
+                    <span
+                        className={styles.printQualityBadge}
+                        title="Print-kwaliteit (>3000px)"
+                    >
+                        ⭐
+                    </span>
+                )}
+                {isLowQuality && (
+                    <span
+                        className={styles.lowQualityBadge}
+                        title="Lage resolutie (SD) - Max 1024px"
+                    >
+                        SD
+                    </span>
+                )}
+            </div>
+
+            {/* Enhanced Metadata Overlay */}
+            {photo.width && photo.height && (
+                <div className={styles.thumbnailMetadata}>
+                    <div className={styles.metadataDimensions}>
+                        {photo.width} × {photo.height}
+                    </div>
+                    <div className={styles.metadataRow}>
+                        <span className={styles.metadataAspect}>
+                            {calculateAspectRatio(photo.width, photo.height)}
+                        </span>
+                        <span className={styles.metadataSource}>
+                            {searchContext?.source === 'flickr' ? '📸 Flickr' : '🔍 Pexels'}
+                        </span>
+                    </div>
+                    <div className={styles.metadataOrientation}>
+                        {photo.height > photo.width ? '📱 Portrait' : '🖼️ Landscape'}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -14,7 +14,10 @@ import {AccountNav} from '@/components/account/AccountNav';
 import {FavoritesSection} from '@/components/account/FavoritesSection';
 import {StatsSection} from '@/components/account/StatsSection';
 import {SettingsSection} from '@/components/account/SettingsSection';
+import {useToast} from '@/context/ui/ToastContext';
 import styles from './AccountPage.module.scss';
+
+import {supabase} from '@/services/supabase/supabase';
 
 /**
  * AccountPage component for user account management
@@ -25,7 +28,9 @@ import styles from './AccountPage.module.scss';
 export function AccountPage() {
     const {user, loading} = useAuth();
     const navigate = useNavigate();
+    const { addToast } = useToast();
     const [activeTab, setActiveTab] = useState('favorites');
+    const [displayName, setDisplayName] = useState('');
 
     // Redirect to login if not authenticated
     useEffect(() => {
@@ -33,6 +38,28 @@ export function AccountPage() {
             navigate('/auth/login', {replace: true});
         }
     }, [user, loading, navigate]);
+
+    // Fetch user settings (display name)
+    useEffect(() => {
+        if (user) {
+            const fetchSettings = async () => {
+                try {
+                    const { data, error } = await supabase
+                        .from('user_settings')
+                        .select('display_name')
+                        .eq('id', user.id)
+                        .single();
+                    
+                    if (data && data.display_name) {
+                        setDisplayName(data.display_name);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user settings:', error);
+                }
+            };
+            fetchSettings();
+        }
+    }, [user]);
 
     // Show loading state while checking auth
     if (loading) {
@@ -56,17 +83,25 @@ export function AccountPage() {
                 <header className={styles.header}>
                     <h1 className={styles.title}>Mijn Account</h1>
                     <p className={styles.subtitle}>
-                        Welkom terug, {user.email}
+                        Welkom terug, {displayName || user.user_metadata?.full_name || user.email}
                     </p>
                 </header>
 
                 {/* Navigation Tabs */}
-                <AccountNav activeTab={activeTab} onTabChange={setActiveTab}/>
+                <AccountNav 
+                    activeTab={activeTab} 
+                    onTabChange={(tab) => {
+                        if (tab === 'stats') {
+                            addToast('Deze functie komt beschikbaar in versie 2.0', 'info');
+                            return;
+                        }
+                        setActiveTab(tab);
+                    }}
+                />
 
                 {/* Tab Content */}
                 <div className={styles.content}>
                     {activeTab === 'favorites' && <FavoritesSection/>}
-                    {activeTab === 'stats' && <StatsSection/>}
                     {activeTab === 'settings' && <SettingsSection/>}
                 </div>
             </div>

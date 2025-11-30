@@ -10,7 +10,6 @@ export const useEasterEgg = (callback) => {
         if (event.altKey && event.key.toLowerCase() === 'g') {
             // Prevent default browser action (e.g., focus search bar in some browsers)
             event.preventDefault();
-            console.log('🤫 Shortcut Activated: Alt+G');
             callback();
         }
     }, [callback]);

@@ -29,6 +29,10 @@ export function useKeyboardShortcuts({
   onXyFocusRequest, // Callback om focus handler van XYMoveSliders te ontvangen
   setHoverFreezeActive, // NEW: Callback to activate hover freeze
   setActiveShortcut, // NEW: Callback to show shortcut visualization
+  onToggleLayoutPosition, // NEW: Alt+S
+  onToggleUIVisibility, // NEW: Alt+.
+  onToggleNav, // NEW: Alt+N
+  onCycleQuality, // NEW: Alt+Q
 }) {
   // Keep track of previous selection to restore when returning to edit/line mode
   const previousSelectionRef = useRef(new Set());
@@ -102,11 +106,6 @@ export function useKeyboardShortcuts({
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      console.log(`🖱️ moveMouseToContainer: Moving to center (${centerX.toFixed(0)}, ${centerY.toFixed(0)}) of container`, {
-        width: rect.width,
-        height: rect.height,
-        position: rect
-      });
 
       // Simuleer mouse move event naar het centrum van de container
       const mouseMoveEvent = new MouseEvent('mousemove', {
@@ -137,10 +136,6 @@ export function useKeyboardShortcuts({
 
   // Verbeterde focus functie met ref callback, retry logic en muis verplaatsing
   const focusXyMoveSliders = useCallback(() => {
-    console.log('🎛️ Alt+J: Focus+Mouse sequence initiated', {
-      currentMode: moveMode,
-      currentlyVisible: xySlidersVisible
-    });
 
     // Switch to poem mode if not already active
     if (moveMode !== 'poem') {
@@ -238,19 +233,10 @@ export function useKeyboardShortcuts({
     }, 250); // Langere totale delay voor volledige render cycle
   }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, onXyFocusRequest, moveMouseToContainer]);
 
+
+
   useEffect(() => {
-    if (import.meta.env.DEV) {
-
-    }
-
     const handleKeyDown = (event) => {
-			if (import.meta.env.DEV) {
-				console.log("⌨️ Keydown:", {
-					key: event.key,
-					altKey: event.altKey,
-					target: event.target.tagName,
-				});
-			}
 
 			if (
 				event.target.tagName === "INPUT" ||
@@ -424,11 +410,82 @@ export function useKeyboardShortcuts({
 				setHighlightVisible(!highlightVisible);
 				return;
 			}
+
+            // ALT+S: Swap Layout Position
+            if (
+                event.key.toLowerCase() === "s" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("swap-layout", "Alt+S: Swap panel position");
+                if (onToggleLayoutPosition) onToggleLayoutPosition();
+                return;
+            }
+
+            // ALT+. (Dot): Toggle UI Visibility (Controls + Nav)
+            if (
+                event.key === "." &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("toggle-ui", "Alt+.: Toggle UI visibility");
+                if (onToggleUIVisibility) onToggleUIVisibility();
+                return;
+            }
+
+            // ALT+N: Toggle Navigation
+            if (
+                event.key.toLowerCase() === "n" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("toggle-nav", "Alt+N: Toggle Navigation");
+                if (onToggleNav) onToggleNav();
+                return;
+            }
+
+            // ALT+Q: Cycle Quality
+            if (
+                event.key.toLowerCase() === "q" &&
+                event.altKey &&
+                !event.ctrlKey &&
+                !event.shiftKey
+            ) {
+                event.preventDefault();
+                showShortcutFeedback("cycle-quality", "Alt+Q: Cycle image quality");
+                if (onCycleQuality) onCycleQuality();
+                return;
+            }
 		};
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, highlightVisible, setHighlightVisible, setHoverFreezeActive, setActiveShortcut, cycleModes, resetToEditMode, selectAll, selectAllIncludingTitleAuthor, currentPoem, showShortcutFeedback]);
+  }, [
+    moveMode, 
+    setMoveMode, 
+    xySlidersVisible, 
+    setXySlidersVisible, 
+    highlightVisible, 
+    setHighlightVisible, 
+    setHoverFreezeActive, 
+    setActiveShortcut, 
+    cycleModes, 
+    resetToEditMode, 
+    selectAll, 
+    selectAllIncludingTitleAuthor, 
+    currentPoem, 
+    showShortcutFeedback,
+    onToggleLayoutPosition,
+    onToggleUIVisibility,
+    onToggleNav,
+    onCycleQuality
+  ]);
 
   // Return function to restore previous selection (to be used by parent component)
   const restorePreviousSelection = () => {

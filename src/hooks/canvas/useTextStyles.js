@@ -138,8 +138,7 @@ export function useLineStyle(
 
     // Apply selection styling ONLY if color picker is not active AND highlight is visible
     if (isSelected && !isColorPickerActive && highlightVisible) {
-      styleProps.stroke = "#ffff00"; // Yellow border for selection indicator
-      styleProps.strokeThickness = 2; // Subtle border thickness
+      styleProps.stroke = { width: 2, color: "#ffff00" }; // Yellow border for selection indicator
 
       // Apply yellow fill ONLY if no color override exists
       if (!hasColorOverride) {

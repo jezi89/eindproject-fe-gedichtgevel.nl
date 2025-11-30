@@ -32,11 +32,11 @@ export const PoemExpansionControls = ({
                                           onNavigateToCanvas,
                                           onNavigateToRecording,
                                           onToggle,
-                                          styles
+                                          styles,
+                                          showLabels = true
                                       }) => {
     if (!canExpand) return null;
 
-    // TODO goed begrijpen hoe deze expansion controls werken en hoe ze zich verhouden tot de rest van de UI
     return (
         <AnimatePresence mode="wait">
             {!isExpanded && animationPhase === 'idle' && (
@@ -59,6 +59,7 @@ export const PoemExpansionControls = ({
                         onNavigateToRecording={onNavigateToRecording}
                         onToggle={onToggle}
                         styles={styles}
+                        showLabels={showLabels}
                     />
                 </motion.div>
             )}

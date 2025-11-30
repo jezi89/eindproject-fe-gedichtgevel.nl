@@ -1,7 +1,6 @@
-// src/components/Core/Canvas/components/PoemAuthor.jsx
 import React, {useEffect, useRef} from "react";
 import {useLineStyle} from "@/hooks/canvas/useTextStyles.js";
-// import { useDraggableLine } from "../hooks/useDraggableLine"; // REMOVED: Will use viewport-level event handling
+import {useTextEffects} from "@/hooks/canvas/useTextEffects.js";
 
 export const PoemAuthor = ({
                                author,
@@ -15,7 +14,9 @@ export const PoemAuthor = ({
                                globalFontFamily,
                                anchorX = 0.5,
                                isColorPickerActive = false,
-                               highlightVisible = true, // <-- NEW: Highlight toggle
+                               highlightVisible = true,
+                               textEffectMode, // NEW: Text effect mode
+                               textEffectParams, // NEW: Text effect parameters
                                // Drag functionality props
                                moveMode,
                                index, // This will be -1
@@ -25,9 +26,15 @@ export const PoemAuthor = ({
                                onDragLineEnd,
                                // Resolution optimization prop
                                resolution = 1,
+                               // Line-specific overrides
+                               skewX = 0,
+                               skewY = 0,
+                               overrideTextAlign,
+
                            }) => {
     const textRef = useRef();
     const containerRef = useRef();
+    const [textBounds, setTextBounds] = React.useState({ width: 0, height: 0 });
 
     // Use the same useLineStyle hook to compute the final style
     const computedStyle = useLineStyle(
@@ -37,8 +44,36 @@ export const PoemAuthor = ({
         isColorPickerActive,
         fontStatus,
         globalFontFamily,
-        highlightVisible // <-- NEW: Pass highlight toggle
+        highlightVisible
     );
+
+    // Calculate effective anchor based on override or global setting
+    const effectiveAnchorX = React.useMemo(() => {
+        if (overrideTextAlign) {
+            return {
+                left: 0,
+                center: 0.5,
+                right: 1,
+            }[overrideTextAlign];
+        }
+        return anchorX;
+    }, [overrideTextAlign, anchorX]);
+
+    // Calculate effective skew in radians
+    const effectiveSkew = React.useMemo(() => {
+        return {
+            x: (skewX * Math.PI) / 180,
+            y: (skewY * Math.PI) / 180,
+        };
+    }, [skewX, skewY]);
+
+    // Measure text dimensions
+    useEffect(() => {
+        if (textRef.current) {
+            const { width, height } = textRef.current;
+            setTextBounds({ width, height });
+        }
+    }, [author, computedStyle, resolution, fontStatus]);
 
     // Mode-based interaction: only in edit mode (identical to PoemLine)
     useEffect(() => {
@@ -83,30 +118,39 @@ export const PoemAuthor = ({
         }
     }, [onSelect, moveMode]);
 
-    // REMOVED: Author drag functionality - will use viewport-level event handling
-    // useDraggableLine(containerRef, {
-    //   enabled: moveMode === 'line' && selectedLines && selectedLines.has(index),
-    //   onDragStart: () => onDragLineStart && onDragLineStart(index, selectedLines),
-    //   onDragMove: (offset) => onDragLineMove && onDragLineMove(index, offset, selectedLines),
-    //   onDragEnd: onDragLineEnd
-    // });
+    // Calculate Text Effects using the custom hook
+    const { filters, style: effectStyle, blendMode, alpha } = useTextEffects(textEffectMode, textEffectParams);
+
+    // Merge computed style with effect style
+    const finalStyle = React.useMemo(() => {
+        if (!computedStyle) return null;
+        const style = computedStyle.clone();
+        // Apply effect styles (filters, dropShadow, etc.)
+        Object.assign(style, effectStyle);
+        // Ensure sufficient padding for effects
+        style.padding = 30;
+        return style;
+    }, [computedStyle, effectStyle]);
 
     return (
         <pixiContainer
             ref={containerRef}
             x={x}
             y={y}
+            skew={effectiveSkew} // <-- Apply skew here
             eventMode="passive"
             interactiveChildren={moveMode === "edit"}
         >
             <pixiText
                 ref={textRef}
                 text={author}
-                style={computedStyle}
-                anchor={{x: anchorX, y: 0}}
+                style={finalStyle}
+                filters={filters}
+                anchor={{x: effectiveAnchorX, y: 0}} // <-- Apply anchor here
                 resolution={resolution}
+                blendMode={blendMode}
+                alpha={alpha}
             />
         </pixiContainer>
     );
 };
-

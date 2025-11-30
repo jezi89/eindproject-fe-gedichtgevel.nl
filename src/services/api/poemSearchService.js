@@ -1,10 +1,5 @@
 /**
- * poemSearchService.js
- * Geavanceerde zoekfuncties (filters, multi-search, combinaties van velden)
- * Complexere zoekopbouw en combinaties, eventueel op basis van een enkele dataset (nog géén cache/cross-data).
- *
- * @description Advanced search functions (filters, multi-search, field combinations)
- * Complex search construction and combinations, potentially based on a single dataset (not yet cache/cross-data).
+ * Advanced Poem Search Service
  *
  * OPTIMIZATIONS IMPLEMENTED:
  * 1. Smart Request Routing - Only makes necessary API calls based on search term analysis
@@ -16,29 +11,29 @@
  * @module poemSearchService
  */
 
-// src/services/api/poemSearchService.js
 import {fetchPoemsFromPoetryDBByAuthorAndTitle, searchPoemsByAuthor as searchByAuthorInService, searchPoemsByTitle as searchByTitleInService} from './poemService.js';
-import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js'; // Zorg ervoor dat je deze lijst hebt gedefinieerd in een apart bestand
+import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js';
+import authorLifespans from '@/data/author_lifespans.json';
+import {ERAS} from '@/utils/eraMapping.js';
 
 // Request deduplication cache
 const pendingRequests = new Map();
 
 
 /**
- * Analyseert een zoekterm en probeert deze intelligent op te splitsen in auteur en titel.
- * Herkent verschillende patronen in de zoekterm.
+ * Analyzes a search term and intelligently splits it into author and title.
+ * Recognizes various patterns in the search term.
  *
- * @param {string} searchTerm De complete zoekterm ingevoerd door de gebruiker
- * @returns {Object} Een object met authorTerm, titleTerm, matchType, en confidence
+ * @param {string} searchTerm Complete search term entered by the user
+ * @returns {Object} Object with authorTerm, titleTerm, matchType, and confidence
  */
 function analyzeSearchTerm(searchTerm) {
-    // Log the original search term for debugging
     // 1. Check for explicit patterns "author - title" or "title by author"
     const dashPattern = /(.+?)\s+-\s+(.+)/i;
     const byPattern = /(.+?)\s+(?:door|by|van)\s+(.+)/i;
 
     if (dashPattern.test(searchTerm)) {
-        const [_, part1, part2] = searchTerm.match(dashPattern);
+        const [, part1, part2] = searchTerm.match(dashPattern);
         return {
             authorTerm: part1.trim(),
             titleTerm: part2.trim(),
@@ -49,7 +44,7 @@ function analyzeSearchTerm(searchTerm) {
     }
 
     if (byPattern.test(searchTerm)) {
-        const [_, part1, part2] = searchTerm.match(byPattern);
+        const [, part1, part2] = searchTerm.match(byPattern);
         return {
             authorTerm: part2.trim(),
             titleTerm: part1.trim(),
@@ -63,8 +58,6 @@ function analyzeSearchTerm(searchTerm) {
 
     // For 3+ words, assume pattern "First Last Title"
     if (words.length >= 3) {
-        // In a production version this would be a much more extensive list or an API
-        // Ensure poetrydbAuthors is available in this scope
         const knownAuthorsLower = poetrydbAuthors.map(a => a.toLowerCase());
 
         // Enhanced author detection for queries with 1 or more words
@@ -100,8 +93,7 @@ function analyzeSearchTerm(searchTerm) {
 
         // 3. For two words
         if (words.length === 2) {
-            const word1Lower = words[0].toLowerCase(); // Define word1Lower
-            const word2Lower = words[1].toLowerCase(); // Define word2Lower
+            const word1Lower = words[0].toLowerCase();
             // There are multiple possibilities:
             // a) "Shakespeare Winter" = Author "Shakespeare" and title contains "Winter"
             // b) "Winter Shakespeare" = Title contains "Winter" and author "Shakespeare"
@@ -194,17 +186,6 @@ function analyzeSearchTerm(searchTerm) {
  * @param {Function} requestFn - Function that returns a promise
  * @returns {Promise} The deduped promise
  */
-
-// TODO Nog implementeren
-
-// TEMP
-
-/**
- * Helper function to deduplicate requests
- * @param {string} key - Unique key for the request
- * @param {Function} requestFn - Function that returns a promise
- * @returns {Promise} The deduped promise
- */
 async function dedupeRequest(key, requestFn) {
     // Check if request is already pending
     if (pendingRequests.has(key)) {
@@ -225,20 +206,16 @@ async function dedupeRequest(key, requestFn) {
 
 
 /**
- * Voert een algemene zoekopdracht uit op gedichten.
- * Probeert de zoekterm intelligent te matchen tegen zowel titels als auteurs.
+ * Performs a general search on poems.
+ * Intelligently matches the search term against both titles and authors.
  *
- * @description Performs a general search on poems.
- * Tries to intelligently match the search term against both titles and authors.
- *
- * @param {string} searchTerm De ingevoerde zoekterm. / The entered search term.
- * @param {Object} filters Optionele filters voor de zoekopdracht (taal, periode, enz.) / Optional filters for the search (language, period, etc.)
- * @returns {Promise<Array<object>>} Een array van gevonden gedichten. / An array of found poems.
+ * @param {string} searchTerm The entered search term
+ * @param {Object} filters Optional filters for the search (language, period, etc.)
+ * @returns {Promise<Array<object>>} Array of found poems
  */
 export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = {}) {
     if (!searchTerm || !searchTerm.trim()) {
-        // Aborting wildcard search is not implemented as it's a collection of requests
-        return searchAllPoems();
+        return [];
     }
 
     // 1. Analysis of the search term
@@ -261,16 +238,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         const titleKey = `title:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(titleKey, () =>
-                searchByTitleInService(searchTerm, { signal }).catch(error => {
-                    if (error.name === 'CanceledError') {
-                    } else {
-                    }
+                searchByTitleInService(searchTerm, { signal }).catch(error => { // eslint-disable-line no-unused-vars
                     return []; // Return empty array on error or cancellation
                 })
             )
         );
         promiseLabels.push("Title search");
-    } else {
     }
 
     // 2b. Search by author (only if needed)
@@ -278,16 +251,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         const authorKey = `author:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(authorKey, () =>
-                searchByAuthorInService(searchTerm, { signal }).catch(error => {
-                     if (error.name === 'CanceledError') {
-                    } else {
-                    }
+                searchByAuthorInService(searchTerm, { signal }).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
         );
         promiseLabels.push("Author search");
-    } else {
     }
 
     // 3. Adding intelligent AND search action based on analysis
@@ -302,9 +271,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     analysis.option1.authorTerm,
                     analysis.option1.titleTerm,
                     { signal }
-                ).catch(error => {
-                    if (error.name !== 'CanceledError') {
-                    }
+                ).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
@@ -319,9 +286,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     analysis.option2.authorTerm,
                     analysis.option2.titleTerm,
                     { signal }
-                ).catch(error => {
-                    if (error.name !== 'CanceledError') {
-                    }
+                ).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
@@ -340,15 +305,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                         analysis.authorTerm,
                         analysis.titleTerm,
                         { signal }
-                    ).catch(error => {
-                        if (error.name !== 'CanceledError') {
-                        }
+                    ).catch(error => { // eslint-disable-line no-unused-vars
                         return [];
                     })
                 )
             );
             promiseLabels.push("Combined author-title search");
-        } else {
         }
     }
 
@@ -373,10 +335,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
             data: result || []
         }));
 
-        // Log results
-        resultsWithLabels.forEach(({label, data}) => {
-        });
-    } catch (error) {
+    } catch (error) { // eslint-disable-line no-unused-vars
         return [];
     }
 
@@ -427,30 +386,110 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
 
 
 /**
- * Zoek gedichten op titel (behoudt de originele specialisatie als nodig).
- *
- * @description Search poems by title (maintains the original specialization if needed).
- * @param {string} title De titel om op te zoeken. / The title to search for.
- * @returns {Promise<Array<object>>} Found poems
+ * Helper function to calculate active middle year of an author
+ * @param {number|null} birthYear
+ * @param {number|null} deathYear
+ * @returns {number|null}
  */
+function getActiveMiddleYear(birthYear, deathYear) {
+    if (birthYear != null && deathYear != null) {
+        return Math.round((birthYear + deathYear) / 2);
+    }
+    if (birthYear != null) {
+        return birthYear + 35;
+    }
+    if (deathYear != null) {
+        return deathYear - 35;
+    }
+    return null;
+}
+
 
 /**
- * Zoek gedichten op auteur (behoudt de originele specialisatie als nodig).
- *
- * @description Search poems by author (maintains the original specialization if needed).
- * @param {string} author De auteur om op te zoeken. / The author to search for.
- * @returns {Promise<Array<object>>} Found poems
+ * Get authors that belong to a specific era
+ * @param {string} eraId - Era ID (e.g., 'romantic', 'victorian')
+ * @returns {Array<string>} Array of author names
  */
+function getAuthorsInEra(eraId) {
+    const era = Object.values(ERAS).find(e => e.id === eraId);
+    if (!era || era.minYear === null || era.maxYear === null) {
+        return [];
+    }
+
+    return authorLifespans
+        .filter(entry => {
+            const activeMiddle = getActiveMiddleYear(entry.birth_year, entry.death_year);
+            return activeMiddle !== null &&
+                   activeMiddle >= era.minYear &&
+                   activeMiddle <= era.maxYear;
+        })
+        .map(entry => entry.author);
+}
+
 
 /**
- * Concept voor een functie die zoeken met filters toepast.
- * Dit is een opzet die verder uitgewerkt kan worden.
+ * Search poems by era - fetches all poems from authors in that era
  *
- * @description Concept for a function that applies filtered search.
- * This is a setup that can be further developed.
- *
- * @param {string} searchTerm De zoekterm / The search term
- * @param {Object} filters De toegepaste filters / The applied filters
- * @returns {Promise<Array<object>>} Gefilterde resultaten / Filtered results
+ * @param {string} eraId - The era ID to search for
+ * @param {Object} options - Options object
+ * @param {AbortSignal} options.signal - Abort signal for cancellation
+ * @returns {Promise<Array<object>>} Array of poems from authors in that era
  */
-// TODO implementeren
+export async function searchPoemsByEra(eraId, { signal } = {}) {
+    if (!eraId || eraId === 'all') {
+        return [];
+    }
+
+    const authorsInEra = getAuthorsInEra(eraId);
+
+    if (authorsInEra.length === 0) {
+        return [];
+    }
+
+    // Fetch poems for each author in parallel (limit concurrent requests)
+    const BATCH_SIZE = 5;
+    const allPoems = [];
+
+    for (let i = 0; i < authorsInEra.length; i += BATCH_SIZE) {
+        // Check if aborted before starting batch
+        if (signal?.aborted) {
+            throw new DOMException('Aborted', 'AbortError');
+        }
+
+        const batch = authorsInEra.slice(i, i + BATCH_SIZE);
+        const batchPromises = batch.map(author => {
+            const key = `era-author:${author.toLowerCase()}`;
+            return dedupeRequest(key, () =>
+                searchByAuthorInService(author, { signal }).catch(() => [])
+            );
+        });
+
+        const batchResults = await Promise.all(batchPromises);
+        batchResults.forEach(poems => {
+            if (Array.isArray(poems)) {
+                allPoems.push(...poems);
+            }
+        });
+    }
+
+    // Deduplicate results
+    const uniquePoems = [];
+    const seenKeys = new Set();
+
+    for (const poem of allPoems) {
+        const key = `${poem.title}-${poem.author}`.toLowerCase();
+        if (!seenKeys.has(key)) {
+            uniquePoems.push({ ...poem, matchType: 'era_search', score: 50 });
+            seenKeys.add(key);
+        }
+    }
+
+    // Sort alphabetically by author, then title
+    uniquePoems.sort((a, b) => {
+        const authorComp = a.author.localeCompare(b.author);
+        if (authorComp !== 0) return authorComp;
+        return a.title.localeCompare(b.title);
+    });
+
+    return uniquePoems;
+}

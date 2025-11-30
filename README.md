@@ -569,8 +569,5 @@ pnpm run dev -- --port 3001
 ---
 
 **Versie:** 1.0.0
-**Laatste update:** Oktober 2025
+**Laatste update:** November 2025
 **Auteur:** Eindproject Frontend Ontwikkeling NOVI
-
----
-testing

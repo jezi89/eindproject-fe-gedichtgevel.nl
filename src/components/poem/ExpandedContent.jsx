@@ -34,7 +34,8 @@ export const ExpandedContent = memo(({
                                          onNavigateToCanvas,
                                          onNavigateToRecording,
                                          onToggle,
-                                         styles
+                                         styles,
+                                         showLabels = true
                                      }) => {
     return (
         <motion.div
@@ -127,6 +128,7 @@ export const ExpandedContent = memo(({
                 onNavigateToRecording={onNavigateToRecording}
                 onToggle={onToggle}
                 styles={styles}
+                showLabels={showLabels}
             />
         </motion.div>
     );

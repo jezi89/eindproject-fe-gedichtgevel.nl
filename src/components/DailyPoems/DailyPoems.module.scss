@@ -4,6 +4,7 @@
  * Compact styling that reuses SearchResults styling but with daily-specific adjustments
  */
 
+@use "sass:color";
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 
@@ -147,3 +148,124 @@
 	padding-top: $spacing-s;
 	}
   }
+
+// Wrapper for DailyPoems with easter egg elements
+.dailyPoemsWrapper {
+  position: relative;
+}
+
+// Easter egg hint for anonymous users
+.easterEggHint {
+  text-align: center;
+  font-size: $font-size-s;
+  color: $text-tertiary;
+  margin: $spacing-m 0 0 0;
+  opacity: 0.7;
+
+  em {
+    font-style: italic;
+  }
+}
+
+// Brick emoji for logged-in users
+.brickEmoji {
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: $spacing-m auto 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:focus {
+    outline: 2px solid $primary-cognac;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+// Modal overlay
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+// Modal content
+.modal {
+  background: $secondary-dark;
+  border: 1px solid rgba($neutral-white, 0.2);
+  border-radius: 12px;
+  padding: $spacing-xl;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease;
+
+  h3 {
+    margin: 0 0 $spacing-m 0;
+    font-size: $font-size-l;
+    color: $text-heading;
+  }
+
+  p {
+    margin: 0 0 $spacing-l 0;
+    font-size: $font-size-m;
+    color: $text-primary;
+
+    kbd {
+      display: inline-block;
+      padding: 0.2em 0.5em;
+      margin: 0 0.2em;
+      background: rgba($neutral-white, 0.1);
+      border: 1px solid rgba($neutral-white, 0.3);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+      color: $primary-cognac;
+    }
+  }
+
+  button {
+    padding: $spacing-s $spacing-l;
+    background: $primary-cognac;
+    border: none;
+    border-radius: 6px;
+    color: $neutral-white;
+    font-size: $font-size-s;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: color.adjust($primary-cognac, $lightness: -10%);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -111,7 +111,57 @@
   padding:          8px 16px;
   border-bottom:    1px solid $canvas-control-border;
   background-color: $canvas-control-overlay-shinethrough;
+  transition:       all 0.3s ease;
   }
+
+/* Quality Status Overlay - Integrated into Header */
+.qualityStatusOverlay {
+  position:      absolute;
+  top:           0;
+  left:          50%;
+  transform:     translateX(-50%) translateY(-100%);
+  transition:    transform 0.3s ease;
+  pointer-events: none;
+  opacity:       0;
+  
+  &.visible {
+    transform: translateX(-50%) translateY(50%); // Slide down into view
+    opacity:   1;
+  }
+}
+
+// Alternative: If we want it IN the header flow, we might need to adjust the header structure.
+// But user asked for "temporarily higher" header.
+// Let's try positioning it absolutely relative to the header for now, or inject it.
+
+.qualityStatusContent {
+  display:          flex;
+  align-items:      center;
+  gap:              8px;
+  padding:          4px 12px;
+  border-radius:    16px;
+  background-color: rgba($canvas-control-bg, 0.95);
+  border:           1px solid $canvas-control-accent;
+  box-shadow:       0 2px 8px rgba(0,0,0,0.2);
+  font-size:        0.75rem;
+  font-family:      $font-family-section-heading;
+  color:            $canvas-control-text;
+  white-space:      nowrap;
+}
+
+.qualityLabel, .dimensionsLabel {
+  opacity: 0.7;
+}
+
+.qualityValue, .dimensionsValue {
+  font-weight: 600;
+  color:       $canvas-control-accent;
+}
+
+.separator {
+  opacity: 0.3;
+  margin:  0 4px;
+}
 
 .panelHeader h2, .panelHeader h3 {
   font-family: $font-family-section-heading; // Bitter
@@ -748,6 +798,118 @@
   object-fit: cover;
   }
 
+.printQualityBadge {
+  font-size:  1.2rem;
+  filter:     drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  }
+
+.lowQualityBadge {
+  font-family:      $font-family-section-heading; // Bitter
+  font-size:        0.7rem;
+  font-weight:      bold;
+  padding:          2px 4px;
+  color:            $neutral-cream;
+  border:           1px solid rgba(255, 255, 255, 0.5);
+  border-radius:    4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter:  blur(2px);
+  }
+
+.badgeContainer {
+  position:       absolute;
+  top:            4px;
+  right:          4px;
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            4px;
+  pointer-events: none;
+  }
+
+.thumbnailLoader {
+  position:        absolute;
+  z-index:         1;
+  top:             0;
+  right:           0;
+  bottom:          0;
+  left:            0;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      rgba(0, 0, 0, 0.1);
+  }
+
+.spinner {
+  width:             20px;
+  height:            20px;
+  animation:         spin 1s linear infinite;
+  border:            2px solid rgba($canvas-control-accent, 0.3);
+  border-top-color:  $canvas-control-accent;
+  border-radius:     50%;
+  }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+  }
+
+.thumbnailMetadata {
+  position:        absolute;
+  bottom:          0;
+  left:            0;
+  right:           0;
+  background:      rgba(0, 0, 0, 0.85);
+  color:           #fff;
+  padding:         6px 8px;
+  font-size:       0.7rem;
+  font-family:     monospace;
+  line-height:     1.4;
+  opacity:         0;
+  transition:      opacity 0.2s ease;
+  pointer-events:  none;
+  display:         flex;
+  flex-direction:  column;
+  gap:             2px;
+  }
+
+.floatingPhotoThumbnail:hover .thumbnailMetadata {
+  opacity: 1;
+  }
+
+.metadataDimensions {
+  font-weight: 600;
+  font-size:   0.75rem;
+  color:       #4ade80; // Green
+  }
+
+.metadataRow {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  gap:             8px;
+  }
+
+.metadataAspect {
+  color:       #fbbf24; // Amber
+  font-weight: 500;
+  font-size:   0.7rem;
+  }
+
+.metadataSource {
+  color:     #60a5fa; // Blue
+  font-size: 0.65rem;
+  }
+
+.metadataOrientation {
+  color:      #c084fc; // Purple
+  font-size:  0.65rem;
+  font-style: italic;
+  }
+
+.metadataCrop {
+  color:      #ffd700;
+  font-size:  0.65rem;
+  }
+
 .floatingPaginationControls {
   display:         flex;
   justify-content: space-between;
@@ -1138,6 +1300,61 @@
   background:     rgba(0, 0, 0, 0.1);
   }
 
+/* Image Quality Controls */
+.qualityModeContainer {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  }
+
+.qualityOption {
+  display:          flex;
+  align-items:      flex-start;
+  padding:          12px;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  border:           1px solid $canvas-control-border;
+  border-radius:    6px;
+  background-color: $canvas-control-input-bg;
+
+  &:hover {
+	background-color: $canvas-control-hover;
+	border-color:     $canvas-control-accent;
+	}
+
+  &.active {
+	border-color:     $canvas-control-accent;
+	background-color: rgba($canvas-control-accent, 0.1);
+	}
+
+  input[type="radio"] {
+	margin:      4px 12px 0 0;
+	cursor:      pointer;
+	accent-color: $canvas-control-accent;
+	}
+  }
+
+.qualityOptionContent {
+  display:        flex;
+  flex:           1;
+  flex-direction: column;
+  gap:            4px;
+  }
+
+.qualityLabel {
+  font-family: $font-family-section-heading; // Bitter
+  font-size:   0.9rem;
+  font-weight: $font-weight-semibold;
+  color:       $canvas-control-text;
+  }
+
+.qualityDescription {
+  font-family: $font-family-section-heading; // Bitter
+  font-size:   0.75rem;
+  line-height: 1.3;
+  color:       $canvas-control-overlay;
+  }
+
 /* Mobile responsive aanpassingen */
 @include respond-to("tablet") {
   .canvasContainer {
@@ -1170,4 +1387,129 @@
 	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 	gap:                   8px;
 	}
+  }
+
+/* Optimization Toggle Styling */
+.optimizationContainer {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.optimizationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.optimizationCheckbox {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: $accent-gold;
+}
+
+.optimizationTitle {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1rem;
+  color: $primary-cognac; /* Using primary color for prominence */
+  line-height: 1.2;
+}
+
+.optimizationDescription {
+  font-size: 0.85em;
+  font-weight: normal;
+  opacity: 0.8;
+  margin-left: 36px; /* Indent to align with text above */
+  color: $neutral-dark;
+}
+
+/* Custom Font Select Styling */
+.customSelect {
+  position: relative;
+  width:    100%;
+  }
+
+.selectTrigger {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  width:           100%;
+  padding:         8px;
+  cursor:          pointer;
+  text-align:      left;
+  color:           $canvas-control-text;
+  border:          1px solid $canvas-control-border;
+  border-radius:   4px;
+  background:      $canvas-control-input-bg;
+  }
+
+.selectTrigger:hover {
+  border-color: $canvas-control-accent;
+  }
+
+.arrow {
+  font-size: 0.8em;
+  color:     $canvas-control-text-muted;
+  }
+
+.optionsList {
+  position:         absolute;
+  z-index:          3000;
+  top:              100%;
+  width:            300px; /* Wider than trigger to show long names */
+  max-height:       400px;
+  overflow-y:       auto;
+  border:           1px solid $canvas-control-border;
+  border-radius:    4px;
+  background-color: $canvas-control-bg;
+  box-shadow:       0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+/* Positioning logic based on layout */
+.alignLeft {
+  left: 0;
+  }
+
+.alignRight {
+  right: 0;
+  left:  auto;
+  }
+
+.optGroup {
+  border-bottom: 1px solid $canvas-control-border;
+  }
+
+.optGroup:last-child {
+  border-bottom: none;
+  }
+
+.groupLabel {
+  font-size:      0.75rem;
+  font-weight:    bold;
+  padding:        8px 12px;
+  text-transform: uppercase;
+  color:          $neutral-dark; /* Darker text for visibility */
+  background:     rgba(0, 0, 0, 0.05); /* Slightly darker background */
+  letter-spacing: 0.05em;
+  }
+
+.fontOption {
+  font-size:  1.1rem; /* Larger for preview */
+  padding:    8px 12px;
+  cursor:     pointer;
+  transition: background 0.2s;
+  color:      $neutral-black; /* Black for clear preview */
+  }
+
+.fontOption:hover {
+  background-color: $canvas-control-hover;
+  }
+
+.fontOption.selected {
+  color:            $canvas-control-accent;
+  background-color: rgba($canvas-control-accent, 0.1);
   }

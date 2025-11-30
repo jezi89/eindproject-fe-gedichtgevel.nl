@@ -22,7 +22,6 @@ export default function XYMoveSliders({
     // Auto-focus en cursor overlay wanneer visibility verandert naar true
     useEffect(() => {
         if (isVisible && containerRef.current) {
-            console.log('📦 XYMoveSliders: Showing popover and auto-focusing on visibility change');
             containerRef.current.showPopover();
             containerRef.current.focus({preventScroll: true});
 
@@ -34,7 +33,6 @@ export default function XYMoveSliders({
 
             return () => clearTimeout(timeout);
         } else if (containerRef.current) {
-            console.log('📦 XYMoveSliders: Hiding popover on visibility change');
             containerRef.current.hidePopover();
         }
     }, [isVisible]);
@@ -42,7 +40,6 @@ export default function XYMoveSliders({
     // Focus request handler voor callback van parent (met cursor overlay)
     const handleRequestFocus = useCallback(() => {
         if (containerRef.current) {
-            console.log('🎛️ XYMoveSliders: Focus requested via callback');
             containerRef.current.focus({preventScroll: true});
 
             // Activeer focus overlay
@@ -53,7 +50,6 @@ export default function XYMoveSliders({
 
             return true;
         }
-        console.warn('🎛️ XYMoveSliders: Container ref not available for focus');
         return false;
     }, []);
 
@@ -62,7 +58,6 @@ export default function XYMoveSliders({
         const handleEscKey = (event) => {
             if (event.key === 'Escape' && isFocusActive) {
                 setIsFocusActive(false);
-                console.log('⌨️ ESC pressed: Deactivating XY focus overlay');
             }
         };
 

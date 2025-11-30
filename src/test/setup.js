@@ -5,7 +5,7 @@
  * Dit bestand wordt automatisch geladen voor elke test suite.
  */
 
-import { expect, afterEach, vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom'; // Extended matchers (toBeInTheDocument, etc.)
 
@@ -20,9 +20,6 @@ if (!import.meta.env.VITE_SUPABASE_URL) {
 }
 if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
   import.meta.env.VITE_SUPABASE_ANON_KEY = 'test-key';
-}
-if (!import.meta.env.VITE_SENTRY_DSN) {
-  import.meta.env.VITE_SENTRY_DSN = 'https://test@sentry.io/test';
 }
 
 // Mock window.matchMedia (gebruikt door responsive components)

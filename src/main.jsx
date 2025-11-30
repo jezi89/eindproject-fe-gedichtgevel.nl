@@ -1,20 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
-// Using createBrowserRouter for React Router v6.4+ because it allows for better data loading and route management
 import {createBrowserRouter, RouterProvider} from 'react-router';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
-import * as Sentry from '@sentry/react';
 import {AuthProvider} from './context/auth/AuthProvider';
 import App from './App.jsx';
 import queryClient from './services/api/queryClient.js';
 import {GlobalErrorBoundary} from './components/ErrorBoundary/GlobalErrorBoundary.jsx';
 import {RouterErrorBoundary} from './components/ErrorBoundary/RouterErrorBoundary.jsx';
 import {ProtectedRoute} from './components/ProtectedRoute.jsx';
-import {initSentry} from './services/sentry/sentryConfig.js';
-
-// Initialiseer Sentry VOOR de router wordt aangemaakt
-initSentry();
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import('./pages/Home/HomePage.jsx').then(m => ({ default: m.HomePage })));
@@ -54,10 +48,7 @@ const localStoragePersister = createSyncStoragePersister({
     key: 'GEDICHTGEVEL_QUERY_CACHE', // Custom key for this app
 });
 
-// Wrap createBrowserRouter met Sentry voor performance monitoring
-const sentryCreateBrowserRouter = Sentry.wrapCreateBrowserRouterV7(createBrowserRouter);
-
-const router = sentryCreateBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
@@ -99,6 +90,10 @@ const router = sentryCreateBrowserRouter([
     {path: "auth/callback", element: <Suspense fallback={<PageLoader/>}><AuthCallback/></Suspense>},
 ]);
 
+import {ToastProvider} from './context/ui/ToastContext.jsx';
+
+// ... existing imports ...
+
 // Create the root element for React 19
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -108,7 +103,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 persistOptions={{persister: localStoragePersister}}
             >
                 <AuthProvider>
-                    <RouterProvider router={router}/>
+                    <ToastProvider>
+                        <RouterProvider router={router}/>
+                    </ToastProvider>
                 </AuthProvider>
             </PersistQueryClientProvider>
         </GlobalErrorBoundary>

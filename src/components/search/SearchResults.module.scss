@@ -11,15 +11,15 @@
   display:          flex;
   align-items:      center;
   flex-direction:   column;
-  justify-content:  center; // Added for proper vertical centering
+  justify-content:  center;
+  position:         relative;
   width:            100%;
-  padding:          $spacing-m 0 $spacing-xxl 0; // Add bottom padding for animations
-  background-color: transparent; // Inherit from parent
+  padding:          $spacing-m 0 $spacing-xxl 0;
+  background-color: transparent;
 
   container-type:   inline-size;
   container-name:   search-results;
 
-  // Compacte spacing voor canvas mode
   &.canvasMode {
 	padding: $spacing-xs 0;
 	gap:     $spacing-s;
@@ -31,7 +31,6 @@
 	  margin-bottom: $spacing-s; }
 	}
 
-  // Daily mode styling
   &.dailyMode {
 	width:            100%;
 	margin-top:       $spacing-xl;
@@ -39,17 +38,16 @@
 	background-color: $secondary-dark;
 	border-top:       2px solid $secondary-muted;
 
-	// Compact spacing for daily poems
 	.cardHeader {
-	  padding-bottom: $spacing-xs; // Much less space below header
+	  padding-bottom: $spacing-xs;
 	  }
 
 	.addressContainer {
-	  margin-top:    0; // No negative margin
-	  margin-bottom: $spacing-xxs; // Very tight spacing to poem content
+	  margin-top:    0;
+	  margin-bottom: $spacing-xxs;
+	  margin-bottom: $spacing-xxs;
 	  }
 
-	// Hide global toggles in daily mode
 	.globalToggleContainer,
 	.focusStudioButton {
 	  display: none !important;
@@ -57,7 +55,6 @@
 	}
   }
 
-// Section Header for daily mode
 .sectionHeader {
   margin-bottom: $spacing-xl;
   text-align:    center;
@@ -77,23 +74,22 @@
   color:     $poem-text-inverse;
   }
 
-// Global Toggle Button Container
 .globalToggleContainer {
   @include flex-center;
   box-sizing:    border-box;
   width:         100%;
-  margin-bottom: $spacing-s; // Was spacing-sm (Reduced from md to sm)
+  margin-bottom: $spacing-s;
   padding:       0 $spacing-m; }
 
 .globalToggleButton {
   @include flex-center;
-  font-family:      $font-family-nav-item; // Was $font-family-primary
-  font-size:        $font-size-s; font-weight: $font-weight-semibold; // Was 600
-  padding:          $spacing-s $spacing-l; // Was $spacing-sm $spacing-lg
+  font-family:      $font-family-nav-item;
+  font-size:        $font-size-s; font-weight: $font-weight-semibold;
+  padding:          $spacing-s $spacing-l;
   cursor:           pointer;
   transition:       all $transition-normal;
-  color:            $neutral-off-white; // Was $white-medium
-  border:           $border-width-regular solid $neutral-off-white; // Was 2px, $white-medium
+  color:            $neutral-off-white;
+  border:           $border-width-regular solid $neutral-off-white;
   border-radius:    $border-radius-sm;
   background-color: $secondary-carribean-current;
   gap:              $spacing-s;
@@ -106,7 +102,7 @@
 
   // State variations
   &[aria-expanded="partial"] {
-	border-color:     $accent-golden-highlight; // Was #E6B17A;
+	border-color:     $accent-golden-highlight;
 	background-color: color.adjust($secondary-carribean-current, $lightness: -5%);
 	}
 
@@ -117,42 +113,39 @@
   }
 
 .toggleIcon {
-  font-size:   $font-size-s; // Was 16px;
+  font-size:   $font-size-s;
   font-weight: bold;
-  width:       $size-icon-container; // Was 18px;
+  width:       $size-icon-container;
   text-align:  center;
   @include flex-center;
   }
 
-// Results Container based on count
 .resultsContainer {
   width: 100%;
   }
 
 .resultsList {
-  // Base styling - default flex layout
+
   display:        flex;
-  align-items:    flex-start; // CRITICAL FIX: Prevent bidirectional expansion
+  align-items:    flex-start;
   flex-direction: column;
   width:          100%;
-  gap:            $spacing-m; // Was spacing-md (Further reduced to 1rem (16px) for tighter layout
+  gap:            $spacing-m;
   }
 
-// Individual Result Card - Based on Figma design
 .resultCard {
-  position:         relative; // For absolute positioned children (toast)
+  position:         relative;
   display:          flex;
   overflow:         visible;
   flex-direction:   column;
   width:            100%;
   height:           auto;
   min-height:       fit-content;
-  margin-bottom:    $spacing-xs; // Was $spacing-sm; Further reduced to 0.5rem (8px) for tighter layout
+  margin-bottom:    $spacing-xs;
   border-radius:    $border-radius-lg;
-  background-color: $neutral-cream; // Was $half-dutch-white; // Same as inner content
+  background-color: $neutral-cream;
   }
 
-// Equal heights for preview state in multiple columns
 .twoColumns,
 .threeColumns,
 .threeColumnsCarousel {
@@ -160,7 +153,7 @@
 	display:        flex;
 	align-items:    stretch;
 	flex-direction: column;
-	min-height:     fit-content; // Let content determine height naturally
+	min-height:     fit-content;
 	}
 
   .poemContent {
@@ -168,7 +161,7 @@
 	flex:           1;
 	flex-direction: column;
 	height:         auto;
-	min-height:     fit-content; // Let content determine height naturally
+	min-height:     fit-content;
 	}
   }
 
@@ -178,74 +171,73 @@
   overflow:         hidden;
   flex-direction:   column;
   justify-content:  center;
-  height:           $height-min-text-area; // Was 120px;
-  padding:          $spacing-m; // Changed from $spacing-xl (2rem) to $spacing-m (1rem)
+  min-height:       $height-min-text-area;
+  height:           auto;
+  padding:          $spacing-m;
   padding-bottom:   $spacing-l;
   text-align:       center;
-  border-bottom:    1px solid rgba($neutral-mid, 0.2); // Was $grey-500
-  background-color: $neutral-cream; // Was $half-dutch-white;
+  border-bottom:    1px solid rgba($neutral-mid, 0.2);
+  background-color: $neutral-cream;
 
   .poemTitle {
-	font-family: $font-family-body; // Was $font-family-secondary
-	font-size:   $font-size-sm-md; // Was 18px;
-	font-weight: $font-weight-regular; // Was 400;
-	line-height: $line-height-tight; // Was 1.1;
-	flex-shrink: 0;
-	max-height:  2.2em;
+	font-family: $font-family-body;
+	font-size:   $font-size-sm-md;
+	font-weight: $font-weight-regular;
+	line-height: $line-height-tight;
+	flex-shrink: 1;
 
-	// Ellipsis for long titles - max 2 lines
-	@include text-clamp(2);
-	margin:      0 0 $spacing-xs 0; // Was 8px
-	color:       $neutral-soft-black; // Was $smoky-black; // Dark color for better contrast
+
+	white-space: normal;
+	margin:      0 0 $spacing-xs 0;
+	color:       $neutral-soft-black;
 	}
 
   .poemAuthor {
-	font-family: $font-family-body; // Was $font-family-secondary
-	font-size:   $font-size-xxs; // Was 14px;
-	font-weight: $font-weight-regular; // Was 400;
-	line-height: $line-height-snug; // Was 1.2;
+	font-family: $font-family-body;
+	font-size:   $font-size-xxs;
+	font-weight: $font-weight-regular;
+	line-height: $line-height-snug;
 	flex-shrink: 0;
 	max-height:  2.4em;
 
-	// Ellipsis for long author names
+
 	@include text-clamp(2);
 	margin:      0;
-	color:       $neutral-mid; // Was $grey-500; // Dark grey for better contrast
+	color:       $neutral-mid;
 	}
   }
 
 .poemContent {
   position:         relative;
   display:          flex;
-  overflow:         visible; // CRITICAL: Allow content to expand beyond boundaries
-  flex:             1; // CRITICAL: Fill available space in card
+  overflow:         visible;
   flex-direction:   column;
-  height:           auto; // Let content determine full height
-  min-height:       fit-content; // Let content determine minimum height
+  height:           auto;
+  min-height:       fit-content;
   padding:          $spacing-xl;
   border-radius:    0 0 $border-radius-lg $border-radius-lg;
-  background-color: $neutral-cream; // Was $half-dutch-white;
-  // Remove transitions that can cause jank during animations
+  background-color: $neutral-cream;
   }
 
 .poemText {
-  font-family:   $font-family-body; // Was $font-family-secondary
-  font-size:     $font-size-s; // Was 16px;
-  font-weight:   $font-weight-regular; // Was 400;
-  line-height:   $line-height-relaxed; // Was 1.6;
+  font-family:   $font-family-body;
+  font-size:     $font-size-s;
+  font-weight:   $font-weight-regular;
+  line-height:   $line-height-relaxed;
   flex:          1;
-  min-height:    $height-min-text-area; // Was 120px; // Ensure minimum text area height
+  min-height:    $height-min-text-area;
   margin:        0;
   white-space:   pre-line;
   word-wrap:     break-word;
-  color:         $neutral-soft-black; // Was $smoky-black; // Dark color for better readability
+  color:         $neutral-soft-black;
   overflow-wrap: break-word;
 
   &.collapsed {
 	display:            -webkit-box;
 	overflow:           hidden;
 	text-overflow:      ellipsis;
-	-webkit-line-clamp: 6; // Slightly fewer lines for consistency
+	-webkit-line-clamp: 6;
+	line-clamp:         6;
 	-webkit-box-orient: vertical;
 	}
 
@@ -255,60 +247,49 @@
 	}
   }
 
-// REFERENCE CLEAN ARCHITECTURE - Stable preview section
-.previewSection {
-  flex-shrink: 0; // Never shrink - maintains stability
-  // Removed margin-bottom for tighter layout
-  }
 
-// Ellipsis section - clean separation from preview
 .ellipsisSection {
   flex-shrink: 0;
   margin:      $spacing-s 0; text-align: center;
   }
 
 .previewEllipsis {
-  font-family: $font-family-body; // Was $font-family-secondary
-  font-size:   $font-size-sm-md; // Was 18px;
+  font-family: $font-family-body;
+  font-size:   $font-size-sm-md;
   margin:      0;
   text-align:  center;
-  color:       $neutral-mid; // Was $grey-500;
+  color:       $neutral-mid;
   }
 
-// Hidden content indicator voor preview
 .hiddenContentIndicator {
-  font-family: $font-family-body; // Was $font-family-secondary
+  font-family: $font-family-body;
   font-size:   $font-size-xs;
   font-style:  italic;
   margin:      $spacing-xs 0;
   text-align:  center;
   opacity:     0.8;
-  color:       $neutral-mid-dark; // Was $grey-600;
+  color:       $neutral-mid-dark;
   }
 
-// ULTRA-SOLID EXPANSION PLACEHOLDER - Critical CSS for container stability
 .expansionPlaceholder {
   position: relative;
-  overflow: visible !important; // CRITICAL: Override any inline styles that set overflow hidden
-  flex:     1; // CRITICAL: Take remaining space to prevent container size issues
+  overflow: visible !important;
+  flex:     1;
   width:    100%;
-  // Height controlled by Framer Motion
   }
 
-// EXPANDED CONTENT - Stable content container
 .expandedContent {
   position:       relative;
   display:        flex;
-  overflow:       visible; // CRITICAL: Ensure all content is visible
+  overflow:       visible;
   flex-direction: column;
   width:          100%;
-  height:         auto; // Allow natural height
+  height:         auto;
   min-height:     fit-content;
-  padding-top:    $spacing-xs; // Was $spacing-sm; // 8px - matches height calculation
-  padding-bottom: $spacing-m; // Space for separator
+  padding-top:    $spacing-xs;
+  padding-bottom: $spacing-m;
   }
 
-// Visual separator at bottom of expanded content
 .poemSeparator {
   display:         flex;
   align-items:     center;
@@ -319,7 +300,6 @@
   padding:         $spacing-s 0;
   cursor:          default;
   gap:             $spacing-s;
-  // Prevent layout shift
   contain:         layout;
 
   .separatorDingbat {
@@ -328,18 +308,15 @@
 	display:     inline-block;
 	width:       1.2em;
 	height:      1.2em;
-	// Use will-change for performance
 	transition:  color $transition-normal, opacity $transition-normal;
-	// Fixed dimensions to prevent shift
 	transform:   rotate(90deg);
 	text-align:  center;
 	opacity:     0.5;
-	color:       $neutral-mid; // Softer, more subtle color
+	color:       $neutral-mid;
 	will-change: opacity;
 
 	&:nth-child(2) {
-	  opacity: 0.7; // Middle slightly more visible
-	  // No scale transform to prevent shift
+	  opacity: 0.7;
 	  }
 
 	&:nth-child(3) {
@@ -347,15 +324,12 @@
 	  }
 	}
 
-  // Subtle hover effect without layout shift
   &:hover .separatorDingbat {
-	opacity: 0.8; // Not fully opaque, more subtle
-	color:   $primary-light; // Softer cognac shade
-	// No transform changes on hover
+	opacity: 0.8;
+	color:   $primary-light;
 	}
   }
 
-// Button container - used for expand button in ellipsis section
 .buttonContainer {
   display:         flex;
   align-items:     center;
@@ -364,10 +338,9 @@
   width:           100%;
   margin-top:      $spacing-m;
   padding-top:     $spacing-m;
-  border-top:      1px solid rgba($neutral-mid, 0.1); // Was $grey-500
-  gap:             $spacing-s; // Was spacing-sm;
+  border-top:      1px solid rgba($neutral-mid, 0.1);
+  gap:             $spacing-s;
 
-  // Side-by-side layout variant (without border-top)
   &.sideLayout {
     padding-top: 0;
     border-top: none;
@@ -380,13 +353,10 @@
   }
   }
 
-// Collapse button - naturally positioned within expanded content
 .collapseButton {
   margin-top: $spacing-m;
-  background-color: color.adjust($primary-cognac, $lightness: -5%); // Darker for collapse action
-  // Positioned naturally at end of expanded content flow
+  background-color: color.adjust($primary-cognac, $lightness: -5%);
 
-  // Override margin when in buttonContainer
   &.inContainer {
     margin-top: 0;
   }
@@ -397,11 +367,11 @@
   width: 100%;
 
   .poemLine {
-	font-family:   $font-family-body; // Was $font-family-secondary
-	font-size:     $font-size-s; // Was 16px;
-	font-weight:   $font-weight-regular; // Was 400;
-	line-height:   $line-height-relaxed; // Was 1.6;
-	margin:        0 0 $spacing-xs 0; // Was 0.5rem
+	font-family:   $font-family-body;
+	font-size:     $font-size-s;
+	font-weight:   $font-weight-regular;
+	line-height:   $line-height-relaxed;
+	margin:        0 0 $spacing-xs 0;
 	padding:       0;
 	word-wrap:     break-word;
 	color:         $text-primary;
@@ -410,17 +380,17 @@
   }
 
 .poemLine {
-  font-family:    $font-family-body; // Was $font-family-secondary
-  font-size:      $font-size-s; // Was 16px; // EXACT value used in height calculation
-  font-weight:    $font-weight-regular; // Was 400;
-  line-height:    $line-height-relaxed; // Was 1.6; // EXACT value used in height calculation
+  font-family:    $font-family-body;
+  font-size:      $font-size-s;
+  font-weight:    $font-weight-regular;
+  line-height:    $line-height-relaxed;
   width:          100%;
-  margin:         0 0 $spacing-xs 0; // Was 0.5rem; // EXACT value: 0.5rem = 8px used in height calculation
+  margin:         0 0 $spacing-xs 0;
   padding:        0;
   text-align:     left;
   letter-spacing: 0.5px;
   word-wrap:      break-word;
-  color:          $neutral-soft-black; // Was $smoky-black;
+  color:          $neutral-soft-black;
   overflow-wrap:  break-word;
   }
 
@@ -429,59 +399,56 @@
   align-items:     center;
   flex-shrink:     0;
   justify-content: space-between;
-  margin-top:      $spacing-m; padding-top: $spacing-m; border-top: $border-width-thin solid $accent-greyish; // Was $grey-800
-  gap:             $spacing-s; // Was spacing-sm;
+  margin-top:      $spacing-m; padding-top: $spacing-m; border-top: $border-width-thin solid $accent-greyish;
+  gap:             $spacing-s;
   }
 
-// Reduced spacing for canvas mode (DesignPage)
 .canvasMode .cardActions {
-  margin-top:  $spacing-xs; // Much smaller top margin
-  padding-top: $spacing-xs; // Much smaller top padding
+  margin-top:  $spacing-xs;
+  padding-top: $spacing-xs;
   }
 
-// More compact cards for DesignPage while maintaining equal heights
 .canvasMode .resultCard {
-  padding: $spacing-s; // Was spacing-sm; // Reduced internal padding
+  padding: $spacing-s;
   }
 
 .canvasMode .poemLine {
-  line-height:   $line-height-normal-plus; // Was 1.4; // Slightly condensed line height
-  margin-bottom: $spacing-xxs; // Was 0.25rem; // Tighter line spacing
+  line-height:   $line-height-normal-plus;
+  margin-bottom: $spacing-xxs;
   }
 
 .canvasMode .cardHeader {
-  height:         $spacing-xxxl; // Was 4rem; // Standard height for consistent card alignment
-  margin-bottom:  $spacing-xs; // Tighter header spacing
-  padding:        0; // Remove all padding for DesignPage
-  padding-top:    $spacing-xs; // Was 0.5rem; // Add top padding for poemTitle breathing room
-  padding-bottom: $spacing-xs; // Was 0.5rem; // Only bottom padding for DesignPage
+  height:         $spacing-xxxl;
+  margin-bottom:  $spacing-xs;
+  padding:        0;
+  padding-top:    $spacing-xs;
+  padding-bottom: $spacing-xs;
   }
 
 .expandIcon {
-  font-size:       $font-size-xxxs; // Was 12px;
+  font-size:       $font-size-xxxs;
   font-weight:     bold;
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  width:           $size-icon; // Was 16px;
-  height:          $size-icon; // Was 16px;
+  width:           $size-icon;
+  height:          $size-icon;
   margin-right:    $spacing-xs;
   transition:      transform $transition-fast;
   }
 
 .expandButton {
   @include button-base;
-  font-size:        $font-size-s; font-weight: $font-weight-semibold; // Was 600;
+  font-size:        $font-size-s; font-weight: $font-weight-semibold;
   position:         relative;
   z-index:          1;
-  min-height:       $height-min-button; // Was 40px;
+  min-height:       $height-min-button;
   padding:          $spacing-s $spacing-l;
   transition:       all $transition-fast;
-  color:            $neutral-white; // Was $white;
-  border:           $border-width-regular solid transparent; // Was 2px
+  color:            $neutral-white;
+  border:           $border-width-regular solid transparent;
 
-  // Ensure good visibility
-  background-color: $primary-cognac; // Use more visible primary color
+  background-color: $primary-cognac;
   box-shadow:       $shadow-sm;
 
   &:hover:not(:disabled) {
@@ -497,7 +464,6 @@
 	}
   }
 
-// Canvas navigation button with distinct styling
 .canvasButton {
   border-color:     transparent;
   background-color: $secondary-carribean-current;
@@ -507,13 +473,12 @@
 	}
 
   .expandIcon {
-	font-size: $font-size-xxs; // Was 14px; // Slightly larger for emoji
+	font-size: $font-size-xxs;
 	}
   }
 
-// Load in canvas button - for loading in preview without navigation
 .loadCanvasButton {
-  color:            $neutral-soft-black; // Was $smoky-black;
+  color:            $neutral-soft-black;
   border-color:     transparent;
   background-color: $accent-gold; // Was $camel;
 
@@ -522,11 +487,10 @@
 	}
 
   .expandIcon {
-	font-size: $font-size-xxs; // Was 14px;
+	font-size: $font-size-xxs;
 	}
   }
 
-// Actions for non-expandable poems
 .nonExpandableActions {
   display:         flex;
   justify-content: center;
@@ -534,12 +498,11 @@
   // Removed padding for tighter layout
   }
 
-// Layout Classes - Based on reference implementation
 .singleResult {
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -560,7 +523,7 @@
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -596,7 +559,7 @@
   display:         flex;
   justify-content: center;
   width:           100%;
-  max-width:       100vw;
+  max-width:       100%;
   margin:          0 auto;
 
   .resultsList {
@@ -614,7 +577,6 @@
 	width:       30vw;
 	}
 
-  // Daily mode: narrower max-width for more compact layout
   :global(.dailyMode) & {
 	.resultsList {
 	  max-width: 88vw;
@@ -643,18 +605,17 @@
   width:           100%;
   max-width:       100vw;
   margin:          0 auto;
-  padding:         0 8vw; // Space for carousel arrows
+  padding:         0 8vw;
 
   .resultsList {
-	position:        relative; // Required for pseudo-elements
+	position:        relative;
 	display:         flex;
-	align-items:     flex-start; // CRITICAL FIX: Prevent bidirectional expansion in carousel
-	flex-direction:  row; // Explicit row layout for desktop
+	align-items:     flex-start;
+	flex-direction:  row;
 	justify-content: center;
 	width:           100%;
 	max-width:       84vw;
 	gap:             2vw;
-
 	}
 
 
@@ -685,14 +646,14 @@
   align-items:     center;
   justify-content: center;
   margin-top:      $spacing-xl;
-  gap:             $spacing-m; // Was spacing-md;
+  gap:             $spacing-m;
 
   .navButton {
 	@include button-base;
 	font-size:        $font-size-l;
-	width:            $height-min-button; // Was 40px;
-	height:           $height-min-button; // Was 40px;
-	color:            $neutral-white; // Was $white;
+	width:            $height-min-button;
+	height:           $height-min-button;
+	color:            $neutral-white;
 	border:           none;
 	border-radius:    $border-radius-pill; // Was $border-radius-full;
 	background-color: $secondary-carribean-current;
@@ -713,12 +674,12 @@
   gap:     $spacing-xs;
 
   .dot {
-	width:            $spacing-xs; // Was 8px;
-	height:           $spacing-xs; // Was 8px;
+	width:            $spacing-xs;
+	height:           $spacing-xs;
 	cursor:           pointer;
 	transition:       background-color $transition-fast;
 	border-radius:    $border-radius-pill; // Was $border-radius-full;
-	background-color: $neutral-mid-dark; // Was $grey-600;
+	background-color: $neutral-mid-dark;
 
 	&.active {
 	  background-color: $secondary-carribean-current;
@@ -730,7 +691,6 @@
 	}
   }
 
-// Mobile-specific improvements
 @include respond-to("mobile") {
   .searchResultsSection {
 	padding: $spacing-l 0;
@@ -738,12 +698,12 @@
 	}
 
   .globalToggleContainer {
-	padding: 0 $spacing-s; // Was $spacing-sm
+	padding: 0 $spacing-s;
 	}
 
   .globalToggleButton {
 	font-size: $font-size-xs;
-	padding:   $spacing-s $spacing-m; // Was $spacing-sm $spacing-md
+	padding:   $spacing-s $spacing-m;
 	}
 
   .resultCard {
@@ -752,15 +712,15 @@
 
   .cardHeader {
 	height:     auto;
-	min-height: $height-min-card-header-mobile; // Was 100px;
+	min-height: $height-min-card-header-mobile;
 	padding:    $spacing-m;
 
 	.poemTitle {
-	  font-size: $font-size-s; // Was 16px;
+	  font-size: $font-size-s;
 	  }
 
 	.poemAuthor {
-	  font-size: $font-size-xxxs; // Was 12px;
+	  font-size: $font-size-xxxs;
 	  }
 	}
 
@@ -768,59 +728,41 @@
 	padding: $spacing-m; }
 
   .poemText {
-	font-size:   $font-size-xxs; // Was 14px;
-	line-height: $line-height-normal-unitless; // Was 1.5;
+	font-size:   $font-size-xxs;
+	line-height: $line-height-normal-unitless;
 
 	&.collapsed {
 	  -webkit-line-clamp: 6;
+	  line-clamp:         6;
 	  }
 	}
 
   .cardActions {
-	margin-top:  $spacing-s; // Was $spacing-sm
-	padding-top: $spacing-s; // Was $spacing-sm
+	margin-top:  $spacing-s;
+	padding-top: $spacing-s;
 	}
 
   .expandButton {
 	font-size: $font-size-xs;
-	padding:   $spacing-xs $spacing-s; // Was $spacing-sm
+	padding:   $spacing-xs $spacing-s;
 	}
 
   .singleResult,
   .twoColumns,
   .threeColumns,
   .threeColumnsCarousel {
-	padding: 0 $spacing-s; // Was $spacing-sm
+	padding: 0 $spacing-s;
 	}
   }
 
-// Missing classes that are used in the JSX but not defined
-.preview {
-  // Collapsed/preview state for poem content
-  }
-
-.expanded {
-  // Expanded state for poem content - already defined above in poemContent context
-  }
-
-// singleResult is already defined above in the Layout Classes section
-
 .mobileStacked {
-  // Mobile stacked layout
   display:        flex;
   flex-direction: column;
   width:          100%;
-  padding:        0 $spacing-s; // Was $spacing-sm
+  padding:        0 $spacing-s;
   gap:            $spacing-l;
   }
 
-// poemAuthor and poemTitle are already defined in the cardHeader section above
-
-.carouselNav {
-  // Removed - using inline styles for dynamic positioning as in reference
-  }
-
-// Results Overview - Exact Figma 2-half ellipses design
 .resultsOverview {
   position:        relative;
   display:         flex;
@@ -836,7 +778,6 @@
   border-radius: 50%;
   box-shadow:    0 4px 12px rgba(0, 0, 0, 0.15);
 
-  // Top half - Dark brown with "Ga naar overzicht"
   &::before {
 	position:      absolute;
 	top:           0;
@@ -844,11 +785,10 @@
 	width:         100%;
 	height:        50%;
 	content:       "";
-	border-radius: 200px 200px 0 0; // Keeping specific radius for ellipse effect
-	background:    $neutral-dark-brown-figma; // Was #5D3A29; // Dark brown from screenshot
+	border-radius: 200px 200px 0 0;
+	background:    $neutral-dark-brown-figma;
 	}
 
-  // Bottom half - Cream/beige with number
   &::after {
 	position:      absolute;
 	bottom:        0;
@@ -856,8 +796,8 @@
 	width:         100%;
 	height:        50%;
 	content:       "";
-	border-radius: 0 0 200px 200px; // Keeping specific radius for ellipse effect
-	background:    $neutral-off-white; // Cream color
+	border-radius: 0 0 200px 200px;
+	background:    $neutral-off-white;
 	}
   }
 
@@ -868,13 +808,13 @@
   align-items:     center;
   flex-direction:  column;
   justify-content: center;
-  width:           100%; // Should be $size-overview-circle if circle is parent
-  height:          100%; // Should be $size-overview-circle if circle is parent
+  width:           100%;
+  height:          100%;
   }
 
 .overviewTopHalf {
   position:        absolute;
-  top:             $font-size-m; // Was 20px;
+  top:             $font-size-m;
   right:           0;
   left:            0;
   display:         flex;
@@ -886,24 +826,24 @@
   }
 
 .overviewLabel {
-  font-family:   $font-family-section-heading; // Was $font-family-primary
-  font-size:     $font-size-xxs; // Was 14px;
-  font-weight:   $font-weight-semibold; // Was 600;
+  font-family:   $font-family-section-heading;
+  font-size:     $font-size-xxs;
+  font-weight:   $font-weight-semibold;
   font-style:    italic;
-  line-height:   $line-height-snug; // Was 1.2;
-  margin-bottom: $spacing-xs; // Was 8px;
+  line-height:   $line-height-snug;
+  margin-bottom: $spacing-xs;
   text-align:    center;
   }
 
 .overviewIcon {
-  font-size: $font-size-l; // Was 24px;
-  color:     $accent-golden-highlight; // Was #E6B17A; // Golden color for heart icon
+  font-size: $font-size-l;
+  color:     $accent-golden-highlight;
   }
 
 .overviewBottomHalf {
   position:        absolute;
   right:           0;
-  bottom:          $font-size-m; // Was 20px;
+  bottom:          $font-size-m;
   left:            0;
   display:         flex;
   align-items:     center;
@@ -913,61 +853,58 @@
   }
 
 .overviewNumber {
-  font-family:   $font-family-section-heading; // Was $font-family-primary
-  font-size:     $font-size-xxxl; // Was 48px;
-  font-weight:   $font-weight-extrabold; // Was 800;
-  line-height:   1; // Keep as 1 for precise design
-  margin-bottom: $spacing-xs; // Was 8px;
+  font-family:   $font-family-section-heading;
+  font-size:     $font-size-xxxl;
+  font-weight:   $font-weight-extrabold;
+  line-height:   1;
+  margin-bottom: $spacing-xs;
   text-align:    center;
-  color:         $neutral-dark-brown-figma; // Was #5D3A29; // Dark brown for number
+  color:         $neutral-dark-brown-figma;
   }
 
 .overviewLines {
-  width:      $width-overview-lines; // Was 60px;
-  height:     $border-width-custom-thick; // Was 3px;
+  width:      $width-overview-lines;
+  height:     $border-width-custom-thick;
   background: repeating-linear-gradient(
 							  to right,
-							  $accent-golden-highlight 0px, // Was #E6B17A
-							  $accent-golden-highlight 8px, // Was #E6B17A
+							  $accent-golden-highlight 0px,
+							  $accent-golden-highlight 8px,
 							  transparent 8px,
 							  transparent 12px
 			  );
   }
 
 
-// Simple results overview for canvas mode
 .resultsOverviewSimple {
   display:         flex;
   align-items:     center;
   justify-content: center;
-  margin-bottom:   $spacing-s; // Was $spacing-sm; // Veel compacter
-  padding:         $spacing-xs; // Compacter
-  gap:             $spacing-xs; // Compacter
+  margin-bottom:   $spacing-s;
+  padding:         $spacing-xs;
+  gap:             $spacing-xs;
 
   .simpleCount {
-	font-family: $font-family-section-heading; // Was $font-family-primary
+	font-family: $font-family-section-heading;
 	font-size:   $font-size-xl;
-	font-weight: $font-weight-extrabold; // Was 800
-	color:       $primary-cognac; // Brown color
+	font-weight: $font-weight-extrabold;
+	color:       $primary-cognac;
 	}
 
   .simpleLabel {
-	font-family: $font-family-section-heading; // Was $font-family-primary
-	font-size:   $font-size-s; // Was $font-size-base
-	font-weight: $font-weight-semibold; // Was 600
-	color:       $primary-flame; // Orange color
+	font-family: $font-family-section-heading;
+	font-size:   $font-size-s;
+	font-weight: $font-weight-semibold;
+	color:       $primary-flame;
 	}
   }
 
 .indicatorWrapper {
-  // For carousel indicators
   display:         flex;
   align-items:     center;
   justify-content: center;
   margin-top:      $spacing-m; gap: $spacing-xs;
   }
 
-// Animation classes
 .fade-in {
   @include fade-in;
   }
@@ -976,20 +913,19 @@
   @include slide-up;
   }
 
-// Loading and error states
 .loadingState {
   @include flex-center;
-  font-family: $font-family-section-heading; // Was $font-family-primary
-  padding:     $spacing-xxl; // Was $spacing-2xl
-  color:       $neutral-off-white; // Was $white-medium;
+  font-family: $font-family-section-heading;
+  padding:     $spacing-xxl;
+  color:       $neutral-off-white;
 
   .spinner {
-	width:         $height-min-button; // Was 40px;
-	height:        $height-min-button; // Was 40px;
+	width:         $height-min-button;
+	height:        $height-min-button;
 	animation:     spin 1s linear infinite;
-	border:        $border-width-custom-thick solid $neutral-mid-dark; // Was 3px, $grey-600;
-	border-top:    $border-width-custom-thick solid $accent-gold; // Was 3px, $camel;
-	border-radius: $border-radius-pill; // Was $border-radius-full;
+	border:        $border-width-custom-thick solid $neutral-mid-dark;
+	border-top:    $border-width-custom-thick solid $accent-gold;
+	border-radius: $border-radius-pill;
 	}
   }
 
@@ -1000,12 +936,12 @@
 
 .errorState {
   @include flex-center;
-  font-family:    $font-family-section-heading; // Was $font-family-primary
+  font-family:    $font-family-section-heading;
   flex-direction: column;
-  padding:        $spacing-xxl; // Was $spacing-2xl
+  padding:        $spacing-xxl;
   text-align:     center;
   color:          $feedback-error;
-  gap:            $spacing-m; // Was spacing-md;
+  gap:            $spacing-m;
 
   .errorIcon {
 	font-size:     $font-size-4xl;
@@ -1013,52 +949,50 @@
 	}
 
   .errorMessage {
-	font-size:   $font-size-l; // Was $font-size-lg
-	font-weight: $font-weight-semibold; // Was 600;
+	font-size:   $font-size-l;
+	font-weight: $font-weight-semibold;
 	}
 
   .errorDescription {
-	font-size: $font-size-s; // Was $font-size-base;
-	max-width: $height-progress-container; // Was 400px;
-	color:     $neutral-mid-dark; // Was $grey-600;
+	font-size: $font-size-s;
+	max-width: $height-progress-container;
+	color:     $neutral-mid-dark;
 	}
   }
 
-// Focus Studio button styling
 .focusStudioButton {
-  color:            $neutral-soft-black; // Was $smoky-black;
-  border-color:     $accent-gold; // Was $camel;
-  background-color: $accent-gold; // Was $camel;
+  color:            $neutral-soft-black;
+  border-color:     $accent-gold;
+  background-color: $accent-gold;
 
   &:hover {
-	border-color:     color.adjust($accent-gold, $lightness: -10%); // Was $camel
-	background-color: color.adjust($accent-gold, $lightness: -10%); // Was $camel
+	border-color:     color.adjust($accent-gold, $lightness: -10%);
+	background-color: color.adjust($accent-gold, $lightness: -10%);
 	}
   }
 
-// Compacte Focus Studio knop voor canvas mode
 .compactFocusStudioButton {
-  font-family:      $font-family-button; // Was $font-family-primary
+  font-family:      $font-family-button;
   font-size:        $font-size-xs;
-  font-weight:      $font-weight-semibold; // Was 600
+  font-weight:      $font-weight-semibold;
   display:          flex;
   align-items:      center;
   justify-content:  center;
-  width:            fit-content; // Alleen zo breed als nodig
-  margin:           0 auto $spacing-xs auto; // Horizontaal gecentreerd
+  width:            fit-content;
+  margin:           0 auto $spacing-xs auto;
   padding:          $spacing-xs $spacing-s;
   cursor:           pointer;
   transition:       all $transition-fast;
-  color:            $neutral-soft-black; // Was $smoky-black
-  border:           1px solid $accent-gold; // Was $camel
+  color:            $neutral-soft-black;
+  border:           1px solid $accent-gold;
   border-radius:    $border-radius-sm;
-  background-color: $accent-gold; // Was $camel
+  background-color: $accent-gold;
   gap:              $spacing-xs;
 
   &:hover {
 	transform:        translateY(-1px);
-	border-color:     color.adjust($accent-gold, $lightness: -10%); // Was $camel
-	background-color: color.adjust($accent-gold, $lightness: -10%); // Was $camel
+	border-color:     color.adjust($accent-gold, $lightness: -10%);
+	background-color: color.adjust($accent-gold, $lightness: -10%);
 	}
 
   .focusIcon {
@@ -1066,9 +1000,8 @@
   }
 
 
-// Canvas mode card styling
 .canvasCard {
-  padding-bottom: 0; // No extra spacing necessary
+  padding-bottom: 0;
   transition:     all $transition-fast;
 
   &:hover {
@@ -1081,44 +1014,42 @@
 	transform: translateY(0) scale(0.98);
 	}
 
-  // Ensure buttons have proper spacing
   .buttonContainer {
-	margin-bottom: $spacing-s; // Was $spacing-sm
+	margin-bottom: $spacing-s;
 	}
   }
 
-// Toast hint for double-click functionality (overlay version)
 .doubleClickToastInline {
-  // Absolute positioning within card - overlaps button area
-  font-size:       $font-size-s; font-weight: $font-weight-semibold; // Was 600;
+
+  font-size:       $font-size-s; font-weight: $font-weight-semibold;
   position:        absolute;
-  z-index:         $z-toast; // Ensure it appears above buttons
+  z-index:         $z-toast;
 
   // Responsive sizing optimized for button overlap
-  bottom:          $spacing-xxs; // Was 4px; // Overlap the button area
+  bottom:          $spacing-xxs;
   left:            50%;
   display:         flex;
 
-  // Visual styling
+
   align-items:     center;
   justify-content: center;
-  width:           calc(100% - #{$spacing-m}); // Was 16px; // Less padding constraint for better overlap
-  min-width:       $width-min-toast; // Was 180px; // Minimum readable width
-  max-width:       $width-max-toast; // Was 260px; // Slightly smaller for better button overlap
-  min-height:      $spacing-xl; // Was 32px;
-  padding:         $spacing-xs $spacing-m; // Was $spacing-md
-  transform:       translateX(-50%); // Perfect centering
+  width:           calc(100% - #{$spacing-m});
+  min-width:       $width-min-toast;
+  max-width:       $width-max-toast;
+  min-height:      $spacing-xl;
+  padding:         $spacing-xs $spacing-m;
+  transform:       translateX(-50%);
   animation:       toast-pulse 2s ease-in-out infinite;
   text-align:      center;
   pointer-events:  none;
 
-  // Layout and stacking
-  color:           $neutral-white; // Was white
-  border:          $border-width-regular solid rgba($neutral-white, 0.2); // Was 2px, white
+
+  color:           $neutral-white;
+  border:          $border-width-regular solid rgba($neutral-white, 0.2);
   border-radius:   $border-radius-md;
   background:      linear-gradient(135deg, rgba($primary-flame, 0.95), rgba($secondary-carribean-current, 0.95));
 
-  // Subtle pulse animation to draw attention
+
   backdrop-filter: blur(8px);
   }
 
@@ -1133,7 +1064,6 @@
 	}
   }
 
-// CSS animation for text reveal (replaces Framer Motion)
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1157,21 +1087,18 @@
   }
 }
 
-.SearchResultsContainer {
-  // bestaande styling
-}
 
-// Address Display Component Styles
+
 .addressContainer {
   display:         flex;
-  flex-direction:  column; // Stack vertically
+  flex-direction:  column;
   align-items:     flex-start;
   width:           100%;
-  margin:          -$spacing-xs $spacing-m $spacing-xs; // Reduced horizontal margin, smaller bottom
-  padding:         $spacing-xs $spacing-s; // Smaller padding
+  margin:          -$spacing-xs $spacing-m $spacing-xs;
+  padding:         $spacing-xs $spacing-s;
   border-radius:   $border-radius-sm;
   background-color: rgba($neutral-mid, 0.05);
-  gap:             $spacing-xxs; // Smaller gap between address and link
+  gap:             $spacing-xxs;
 }
 
 .addressText {
@@ -1198,4 +1125,84 @@
     outline:        2px solid $primary-cognac;
     outline-offset: 2px;
   }
+}
+
+.overlayMode {
+    padding: $spacing-m 0;
+    width: 100%;
+    max-width: 100%;
+
+    .resultsList {
+        gap: 0.5rem;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .resultCard {
+        min-width: calc(100% - 4rem);
+        max-width: 600px;
+        flex-shrink: 0;
+        margin: 0 auto;
+        border: $border-width-thick solid $border-warm;
+    }
+
+
+    &.threeColumns,
+    &.threeColumnsCarousel {
+        .resultsList {
+            gap: 0;
+            max-width: 100%;
+        }
+        .resultCard {
+            width: calc(100% - 4rem);
+            max-width: 600px;
+        }
+    }
+
+
+
+
+    :global(.Carrousel_arrowsContainer__1hJq_) {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        justify-content: space-between;
+        padding: 0 1rem;
+        width: 100%;
+        pointer-events: none;
+        z-index: 10;
+
+        button {
+            pointer-events: auto;
+            background-color: rgba($secondary-carribean-current, 0.8);
+            
+            &:hover {
+                background-color: $secondary-carribean-current;
+            }
+        }
+    }
+
+    :global(.SearchResults_expandButton__3F8q_) {
+        font-size: 1rem;
+        padding: 0.5rem;
+        width: 36px;
+        height: 36px;
+        min-width: unset;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.5rem;
+        position: relative;
+        z-index: 20;
+        cursor: pointer;
+
+
+        .SearchResults_expandIcon__3F8q_ {
+            margin-right: 0;
+            font-size: 1.2rem;
+        }
+    }
 }

@@ -12,41 +12,29 @@
 // VARIABLES
 // ==========================================================================
 //
-// Dit bestand bevat alle globale variabelen voor het project gedichtgevel.nl
+// This file contains all global variables for the project gedichtgevel.nl
 //
 // @package   gedichtgevel.nl
 // @author    Jerôme
 // @version   1.0.0
 // @license   CC
 //
-// INHOUDSOPGAVE:
-// 1. Kleurenpalet (uit Figma)
-// 2. Typografie (uit Figma)
+// TABLE OF CONTENTS:
+// 1. Color Palette (from Figma)
+// 2. Typography (from Figma)
 // 3. Spacing & Layout
-// 4. Effecten
+// 4. Effects
 // 5. Breakpoints
 // 6. Z-index
-// 7. Animaties/Transities
+// 7. Animations/Transitions
 // ==========================================================================
 
-/*
-De fundering van onze kathedraal,
-Hierop bouwen wij met zorg en taal;
-Deze constanten geven ons houvast,
-Zodat elk component precies past.*/
-
 // ==========================================================================
-// 1. KLEURENPALET
-// Uit Figma Core en Semantic variables
+// 1. COLOR PALETTE
+// From Figma Core and Semantic variables
 // ==========================================================================
 
-/*
-In deze kleurenpracht ligt ons palet,
-Elk pigment met precisie neergezet;
-Van vlamrood naar oceaangroen,
-Tot zachte tinten die ons werk begroet'n. */
-
-// --- PRIMAIRE KLEUREN ---
+// --- PRIMARY COLORS ---
 $primary-cognac:                      #943512; // primary-cognac
 $primary-flame:                       #e35712; // primary-flame
 $primary-dark:                        #3b1608; // primary-100
@@ -56,7 +44,7 @@ $primary-light:                       #c24919; // primary-400
 $primary-lighter:                     #e3602b; // primary-500
 $primary-vibrant:                     #e35712; // primary-flame
 
-// --- SECUNDAIRE KLEUREN ---
+// --- SECONDARY COLORS ---
 $secondary-carribean-current:         #156064; // secondary-carribean-current
 $secondary-dark:                      #061d1e; // secondary-100
 $secondary-muted:                     #0f4648; // secondary-300
@@ -67,7 +55,7 @@ $secondary-brightest:                 #29c2c7; // secondary-700
 $secondary-pale:                      #62dbdf; // secondary-800
 $secondary-pastel:                    #b3edef; // secondary-900
 
-// --- NEUTRAL KLEUREN ---
+// --- NEUTRAL COLORS ---
 $neutral-white:                       #ffffff; // white
 $neutral-off-white:                   #f9f4ed; // white-smoke
 $neutral-cream:                       #fff5e1; // half-dutch-white
@@ -84,7 +72,7 @@ $neutral-rich-black:                  #2b140b; // zinnwaldite-brown
 $neutral-grey-figma:                  #C4C4C4; // Added: Specific grey from Figma design (SearchProgress)
 $neutral-dark-brown-figma:            #5D3A29; // Added: Dark brown color from Figma overview (SearchResults)
 
-// --- ACCENT KLEUREN ---
+// --- ACCENT COLORS ---
 $accent-gold:                         #d09a47; // camel
 $accent-brown:                        #856d61;
 $accent-sage:                         #c8e9a0; // light-sage
@@ -92,13 +80,13 @@ $accent-moss:                         #ccd698; // green-mist
 $accent-greyish:                      #b2b5c2; // grey-800
 $accent-golden-highlight:             #E6B17A; // Added: Golden highlight color from Figma (SearchResults)
 
-// --- FEEDBACK KLEUREN ---
+// --- FEEDBACK COLORS ---
 $feedback-success:                    #28a745; // apple
 $feedback-warning:                    #ffc107; // mikado-yellow
 $feedback-error:                      #dc3545; // amaranth
 $feedback-info:                       #17a2b8; // pacific-blue
 
-// --- EFFECTEN (SHADOWS & OVERLAYS) ---
+// --- EFFECTS (SHADOWS & OVERLAYS) ---
 $shadow-light:                        rgba(0, 0, 0, 0.15);
 $shadow-base-light:                   rgba(0, 0, 0, 0.2);
 $shadow-base-darker:                  rgba(0, 0, 0, 0.3);
@@ -141,11 +129,11 @@ $icon-secondary:                      $secondary-carribean-current;
 $icon-accent:                         $accent-gold;
 $icon-inverse:                        $neutral-cream;
 
-// --- COMPONENT-SPECIFIEKE KLEUREN ---
+// --- COMPONENT-SPECIFIC COLORS ---
 // Navbar
 $navbar-background:                   $primary-cognac;
-$navbar-text:                         $neutral-off-white;
-$navbar-text-active:                  $accent-gold;
+$navbar-text:                         $primary-dark;
+$navbar-text-active:                  $accent-golden-highlight;
 $navbar-alt-background:               $primary-light;
 
 // Button
@@ -193,17 +181,12 @@ $canvas-control-accent:               $accent-gold; // #d09a47 - Active states &
 $canvas-control-hover:                rgba($accent-gold, 0.2); // Hover state
 $canvas-control-active:               $accent-gold; // Active button background
 $canvas-control-input-bg:             rgba($accent-brown, 0.05); // Input field background
+$canvas-control-text-muted:           $neutral-mid-dark; // Added for muted text in controls
 
 
 // ==========================================================================
-// 2. TYPOGRAFIE
+// 2. TYPOGRAPHY
 // ==========================================================================
-
-/*
-Letters dansen op ons doek,
-Fonts die spreken, rijk en kloek;
-Van serieuze statements tot zachte vraag,
-Onze typografie draagt elk verhaal met graag. */
 
 // --- FONT FAMILIES ---
 $font-family-title:                   "Quilty", serif;
@@ -255,7 +238,7 @@ $line-height-dislectic:               2.5rem; // 40px
 $letter-spacing-navbar-filter:        0.1563rem; // 2.5px
 
 // --- SEMANTIC TYPOGRAPHY ---
-// Text styles voor specifieke componenten
+// Text styles for specific components
 $title-site:                          (
 											  font-family: $font-family-title,
 											  font-size: $font-size-xxl,
@@ -311,26 +294,12 @@ $searchbar-placeholder:               (
 											  font-weight: $font-weight-regular,
 											  line-height: $line-height-normal
 									  );
-// Font Families $font-family-title: "Quilty", serif; $font-family-section-heading: "Bitter", serif; $font-family-nav-item: "Work Sans", sans-serif; $font-family-body: "Bitter", serif; $font-family-button: "Quilty", serif; $font-family-footer: "Bitter", serif; $font-family-callout-heading: "Work Sans", sans-serif; $font-family-searchbar: "Work Sans", sans-serif; $font-family-bigger-body-special: "Quilty", serif;
 
-// Font Sizes - Base value: 1rem = 16px $font-size-xxs: 0.875rem; // 14px $font-size-xs: 0.9375rem; // 15px $font-size-s: 1rem; // 16px $font-size-m: 1.25rem; // 20px $font-size-l: 1.5rem; // 24px $font-size-xl: 2rem; // 32px $font-size-xxl: 2.25rem; // 36px $font-size-xxxl: 3rem; // 48px
-
-// Font Weights $font-weight-regular: 400; $font-weight-semibold: 600; $font-weight-bold: 700; $font-weight-extrabold: 800;
-
-// Line Heights $line-height-normal: 1.5rem; // 24px $line-height-bigger: 2.8125rem; // 45px $line-height-dislectic: 2.5rem; // 40px
-
-// Other Text Properties $navbar-filter-selection-letter-spacing: 0.1563rem; // 2.5px
 
 
 // ==========================================================================
 // 3. SPACING & LAYOUT
 // ==========================================================================
-
-/*
-De ruimte tussen ons vertelt verhalen,
-Marges en paddings, ritmisch te bepalen;
-Consistente waarden geven rust en kracht,
-In elke pixel zit betekenis, met zorg bedacht. */
 
 // --- SIZING ---
 $width-medium-poem-showcase:          35.625rem; // 570px
@@ -380,22 +349,12 @@ $border-width-thick:                  4px;
 $border-width-custom-thick:           3px; // Added: custom thick border/line (SearchResults)
 $border-width-extrathick:             8px; // Added: for extra thick borders (SearchProgress)
 
-// Spacing Variables $spacing-xxxs: 0.125rem; // 2px $spacing-xxs: 0.25rem; // 4px $spacing-xs: 0.5rem; // 8px $spacing-sm: 0.75rem; // 12px $spacing-md: 1rem; // 16px $spacing-lg: 1.5rem; // 24px $spacing-xl: 2rem; // 32px $spacing-xxl: 3rem; // 48px $spacing-xxxl: 4rem; // 64px
 
-// Component Sizing $width-medium-poem-showcase: 35.625rem; // 570px $height-medium-poem-showcase: 28.5rem; // 456px $width-small-poem-showcase: 34.375rem; // 550px $height-small-poem-showcase: 27.5rem; // 440px
-
-// Border Radius $border-radius-xs: 0.125rem; // 2px $border-radius-sm: 0.25rem; // 4px $border-radius-md: 0.5rem; // 8px $border-radius-lg: 1rem; // 16px $border-radius-pill: 9999px; // Pill shape
 
 
 // ==========================================================================
-// 4. EFFECTEN
+// 4. EFFECTS
 // ==========================================================================
-
-/*
-Alsof de elementen ademen en leven,
-Subtiele beweging, aan de blik gegeven;
-Schaduwen die diepte geven, zachte overgang,
-Elke animatie wekt een visuele zang. */
 
 // --- BOX SHADOWS ---
 $shadow-sm:                           0 1px 2px rgba($neutral-black, 0.05);
@@ -418,24 +377,12 @@ $gradient-accent:                     linear-gradient(135deg, $accent-brown 0%, 
 $gradient-dark:                       linear-gradient(135deg, $neutral-darker 0%, $neutral-black 100%);
 $gradient-light:                      linear-gradient(135deg, $neutral-white 0%, $neutral-off-white 100%);
 
-// Shadows $shadow-1: rgba(0, 0, 0, 0.2); // night-shadow-20 $shadow-2: rgba(1, 22, 14, 0.6); // black-bean-shadow-60
 
-// Shadow Mixins (kunnen worden overgezet naar _mixins.scss) $shadow-sm: 0 1px 2px 0 $shadow-1; $shadow-md: 0 4px 6px -1px $shadow-1, 0 2px 4px -1px $shadow-2; $shadow-lg: 0 10px 15px -3px $shadow-1, 0 4px 6px -2px $shadow-2; $shadow-xl: 0 20px 25px -5px $shadow-1, 0 10px 10px -5px $shadow-2;
-
-// Transitions $transition-fast: 0.2s ease; $transition-normal: 0.3s ease; $transition-slow: 0.5s ease;
-
-// Animation Timing $animation-timing-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275); $animation-timing-smooth: cubic-bezier(0.645, 0.045, 0.355, 1); $animation-timing-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 
 // ==========================================================================
 // 5. BREAKPOINTS
 // ==========================================================================
-
-/*
-Grenzen waar ons ontwerp zich ontplooit,
-Van kleine schermen tot waar ruimte zich vergrooit;
-Responsief denken in verschillende maten,
-Zodat geen enkel apparaat wordt verlaten. */
 
 $screen-xs:                           320px; // Extra small devices, smartphones
 $screen-sm:                           576px; // Small devices, large smartphones/small tablets
@@ -444,19 +391,12 @@ $screen-lg:                           992px; // Large devices, desktops
 $screen-xl:                           1200px; // Extra large devices, large desktops
 $screen-xxl:                          1400px; // Extra extra large devices, very large desktops
 
-// $breakpoint-xs: 320px; // Extra small devices $breakpoint-sm: 576px; // Small devices $breakpoint-md: 768px; // Medium devices $breakpoint-lg: 992px; // Large devices $breakpoint-xl: 1200px; // Extra large devices $breakpoint-xxl: 1400px; // Extra extra large
-// Breakpoint Map voor mixin gebruik $breakpoints: ( xs: $breakpoint-xs, sm: $breakpoint-sm, md: $breakpoint-md, lg: $breakpoint-lg, xl: $breakpoint-xl, xxl: $breakpoint-xxl );
+
 
 
 // ==========================================================================
 // 6. Z-INDEX
 // ==========================================================================
-
-/*
-Lagen in diepte, een virtuele berg,
-Elk element krijgt zijn eigen plaats en werk;
-Modals zweven boven content, tooltips hoger nog,
-Zodat elke interactie verloopt zonder bedrog. */
 
 $z-negative:                          -1; // Behind content
 $z-lowest:                            1; // Base level
@@ -468,11 +408,11 @@ $z-toast:                             9000; // Notifications/toasts
 $z-modal:                             9500; // Modal dialogs
 $z-tooltip:                           9900; // Tooltips/popovers
 
-// $z-index-below: -1; // Elementen onder andere $z-index-default: 0; // Standaard z-index $z-index-dropdown: 1000; // Dropdowns $z-index-sticky: 1020; // Sticky elementen $z-index-fixed: 1030; // Fixed elementen zoals navbar $z-index-modal: 1050; // Modal backdrop $z-index-modal-content: 1055; // Modal content $z-index-popover: 1070; // Popovers $z-index-tooltip: 1080; // Tooltips
+
 
 
 // ==========================================================================
-// 7. ANIMATIES/TRANSITIES (misschien ombouwen naar framer)
+// 7. ANIMATIONS/TRANSITIONS
 // ==========================================================================
 
 // --- TIMING ---
@@ -495,17 +435,3 @@ $ease-spring:                         cubic-bezier(0.68, -0.55, 0.27, 1.55);
 // ==========================================================================
 // 8. MISCELLANEOUS
 // ==========================================================================
-
-/*
-Die laatste details maken het verschil,
-Container breedtes, grid maten, niet per onwil;
-Globale instellingen die het geheel versterken,
-De juiste grens voor elk ontwerp te bemerken. */
-
-// Container Max Widths $container-max-width-sm: 540px; $container-max-width-md: 720px; $container-max-width-lg: 960px; $container-max-width-xl: 1140px; $container-max-width-xxl: 1320px;
-
-// Grid Settings $grid-columns: 12; $grid-gutter-width: 1.5rem; // 24px
-
-// Canvas Settings $canvas-border-width: 2px; $canvas-control-size: 1.6rem; // 25.6px
-
-// Animation arc settings $arc-spring: 7; $arc-start: 10;

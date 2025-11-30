@@ -31,38 +31,46 @@
   }
 }
 
+.tableTitle {
+  font-family: $font-family-title;
+  font-size: $font-size-l;
+  font-weight: 600;
+  margin-bottom: $spacing-m;
+  color: $primary-flame;
+}
+
 // Tab Navigation
 .tabNav {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid $border-default;
+  gap: $spacing-m;
+  margin-bottom: $spacing-l;
+  border-bottom: 1px solid $border-default;
 }
 
 .tabButton {
+  @include button-reset;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 1.5rem;
-  background: none;
-  border: none;
-  color: $neutral-mid;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  gap: $spacing-s;
+  padding: $spacing-s $spacing-m;
   font-family: $font-family-body;
-  font-size: $font-size-s;
-  font-weight: 500;
-  position: relative;
+  font-size: $font-size-m;
+  color: $neutral-mid;
+  border-bottom: 2px solid transparent;
+  transition: all $transition-fast;
+  position: relative; // Keep this for the ::after pseudo-element
 
   &:hover {
-    color: $text-primary;
-    background-color: rgba($secondary-carribean-current, 0.1);
+    color: $primary-flame;
   }
 
   &.active {
-    color: $secondary-carribean-current;
+    color: $primary-flame;
+    border-bottom-color: $primary-flame;
     font-weight: 600;
 
+    // The ::after pseudo-element was part of the original active state
+    // and should be retained if not explicitly removed by the instruction.
     &::after {
       content: '';
       position: absolute;
@@ -84,14 +92,147 @@
   min-height: 300px;
 }
 
-// Grid Layout
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+// Table Layout
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-md;
+  background-color: $neutral-darker;
 }
 
-// Card Styles
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; // Ensure table doesn't get too squashed
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid $border-default;
+  }
+
+  th {
+    background-color: rgba($secondary-carribean-current, 0.1);
+    font-family: $font-family-title;
+    font-weight: 600;
+    color: $text-primary;
+    white-space: nowrap;
+
+    // Fixed column widths for consistent layout
+    &:nth-child(1) { width: 35%; } // Title
+    &:nth-child(2) { width: 25%; } // Author
+    &:nth-child(3) { width: 20%; } // Location/Era
+    &:nth-child(4) { width: 10%; } // Lines
+    &:nth-child(5) { width: 10%; } // Actions
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background-color: rgba($secondary-carribean-current, 0.05);
+  }
+}
+
+.sortableHeader {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba($secondary-carribean-current, 0.2);
+  }
+}
+
+.actionHeader {
+  width: 80px;
+  text-align: center;
+}
+
+.titleCell {
+  font-family: $font-family-title;
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.authorCell {
+  color: $secondary-carribean-current;
+  font-style: italic;
+}
+
+.dateCell {
+  color: $neutral-mid;
+  font-size: $font-size-s;
+}
+
+.actionCell {
+  text-align: center;
+}
+
+.cellLabel {
+  display: none; // Hidden on desktop
+}
+
+// Responsive Table
+@include respond-to(mobile) {
+  .tableContainer {
+    border: none;
+    background: none;
+  }
+
+  .table {
+    display: block;
+    min-width: 0;
+
+    thead {
+      display: none; // Hide headers on mobile
+    }
+
+    tbody {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+      background-color: $neutral-darker;
+      border: 1px solid $border-default;
+      border-radius: $border-radius-md;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba($border-default, 0.5);
+      
+      &:last-child {
+        border-bottom: none;
+        padding-top: 1rem;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .cellLabel {
+    display: inline-block;
+    font-weight: 600;
+    color: $neutral-mid;
+    margin-right: 1rem;
+  }
+  
+  .actionCell {
+    text-align: right;
+  }
+}
+
+// Card Styles (kept for Authors tab if needed, or remove if unused)
 .card {
   background-color: $neutral-darker;
   border: 1px solid $border-default;
@@ -266,5 +407,69 @@
 
   .emptyState {
     padding: 2rem 1rem;
+  }
+}
+
+// New Styles for Split Tables
+.tablesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.tableSection {
+  width: 100%;
+}
+
+.tableTitle {
+  font-family: $font-family-title;
+  font-size: $font-size-l;
+  color: $secondary-carribean-current;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba($secondary-carribean-current, 0.3);
+}
+
+.locationCell,
+.eraCell,
+.linesCell {
+  color: $text-primary;
+  font-size: $font-size-s;
+}
+
+.mapLink {
+  color: $secondary-carribean-current;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $accent-gold;
+    text-decoration: underline;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+@include respond-to(mobile) {
+  .actionButtons {
+    justify-content: flex-end;
   }
 }

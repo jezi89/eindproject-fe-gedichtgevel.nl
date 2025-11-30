@@ -8,3 +8,5 @@ export const ControlsContext = createContext(null);
 
 // Context specifically for countdown state to prevent re-renders
 export const CountdownContext = createContext(null);
+
+

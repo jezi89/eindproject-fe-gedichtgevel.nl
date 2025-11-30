@@ -3,7 +3,9 @@ import {MoveControls} from "./MoveControls.jsx";
 import {FloatingShortcutPanel} from "./FloatingShortcutPanel.jsx";
 import {HintLabel} from "./HintLabel.jsx";
 import {SaveDesignButton} from "./SaveDesignButton.jsx";
-import {useRef} from "react";
+import {useRef, useState, useMemo} from "react";
+import {shareToSocialMedia, openShareDialog} from "@/services/share/shareService.js";
+import {useCanvasShare} from "@/hooks/canvas/useCanvasShare.js";
 
 export default function Navigation({
                                        toggle,
@@ -17,6 +19,7 @@ export default function Navigation({
                                        xySlidersVisible,
                                        setXySlidersVisible,
                                        navWidth,
+                                       navVisible,
                                        highlightVisible,
                                        setHighlightVisible,
                                        onToggleNavbarOverlay,
@@ -25,8 +28,40 @@ export default function Navigation({
                                        currentDesignId,
                                        onExportAsPNG,
                                        onExportAsJPG,
+                                       onExportFullSpriteAsPNG,
+                                       onExportFullSpriteAsJPG,
+                                       getExportDataUrl,
+                                       layoutPosition,
+                                       controlsVisible, // <-- NIEUW
+                                       controlsWidth,   // <-- NIEUW
                                    }) {
-    const navbarToggleRef = useRef(null);
+    const navbarToggleRef = useRef(null); // Ref for the navbar toggle button
+
+    // Create export utils object for the hook
+    const exportUtils = useMemo(() => ({
+        getExportDataUrl
+    }), [getExportDataUrl]);
+
+    const { shareDesign, isSharing, shareError, shareUrl } = useCanvasShare(exportUtils);
+
+    // Handle share button click
+    const handleShare = async () => {
+        // Pass currentDesignId if available to link image to database record
+        const url = await shareDesign(currentDesignId);
+
+        if (url) {
+            // Try Web Share API first, fallback to copy
+            const shared = await shareToSocialMedia(url, {
+                title: 'Mijn Gedicht op Gedichtgevel.nl',
+                text: 'Bekijk mijn visualisatie!'
+            });
+
+            if (!navigator.share) {
+                // Show notification that URL was copied
+                alert('🔗 Link gekopieerd naar klembord!');
+            }
+        }
+    };
 
     // The XY sliders are only truly visible when the mode is 'poem' or 'line' AND the visibility flag is set.
     // This ensures the navigation layout syncs perfectly with the actual visibility of the sliders.
@@ -123,23 +158,81 @@ export default function Navigation({
                         canvasState={canvasState}
                         currentDesignId={currentDesignId}
                     />
-                    {/* Download Buttons */}
-                    {onExportAsPNG && onExportAsJPG && (
+                    {/* Download Buttons - Print Quality (Full Sprite) */}
+                    {onExportFullSpriteAsPNG && (
                         <div className={styles.downloadButtons}>
                             <button
-                                onClick={() => onExportAsPNG()}
+                                onClick={() => onExportFullSpriteAsPNG()}
                                 className={styles.downloadButton}
-                                title="Download als PNG"
+                                title="Download als PNG (volledige afbeelding, print-kwaliteit)"
                             >
-                                📥 PNG
+                                🖨️ PNG
                             </button>
                             <button
-                                onClick={() => onExportAsJPG()}
+                                onClick={() => onExportFullSpriteAsJPG()}
                                 className={styles.downloadButton}
-                                title="Download als JPG"
+                                title="Download als JPG (volledige afbeelding, print-kwaliteit)"
                             >
-                                📥 JPG
+                                🖨️ JPG
                             </button>
+                        </div>
+                    )}
+
+                    {/* Share Button */}
+                    {getExportDataUrl && (
+                        <div className={styles.shareSection}>
+                            <button
+                                onClick={handleShare}
+                                className={`${styles.shareButton} ${isSharing ? styles.sharing : ''}`}
+                                disabled={isSharing}
+                                title="Deel je ontwerp op social media"
+                            >
+                                {isSharing ? '⏳ Uploaden...' : '📤 Delen'}
+                            </button>
+
+                            {/* Share URL display & social buttons */}
+                            {shareUrl && (
+                                <div className={styles.shareOptions}>
+                                    <button
+                                        onClick={() => openShareDialog('twitter', shareUrl, 'Bekijk mijn gedicht!')}
+                                        className={styles.socialButton}
+                                        title="Deel op Twitter/X"
+                                    >
+                                        𝕏
+                                    </button>
+                                    <button
+                                        onClick={() => openShareDialog('facebook', shareUrl)}
+                                        className={styles.socialButton}
+                                        title="Deel op Facebook"
+                                    >
+                                        f
+                                    </button>
+                                    <button
+                                        onClick={() => openShareDialog('whatsapp', shareUrl, 'Bekijk mijn gedicht!')}
+                                        className={styles.socialButton}
+                                        title="Deel via WhatsApp"
+                                    >
+                                        📱
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(shareUrl);
+                                            alert('🔗 Link gekopieerd!');
+                                        }}
+                                        className={styles.socialButton}
+                                        title="Kopieer link"
+                                    >
+                                        🔗
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Error display */}
+                            {shareError && (
+                                <div className={styles.shareError}>
+                                    ⚠️ {shareError}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
@@ -199,6 +292,10 @@ export default function Navigation({
                 activeShortcut={activeShortcut}
                 xySlidersVisible={xySlidersVisible}
                 navWidth={navWidth}
+                navVisible={navVisible}
+                controlsVisible={controlsVisible}
+                controlsWidth={controlsWidth}
+                layoutPosition={layoutPosition}
             />
         </div>
     );

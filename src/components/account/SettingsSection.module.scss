@@ -154,13 +154,14 @@
 }
 
 .primaryButton {
-  background: linear-gradient(135deg, $secondary-carribean-current, $accent-gold);
-  color: $background-page;
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    opacity: 0.8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($secondary-carribean-current, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -187,12 +188,13 @@
 }
 
 .submitButton {
-  background: linear-gradient(135deg, $secondary-carribean-current, $accent-gold);
-  color: $background-page;
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
   white-space: nowrap;
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    opacity: 0.8;
   }
 }
 

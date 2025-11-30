@@ -27,8 +27,8 @@ export function ContactPage() {
                 </p>
 
                 <div className="contact-info">
-                    <p><strong>Email:</strong> info@gedichtgevel.nl</p>
-                    <p><strong>Telefoon:</strong> 06-12345678</p>
+                    <p><strong>Email:</strong> codingjer@gmail.com</p>
+                    <p><strong>Telefoon:</strong> appel, peer, banaan. Dat gaat je niks aan!</p>
                 </div>
             </section>
 

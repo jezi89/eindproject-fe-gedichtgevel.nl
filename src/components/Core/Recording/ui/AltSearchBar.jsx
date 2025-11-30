@@ -1,62 +1,50 @@
-import styles from '../RecordingPage.module.scss';
-import {useSearchPoems} from '@/hooks/search';
+import React from 'react';
+import styles from './AltSearchBar.module.scss';
 
-export function AltSearchBar({onPoemSelect, onSearchStart}) {
-    const {searchTerm, updateSearchTerm, handleSearch, results, loading} = useSearchPoems();
-
-    const handleSearchClick = async () => {
-        await handleSearch();
-        // Return first result to parent if available, otherwise null (no results)
-        if (onPoemSelect) {
-            onPoemSelect(results.length > 0 ? results[0] : null);
-        }
-    };
-
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        updateSearchTerm(value);
-
-        // Notify parent when typing starts (first character typed)
-        if (value.length === 1 && onSearchStart) {
-            onSearchStart();
-        }
-    };
-
-    const handleKeyPress = (e) => {
+export function AltSearchBar({ searchTerm, onSearchTermChange, onSearch, loading }) {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            handleSearchClick();
+            onSearch();
         }
     };
 
     return (
-        <div className={styles.AltSearchBar}>
-
-            <div className={styles['AltSearchBar-collections']}>zoek in collecties
+        <div className={styles.searchBar}>
+            <div className={styles.searchInputContainer}>
                 <input
-                    type="checkbox"
-                    id="toggle-search-options"
-                    className={styles['AltSearchBar-checkbox']}
-                    style={{display: 'none'}}
-                />
-                <label htmlFor="toggle-search-options" className={styles['CustomCheckbox']}></label></div>
-            <div className={styles['AltSearchBar-separator']}>
-                <input
-                    className={styles['AltSearchBar-input']}
                     type="text"
-                    placeholder="Verschuur: De Gevel van Mijn Dromen"
+                    className={styles.searchInput}
+                    placeholder="Zoek op titel, dichter of trefwoord..."
                     value={searchTerm}
-                    onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
-                    disabled={loading}
+                    onChange={(e) => onSearchTermChange(e.target.value)}
+                    onKeyDown={handleKeyDown}
                 />
-                <button
-                    className={styles['AltSearchBar-button']}
-                    onClick={handleSearchClick}
-                    disabled={loading}
-                >
-                    {loading ? 'ZOEKEN...' : 'ZOEK'}
-                </button>
             </div>
+            <button 
+                className={styles.searchButton}
+                onClick={onSearch}
+                disabled={loading}
+                aria-label="Zoeken"
+            >
+                {loading ? (
+                    '...'
+                ) : (
+                    <svg 
+                        className={styles.searchIcon} 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path 
+                            d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                )}
+            </button>
         </div>
     );
 }

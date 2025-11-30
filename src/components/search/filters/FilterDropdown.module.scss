@@ -126,6 +126,11 @@
     height: 16px;
     margin-left: 0.75rem;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.dropdownButton.open .dropdownArrow {
+    transform: rotate(180deg);
 }
 
 .arrowVector {
@@ -243,6 +248,36 @@
     margin-left: 0.5rem;
     flex-shrink: 0;
     color: var(--primary-color, #FF6B35);
+}
+
+// Checkbox styles for multi-select era filter
+.checkboxWrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 0.75rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(239, 239, 239, 0.4);
+    border-radius: 3px;
+    background: transparent;
+    transition: all 0.15s ease;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        color: vars.$neutral-white;
+    }
+
+    &.checked {
+        background-color: var(--primary-color, #FF6B35);
+        border-color: var(--primary-color, #FF6B35);
+    }
 }
 
 .dropdownDivider {

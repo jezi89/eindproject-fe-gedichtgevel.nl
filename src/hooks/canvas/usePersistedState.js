@@ -15,7 +15,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
       const item = localStorage.getItem(key);
       return item ? deserialize(item) : defaultValue;
     } catch (error) {
-      console.warn(`Failed to load persisted state for ${key}:`, error);
       return defaultValue;
     }
   });
@@ -25,7 +24,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
     try {
       localStorage.setItem(key, serialize(state));
     } catch (error) {
-      console.warn(`Failed to persist state for ${key}:`, error);
     }
   }, [key, state, serialize]);
 
@@ -35,7 +33,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
       localStorage.removeItem(key);
       setState(defaultValue);
     } catch (error) {
-      console.warn(`Failed to clear persisted state for ${key}:`, error);
     }
   }, [key, defaultValue]);
 
@@ -47,6 +44,8 @@ export function usePersistedState(key, defaultValue, options = {}) {
  */
 export const PERSISTED_KEYS = {
   BACKGROUND_IMAGE: 'canvas_background_image',
+  TEXT_MATERIAL: 'canvas_text_material',
+  TEXT_PADDING: 'canvas_text_padding',
   TEXT_STYLES: 'canvas_text_styles',
   LINE_OVERRIDES: 'canvas_line_overrides',
   FONT_FAMILY: 'canvas_font_family',
@@ -66,6 +65,7 @@ export const PERSISTED_KEYS = {
   AUTHOR_COLOR_OVERRIDE: 'canvas_author_color_override',
   MOVE_MODE: 'canvas_move_mode',
   SKEW_X: 'canvas_skew_x',
+  SKEW_Y: 'canvas_skew_y',
   SKEW_Y: 'canvas_skew_y'
 };
 
@@ -78,10 +78,8 @@ export function clearAllPersistedState() {
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.warn(`Failed to clear ${key}:`, error);
     }
   });
-  console.log('🧹 Cleared all persisted canvas state from localStorage');
 }
 
 /**

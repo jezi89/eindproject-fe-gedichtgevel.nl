@@ -7,7 +7,7 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import importPlugin from 'eslint-plugin-import';
+// import importPlugin from 'eslint-plugin-import';
 // Vite alias support via Node resolver
 
 // Basisregels voor React componenten en JSX
@@ -186,11 +186,11 @@ export default [
             'react-hooks': reactHooks,
             'react-refresh': reactRefresh,
             'jsx-a11y': jsxA11y,
-            import: importPlugin
+            // import: importPlugin
         },
         settings: {
             react: {version: 'detect'},
-            'import/resolver': {
+            /* 'import/resolver': {
                 node: {
                     extensions: ['.js', '.jsx', '.ts', '.tsx'],
                     paths: ['src']
@@ -202,17 +202,17 @@ export default [
                     ],
                     extensions: ['.js', '.jsx', '.ts', '.tsx']
                 }
-            }
+            } */
         },
         // Combineer alle regelsets
         rules: {
             ...reactRules,
             ...reactHooksRules,
             ...jsxA11yRules,
-            ...importRules,
+            // ...importRules,
             ...viteRules,
             'no-unused-vars': ['warn', {varsIgnorePattern: 'motion|React'}],
-            'import/no-unresolved': ['error', { caseSensitive: true }],
+            // 'import/no-unresolved': ['error', { caseSensitive: true }],
         }
     },
     // Basis ondersteuning voor TypeScript bestanden

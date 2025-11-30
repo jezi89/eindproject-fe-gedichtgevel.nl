@@ -1,8 +1,5 @@
-// src/hooks/canvas/useCanvasHandlers.js
-
 import {useCallback, useEffect} from "react";
 import { useSearchParams } from "react-router";
-// Import paths aangepast voor hoofdproject
 import {getPoemById} from "@/data/canvas/testdata";
 import {
     handleFontSizeChangeUtil,
@@ -10,9 +7,10 @@ import {
     resetLineHeightUtil,
 } from "@/utils/canvas/lineHeightUtils";
 import {getGeoDataByCity} from "@/data/canvas/cityGeoData";
+import fontMetadata from "../../data/font-metadata.json";
 
 
-export function useCanvasHandlers(canvasState, poemData = null) {
+export function useCanvasHandlers({ canvasState, currentPoem: poemData = null }) {
     // Access current poem data for Alt-A functionality
     const [searchParams] = useSearchParams();
     const poemId = searchParams.get("poemId");
@@ -20,9 +18,9 @@ export function useCanvasHandlers(canvasState, poemData = null) {
     const currentPoem = poemData || (poemId ? getPoemById(poemId) : null);
 
     const {
-        handleSelect, // <-- Nieuwe handler uit useSelection
-        clearSelection, // <-- Nieuwe handler uit useSelection
-        selectAll, // <-- NEW: Add selectAll function
+        handleSelect,
+        clearSelection,
+        selectAll,
         viewportDragEnabled,
         setViewportDragEnabled,
         fontSize,
@@ -39,28 +37,27 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         authorColorOverride,
         setAuthorColorOverride,
 
-        lineOverrides, // <-- DEZE TOEVOEGEN
-        setPendingFontFamily, // <-- De nieuwe setter
-        loadFont, // <-- Nieuw, van de font manager
-        selectedLines, // <-- Belangrijk voor per-regel logica
+        lineOverrides,
+        setPendingFontFamily,
+        loadFont,
+        selectedLines, // Required for per-line logic
         setLineOverrides,
-        searchPhotos, // <-- Pexels voor vrije zoekopdrachten
-        searchPhotosByGeo, // <-- NIEUW: Onze Flickr specialist
-        searchPhotosByText, // <-- NIEUW: Flickr text-only search
+        searchPhotos, // Pexels free image search
+        searchPhotosByGeo, // Flickr geo-based search
+        searchPhotosByText, // Flickr text search
         getCollectionPhotos,
-        setBackgroundImage, // <-- van useCanvasState
-        goToNextPage, // <-- Nieuw van usePexels
-        goToPrevPage, // <-- Nieuw van usePexels
-        searchContext, // <-- Nieuwe search context state
-        setSearchContext, // <-- Nieuwe search context setter
-        goToNextFlickrPage, // <-- NIEUW
-        goToPrevFlickrPage, // <-- NIEUW: Voor vorige pagina
-        flickrPhotos, // <-- NIEUW: om te checken welke bron actief is
-        clearFlickrPhotos, // <-- NIEUW: om Flickr te resetten
-        setPhotoGridVisible, // <-- van useCanvasState
+        setBackgroundImage,
+        goToNextPage,
+        goToPrevPage,
+        searchContext,
+        setSearchContext,
+        goToNextFlickrPage,
+        goToPrevFlickrPage,
+        flickrPhotos,
+        clearFlickrPhotos,
+        setPhotoGridVisible,
     } = canvasState;
 
-    // Line selection handler is nu een simpele doorgever
     const handleLineSelect = useCallback(
         (index, event) => {
             handleSelect(index, event);
@@ -68,29 +65,23 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [handleSelect]
     );
 
-    // Past kleur toe op ALLE geselecteerde regels (inclusief titel/auteur sync)
+    // Apply color to all selected lines (including title/author sync)
     const handleLineColorChange = useCallback(
         (color) => {
-            console.log('🎨 handleLineColorChange called with color:', color, 'selectedLines:', Array.from(selectedLines));
             if (selectedLines.size > 0) {
-                // Update lineOverrides voor alle geselecteerde regels
                 setLineOverrides((prev) => {
                     const newOverrides = {...prev};
                     selectedLines.forEach((index) => {
-                        console.log('🎨 Setting color override for line', index, ':', color);
                         newOverrides[index] = {...newOverrides[index], fillColor: color};
                     });
-                    console.log('🎨 New lineOverrides:', newOverrides);
                     return newOverrides;
                 });
 
-                // NIEUW: Sync titel/auteur overrides voor bidirectionele consistentie
+                // Sync title/author overrides for consistency
                 if (selectedLines.has(-2)) {
-                    console.log('🎯 Syncing title color to titleColorOverride:', color);
                     setTitleColorOverride(color);
                 }
                 if (selectedLines.has(-1)) {
-                    console.log('🎯 Syncing author color to authorColorOverride:', color);
                     setAuthorColorOverride(color);
                 }
             }
@@ -98,31 +89,26 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [selectedLines, setLineOverrides, setTitleColorOverride, setAuthorColorOverride]
     );
 
-    // Reset de stijl voor ALLE geselecteerde regels (inclusief titel/auteur sync)
+    // Reset style for all selected lines (including title/author sync)
     const handleResetSelectedLines = useCallback(() => {
         if (selectedLines.size > 0) {
-            // Reset lineOverrides voor alle geselecteerde regels
             setLineOverrides((prev) => {
                 const newOverrides = {...prev};
                 selectedLines.forEach((index) => {
-                    // Verwijder de hele override voor de geselecteerde regel
-                    // Simpeler dan individuele properties verwijderen
                     delete newOverrides[index];
                 });
                 return newOverrides;
             });
 
-            // NIEUW: Reset titel/auteur overrides voor bidirectionele consistentie
+            // Reset title/author overrides for consistency
             if (selectedLines.has(-2)) {
-                console.log('🎯 Resetting title color override');
                 setTitleColorOverride(null);
             }
             if (selectedLines.has(-1)) {
-                console.log('🎯 Resetting author color override');
                 setAuthorColorOverride(null);
             }
 
-            clearSelection(); // Deselecteer na het resetten
+            clearSelection();
         }
     }, [selectedLines, setLineOverrides, setTitleColorOverride, setAuthorColorOverride, clearSelection]);
 
@@ -137,13 +123,11 @@ export function useCanvasHandlers(canvasState, poemData = null) {
     // Color picker active state
     const handleColorPickerActiveChange = useCallback(
         (isActive) => {
-            console.log('🎨 Color picker active state changed to:', isActive);
             canvasState.setIsColorPickerActive(isActive);
         },
         [canvasState]
     );
 
-    // Font size, line height, etc. blijven hetzelfde...
     const handleFontSizeChange = useCallback(
         (newSize) =>
             handleFontSizeChangeUtil(newSize, {
@@ -247,6 +231,62 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [canvasState]
     );
 
+    // NIEUW: Line-specific Skew Handlers
+    const handleLineSkewXChange = useCallback(
+        (value) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            skewX: value,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
+    const handleLineSkewYChange = useCallback(
+        (value) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            skewY: value,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
+    // NIEUW: Line-specific Text Align Handler
+    const handleLineTextAlignChange = useCallback(
+        (align) => {
+            if (selectedLines.size > 0) {
+                setLineOverrides((prev) => {
+                    const newOverrides = {...prev};
+                    selectedLines.forEach((index) => {
+                        newOverrides[index] = {
+                            ...newOverrides[index],
+                            textAlign: align,
+                        };
+                    });
+                    return newOverrides;
+                });
+            }
+        },
+        [selectedLines, setLineOverrides]
+    );
+
     const handleLineFontSizeChange = useCallback(
         (size) => {
             if (selectedLines.size > 0) {
@@ -268,14 +308,12 @@ export function useCanvasHandlers(canvasState, poemData = null) {
     // Hierarchical color system handlers
     const handleTitleColorChange = useCallback(
         (color) => {
-            console.log("🎯 handleTitleColorChange called with:", color);
             setTitleColorOverride(color);
             // Sync naar lineOverrides voor consistentie
             setLineOverrides(prev => ({
                 ...prev,
                 [-2]: {...prev[-2], fillColor: color}
             }));
-            console.log("🎯 setTitleColorOverride called");
         },
         [setTitleColorOverride, setLineOverrides]
     );
@@ -338,25 +376,10 @@ export function useCanvasHandlers(canvasState, poemData = null) {
             (titleOverride ? 1 : 0) + (authorOverride ? 1 : 0) + lineColorOverrides;
 
         if (totalOverrides === 0) {
-            alert("Er zijn geen kleur overrides om te resetten.");
             return;
         }
 
-        // Simple confirmation dialog
-        const confirmMessage =
-            `Dit zal ${totalOverrides} kleur override${
-                totalOverrides === 1 ? "" : "s"
-            } verwijderen:\n\n` +
-            (titleOverride ? "• Titel kleur override\n" : "") +
-            (authorOverride ? "• Auteur kleur override\n" : "") +
-            (lineColorOverrides > 0
-                ? `• ${lineColorOverrides} gedichtregels kleur override${
-                    lineColorOverrides === 1 ? "" : "s"
-                }\n`
-                : "") +
-            "\nAlle kleuren zullen de globale kleur volgen. Doorgaan?";
-
-        if (!confirm(confirmMessage)) {
+        if (!confirm(`Reset ${totalOverrides} color override${totalOverrides === 1 ? "" : "s"}?`)) {
             return;
         }
 
@@ -396,21 +419,10 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         ).length;
 
         if (lineFontOverrides === 0) {
-            alert("Er zijn geen lettertype overrides om te resetten.");
             return;
         }
 
-        // Simple confirmation dialog
-        const confirmMessage =
-            `Dit zal ${lineFontOverrides} lettertype override${
-                lineFontOverrides === 1 ? "" : "s"
-            } verwijderen:\n\n` +
-            `• ${lineFontOverrides} gedichtregels lettertype override${
-                lineFontOverrides === 1 ? "" : "s"
-            }\n\n` +
-            "Alle regels zullen het globale lettertype volgen. Doorgaan?";
-
-        if (!confirm(confirmMessage)) {
+        if (!confirm(`Reset ${lineFontOverrides} font override${lineFontOverrides === 1 ? "" : "s"}?`)) {
             return;
         }
 
@@ -442,12 +454,18 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 
     const handleFontFamilyChange = useCallback(
         (newFontFamily) => {
-            // Taak 1: Zorg dat het lettertype geladen wordt (dit gebeurt altijd)
             loadFont(newFontFamily);
 
-            // 2. Leg de 'intentie' van de gebruiker vast
+            // Check if current weight is valid for new font
+            const availableWeights = fontMetadata[newFontFamily] || ['400', '700'];
+            const currentWeight = canvasState.fontWeight;
+
+            if (!availableWeights.includes(currentWeight)) {
+                 const newWeight = availableWeights.includes('400') ? '400' : availableWeights[0];
+                 canvasState.setFontWeight(newWeight);
+            }
+
             if (selectedLines.size > 0) {
-                // Pas de override toe op de geselecteerde regels
                 setLineOverrides((prev) => {
                     const newOverrides = {...prev};
                     selectedLines.forEach((index) => {
@@ -459,18 +477,15 @@ export function useCanvasHandlers(canvasState, poemData = null) {
                     return newOverrides;
                 });
             } else {
-                // Zet het lettertype in de wachtrij voor de globale stijl
                 setPendingFontFamily(newFontFamily);
             }
         },
-        [loadFont, setPendingFontFamily, selectedLines, setLineOverrides]
+        [loadFont, setPendingFontFamily, selectedLines, setLineOverrides, canvasState]
     );
 
-    // NIEUWE HANDLERS
     const handleSearchBackground = useCallback(
         (query) => {
             searchPhotos(query);
-            // Update search context voor Pexels vrij zoeken
             setSearchContext({
                 type: "pexels_search",
                 query: query,
@@ -482,9 +497,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
 
     const handleSetBackground = useCallback(
         (imageData) => {
-            // Normalize: if string provided, convert to proper object structure
             if (typeof imageData === 'string') {
-                console.log('⚠️ handleSetBackground: Converting string to object:', imageData);
                 const normalizedData = {
                     url: imageData,
                     thumbnail: imageData,
@@ -495,7 +508,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
                 };
                 setBackgroundImage(normalizedData);
             } else {
-                // Already an object, use as-is
                 setBackgroundImage(imageData);
             }
         },
@@ -506,21 +518,17 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         (city) => {
             const geoData = getGeoDataByCity(city);
             if (geoData) {
-                // We geven nu een object mee, inclusief de stadsnaam voor de tags
                 searchPhotosByGeo(
                     {...geoData, city, tags: "gevel,facade,architecture"},
                     true
                 );
-                // Update search context voor Flickr stad zoeken
                 setSearchContext({
                     type: "flickr_city",
                     query: city,
                     source: "flickr",
                 });
             } else {
-                // Geen Pexels fallback meer - toon lege resultaten
                 clearFlickrPhotos();
-                // Update search context voor niet gevonden stad
                 setSearchContext({
                     type: "flickr_city",
                     query: city,
@@ -534,7 +542,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
     const handlePremiumSearch = useCallback(
         (query) => {
             searchPhotosByText(query);
-            // Update search context voor Flickr text search
             setSearchContext({
                 type: "flickr_text",
                 query: query,
@@ -544,9 +551,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         [searchPhotosByText, setSearchContext]
     );
 
-    // --- NIEUWE HANDLERS VOOR PAGINERING ---
     const handleNextPage = useCallback(() => {
-        // Als er flickr foto's zijn, gebruik de flickr paginering
         if (flickrPhotos && flickrPhotos.length > 0) {
             goToNextFlickrPage();
         } else {
@@ -555,7 +560,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
     }, [flickrPhotos, goToNextFlickrPage, goToNextPage]);
 
     const handlePrevPage = useCallback(() => {
-        // Switch tussen Flickr en Pexels paginering
         if (flickrPhotos && flickrPhotos.length > 0) {
             goToPrevFlickrPage();
         } else {
@@ -563,15 +567,9 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         }
     }, [flickrPhotos, goToPrevFlickrPage, goToPrevPage]);
 
-    // NEW: Handler to reset to default collection
     const handleResetToCollection = useCallback(() => {
-        // Eerst Flickr photos wissen
         clearFlickrPhotos();
-
-        // Dan Pexels collection laden
         getCollectionPhotos();
-
-        // Update search context naar collection
         setSearchContext({
             type: "collection",
             query: "",
@@ -579,30 +577,25 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         });
     }, [clearFlickrPhotos, getCollectionPhotos, setSearchContext]);
 
-    // NEW: Handler to open photo grid
     const handleOpenPhotoGrid = useCallback(() => {
         setPhotoGridVisible(true);
     }, [setPhotoGridVisible]);
 
-    // Get moveMode from canvasState for CTRL+drag logic
     const {moveMode} = canvasState;
 
-    // Keyboard shortcuts
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === "Escape") {
-                clearSelection(); // <-- Gebruik de nieuwe clearSelection functie
+                clearSelection();
             }
 
-            // NEW: Alt-A select all functionality
             if (event.altKey && event.key === "a") {
-                event.preventDefault(); // Prevent browser Alt-A behavior
+                event.preventDefault();
                 if (currentPoem?.lines) {
-                    selectAll(currentPoem.lines.length);
+                    canvasState.selectAllIncludingTitleAuthor(currentPoem.lines.length);
                 }
             }
 
-            // C key in Edit mode enables viewport dragging
             if (
                 event.key.toLowerCase() === "c" &&
                 moveMode === "edit" &&
@@ -613,7 +606,6 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         };
 
         const handleKeyUp = (event) => {
-            // Vervang CTRL door C voor viewport drag uitzetten
             if (
                 event.key.toLowerCase() === "c" &&
                 moveMode === "edit" &&
@@ -636,6 +628,7 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         currentPoem,
         setViewportDragEnabled,
         moveMode,
+        canvasState.selectAllIncludingTitleAuthor,
     ]);
 
 
@@ -668,6 +661,9 @@ export function useCanvasHandlers(canvasState, poemData = null) {
         // Skew handlers
         handleSkewXChange,
         handleSkewYChange,
+        handleLineSkewXChange, // <-- EXPORT
+        handleLineSkewYChange, // <-- EXPORT
+        handleLineTextAlignChange, // <-- EXPORT
 
         handleSearchBackground,
         handlePremiumSearch, // <-- NEW: Export premium search handler

@@ -6,6 +6,7 @@ import { useFontManager } from "./useFontManager";
 import { usePexels } from "./usePexels";
 import { usePersistedState, PERSISTED_KEYS } from "./usePersistedState";
 import { useFlickr } from "./useFlickr";
+import { IMAGE_QUALITY_MODE } from "../../utils/imageOptimization";
 
 export function useCanvasState() {
 	// Refs
@@ -39,6 +40,9 @@ export function useCanvasState() {
 		false
 	);
 
+	// Image Quality Mode State (session-only, not persisted)
+	const [imageQualityMode, setImageQualityMode] = useState(IMAGE_QUALITY_MODE.AUTO);
+
 	const selection = useSelection();
 	const { fontStatus, loadFont, availableFonts } = useFontManager();
 
@@ -51,9 +55,22 @@ export function useCanvasState() {
 
 	// Background State
 	const [backgroundImage, setBackgroundImage, clearBackgroundImage] = usePersistedState(
-		PERSISTED_KEYS.BACKGROUND_IMAGE,
-		null
-	);
+        PERSISTED_KEYS.BACKGROUND_IMAGE,
+        null
+    );
+
+    // Text Material State (Global)
+    const [textMaterial, setTextMaterial] = useState(null); // URL of texture
+    const [textPadding, setTextPadding] = useState(20);
+
+    // Text Effect State (Global)
+    const [textEffectMode, setTextEffectMode] = useState('none'); // 'none', 'painted', 'raised', 'engraved'
+    const [textEffectParams, setTextEffectParams] = useState({
+        opacity: 0.8, // For Painted
+        blur: 0.5,    // For Painted
+        distance: 2,  // For Raised/Engraved
+        depth: 2,     // For Engraved
+    });
 
 	const pexels = usePexels();
 	const flickr = useFlickr();
@@ -113,6 +130,8 @@ export function useCanvasState() {
 		0
 	);
 	const [userHasAdjusted, setUserHasAdjusted] = useState(false);
+	
+
 
 	// Hierarchical color system - PERSISTENT
 	const [titleColorOverride, setTitleColorOverride] = usePersistedState(
@@ -198,6 +217,8 @@ export function useCanvasState() {
 		setHighlightVisible,
 		isOptimizationEnabled,
 		setIsOptimizationEnabled,
+		imageQualityMode,
+		setImageQualityMode,
 
 		// Font State
 		currentFontFamily,
@@ -213,10 +234,17 @@ export function useCanvasState() {
 		...pexels,
 		...flickr,
 
-		// Background State
-		backgroundImage,
-		setBackgroundImage,
-		clearBackgroundImage,
+		// Background
+        backgroundImage,
+        setBackgroundImage,
+        textMaterial, // <-- RESTORED
+        setTextMaterial, // <-- RESTORED
+        textPadding, // <-- RESTORED
+        setTextPadding, // <-- RESTORED
+        textEffectMode,
+        setTextEffectMode,
+        textEffectParams,
+        setTextEffectParams,
 		searchContext,
 		setSearchContext,
 
@@ -255,6 +283,8 @@ export function useCanvasState() {
 		setMoveMode,
 		userHasAdjusted,
 		setUserHasAdjusted,
+
+
 
 		// Calculated Styles
 		effectiveStyles,

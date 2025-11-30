@@ -46,7 +46,8 @@ export const SearchResults = memo(({
                                        hideRangeIndicator = false,
                                        initialIndex = 0,
                                        ResultsOverviewComponent = ResultsOverview,
-                                       resultsOverviewProps = {}
+                                       resultsOverviewProps = {},
+                                       isOverlay = false
                                    }) => {
     // Hooks before early return
     // Refs and state for dynamic positioning
@@ -75,7 +76,7 @@ export const SearchResults = memo(({
     return (
         <div
             ref={searchResultsRef}
-            className={`${styles.searchResultsSection} ${canvasMode ? styles.canvasMode : ''} ${isDailyMode ? styles.dailyMode : ''}`}
+            className={`${styles.searchResultsSection} ${canvasMode ? styles.canvasMode : ''} ${isDailyMode ? styles.dailyMode : ''} ${isOverlay ? styles.overlayMode : ''}`}
         >
             {/* Section header for daily mode */}
             {isDailyMode && sectionTitle && (
@@ -96,6 +97,22 @@ export const SearchResults = memo(({
                         {...resultsOverviewProps}
                     />
                 </div>
+            )}
+
+            {/* Carousel arrows - moved above dots for overlay positioning */}
+            {!isDailyMode && updatedLayout.isCarousel && (
+                <CarouselArrows
+                    onPrevious={orchestration.handlePrevious}
+                    onNext={orchestration.handleNext}
+                    hasMultiple={updatedLayout.hasMultiple}
+                    allowDynamicPositioning={!isOverlay} // Disable dynamic positioning in overlay
+                    hasAnyExpanded={orchestration.hasAnyExpanded}
+                    searchResultsRef={searchResultsRef}
+                    onCollapseEvent={handleCollapseEvent}
+                    canvasMode={canvasMode}
+                    className={isOverlay ? styles.overlayArrows : ''}
+                    isOverlay={isOverlay}
+                />
             )}
 
             {/* Carousel dots/indicators - show above results container */}
@@ -162,23 +179,13 @@ export const SearchResults = memo(({
                                         onNavigateToCanvas={onNavigateToCanvas}
                                         onNavigateToRecording={onNavigateToRecording}
                                         onCollapseEvent={handleCollapseEvent}
+                                        showLabels={!isOverlay}
                                     />
                                 </motion.div>
                             );
                         })}
                     </motion.div>
                 </LayoutGroup>
-
-                {/* Carousel arrows - only in search mode */}
-                {!isDailyMode && updatedLayout.isCarousel && (
-                    <CarouselArrows
-                        onPrevious={orchestration.handlePrevious}
-                        onNext={orchestration.handleNext}
-                        hasMultiple={updatedLayout.hasMultiple}
-                        searchResultsRef={searchResultsRef}
-                        canvasMode={canvasMode}
-                    />
-                )}
             </div>
         </div>
     );

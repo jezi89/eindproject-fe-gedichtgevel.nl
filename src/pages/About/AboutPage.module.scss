@@ -1,36 +1,38 @@
-// AboutPage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/typography';    // Voor text styling
-//    @import '@/styles/layout';        // Voor layout utilities
-//
-// 2. Gebruik de variabelen:
-//    - $color-primary, $color-secondary voor thema kleuren
-//    - $spacing-small, $spacing-medium, $spacing-large voor spacing
-//    - $font-size-base, $font-size-large voor font sizes
-//    - $breakpoint-mobile, $breakpoint-tablet voor responsive design
-//
-// 3. Gebruik de mixins:
-//    - @include flex-center(); voor centered flex layouts
-//    - @include card-style(); voor kaart-achtige elementen
-//    - @include responsive($breakpoint-mobile) voor media queries
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
 
-.about-container {
-  // Main container styles
+.page-about {
+  max-width: 800px;
+  margin:    0 auto;
+  padding:   $spacing-xl;
+
+  .page-title {
+    margin-bottom: $spacing-md;
+    color:         $color-primary;
   }
 
-.about-header {
-  // Header section styles
+  .page-subtitle {
+    font-size:     $font-size-lg;
+    margin-bottom: $spacing-xl;
+    color:         $color-text-secondary;
   }
 
-.about-content {
-  // Content area styles
-  }
+  .about-section {
+    margin-bottom:    $spacing-xl;
+    padding:          $spacing-lg;
+    border-radius:    $border-radius-md;
+    background-color: $color-surface;
 
-.about-section {
-  // Individual section styles
+    h2 {
+      font-size:     $font-size-xl;
+      margin-bottom: $spacing-md;
+      color:         $color-primary;
+    }
+
+    p {
+      line-height:   1.6;
+      margin-bottom: $spacing-md;
+      color:         $color-text;
+    }
   }
+}

@@ -1,8 +1,11 @@
 import {memo, useEffect, useRef, useState} from 'react';
+import { useLocation } from 'react-router';
 import styles from './Carrousel.module.scss';
 import {calculateDotNavigation, calculateIndicatorConfig, formatIndicatorElements, getAvailableDecades} from '@/utils/carrouselIndicatorUtils.js';
 
 export const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSeriesNavigation = false, hideRangeIndicator = false}) => {
+    const location = useLocation();
+    const isAudioPage = location.pathname.includes('spreekgevel');
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const dotsContainerRef = useRef(null);
@@ -227,11 +230,13 @@ export const CarouselDots = memo(({totalCount, currentIndex, onNavigate, hideSer
                 </div>
             )}
 
-            {/* Range indicator - only show on homepage (when not hidden) */}
+            {/* Range indicator (e.g. "1 / 10") */}
             {!hideRangeIndicator && (
-                <div className={styles.rangeIndicator}>
-                    {formatRangeText()}
-                </div>
+                <span 
+                    className={`${styles.rangeIndicator} ${isAudioPage ? styles.rangeIndicatorDark : ''}`}
+                >
+                    {currentIndex + 1} / {totalCount}
+                </span>
             )}
         </>
     );

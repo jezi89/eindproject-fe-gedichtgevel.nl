@@ -11,6 +11,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router';
 import {useAuth} from '@/hooks/auth/useAuth';
 import {useUserSettings} from '@/hooks/account/useUserSettings';
+import {useToast} from '@/context/ui/ToastContext';
 import styles from './SettingsSection.module.scss';
 
 /**
@@ -21,6 +22,7 @@ import styles from './SettingsSection.module.scss';
 export function SettingsSection() {
     const navigate = useNavigate();
     const {user, signOut} = useAuth();
+    const { addToast } = useToast();
     const {
         settings,
         loading,
@@ -238,7 +240,7 @@ export function SettingsSection() {
                                 name="theme"
                                 value="dark"
                                 checked={settings?.theme_preference === 'dark'}
-                                onChange={() => updateTheme('dark')}
+                                onChange={() => addToast('Deze functie komt beschikbaar in versie 2.0', 'info')}
                                 className={styles.radio}
                             />
                             <span>Donker</span>
@@ -249,7 +251,7 @@ export function SettingsSection() {
                                 name="theme"
                                 value="light"
                                 checked={settings?.theme_preference === 'light'}
-                                onChange={() => updateTheme('light')}
+                                onChange={() => addToast('Deze functie komt beschikbaar in versie 2.0', 'info')}
                                 className={styles.radio}
                             />
                             <span>Licht</span>
@@ -262,7 +264,7 @@ export function SettingsSection() {
                         <input
                             type="checkbox"
                             checked={settings?.email_notifications || false}
-                            onChange={toggleEmailNotifications}
+                            onChange={() => addToast('Deze functie komt beschikbaar in versie 2.0', 'info')}
                             className={styles.checkbox}
                         />
                         <span>Email notificaties ontvangen</span>

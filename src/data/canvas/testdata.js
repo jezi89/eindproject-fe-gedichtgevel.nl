@@ -1,5 +1,3 @@
-// Mock data voor en gedicht
-// src/data/testdata.js
 export const poems = [
     {
         id: 123,
@@ -23,9 +21,7 @@ export const poems = [
             "en 't is een kwestie van geduld",
             "tot iedereen dat in jou ziet."
         ],
-
     },
-    // eventueel meer gedichten
 ];
 
 export function getPoemById(id) {

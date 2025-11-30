@@ -6,7 +6,9 @@ export const ResponsiveLayout = memo(({
                                           controls,
                                           canvas,
                                           navigation,
-                                          previewState = 'normal'
+                                          previewState = 'normal',
+                                          layoutPosition = 'standard', // 'standard' (Controls Left) or 'swapped' (Controls Right)
+                                          onToggleLayoutPosition
                                       }) => {
 
     const getLayoutClass = () => {
@@ -16,29 +18,26 @@ export const ResponsiveLayout = memo(({
         return className;
     };
 
-    const controlsPanelClass = `${styles.controlsPanel} ${!layout.controlsVisible ? styles.collapsed : ''}`;
-    const navPanelClass = `${styles.navPanel} ${!layout.navVisible ? styles.collapsed : ''}`;
+    const isSwapped = layoutPosition === 'swapped';
+
+    const controlsPanelClass = `${styles.controlsPanel} ${!layout.controlsVisible ? styles.collapsed : ''} ${isSwapped ? styles.swapped : ''}`;
+    const navPanelClass = `${styles.navPanel} ${!layout.navVisible ? styles.collapsed : ''} ${isSwapped ? styles.swapped : ''}`;
+    
+    const openControlsBtnClass = `${styles.openButton} ${styles.openControlsButton} ${isSwapped ? styles.swapped : ''}`;
+    const openNavBtnClass = `${styles.openButton} ${styles.openNavButton} ${isSwapped ? styles.swapped : ''}`;
 
     return (
         <div className={getLayoutClass()}>
-            {/* Left Controls Panel */}
-            <div
-                className={controlsPanelClass}
-                style={{width: layout.controlsWidth}}
-            >
-                {React.cloneElement(controls, {toggle: layout.toggleControls})}
-            </div>
-
-            {/* Main Canvas - takes remaining space */}
+            {/* Canvas - Always full size, bottom layer (z-index: 1) */}
             <div className={styles.canvasWrapper}>
                 {canvas}
 
-                {/* Open Buttons - Rendered on top of the canvas */}
+                {/* Open Buttons - Render OVER canvas when panels collapsed */}
                 {!layout.controlsVisible && (
                     <button
-                        className={`${styles.openButton} ${styles.openControlsButton}`}
+                        className={openControlsBtnClass}
                         onClick={layout.toggleControls}
-                        aria-label="Expand Controls"
+                        aria-label="Open styling controls"
                     >
                         ☰
                     </button>
@@ -46,22 +45,28 @@ export const ResponsiveLayout = memo(({
 
                 {!layout.navVisible && (
                     <button
-                        className={`${styles.openButton} ${styles.openNavButton}`}
+                        className={openNavBtnClass}
                         onClick={layout.toggleNav}
-                        aria-label="Expand Navigation"
+                        aria-label="Open navigation"
                     >
                         ☰
                     </button>
                 )}
             </div>
 
-            {/* Right Navigation Panel */}
-            <div
-                className={navPanelClass}
-                style={{width: layout.navWidth}}
-            >
+            {/* Controls Panel */}
+            <div className={controlsPanelClass}>
+                {React.cloneElement(controls, {
+                    toggle: layout.toggleControls,
+                    onToggleLayoutPosition: onToggleLayoutPosition // Pass toggle handler
+                })}
+            </div>
+
+            {/* Navigation Panel */}
+            <div className={navPanelClass}>
                 {React.cloneElement(navigation, {
                     navWidth: layout.navWidth,
+                    navVisible: layout.navVisible,
                     toggle: layout.toggleNav
                 })}
             </div>

@@ -1,34 +1,14 @@
 // SearchBar Component Styles
 // =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-//
-// 1. Import de benodigde modules:
-@use "@/styles/variables" as *;
-// Voor kleuren, spacing, breakpoints
-@use "@/styles/mixins" as mixins;
-// Voor herbruikbare style patronen
-@use "sass:color";
-// Voor kleur manipulatie
-@use "@/styles/effects" as *;
-// Voor shadows, transitions
-//
-// 2. SearchBar specifieke elementen:
-//    - Search input field
-//    - Search icon/button
-//    - Clear button
-//    - Search suggestions dropdown
-//    - Loading indicator
-//
-// 3. Interactieve states:
-//    - Focus state met expanded view
-//    - Active search state
-//    - No results state
 
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "sass:color";
+@use "@/styles/effects" as *;
 
 // ===========================
 // BASE COMPONENTS
 // ===========================
-
 
 .searchSection {
   // Main search section container
@@ -37,21 +17,21 @@
   // Compact mode for header usage
   &.compact {
 	.searchBar {
-	  width:        min(600px, 80vw); // Keep as is, specific layout decision
+	  width:        min(600px, 80vw);
 	  min-height:   3rem;
-	  border-width: $border-width-custom-thick; // Was 3px; Consider $border-width-regular or $border-width-thick if it matches
+	  border-width: $border-width-custom-thick;
 	  }
 
 	.searchInputContainer {
-	  margin-left: $spacing-xxxl + $spacing-l; // Was 80px; Consider $spacing-xxxl * 1.25 or a new variable if this is a common large spacing
+	  margin-left: $spacing-xxxl + $spacing-l;
 	  }
 
 	.searchInput {
-	  font-size: $font-size-xxxs; // Was $font-size-s; Changed from $font-size-sm to $font-size-s as sm is 12px and xs is 15px in variables
+	  font-size: $font-size-xxxs;
 	  }
 
 	.searchButton {
-	  font-size: $font-size-xxxs; // Was $font-size-s; Changed from $font-size-sm
+	  font-size: $font-size-xxxs;
 	  padding:   $spacing-s $spacing-m;
 	  }
 	}
@@ -59,12 +39,12 @@
   // Canvas variant - centered input with left padding compensation
   &.canvas {
 	.searchBar {
-	  border-left: none; // Remove left border for cleaner look
+	  border-left: none;
 	  }
 
 	.searchInputContainer {
-	  margin-left:  0; // Remove left margin
-	  padding-left: $spacing-xxl + $spacing-xs; // ~58px responsive padding for balance (3rem + 0.5rem = 3.5rem approx 56px, close to 3.625rem)
+	  margin-left:  0;
+	  padding-left: $spacing-xxl + $spacing-xs;
 	  }
 	}
   }
@@ -79,32 +59,29 @@
 // ===========================
 
 .searchBar {
-  position:    relative; // For character count positioning
+  position:    relative;
   display:     flex;
   align-items: center;
-  width:       min(951px, 90vw); // Keep as is, specific layout decision
-  // height: auto; // Default value, can be removed
+  width:       min(951px, 90vw);
   min-height:  $spacing-xxxl; // 4rem
   max-height:  $spacing-xxxl * 2; // 8rem Allow expansion for 2 lines
   margin:      0 auto;
-  transition:  border-color $transition-normal; // Remove height transition (not needed)
-  border:      $border-width-thick + $border-width-regular solid $primary-cognac; // Was 6px; Consider $border-width-thick or a new variable if 6px is common
-  background:  $search-background; // $neutral-off-white
+  transition:  border-color $transition-normal;
+  border:      $border-width-thick + $border-width-regular solid $primary-cognac;
+  background:  $search-background;
 
   // Active state - blue border when text is entered
   &.searchBarActive {
-	border-color: $search-border; // $secondary-muted
+	border-color: $search-border;
 	}
   }
 
 .searchInputContainer {
-  // position: relative; // No longer needed, character count moved to searchBar
   display:         flex;
   align-items:     center; // Vertically center the textarea
   flex:            1;
   justify-content: center; // Horizontally center the textarea
-  // height: 100%; // Default value, not needed
-  margin-left:     $spacing-xxxl * 2; // Was 120px; Consider $spacing-xxxl * 2.5 or a new variable
+  margin-left:     $spacing-xxxl * 2;
   }
 
 
@@ -114,35 +91,29 @@
 
 .searchInput {
   font-family:   $font-family-searchbar;
-  font-size:     $font-size-xxl; // Use design system font size (changed from 2xl to xxl)
-  font-weight:   $font-weight-extrabold; // 800
-  // font-style: normal; // Default value
-  line-height:   $line-height-normal-unitless; // Was $line-height-normal; 1.5; Better vertical centering for text
-  // display: flex; // Wrong for textarea, removed
-  // align-items: center; // Wrong for textarea, removed
-  // justify-content: center; // Wrong for textarea, removed
-  overflow:      hidden; // Hide scrollbars
-  // min-height: 47px; // Removed - let line-height handle centering
+  font-size:     $font-size-xxl;
+  font-weight:   $font-weight-extrabold;
+  line-height:   $line-height-normal-unitless;
+  overflow:      hidden;
   width:         100%;
-  max-height:    $spacing-xxxl + $spacing-xxl + $spacing-xxs; // Was 94px; Allow up to 2 lines (approx $spacing-xxxl * 1.5 + $spacing-xs)
-  padding:       $spacing-xs 0; // Use design system spacing
-  resize:        none; // Disable resize handle
-  // letter-spacing: 0; // Default value
+  max-height:    $spacing-xxxl + $spacing-xxl + $spacing-xxs;
+  padding:       $spacing-xs 0;
+  resize:        none;
   transition:    font-size $transition-fast;
-  text-align:    center; // Center text horizontally within textarea
+  text-align:    center;
   color:         $search-text;
   border:        none;
   background:    transparent;
   caret-color:   $primary-cognac;
-  overflow-wrap: break-word; // Allow word breaking
+  overflow-wrap: break-word;
 
   // When there's content, scale up the text
   &:not(:placeholder-shown) {
-	font-size: clamp(20px, 3vw, $font-size-xxl); // 36px
+	font-size: clamp(20px, 3vw, $font-size-xxl);
 	}
 
   &:focus {
-	font-size: clamp(20px, 3vw, $font-size-xxl); // Scale up on focus
+	font-size: clamp(20px, 3vw, $font-size-xxl);
 	color:     $search-text;
 	outline:   none;
 	}
@@ -154,10 +125,9 @@
 	}
 
   &::placeholder {
-	font-size:   $font-size-xl; // Use design system font size
-	font-weight: $font-weight-semibold; // 600; Slightly lighter weight for placeholder
-	// font-style: normal; // Default value
-	line-height: $line-height-normal-unitless; // Was $line-height-normal; 1.5; Match main text line-height for consistent centering
+	font-size:   $font-size-xl;
+	font-weight: $font-weight-semibold;
+	line-height: $line-height-normal-unitless;
 	transition:  opacity $transition-fast;
 	opacity:     0.8;
 	color:       $search-placeholder;
@@ -170,13 +140,14 @@
 
 .characterCount {
   font-family: $font-family-searchbar;
-  font-size:   $font-size-xs; // Use design system font size
+  font-size:   $font-size-xs;
   position:    absolute;
-  bottom:      $spacing-xs; // Use design system spacing
-  left:        $spacing-xs; // Use design system spacing
-  // pointer-events: none; // Default behavior
+  bottom:      $spacing-xs;
+  left:        $spacing-xs;
+  pointer-events: none;
   opacity:     0.7;
   color:       $neutral-mid-dark;
+  z-index:     1;
   }
 
 // ===========================
@@ -184,44 +155,44 @@
 // ===========================
 
 .searchButtonContainer {
-  @include mixins.flex-center; // Use design system mixin
-  margin-right: $spacing-xs; // Use design system spacing
+  @include mixins.flex-center;
+  margin-right: $spacing-xs;
+  position:     relative;
+  z-index:      2;
   }
 
 .searchButton {
   font-family:   $font-family-button;
-  font-size:     $font-size-l; // Use design system font size (changed from lg to l)
-  font-weight:   $font-weight-extrabold; // 800
-  // font-style: normal; // Default value
-  line-height:   $line-height-normal; // 24px
-  @include mixins.flex-center; // Use design system mixin instead of manual flex
-  width:         104px; // Keep as is, specific layout decision
-  min-height:    $spacing-xl + $spacing-xs; // Was $spacing-xl; 2.5rem (changed from 2.5rem to $spacing-xl which is 2rem, consider $spacing-xl + $spacing-xs for 2.5rem)
-  padding:       $spacing-xs $spacing-m; // Use design system spacing
-  // cursor: pointer; // Default for button
-  transition:    all $transition-fast; // Use design system transition
+  font-size:     $font-size-l;
+  font-weight:   $font-weight-extrabold;
+  line-height:   $line-height-normal;
+  @include mixins.flex-center;
+  width:         104px;
+  min-height:    $spacing-xl + $spacing-xs;
+  padding:       $spacing-xs $spacing-m;
+  cursor:        pointer;
+  transition:    all $transition-fast;
   text-align:    center;
-  // letter-spacing: 0; // Default value
   color:         $neutral-white;
-  border:        $border-width-custom-thick solid $neutral-white; // Was 3px
+  border:        $border-width-custom-thick solid $neutral-white;
   border-radius: 0;
   background:    $button-tertiary-background;
-  box-shadow:    0 0 1.5px 2px $secondary-light, inset 2px 2px 0.5px 2px $secondary-light, inset -2px -2px 0.5px 2px $secondary-light; // Was $secondary-300
+  box-shadow:    0 0 1.5px 2px $secondary-light, inset 2px 2px 0.5px 2px $secondary-light, inset -2px -2px 0.5px 2px $secondary-light;
 
   &:hover:not(:disabled) {
 	transform:  translateY(-1px);
 	background: color.adjust($button-tertiary-background, $lightness: -15%);
 	// Enhanced Figma shadow on hover
-	box-shadow: 0 0 2px 3px $secondary-light, inset 2px 2px 1px 4px $secondary-light, inset -2px -2px 1px 4px $secondary-light; // Was $secondary-300
+	box-shadow: 0 0 3px 3px $secondary-light, inset 1px 1px 0px 3px $secondary-light, inset -1px 0px 1px 4px $secondary-light;
+
 	}
 
   &:disabled {
-	// cursor: not-allowed; // Default for disabled button
 	opacity:          0.7;
-	border:           $border-width-custom-thick solid $neutral-mid-light; // Was 3px, $grey-900
+	border:           $border-width-custom-thick solid $neutral-mid-light;
 	background-color: $neutral-mid;
 	// Reduced Figma shadow for disabled state
-	box-shadow:       0 0 0.5px 1px rgba($secondary-light, 0.3), inset 1px 1px 0.25px 2px rgba($secondary-light, 0.3), inset -1px -1px 0.25px 2px rgba($secondary-light, 0.3); // Was $secondary-300
+	box-shadow:       0 0 0.5px 1px rgba($secondary-light, 0.3), inset 1px 1px 0.25px 2px rgba($secondary-light, 0.3), inset -1px -1px 0.25px 2px rgba($secondary-light, 0.3);
 	}
   }
 
@@ -230,17 +201,17 @@
 // ===========================
 
 // Large screens (1400px and below)
-@include mixins.media-down($screen-xxl) { // max-width: $screen-xxl - 1px (1399px)
+@include mixins.media-down($screen-xxl) {
   .searchBar {
 	width: min(85vw, 800px);
 	}
 
   .searchInput {
-	font-size: $font-size-xl; // Use design system font size
+	font-size: $font-size-xl;
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(18px, 3vw, $font-size-xl + $font-size-xxs); // Was $font-size-l + $font-size-xxs
+	  font-size: clamp(18px, 3vw, $font-size-xl + $font-size-xxs);
 	  }
 
 	&::placeholder {
@@ -249,29 +220,29 @@
 	}
 
   .searchButton {
-	font-size: clamp(18px, 2vw, $font-size-m); // 20px
+	font-size: clamp(18px, 2vw, $font-size-m);
 	width:     clamp(80px, 8vw, 104px);
 	}
 
   // Canvas variant responsive adjustments
   .searchSection.canvas .searchInputContainer {
-	padding-left: $spacing-xxl; // ~48px on tablet (3rem)
+	padding-left: $spacing-xxl;
 	}
   }
 
 // Tablet screens (1024px and below)
-@include mixins.media-down($screen-lg) { // max-width: $screen-lg - 1px (991px)
+@include mixins.media-down($screen-lg) {
   .searchBar {
 	width:      min(90vw, 700px);
-	min-height: $spacing-xl + $spacing-m; // Was $spacing-xl + $spacing-l
+	min-height: $spacing-xl + $spacing-m;
 	}
 
   .searchInput {
-	font-size: $font-size-l; // Use design system font size
+	font-size: $font-size-l;
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(16px, 3vw, $font-size-l); // 24px
+	  font-size: clamp(16px, 3vw, $font-size-l);
 	  }
 
 	&::placeholder {
@@ -280,26 +251,26 @@
 	}
 
   .searchButton {
-	font-size:  clamp(16px, 2vw, $font-size-m - $font-size-xxxs); // Was $font-size-m - $spacing-xxs
+	font-size:  clamp(16px, 2vw, $font-size-m - $font-size-xxxs);
 	width:      clamp(70px, 10vw, 80px);
-	min-height: $spacing-xl + $spacing-xs; // Was $spacing-xl
+	min-height: $spacing-xl + $spacing-xs;
 	}
 
   // Canvas variant responsive adjustments
   .searchSection.canvas .searchInputContainer {
-	padding-left: $spacing-xl + $spacing-xs; // ~40px on mobile (2.5rem)
+	padding-left: $spacing-xl + $spacing-xs;
 	}
   }
 
 // Mobile screens (768px and below)
-@include mixins.media-down($screen-md) { // max-width: $screen-md - 1px (767px)
+@include mixins.media-down($screen-md) {
   .searchBar {
 	flex-direction: column;
 	width:          min(95vw, 600px);
 	min-height:     auto;
-	max-height:     none; // Remove max-height restriction on mobile
+	max-height:     none;
 	padding:        $spacing-m;
-	border-radius:  $border-radius-lg; // Use design system border radius
+	border-radius:  $border-radius-lg;
 	gap:            $spacing-m;
 	}
 
@@ -310,32 +281,30 @@
 
   .searchInput {
 	font-size:     $font-size-s;
-	// min-height: 3rem; // Removed - let line-height handle sizing naturally
 	padding:       $spacing-m;
 	text-align:    center;
-	border:        $border-width-thin solid $accent-greyish; // Was $neutral-mid-dark / $grey-800
-	border-radius: $border-radius-sm; // Use design system border radius
+	border:        $border-width-thin solid $accent-greyish;
+	border-radius: $border-radius-sm;
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(14px, 4vw, $font-size-m - $font-size-xxxs); // Was $font-size-m - $spacing-xxs
+	  font-size: clamp(14px, 4vw, $font-size-m - $font-size-xxxs);
 	  }
 
 	&::placeholder {
-	  font-size: $font-size-xs; // Use design system font size
+	  font-size: $font-size-xs;
 	  }
 	}
 
   .characterCount {
-	bottom: $spacing-xs; // Use design system spacing
+	bottom: $spacing-xs;
 	left:   $spacing-s;
 	}
 
   .searchButton {
-	font-size:     clamp(14px, 3vw, $font-size-s); // 16px
+	font-size:     clamp(14px, 3vw, $font-size-s);
 	width:         100%;
-	// min-height: 3rem; // Removed - let padding handle button height naturally
-	border-radius: $border-radius-sm; // Use design system border radius
+	border-radius: $border-radius-sm;
 	}
   }
 
@@ -344,7 +313,7 @@
 // ===========================
 
 // Very small mobile screens (480px and below)
-@include mixins.media-down(($screen-xs + 160px) + 1px) { // Results in max-width: ($screen-xs + 160px), i.e., max-width: 480px
+@include mixins.media-down(($screen-xs + 160px) + 1px) {
   .searchInput {
 	font-size: $font-size-s;
 	}

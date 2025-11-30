@@ -1,5 +1,6 @@
 // src/hooks/canvas/useFontManager.js
 import { useState, useCallback } from "react";
+import fontMetadata from "../../data/font-metadata.json";
 
 // De lijst met lettertypen die we in de UI willen tonen.
 const availableFonts = [
@@ -151,7 +152,6 @@ export function useFontManager() {
         fontStatus[fontName] === "loading" ||
         fontStatus[fontName] === "loaded"
       ) {
-
         return;
       }
 
@@ -159,8 +159,15 @@ export function useFontManager() {
       setFontStatus((prevStatus) => ({ ...prevStatus, [fontName]: "loading" }));
 
       try {
+        // Determine available weights from metadata, fallback to 400,700 if not found
+        const weights = fontMetadata[fontName] || ['400', '700'];
+        const weightString = weights.join(';');
+        
         // 3. Add Google Fonts CSS if not already present
-        const fontUrl = `https://fonts.googleapis.com/css2?family=${fontApiValues[fontName]}&display=swap`;
+        // Construct URL dynamically based on available weights
+        // Example: family=Roboto:wght@100;300;400;500;700;900
+        const familyBase = fontApiValues[fontName] ? fontApiValues[fontName].split(':')[0] : fontName.replace(/ /g, '+');
+        const fontUrl = `https://fonts.googleapis.com/css2?family=${familyBase}:wght@${weightString}&display=swap`;
 
         if (!loadedFontLinks.has(fontUrl)) {
           const link = document.createElement("link");
@@ -180,18 +187,19 @@ export function useFontManager() {
         }
 
         // 4. Use Font Loading API to ensure font is actually downloaded and ready
-        // Load both weights that we use (400 and 700)
-        await Promise.all([
-          document.fonts.load(`400 16px "${fontName}"`),
-          document.fonts.load(`700 16px "${fontName}"`)
-        ]);
+        // Load ALL available weights
+        const loadPromises = weights.map(weight => 
+            document.fonts.load(`${weight} 16px "${fontName}"`)
+        );
+        
+        await Promise.all(loadPromises);
 
         setFontStatus((prevStatus) => ({
           ...prevStatus,
           [fontName]: "loaded",
         }));
       } catch (error) {
-
+        console.error(`Failed to load font ${fontName}:`, error);
         setFontStatus((prevStatus) => ({ ...prevStatus, [fontName]: "error" }));
       }
     },
@@ -199,4 +207,15 @@ export function useFontManager() {
   );
 
   return { availableFonts, fontStatus, loadFont };
+}
+
+// Helper to generate optimized preview URL
+export function getFontPreviewUrl(fontName) {
+    if (!fontApiValues[fontName]) return null;
+    // Remove weights for preview to keep it even smaller, or keep them? 
+    // Let's keep 400 (Regular) for preview.
+    const familyBase = fontApiValues[fontName].split(':')[0];
+    // Encode the text (font name)
+    const text = encodeURIComponent(fontName);
+    return `https://fonts.googleapis.com/css2?family=${familyBase}&text=${text}&display=swap`;
 }

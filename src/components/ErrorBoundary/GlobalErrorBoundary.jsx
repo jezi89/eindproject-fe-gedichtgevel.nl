@@ -1,12 +1,10 @@
 import {Component} from 'react';
 import {Link} from 'react-router';
-import * as Sentry from '@sentry/react';
 import styles from './GlobalErrorBoundary.module.scss';
 
 /**
  * Global Error Boundary for catching runtime errors
  * Provides graceful fallback when components crash
- * Integrates with Sentry for error tracking
  */
 export class GlobalErrorBoundary extends Component {
     constructor(props) {
@@ -14,8 +12,7 @@ export class GlobalErrorBoundary extends Component {
         this.state = {
             hasError: false,
             error: null,
-            errorInfo: null,
-            eventId: null // Sentry event ID voor feedback dialog
+            errorInfo: null
         };
     }
 
@@ -33,14 +30,6 @@ export class GlobalErrorBoundary extends Component {
         if (typeof window !== 'undefined' && window.console && import.meta.env.DEV) {
             console.error('Error caught by boundary:', error, errorInfo);
         }
-
-        // Send error to Sentry
-        Sentry.withScope((scope) => {
-            scope.setContext('errorInfo', errorInfo);
-            scope.setLevel('error');
-            const eventId = Sentry.captureException(error);
-            this.setState({ eventId });
-        });
     }
 
     handleRetry = () => {

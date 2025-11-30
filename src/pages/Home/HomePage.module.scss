@@ -1,66 +1,3 @@
-// HomePage Styles
-// =====================================
-// Gebruik de gedeelde styles uit de styles folder:
-// 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/typography';    // Voor text styling
-//    @import '@/styles/layout';        // Voor layout utilities
-//    @import '@/styles/effects';       // Voor shadows, transitions
-//
-// 2. Homepage-specifieke secties:
-//    - Hero/banner sectie
-//    - Featured gedichten
-//    - Call-to-action blocks
-//    - Recent designs showcase
-//
-// 3. Animaties en effecten:
-//    - Parallax scrolling
-//    - Fade-in animaties
-//    - Hover effecten op cards
-/*
-
-.home-container {
-  // Main homepage wrapper
-  }
-
-.hero-section {
-  // Grote banner/hero area
-  }
-
-.hero-content {
-  // Hero text en CTA
-  }
-
-.featured-section {
-  // Featured poems/designs
-  }
-
-.featured-grid {
-  // Grid voor featured items
-  }
-
-.cta-section {
-  // Call-to-action gebied
-  }
-
-.recent-designs {
-  // Recent werk showcase
-  }
-
-.intro-text {
-  // Introductie paragraaf
-  }
-
-.action-cards {
-  // Cards voor verschillende acties
-  }*/
-
-/**
- * HomePage SCSS - Exact Figma Design Implementation
- * Converted to use SCSS variables and mixins while preserving all styling
- */
 
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
@@ -72,10 +9,10 @@
   flex-direction:   column;
   margin-top:       4rem;
   color:            $neutral-off-white;
-  background-color: transparent; // Inherit from parent
+  background-color: transparent;
   }
 
-// Hero Section - simple fixed height
+// Hero Section
 .heroSection {
   position:         relative;
   width:            100%;
@@ -89,29 +26,29 @@
   align-items:     center;
   flex-direction:  column;
   justify-content: center;
-  width:           791px; // Exact Figma width
+  width:           791px;
   height:          170px;
   gap:             25px;
   }
 
 .heroHeading {
   @include heading-primary;
-  font-size:      $font-size-5xl; // 48px exact Figma
-  line-height:    57.6px; // Exact Figma
+  font-size:      $font-size-5xl;
+  line-height:    57.6px;
   margin:         0;
   text-align:     center;
   letter-spacing: 0;
-  color:          $primary-flame; // Exact Figma color
+  color:          $primary-flame;
   }
 
 .heroParagraph {
   @include body-text;
-  font-size:      $font-size-l; // 24px exact Figma
-  line-height:    28.8px; // Exact Figma
+  font-size:      $font-size-l;
+  line-height:    28.8px;
   margin:         0;
   text-align:     center;
   letter-spacing: 0;
-  color:          $neutral-off-white; // Exact Figma color
+  color:          $neutral-off-white;
   }
 
 // Main Search Section
@@ -121,11 +58,11 @@
   background-color: transparent;
   }
 
-// ZOEK GEDICHTEN CTA Container - Figma exact positioning
+// ZOEK GEDICHTEN CTA Container
 .searchCTAContainer {
   position:   relative;
   width:      100%;
-  height:     66px; // 2px + 62px + 2px border
+  height:     66px;
   @include flex-center;
   margin-top: 50px;
   }
@@ -139,7 +76,7 @@
   border-width: 2px 0px;
   @include flex-center;
   border-style: solid;
-  border-color: $secondary-muted; // Exact Figma color #0f4648
+  border-color: $secondary-muted;
   gap:          1rem;
 
   @media (max-width: 768px) {
@@ -164,7 +101,7 @@
   text-align:     center;
   white-space:    nowrap;
   letter-spacing: 0;
-  color:          $primary-flame; // Exact Figma color #e3602b
+  color:          $primary-flame;
 
   @media (max-width: 768px) {
 	font-size:   $font-size-xxxl;
@@ -232,7 +169,7 @@
 	}
   }
 
-// Search Container - Balanced responsive layout
+// Search Container
 .searchContainer {
   position:       relative;
   display:        flex;
@@ -240,12 +177,12 @@
   width:          100%;
   max-width:      min(1800px, 95vw);
   height:         auto;
-  margin:         $spacing-m auto $spacing-m auto; // Reduced bottom margin from xl to md
+  margin:         $spacing-m auto $spacing-m auto;
   padding:        $spacing-s 0;
-  gap:            $spacing-m; // Reduced gap from xl to md
+  gap:            $spacing-m;
   }
 
-// Filter Bar Container - Responsive flexbox layout
+// Filter Bar Container
 .filterBarContainer {
   position:    relative;
   order:       0;
@@ -254,7 +191,7 @@
   min-height:  4rem;
   margin-left: calc(-50vw + 50%);
   padding:     0.75rem 0;
-  background:  $primary-dark; // #c24919
+  background:  $primary-dark;
 
   @include respond-to("tablet") {
 	min-height: 3.5rem;
@@ -294,7 +231,7 @@
 	}
   }
 
-// Filter Items - Figma exact styling
+// Filter Items
 .filterItem {
   position: relative;
   @include flex-center;
@@ -303,14 +240,14 @@
 
 .filterText {
   font-family:    $font-family-title;
-  font-size:      2rem; // Exact Figma font size
+  font-size:      2rem;
   font-weight:    600;
   font-style:     normal;
   line-height:    37.536px;
   @include flex-center;
   text-align:     center;
   letter-spacing: 2.5px;
-  color:          $neutral-off-white; // Exact Figma color #f9f4ed
+  color:          $neutral-off-white;
 
   @include respond-to("tablet") {
 	font-size:      1.5rem;
@@ -348,7 +285,7 @@
 
 .filterTextAdvanced {
   font-family:          $font-family-title;
-  font-size:            2rem; // Exact Figma font size
+  font-size:            2rem;
   font-weight:          600;
   font-style:           normal;
   line-height:          37.536px;
@@ -356,11 +293,11 @@
   cursor:               pointer;
   text-align:           center;
   letter-spacing:       2.5px;
-  color:                $neutral-off-white; // Exact Figma color #efefef
+  color:                $neutral-off-white;
   text-decoration-line: underline;
   }
 
-// Search Results Area - simple container without height constraints
+// Search Results Area
 .searchResultsArea {
   width:            100%;
   margin-top:       10px;
@@ -415,7 +352,7 @@
 .showcaseGrid {
   display:               grid;
   margin-top:            $spacing-xxl;
-  grid-template-columns: repeat(3, 1fr); // Exact 3 kolommen zoals Figma
+  grid-template-columns: repeat(3, 1fr);
   gap:                   $spacing-xxl;
   }
 
@@ -440,7 +377,7 @@ a
   font-weight: 600;
   line-height: 1.3;
   margin:      0 0 $spacing-xs 0;
-  color:       $text-primary; // Dark color for better contrast
+  color:       $text-primary;
   }
 
 .showcaseCardAuthor {
@@ -449,7 +386,7 @@ a
   font-weight: 400;
   line-height: 1.3;
   margin:      0;
-  color:       $text-secondary; // Dark grey for better contrast
+  color:       $text-secondary;
   }
 
 .showcaseCardPreview {
@@ -462,7 +399,7 @@ a
   font-weight: 400;
   line-height: 1.5;
   margin:      0 0 $spacing-xs 0;
-  color:       $text-primary; // Dark color for better readability
+  color:       $text-primary;
   }
 
 .showcaseCardEllipsis {
@@ -470,10 +407,10 @@ a
   font-size:   1rem;
   margin:      $spacing-s 0 0 0;
   text-align:  center;
-  color:       $text-secondary; // Dark grey for better contrast
+  color:       $text-secondary;
   }
 
-// USP Section - simple spacing
+// USP Section
 .uspSection {
   width:            100%;
   margin-top:       30px;
@@ -504,7 +441,7 @@ a
   text-align:     center;
   }
 
-// USP Heading - horizontale lijnen style zoals ZOEK GEDICHTEN
+// USP Heading
 .uspHeading {
   position:      relative;
   width:         auto;
@@ -588,127 +525,6 @@ a
 
 @include respond-to("tablet") {
   .searchContainer {
-	margin:  0.75rem auto $spacing-xxl auto;
-	padding: 0.25rem 0;
-	gap:     1.25rem;
-	}
-
-  .filterBarContainer {
-	height:     auto;
-	min-height: 3.5rem;
-	padding:    0.6rem 0;
-	}
-
-  .filterContainer {
-	position:        absolute;
-	top:             50%;
-	left:            50%;
-	display:         flex;
-	align-content:   space-around;
-	align-items:     center;
-	flex-wrap:       wrap;
-	justify-content: space-around;
-	width:           85%;
-	min-height:      4rem;
-	padding:         0.75rem;
-	transform:       translate(-50%, -50%);
-	gap:             $spacing-m $spacing-xxl;
-	}
-
-  .filterText,
-  .filterTextAdvanced {
-	font-size:      clamp(20px, 3vw, 24px);
-	line-height:    1.3;
-	letter-spacing: 1.5px;
-	}
-
-  .searchResultsArea,
-  .uspSection {
-	margin-top: $spacing-xxl;
-	}
-
-  .showcaseGrid {
-	grid-template-columns: repeat(3, 1fr);
-	gap:                   $spacing-m;
-	}
-
-  .showcaseContainer {
-	padding: 0 $spacing-l;
-	}
-
-  .uspContainer {
-	flex-direction: column;
-	gap:            $spacing-xxl;
-	}
-  }
-
-@include respond-to("mobile") {
-  .searchCTA {
-	flex-direction: column;
-	width:          90%;
-	max-width:      400px;
-	height:         auto;
-	padding:        $spacing-m;
-	}
-
-  .searchCTATagline {
-	font-size:     2rem;
-	line-height:   40px;
-	position:      relative;
-	top:           0;
-	left:          0;
-	width:         100%;
-	margin-bottom: $spacing-s;
-	}
-
-  .searchEmojiFrame {
-	position: relative;
-	top:      0;
-	left:     0;
-	width:    auto;
-	height:   auto;
-	}
-
-  .searchEmoji {
-	font-size:   2rem;
-	line-height: 40px;
-	position:    relative;
-	top:         0;
-	left:        0;
-	width:       auto;
-	height:      auto;
-	}
-
-  .searchContainer {
-	margin:  $spacing-s auto $spacing-xxl auto;
-	padding: 0.25rem 0;
-	gap:     $spacing-m;
-	}
-
-  .filterBarContainer {
-	height:     auto;
-	min-height: 5rem;
-	padding:    $spacing-s 0;
-	}
-
-  .filterContainer {
-	position:        absolute;
-	left:            50%;
-	display:         flex;
-	align-content:   space-around;
-	align-items:     center;
-	flex-wrap:       wrap;
-	justify-content: space-around;
-	width:           90%;
-	min-height:      5rem;
-	padding:         $spacing-s;
-	transform:       translate(-50%, -50%);
-	gap:             $spacing-s $spacing-m;
-	}
-
-  .filterText,
-  .filterTextAdvanced {
-	font-size:      clamp(1rem, 4vw, 20px);
 	line-height:    26px;
 	letter-spacing: 1px;
 	}
@@ -821,12 +637,12 @@ a
   bottom:           0;
   left:             0;
   display:          flex;
-  overflow:         hidden; // Keep overlay from scrolling
+  overflow:         hidden;
   align-items:      center;
   flex-direction:   column;
   justify-content:  flex-start;
-  box-sizing:       border-box; // Ensure padding is included in width calculations
-  padding:          $spacing-m; // Reduced padding to prevent horizontal overflow
+  box-sizing:       border-box;
+  padding:          $spacing-m;
   background-color: rgba($secondary-dark, 0.95);
   backdrop-filter:  blur(8px);
 
@@ -887,25 +703,25 @@ a
 
 .focusStudioContent {
   display:        flex;
-  overflow:       hidden; // No scrolling at this level - let background page handle it
+  overflow:       hidden;
   flex:           1;
   flex-direction: column;
-  width:          calc(100% - 32px); // Account for padding to prevent horizontal overflow
-  max-width:      95vw; // Ensure it never exceeds viewport width
+  width:          calc(100% - 32px);
+  max-width:      95vw;
 
   .focusSearchSection {
-	flex-shrink:   0; // Keep search section stable
+	flex-shrink:   0;
 	box-sizing:    border-box;
 	width:         100%;
-	margin-bottom: $spacing-m; // Reduced spacing
+	margin-bottom: $spacing-m;
 	}
 
   .focusResultsArea {
-	overflow:         visible; // Allow natural content flow
+	overflow:         visible;
 	flex:             1;
 	box-sizing:       border-box;
 	width:            100%;
 	background-color: transparent;
-	// Content fits within viewport, background page scrolls
+
 	}
   }
