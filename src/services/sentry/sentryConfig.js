@@ -37,7 +37,6 @@ export function initSentry({
 } = {}) {
     // Skip initialisatie als geen DSN is geconfigureerd
     if (!dsn) {
-        console.warn('Sentry DSN niet gevonden. Sentry monitoring is uitgeschakeld.');
         return;
     }
 
@@ -116,7 +115,6 @@ export function initSentry({
             // In development, log events naar console maar stuur ze ook naar Sentry
             // (dit is nuttig voor local debugging met Spotlight)
             if (isDevelopment) {
-                console.log('Sentry Event (dev):', event);
             }
             return event;
         },

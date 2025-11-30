@@ -33,7 +33,6 @@ export const BackgroundImage = forwardRef(({
     const effectiveUrl = useMemo(() => {
         // Fallback voor oude string URLs (backward compatibility)
         if (!photoData) {
-            console.log('🖼️ BackgroundImage: Using fallback imageUrl (no photoData)');
             return imageUrl;
         }
 
@@ -45,12 +44,6 @@ export const BackgroundImage = forwardRef(({
             imageQualityMode
         );
 
-        console.log('🖼️ BackgroundImage: Quality mode URL calculated:', {
-            qualityMode: imageQualityMode,
-            photoSource: photoData.source,
-            calculatedUrl: calculatedUrl?.substring(0, 80) + '...',
-            canvasSize: `${canvasWidth}×${canvasHeight}`
-        });
 
         return calculatedUrl;
     }, [photoData, canvasWidth, canvasHeight, imageQualityMode, imageUrl]);

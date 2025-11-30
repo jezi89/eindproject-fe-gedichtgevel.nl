@@ -475,10 +475,6 @@ export default function FontControls({
                                     id="titleColor"
                                     value={effectiveTitleColor}
                                     onChange={(e) => {
-                                        console.log(
-                                            "🔴 TITLE onChange triggered! Value:",
-                                            e.target.value
-                                        );
                                         onTitleColorChange(e.target.value);
                                     }}
                                     title={

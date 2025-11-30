@@ -264,7 +264,6 @@ export const calculateDotNavigation = (dotIndex, config) => {
 
         // Bounds checking to prevent index >= totalCount
         if (targetIndex >= config.totalCount) {
-            console.warn(`Dot navigation: targetIndex ${targetIndex} >= totalCount ${config.totalCount}, using last valid index`);
             return config.totalCount - 1;
         }
 

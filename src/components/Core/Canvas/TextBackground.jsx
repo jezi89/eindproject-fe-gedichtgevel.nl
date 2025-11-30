@@ -77,7 +77,6 @@ export const TextBackground = ({
             });
             return [bevel];
         } catch (error) {
-            console.warn('Failed to create bevel filter:', error);
             return [];
         }
     }, [bevelThickness]);

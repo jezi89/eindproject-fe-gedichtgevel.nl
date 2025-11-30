@@ -49,8 +49,6 @@ export const PoemCard = memo(forwardRef(({
                 damping: 20, // Lagere damping voor natural bounce
                 mass: 0.6
             }}
-            onAnimationStart={() => console.log('PoemCard animation started')}
-            onAnimationComplete={() => console.log('PoemCard animation completed')}
             style={{
                 cursor: canvasMode ? 'pointer' : 'default',
                 position: 'relative',

@@ -54,12 +54,6 @@ function normalizeFlickrPhoto(photo) {
             ((oWidth > oHeight) !== (effectiveWidth > effectiveHeight));
 
         if (orientationChanged) {
-            console.log('🔄 Flickr EXIF rotation detected:', {
-                id: photo.id,
-                o_dims: photo.o_dims,
-                effective: `${effectiveWidth}×${effectiveHeight}`,
-                orientationFlipped: true
-            });
         }
     }
 

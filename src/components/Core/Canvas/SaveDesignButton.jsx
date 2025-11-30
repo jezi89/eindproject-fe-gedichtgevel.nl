@@ -28,7 +28,6 @@ export function SaveDesignButton({poemData, canvasState, currentDesignId = null}
     const handleConfirmSave = async () => {
         // Prevent double-click
         if (saveInProgressRef.current) {
-            console.log('⚠️ Save already in progress, ignoring click');
             return;
         }
 

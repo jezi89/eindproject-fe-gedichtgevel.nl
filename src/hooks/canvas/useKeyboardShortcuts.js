@@ -106,11 +106,6 @@ export function useKeyboardShortcuts({
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      console.log(`🖱️ moveMouseToContainer: Moving to center (${centerX.toFixed(0)}, ${centerY.toFixed(0)}) of container`, {
-        width: rect.width,
-        height: rect.height,
-        position: rect
-      });
 
       // Simuleer mouse move event naar het centrum van de container
       const mouseMoveEvent = new MouseEvent('mousemove', {
@@ -141,10 +136,6 @@ export function useKeyboardShortcuts({
 
   // Verbeterde focus functie met ref callback, retry logic en muis verplaatsing
   const focusXyMoveSliders = useCallback(() => {
-    console.log('🎛️ Alt+J: Focus+Mouse sequence initiated', {
-      currentMode: moveMode,
-      currentlyVisible: xySlidersVisible
-    });
 
     // Switch to poem mode if not already active
     if (moveMode !== 'poem') {

@@ -133,7 +133,6 @@ export function RecordingBook() {
             if (savedPoem) {
                 const standardized = CanvasDataService.standardizePoemData(savedPoem);
                 setSelectedPoem(standardized);
-                console.log('📚 Loaded poem from navigation state:', standardized);
             }
         } catch (error) {
             console.error('Failed to load poem from navigation state:', error);
@@ -145,7 +144,6 @@ export function RecordingBook() {
             const standardized = CanvasDataService.standardizePoemData(poem);
             setSelectedPoem(standardized);
             setShowOverlay(false);
-            console.log('📝 Selected poem:', standardized);
         } else {
             // No results found
             setSelectedPoem({
@@ -158,10 +156,8 @@ export function RecordingBook() {
     };
 
     const handleManualSearch = () => {
-        console.log('🔍 Manual search triggered');
         searchPoems();
         setShowOverlay(true);
-        console.log('🔍 showOverlay set to true, current results length:', results.length);
     };
 
     const handleSearchStart = () => {
@@ -327,7 +323,6 @@ export function RecordingBook() {
                                                 ResultsOverviewComponent={null}
                                                 onNavigateToRecording={handlePoemSelect}
                                                 onNavigateToCanvas={(poem) => {
-                                                    console.log('🎨 Navigating to canvas with poem:', poem);
                                                     navigate('/designgevel', { state: { selectedPoem: poem } });
                                                 }}
                                             />

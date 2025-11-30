@@ -71,7 +71,6 @@ export function useFavorites() {
                     }
                 } else {
                     // Fallback if not found in state (shouldn't happen if keys are in sync)
-                     console.warn('Favorite entry not found in state for removal');
                 }
             } else {
                 // Add favorite

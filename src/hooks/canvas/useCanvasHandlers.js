@@ -72,26 +72,21 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
     // Past kleur toe op ALLE geselecteerde regels (inclusief titel/auteur sync)
     const handleLineColorChange = useCallback(
         (color) => {
-            console.log('🎨 handleLineColorChange called with color:', color, 'selectedLines:', Array.from(selectedLines));
             if (selectedLines.size > 0) {
                 // Update lineOverrides voor alle geselecteerde regels
                 setLineOverrides((prev) => {
                     const newOverrides = {...prev};
                     selectedLines.forEach((index) => {
-                        console.log('🎨 Setting color override for line', index, ':', color);
                         newOverrides[index] = {...newOverrides[index], fillColor: color};
                     });
-                    console.log('🎨 New lineOverrides:', newOverrides);
                     return newOverrides;
                 });
 
                 // NIEUW: Sync titel/auteur overrides voor bidirectionele consistentie
                 if (selectedLines.has(-2)) {
-                    console.log('🎯 Syncing title color to titleColorOverride:', color);
                     setTitleColorOverride(color);
                 }
                 if (selectedLines.has(-1)) {
-                    console.log('🎯 Syncing author color to authorColorOverride:', color);
                     setAuthorColorOverride(color);
                 }
             }
@@ -115,11 +110,9 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
 
             // NIEUW: Reset titel/auteur overrides voor bidirectionele consistentie
             if (selectedLines.has(-2)) {
-                console.log('🎯 Resetting title color override');
                 setTitleColorOverride(null);
             }
             if (selectedLines.has(-1)) {
-                console.log('🎯 Resetting author color override');
                 setAuthorColorOverride(null);
             }
 
@@ -138,7 +131,6 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
     // Color picker active state
     const handleColorPickerActiveChange = useCallback(
         (isActive) => {
-            console.log('🎨 Color picker active state changed to:', isActive);
             canvasState.setIsColorPickerActive(isActive);
         },
         [canvasState]
@@ -325,14 +317,12 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
     // Hierarchical color system handlers
     const handleTitleColorChange = useCallback(
         (color) => {
-            console.log("🎯 handleTitleColorChange called with:", color);
             setTitleColorOverride(color);
             // Sync naar lineOverrides voor consistentie
             setLineOverrides(prev => ({
                 ...prev,
                 [-2]: {...prev[-2], fillColor: color}
             }));
-            console.log("🎯 setTitleColorOverride called");
         },
         [setTitleColorOverride, setLineOverrides]
     );
@@ -562,7 +552,6 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
         (imageData) => {
             // Normalize: if string provided, convert to proper object structure
             if (typeof imageData === 'string') {
-                console.log('⚠️ handleSetBackground: Converting string to object:', imageData);
                 const normalizedData = {
                     url: imageData,
                     thumbnail: imageData,

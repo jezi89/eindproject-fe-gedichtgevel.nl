@@ -436,7 +436,6 @@ export const calculateCollapseScroll = (targetSelector, offset = 100) => {
     const targetElement = document.querySelector(targetSelector);
 
     if (!targetElement) {
-        console.log('Collapse scroll target not found:', targetSelector);
         return {shouldScroll: false, targetPosition: 0};
     }
 

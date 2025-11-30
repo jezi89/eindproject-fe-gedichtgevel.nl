@@ -15,7 +15,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
       const item = localStorage.getItem(key);
       return item ? deserialize(item) : defaultValue;
     } catch (error) {
-      console.warn(`Failed to load persisted state for ${key}:`, error);
       return defaultValue;
     }
   });
@@ -25,7 +24,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
     try {
       localStorage.setItem(key, serialize(state));
     } catch (error) {
-      console.warn(`Failed to persist state for ${key}:`, error);
     }
   }, [key, state, serialize]);
 
@@ -35,7 +33,6 @@ export function usePersistedState(key, defaultValue, options = {}) {
       localStorage.removeItem(key);
       setState(defaultValue);
     } catch (error) {
-      console.warn(`Failed to clear persisted state for ${key}:`, error);
     }
   }, [key, defaultValue]);
 
@@ -81,10 +78,8 @@ export function clearAllPersistedState() {
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.warn(`Failed to clear ${key}:`, error);
     }
   });
-  console.log('🧹 Cleared all persisted canvas state from localStorage');
 }
 
 /**

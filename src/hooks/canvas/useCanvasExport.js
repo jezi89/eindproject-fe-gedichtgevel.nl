@@ -46,7 +46,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
         }
 
         try {
-            console.log('📸 Starting PNG export...');
 
             // Use html-to-image to capture the entire canvas container
             const dataUrl = await toPng(container, {
@@ -59,7 +58,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
             const filename = `gedicht-${timestamp}.png`;
 
             triggerDownload(dataUrl, filename);
-            console.log(`✅ PNG export successful: ${filename}`);
         } catch (error) {
             console.error('❌ PNG export failed:', error);
         }
@@ -75,7 +73,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
         }
 
         try {
-            console.log('📸 Starting JPG export...');
 
             // Use html-to-image to capture the entire canvas container
             const dataUrl = await toJpeg(container, {
@@ -89,7 +86,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
             const filename = `gedicht-${timestamp}.jpg`;
 
             triggerDownload(dataUrl, filename);
-            console.log(`✅ JPG export successful: ${filename}`);
         } catch (error) {
             console.error('❌ JPG export failed:', error);
         }
@@ -130,13 +126,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
             const exportWidth = Math.ceil(spriteBounds.width);
             const exportHeight = Math.ceil(spriteBounds.height);
 
-            console.log(`📤 Exporting full sprite:`, {
-                spriteBounds: `${exportWidth}×${exportHeight}px`,
-                qualityMode: imageQualityMode,
-                resolution: qualityMultiplier,
-                finalSize: `${Math.ceil(exportWidth * qualityMultiplier)}×${Math.ceil(exportHeight * qualityMultiplier)}px`,
-                format
-            });
 
             // Create frame rectangle for extraction (crop to sprite bounds, remove black bars)
             const frame = new Rectangle(
@@ -162,7 +151,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
                 dataUrl = extractedCanvas.toDataURL('image/png');
             }
 
-            console.log('✅ PixiJS Extract successful');
             return dataUrl;
 
         } catch (error) {
@@ -175,7 +163,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
      * Export full sprite as PNG and trigger download
      */
     const exportFullSpriteAsPNG = useCallback(async () => {
-        console.log('📸 Starting Full Sprite PNG export...');
 
         const dataUrl = await exportFullSprite('png');
         if (!dataUrl) {
@@ -189,14 +176,12 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
         const filename = `gedicht-${timestamp}${qualityLabel}-full.png`;
 
         triggerDownload(dataUrl, filename);
-        console.log(`✅ Full Sprite PNG export successful: ${filename}`);
     }, [exportFullSprite, triggerDownload, imageQualityMode]);
 
     /**
      * Export full sprite as JPG and trigger download
      */
     const exportFullSpriteAsJPG = useCallback(async (quality = 0.92) => {
-        console.log('📸 Starting Full Sprite JPG export...');
 
         const dataUrl = await exportFullSprite('jpeg', quality);
         if (!dataUrl) {
@@ -210,7 +195,6 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
         const filename = `gedicht-${timestamp}${qualityLabel}-full.jpg`;
 
         triggerDownload(dataUrl, filename);
-        console.log(`✅ Full Sprite JPG export successful: ${filename}`);
     }, [exportFullSprite, triggerDownload, imageQualityMode]);
 
     /**

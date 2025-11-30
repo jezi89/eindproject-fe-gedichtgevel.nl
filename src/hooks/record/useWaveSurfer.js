@@ -238,7 +238,6 @@ export const useRecording = (containerRef, timelineRef) => {
                         currentRecordPlugin.stopMic(); 
                     }
                 } catch (e) {
-                    console.warn('Error cleaning up RecordPlugin:', e);
                 }
             }
         };
@@ -309,7 +308,6 @@ export const useRecording = (containerRef, timelineRef) => {
             try {
                 record.stopMic();
             } catch (e) {
-                console.warn('Error stopping mic during countdown cancel:', e);
             }
             return;
         }

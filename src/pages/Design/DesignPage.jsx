@@ -42,16 +42,13 @@ export function DesignPage() {
 
 			try {
 				if (import.meta.env.DEV) {
-					console.log("🎨 DesignPage: Loading poem data...", { poemId, designId });
 				}
 
 				// Priority 0: Load saved design if designId provided
 				if (designId) {
-					console.log("📂 DesignPage: Loading saved design:", designId);
 					const designResult = await load(designId);
 
 					if (designResult.success) {
-						console.log("✅ DesignPage: Loaded saved design:", designResult.data.title);
 						setPoemData(designResult.data.poem);
 						setDataSource("saved-design");
 						setLoadedDesignId(designId);
@@ -73,10 +70,6 @@ export function DesignPage() {
 				// Priority 1: Check for poem data from canvas navigation (sessionStorage)
 				const storedPoemData = CanvasDataService.getPoemForCanvas();
 				if (storedPoemData) {
-					console.log(
-						"✅ DesignPage: Using poem from navigation:",
-						storedPoemData.title
-					);
 					setPoemData(storedPoemData);
 					setDataSource("navigation");
 					setLoading(false);
@@ -85,13 +78,8 @@ export function DesignPage() {
 
 				// Priority 2: If we have a poemId, try to get demo poem by ID
 				if (poemId) {
-					console.log("🔍 DesignPage: Looking for demo poem with ID:", poemId);
 					const demoPoemData = getPoemById(poemId);
 					if (demoPoemData) {
-						console.log(
-							"✅ DesignPage: Using demo poem data:",
-							demoPoemData.title
-						);
 						// Standardize demo data format
 						const standardizedDemo =
 							CanvasDataService.standardizePoemData(demoPoemData);
@@ -104,10 +92,6 @@ export function DesignPage() {
 
 				// Priority 3: Fallback to default demo poem (first poem in testdata)
 				if (poems && poems.length > 0) {
-					console.log(
-						"📝 DesignPage: Using fallback demo poem:",
-						poems[0].title
-					);
 					const fallbackDemo = CanvasDataService.standardizePoemData(poems[0]);
 					setPoemData(fallbackDemo);
 					setDataSource("fallback");
@@ -116,9 +100,6 @@ export function DesignPage() {
 				}
 
 				// Priority 4: Ultimate fallback - create minimal poem data
-				console.warn(
-					"⚠️ DesignPage: No poem data available, using minimal fallback"
-				);
 				const minimalFallback = {
 					id: "fallback-poem",
 					title: "Welkom bij de Canvas",
@@ -153,7 +134,6 @@ export function DesignPage() {
 	// Clear cached background when navigating to new poem (not when loading saved design)
 	useEffect(() => {
 		if (dataSource && dataSource !== 'saved-design') {
-			console.log("🧹 DesignPage: Clearing cached background for new poem (source:", dataSource, ")");
 			// Clear background from localStorage to prevent it from persisting
 			localStorage.removeItem('canvas_background_image');
 		}
@@ -161,12 +141,10 @@ export function DesignPage() {
 
 	const handleCanvasSave = (imageData) => {
 		// TODO: Implement save functionality
-		console.log("Canvas save requested:", imageData);
 	};
 
 	const handleCanvasBack = () => {
 		// Navigate back to home or previous page using CanvasDataService
-		console.log("⬅️ DesignPage: Navigating back from canvas");
 		CanvasDataService.clearPoemData();
 
 		// Try to go back in history, fallback to home

@@ -19,7 +19,6 @@ export const useDailyPoems = () => {
             const cachedPoems = sessionStorage.getItem(DAILY_POEMS_KEY);
             if (cachedPoems) {
                 const parsed = JSON.parse(cachedPoems);
-                console.log('✅ useDailyPoems: Loaded from session cache');
                 setDailyPoems(parsed);
                 setIsLoading(false);
                 return;
@@ -51,7 +50,6 @@ export const useDailyPoems = () => {
 
             // Cache the new poems in sessionStorage
             sessionStorage.setItem(DAILY_POEMS_KEY, JSON.stringify(transformedData));
-            console.log('✅ useDailyPoems: Fetched and cached new poems');
             setDailyPoems(transformedData);
         } catch (err) {
             console.error('Onverwachte fout bij ophalen gedichten:', err);
@@ -67,12 +65,10 @@ export const useDailyPoems = () => {
 
     // Function to manually trigger a refetch
     const refetchDailyPoems = useCallback(async () => {
-        console.log('🔄 Refetching daily poems...');
         // Clear the cache to force a new fetch
         sessionStorage.removeItem(DAILY_POEMS_KEY);
         // Call the fetch function again
         await fetchDailyStreetPoems();
-        console.log('✨ New daily poems have been loaded.');
     }, [fetchDailyStreetPoems]);
 
     return { dailyPoems, isLoading, refetchDailyPoems };

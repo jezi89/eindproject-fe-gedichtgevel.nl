@@ -278,7 +278,6 @@ const createUserProfile = async (user, additionalData = {}) => {
             .single();
 
         if (existingProfile) {
-            console.log('Profile already exists for user:', user.id);
             return handleAuthSuccess();
         }
 
@@ -295,7 +294,6 @@ const createUserProfile = async (user, additionalData = {}) => {
         if (error) {
             // Ignore duplicate key errors
             if (error.code === '23505') {
-                console.log('Profile already exists (duplicate key)');
                 return handleAuthSuccess();
             }
             throw error;

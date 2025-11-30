@@ -216,18 +216,8 @@ export const PoemResultItem = memo(
               }}
               transition={SPRING_CONFIG[isExpanded ? "expand" : "collapse"]}
               onAnimationStart={() => {
-                console.log("Expansion animation started:", {
-                  isExpanded,
-                  animationPhase,
-                  targetHeight: finalHeightInfo?.totalHeight,
-                  isSmallPoem: isSmallPoemValue,
-                });
               }}
               onAnimationComplete={() => {
-                console.log("Expansion animation completed:", {
-                  isExpanded,
-                  animationPhase,
-                });
               }}
               style={{
                 overflow: "visible",

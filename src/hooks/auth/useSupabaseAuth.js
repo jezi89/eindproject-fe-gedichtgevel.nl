@@ -120,7 +120,6 @@ export function useSupabaseAuth() {
             // Check if email confirmation is required
             if (result.data?.user && !result.data.user.confirmed_at) {
                 // Handle unconfirmed user state
-                console.log('User needs to confirm email:', result.data.user.email);
             }
 
             signupForm.resetForm();
@@ -148,7 +147,6 @@ export function useSupabaseAuth() {
                 result.error?.message?.includes('Auth session missing');
 
             if (isSessionMissingError) {
-                console.warn('Sign out failed gracefully: session was already missing.');
                 // This is the crucial part:
                 // Manually update the state to log the user out in the UI,
                 // because the onAuthStateChange listener will not fire.

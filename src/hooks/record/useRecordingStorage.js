@@ -32,7 +32,6 @@ export const useRecordingStorage = () => {
         duration: metadata.duration || 0,
         ...metadata
       });
-      console.log("Recording saved successfully");
     } catch (error) {
       console.error("Failed to save recording:", error);
       throw error;
@@ -42,7 +41,6 @@ export const useRecordingStorage = () => {
   const deleteRecording = useCallback(async (id) => {
     try {
       await db.recordings.delete(id);
-      console.log("Recording deleted successfully");
     } catch (error) {
       console.error("Failed to delete recording:", error);
       throw error;

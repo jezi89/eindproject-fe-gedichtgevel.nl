@@ -279,12 +279,6 @@ export default function FloatingPhotoGrid({
                                         })
                                     };
 
-                                    console.log('📸 FloatingPhotoGrid: Storing photo data for quality switching:', {
-                                        source: backgroundData.source,
-                                        hasFlickrVariants: !!(photo.url_b || photo.url_h || photo.url_k),
-                                        hasPexelsSrc: !!(photo.src),
-                                        dimensions: `${backgroundData.width}×${backgroundData.height}`
-                                    });
 
                                     onSetBackground(backgroundData);
 

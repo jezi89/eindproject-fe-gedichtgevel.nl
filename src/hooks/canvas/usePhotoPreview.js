@@ -14,7 +14,6 @@ export function usePhotoPreview() {
 
     // Open grid - set to dimmed state and store original background
     const openGrid = useCallback((currentBackground) => {
-        console.log('🖼️ Opening photo grid, storing background:', currentBackground);
         setOriginalBackground(currentBackground);
         setPreviewMode('dimmed');
         setPreviewImage(null);
@@ -23,7 +22,6 @@ export function usePhotoPreview() {
 
     // Close grid - restore original background and reset state
     const closeGrid = useCallback(() => {
-        console.log('🖼️ Closing photo grid');
         setPreviewMode('normal');
         setPreviewImage(null);
         setHasHovered(false); // Reset hover state when closing
@@ -34,7 +32,6 @@ export function usePhotoPreview() {
 
     // Handle hover over photo thumbnail - immediate response
     const handlePhotoHover = useCallback((photoUrl) => {
-        console.log('🖼️ Photo hover:', photoUrl);
         setPreviewImage(photoUrl);
         setPreviewMode('preview');
         setHasHovered(true); // Mark that user has hovered (persistent)
@@ -42,7 +39,6 @@ export function usePhotoPreview() {
 
     // Reset preview to dimmed state (for reset button)
     const resetPreview = useCallback(() => {
-        console.log('🖼️ Resetting preview to dimmed state');
         setPreviewImage(null);
         setPreviewMode('dimmed');
         setHasHovered(false); // Allow dimmed state again
@@ -50,7 +46,6 @@ export function usePhotoPreview() {
 
     // Handle immediate photo selection (click)
     const handlePhotoSelect = useCallback((photoUrl) => {
-        console.log('🖼️ Photo selected:', photoUrl);
         // Don't change preview state here - let parent handle background setting
         // The closeGrid function will handle cleanup
         return photoUrl;
