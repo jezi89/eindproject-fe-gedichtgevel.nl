@@ -11,8 +11,8 @@ import ImageQualityControls from "./controls/ImageQualityControls.jsx";
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function Controls({
-                                     toggle, // <-- NEW: For collapsing the panel
-                                     qualityOverlay, // <-- NEW: Quality Status Overlay
+                                     toggle,
+                                     qualityOverlay,
                                      fontSize,
                                      onFontSizeChange,
                                      fillColor,
@@ -21,13 +21,13 @@ export default function Controls({
                                      onLetterSpacingChange,
                                      lineHeightMultiplier,
                                      onLineHeightMultiplierChange,
-                                     onLineLetterSpacingChange, // <-- DEZE ONTBRAK!
-                                     onLineFontSizeChange, // <-- NIEUW: Voor fontSize van geselecteerde regels
+                                     onLineLetterSpacingChange,
+                                     onLineFontSizeChange,
                                      onResetLineHeight,
                                      textAlign,
                                      onTextAlignChange,
                                      onLineColorChange,
-                                     handleResetSelectedLines, // <-- Hernoemde handler
+                                     handleResetSelectedLines,
                                      viewportDragEnabled,
                                      onViewportToggle,
                                      onColorPickerActiveChange,
@@ -45,48 +45,32 @@ export default function Controls({
                                      fontFamily,
                                      onFontFamilyChange,
                                      availableFonts,
-
-                                     // Font style props
                                      fontWeight,
                                      onFontWeightChange,
                                      fontStyle,
                                      onFontStyleChange,
-
-                                     // Skew props
                                      skewX,
                                      onSkewXChange,
-                                     onLineSkewXChange, // <-- NIEUW
+                                     onLineSkewXChange,
                                      skewY,
                                      onSkewYChange,
-                                     onLineSkewYChange, // <-- NIEUW
-                                     onLineTextAlignChange, // <-- NIEUW
-
-                                     // Pexels background props
+                                     onLineSkewYChange,
+                                     onLineTextAlignChange,
                                      isLoading,
                                      error,
-                                     onSearch, // Dit wordt onze handleSearchBackground
-                                     onCitySearch, // Wordt handleCitySearch
-                                     onPremiumSearch, // NEW: Premium Flickr text search
-                                     onResetToCollection, // New prop for resetting to collection
-                                     onOpenPhotoGrid, // New prop to open floating photo grid
-                                     onResetViewport, // NEW: For resetting the camera
-
-                                     // We hebben deze ook nodig om de juiste 'value' te tonen
+                                     onSearch,
+                                     onCitySearch,
+                                     onPremiumSearch,
+                                     onResetToCollection,
+                                     onOpenPhotoGrid,
+                                     onResetViewport,
                                      selectedLines,
                                      lineOverrides,
-
-                                     // NEW: Hover freeze state for timer indicator
                                      hoverFreezeActive,
-
-                                     // Text optimization props
                                      isOptimizationEnabled,
                                      setIsOptimizationEnabled,
-
-                                     // Image quality props
                                      imageQualityMode,
                                      setImageQualityMode,
-
-                                     // Text Background Props
                                      textMaterial,
                                      onTextMaterialChange,
                                      textPadding,
@@ -95,11 +79,10 @@ export default function Controls({
                                      setTextEffectMode,
                                      textEffectParams,
                                      setTextEffectParams,
-
-                                     totalLineCount = 0, // <-- NIEUW
-                                     onResetAllText, // <-- NIEUW: Reset alle tekst edits
-                                     onToggleLayoutPosition, // <-- NIEUW: Wissel layout positie
-                                     layoutPosition, // <-- NIEUW: Voor dropdown positioning
+                                     totalLineCount = 0,
+                                     onResetAllText,
+                                     onToggleLayoutPosition,
+                                     layoutPosition,
                                  }) {
     const {user} = useAuthContext();
 
@@ -124,47 +107,47 @@ export default function Controls({
     const [fontSectionOpen, setFontSectionOpen] = useState(true);
     const [layoutSectionOpen, setLayoutSectionOpen] = useState(true);
     const [qualitySectionOpen, setQualitySectionOpen] = useState(true);
-    const [materialSectionOpen, setMaterialSectionOpen] = useState(false); // <-- RESTORED
+    const [materialSectionOpen, setMaterialSectionOpen] = useState(false);
 
     const [colorSubsectionOpen, setColorSubsectionOpen] = useState(false);
 
     const selectionCount = selectedLines.size;
     const hasSelection = selectionCount > 0;
-    // Check of alles geselecteerd is (behalve titel/auteur die -1/-2 zijn)
-    // We tellen alleen de positieve indices voor "Select All" logica van regels
+    // Check if everything is selected (except title/author which are -1/-2)
+    // We only count positive indices for "Select All" line logic
     const selectedLineIndices = Array.from(selectedLines).filter(i => i >= 0);
     const isSelectAll = totalLineCount > 0 && selectedLineIndices.length === totalLineCount;
 
     const singleSelectedLineIndex =
         selectionCount === 1 ? Array.from(selectedLines)[0] : null;
 
-    // Bepaal welke kleur getoond wordt - nu met multi-selectie support
+    // Determine which color is displayed - now with multi-selection support
     const displayedColor = useMemo(() => {
         if (selectionCount === 0) {
-            // Geen selectie → globale kleur
+            // No selection → global color
             return fillColor;
         } else if (selectionCount === 1) {
-            // Single selectie → kleur van die regel
+            // Single selection → color of that line
             const lineIndex = Array.from(selectedLines)[0];
             return lineOverrides[lineIndex]?.fillColor ?? fillColor;
         } else {
-            // Multi-selectie → zoek gemeenschappelijke kleur
+            // Multi-selection → find common color
             const selectedIndices = Array.from(selectedLines);
             const colors = selectedIndices.map((index) => {
-                // Voor titel (-2) en auteur (-1), gebruik effectieve kleuren
+                // For title (-2) and author (-1), use effective colors
                 if (index === -2) return effectiveTitleColor;
                 if (index === -1) return effectiveAuthorColor;
-                // Voor gedichtregels, gebruik lineOverrides of fallback naar fillColor
+                // For poem lines, use lineOverrides or fallback to fillColor
                 return lineOverrides[index]?.fillColor ?? fillColor;
             });
 
-            // Check of alle kleuren hetzelfde zijn
+            // Check if all colors are the same
             const uniqueColors = [...new Set(colors)];
             if (uniqueColors.length === 1) {
-                // Alle geselecteerde regels hebben dezelfde kleur
+                // All selected lines have the same color
                 return uniqueColors[0];
             } else {
-                // Mixed colors → gebruik eerste kleur (of kan mixed state indicator zijn)
+                // Mixed colors → use first color (or could be mixed state indicator)
                 return colors[0];
             }
         }
@@ -177,27 +160,26 @@ export default function Controls({
         effectiveAuthorColor,
     ]);
 
-    // Bepaal welke letterafstand getoond wordt
+    // Determine which letter spacing is displayed
     const displayedLetterSpacing = useMemo(() => {
         if (!hasSelection) return letterSpacing;
         const firstIndex = Array.from(selectedLines)[0];
         return lineOverrides[firstIndex]?.letterSpacing ?? letterSpacing;
     }, [hasSelection, selectedLines, lineOverrides, letterSpacing]);
 
-    // Bepaal welke lettergrootte getoond wordt voor geselecteerde regel
+    // Determine which font size is displayed for selected line
     const displayedFontSize = useMemo(() => {
         if (!hasSelection) return fontSize;
         const firstIndex = Array.from(selectedLines)[0];
         return lineOverrides[firstIndex]?.fontSize ?? fontSize;
     }, [hasSelection, selectedLines, lineOverrides, fontSize]);
 
-    // ✅ CORRECT: Bepaal hier welk lettertype getoond wordt
+    // Determine which font family is displayed
     const displayedFontFamily =
         singleSelectedLineIndex !== null
             ? lineOverrides[singleSelectedLineIndex]?.fontFamily ?? fontFamily
             : fontFamily;
 
-    // De handleColorInput functie wordt weer simpel
     const handleColorInput = (color) => {
         if (hasSelection) {
             onLineColorChange(color);
@@ -206,7 +188,7 @@ export default function Controls({
         }
     };
 
-    // NIEUW: Bepaal displayed Skew & Align
+    // Determine displayed Skew & Align
     const displayedSkewX = useMemo(() => {
         if (!hasSelection) return skewX;
         const firstIndex = Array.from(selectedLines)[0];
@@ -225,7 +207,7 @@ export default function Controls({
         return lineOverrides[firstIndex]?.textAlign ?? textAlign;
     }, [hasSelection, selectedLines, lineOverrides, textAlign]);
 
-    // NIEUW: Wrapped Handlers
+    // Wrapped handlers for skew and text align
     const handleSkewXInput = (val) => {
         if (hasSelection) onLineSkewXChange(val);
         else onSkewXChange(val);
@@ -320,7 +302,7 @@ export default function Controls({
                 </button>
             </div>
 
-            {/* NIEUW: Selection Indicator - Compact Design */}
+            {/* Selection Indicator - Compact Design */}
             {hasSelection && (
                 <div className={styles.selectionIndicator}>
                     <div className={styles.selectionInfo}>
@@ -399,9 +381,9 @@ export default function Controls({
                 fontStyle={fontStyle}
                 fontSize={fontSize}
                 hasSelection={hasSelection}
-                isSelectAll={isSelectAll} // <-- NIEUW
+                isSelectAll={isSelectAll}
                 selectionCount={selectionCount}
-                letterSpacing={letterSpacing} // <-- NIEUW
+                letterSpacing={letterSpacing}
                 displayedFontSize={displayedFontSize}
                 displayedLetterSpacing={displayedLetterSpacing}
                 displayedColor={displayedColor}
@@ -427,28 +409,28 @@ export default function Controls({
                 setFontSectionOpen={setFontSectionOpen}
                 colorSubsectionOpen={colorSubsectionOpen}
                 setColorSubsectionOpen={setColorSubsectionOpen}
-                layoutPosition={layoutPosition} // <-- NIEUW
+                layoutPosition={layoutPosition}
             />
 
             <LayoutControls
                 lineHeightMultiplier={lineHeightMultiplier}
                 fontSize={fontSize}
-                isSelectAll={isSelectAll} // <-- NIEUW
-                hasSelection={hasSelection} // <-- NIEUW
-                textAlign={displayedTextAlign} // <-- Updated
+                isSelectAll={isSelectAll}
+                hasSelection={hasSelection}
+                textAlign={displayedTextAlign}
                 viewportDragEnabled={viewportDragEnabled}
                 isOptimizationEnabled={isOptimizationEnabled}
-                skewX={displayedSkewX} // <-- Updated
-                skewY={displayedSkewY} // <-- Updated
-                globalSkewX={skewX} // <-- NIEUW
-                globalSkewY={skewY} // <-- NIEUW
+                skewX={displayedSkewX}
+                skewY={displayedSkewY}
+                globalSkewX={skewX}
+                globalSkewY={skewY}
                 onLineHeightMultiplierChange={onLineHeightMultiplierChange}
                 onResetLineHeight={onResetLineHeight}
-                onTextAlignChange={handleTextAlignInput} // <-- Updated
+                onTextAlignChange={handleTextAlignInput}
                 onViewportToggle={onViewportToggle}
                 onResetViewport={onResetViewport}
-                onSkewXChange={handleSkewXInput} // <-- Updated
-                onSkewYChange={handleSkewYInput} // <-- Updated
+                onSkewXChange={handleSkewXInput}
+                onSkewYChange={handleSkewYInput}
                 setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}
