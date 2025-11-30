@@ -31,7 +31,7 @@ function analyzeSearchTerm(searchTerm) {
     const byPattern = /(.+?)\s+(?:door|by|van)\s+(.+)/i;
 
     if (dashPattern.test(searchTerm)) {
-        const [_, part1, part2] = searchTerm.match(dashPattern);
+        const [, part1, part2] = searchTerm.match(dashPattern);
         return {
             authorTerm: part1.trim(),
             titleTerm: part2.trim(),
@@ -42,7 +42,7 @@ function analyzeSearchTerm(searchTerm) {
     }
 
     if (byPattern.test(searchTerm)) {
-        const [_, part1, part2] = searchTerm.match(byPattern);
+        const [, part1, part2] = searchTerm.match(byPattern);
         return {
             authorTerm: part2.trim(),
             titleTerm: part1.trim(),
@@ -91,8 +91,7 @@ function analyzeSearchTerm(searchTerm) {
 
         // 3. For two words
         if (words.length === 2) {
-            const word1Lower = words[0].toLowerCase(); // Define word1Lower
-            const word2Lower = words[1].toLowerCase(); // Define word2Lower
+            const word1Lower = words[0].toLowerCase();
             // There are multiple possibilities:
             // a) "Shakespeare Winter" = Author "Shakespeare" and title contains "Winter"
             // b) "Winter Shakespeare" = Title contains "Winter" and author "Shakespeare"
@@ -214,8 +213,7 @@ async function dedupeRequest(key, requestFn) {
  */
 export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = {}) {
     if (!searchTerm || !searchTerm.trim()) {
-        // Aborting wildcard search is not implemented as it's a collection of requests
-        return searchAllPoems();
+        return [];
     }
 
     // 1. Analysis of the search term
@@ -238,16 +236,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         const titleKey = `title:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(titleKey, () =>
-                searchByTitleInService(searchTerm, { signal }).catch(error => {
-                    if (error.name === 'CanceledError') {
-                    } else {
-                    }
+                searchByTitleInService(searchTerm, { signal }).catch(error => { // eslint-disable-line no-unused-vars
                     return []; // Return empty array on error or cancellation
                 })
             )
         );
         promiseLabels.push("Title search");
-    } else {
     }
 
     // 2b. Search by author (only if needed)
@@ -255,16 +249,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         const authorKey = `author:${searchTerm.toLowerCase()}`;
         promises.push(
             dedupeRequest(authorKey, () =>
-                searchByAuthorInService(searchTerm, { signal }).catch(error => {
-                     if (error.name === 'CanceledError') {
-                    } else {
-                    }
+                searchByAuthorInService(searchTerm, { signal }).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
         );
         promiseLabels.push("Author search");
-    } else {
     }
 
     // 3. Adding intelligent AND search action based on analysis
@@ -279,9 +269,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     analysis.option1.authorTerm,
                     analysis.option1.titleTerm,
                     { signal }
-                ).catch(error => {
-                    if (error.name !== 'CanceledError') {
-                    }
+                ).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
@@ -296,9 +284,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                     analysis.option2.authorTerm,
                     analysis.option2.titleTerm,
                     { signal }
-                ).catch(error => {
-                    if (error.name !== 'CanceledError') {
-                    }
+                ).catch(error => { // eslint-disable-line no-unused-vars
                     return [];
                 })
             )
@@ -317,15 +303,12 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
                         analysis.authorTerm,
                         analysis.titleTerm,
                         { signal }
-                    ).catch(error => {
-                        if (error.name !== 'CanceledError') {
-                        }
+                    ).catch(error => { // eslint-disable-line no-unused-vars
                         return [];
                     })
                 )
             );
             promiseLabels.push("Combined author-title search");
-        } else {
         }
     }
 
@@ -350,10 +333,7 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
             data: result || []
         }));
 
-        // Log results
-        resultsWithLabels.forEach(({label, data}) => {
-        });
-    } catch (error) {
+    } catch (error) { // eslint-disable-line no-unused-vars
         return [];
     }
 

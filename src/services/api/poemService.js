@@ -100,32 +100,10 @@ async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm, { s
  * @param {string} field - The field to be searched for ('title' or 'author').
  * @returns {Promise<Array<{title: string, author: string}>>} - Array of title/author combinations.
  */
-async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') {
+async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') { // eslint-disable-line no-unused-vars
     // TODO: Implement real Supabase interaction when available
     // For now return empty array to avoid unnecessary complexity
     return Promise.resolve([]);
-
-    /* Example implementation with Supabase client:
-
-    if (!supabase) {
-        return [];
-    }
-
-    try {
-        const { data, error } = await supabase
-            .from('poems')
-            .select('title, author')
-            .ilike(field, `%${query}%`);
-
-        if (error) {
-            throw error;
-        }
-
-        return data || [];
-    } catch (error) {
-        throw new Error(`Could not fetch matches from Supabase: ${error.message}`);
-    }
-    */
 }
 
 /**
@@ -149,7 +127,7 @@ async function fetchPoem(title, author) {
         }
 
         return null;
-    } catch (error) {
+    } catch (error) { // eslint-disable-line no-unused-vars
         return null;
     }
 }
@@ -169,7 +147,8 @@ export async function searchPoemsByTitle(title, { signal } = {}) {
         // Supabase JS client v2 doesn't support AbortController directly in all methods.
         // Assuming fetchTitleAuthorMatchesFromSupabase is custom and doesn't support it yet.
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(title, 'title');
-    } catch (error) {
+    } catch (error) { // eslint-disable-line no-unused-vars
+        // ignore
     }
 
     // Step 2: For each Supabase match, retrieve details from PoetryDB
@@ -190,6 +169,7 @@ export async function searchPoemsByTitle(title, { signal } = {}) {
                 }
             } catch (error) {
                  if (error.name !== 'CanceledError') {
+                    // ignore
                  }
             }
         }
@@ -230,7 +210,8 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
     // Search Supabase first
     try {
         supabaseMatches = await fetchTitleAuthorMatchesFromSupabase(author, 'author');
-    } catch (error) {
+    } catch (error) { // eslint-disable-line no-unused-vars
+        // ignore
     }
 
     // For each Supabase match, retrieve details from PoetryDB
@@ -249,6 +230,7 @@ export async function searchPoemsByAuthor(author, { signal } = {}) {
                 }
             } catch (error) {
                 if (error.name !== 'CanceledError') {
+                    // ignore
                 }
             }
         }
