@@ -6,12 +6,10 @@ import { useToast } from '@/context/ui/ToastContext';
 export function useFavorites() {
     const { user } = useAuth();
     const { addToast } = useToast();
-    // Store keys as "Title|Author"
     const [favoriteKeys, setFavoriteKeys] = useState(new Set());
     const [favoritePoems, setFavoritePoems] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Fetch favorites on mount/user change
     useEffect(() => {
         if (!user) {
             setFavoriteKeys(new Set());
@@ -49,10 +47,7 @@ export function useFavorites() {
 
         try {
             if (favoriteKeys.has(key)) {
-                // Remove favorite
-                // We need the poem ID (item_id) to remove it.
-                // We can find it in favoritePoems state.
-                const favoriteEntry = favoritePoems.find(f => 
+                const favoriteEntry = favoritePoems.find(f =>
                     f.poem && f.poem.title === poem.title && f.poem.author === poem.author
                 );
 
@@ -69,11 +64,8 @@ export function useFavorites() {
                     } else {
                         throw new Error(result.error);
                     }
-                } else {
-                    // Fallback if not found in state (shouldn't happen if keys are in sync)
                 }
             } else {
-                // Add favorite
                 const result = await favoritesService.addFavoritePoem(user.id, poem);
                 if (result.success) {
                      setFavoriteKeys(prev => {
@@ -81,12 +73,7 @@ export function useFavorites() {
                         next.add(key);
                         return next;
                     });
-                    // We need to re-fetch or construct the new favorite object to update state
-                    // The service returns the new favorite row.
-                    // We need to fetch the poem details or just use the input poem.
-                    // Ideally, we re-fetch favorites to be sure, or we construct it.
-                    // Let's construct it to avoid a network call, but we need the poem ID which is in result.data.item_id
-                    
+
                     const newFavorite = {
                         ...result.data,
                         poem: {
@@ -117,12 +104,10 @@ export function useFavorites() {
         if (!user) return { success: false };
 
         const result = await favoritesService.removeFavoritePoem(user.id, poemId);
-        
+
         if (result.success) {
-             // Update state
             setFavoritePoems(prev => prev.filter(p => p.item_id !== poemId));
-            
-            // Also update keys
+
             setFavoriteKeys(prev => {
                 const next = new Set(prev);
                 const poemToRemove = favoritePoems.find(p => p.item_id === poemId);
