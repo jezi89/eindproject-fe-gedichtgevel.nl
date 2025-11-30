@@ -35,14 +35,9 @@ const handleAuthSuccess = (data = null) => {
  * @param {string} email - User email
  * @param {string} password - User password
  * @param {string} captchaToken - Optional captcha token
- * @param {Object} profileData - Additional profile data
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
-
-// TODO Checken of profiledata paramtere gebruikt moet worden
 const register = async (email, password, captchaToken = null) => {
-
-    // Todo captcha token implementeren en checken of het nu modulair is
     try {
         const options = {}
         if (captchaToken) {
@@ -54,16 +49,14 @@ const register = async (email, password, captchaToken = null) => {
             password,
             options: {
                 ...options,
-                // TODO: Check and test email confirmation
                 emailRedirectTo: `${window.location.origin}/auth/callback`
             }
         });
 
         if (error) {
             // Supabase returns specific error codes for existing users
-            // TODO Check if double check nodig is
             if (error.code === 'user_already_exists' || error.message.includes('already registered')) {
-                throw new Error('Een account met dit e-mailadres bestaat al. Probeer in te loggen.');
+                throw new Error('An account with this email already exists. Please try logging in.');
             }
             throw error;
         }
@@ -83,8 +76,7 @@ const register = async (email, password, captchaToken = null) => {
  * @param {string} captchaToken - Optional captcha token
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
-
-// Maak login een interne functie, geen export
+// Make login an internal function, no export
 const login = async (email, password, captchaToken = null) => {
     try {
         const authOptions = {};
@@ -95,7 +87,7 @@ const login = async (email, password, captchaToken = null) => {
         const {data, error} = await supabase.auth.signInWithPassword({
             email,
             password,
-            // Expression to only include options if they are provided, by checking if the object contains at least one key and using a spread operator to conditionally add the options property
+            // Expression to only include options if they are provided
             ...(Object.keys(authOptions).length > 0 ? {options: authOptions} : {})
         });
 
@@ -114,7 +106,6 @@ const login = async (email, password, captchaToken = null) => {
  * Logout user
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-
 const logout = async () => {
     try {
         const {error} = await supabase.auth.signOut();
@@ -132,7 +123,6 @@ const logout = async () => {
  * Get current session
  * @returns {Promise<{session: Object|null, error?: string}>}
  */
-
 const getSession = async () => {
     try {
         const {data: {session}, error} = await supabase.auth.getSession();
@@ -149,7 +139,6 @@ const getSession = async () => {
  * Get current user
  * @returns {Promise<{user: Object|null, error?: string}>}
  */
-
 const getCurrentUser = async () => {
     try {
         const {data, error} = await supabase.auth.getUser();
@@ -167,7 +156,6 @@ const getCurrentUser = async () => {
  * @param {Function} callback - Callback function for auth state changes
  * @returns {Function} Unsubscribe function
  */
-
 const onAuthStateChange = (callback) => {
     const {data: {subscription}} = supabase.auth.onAuthStateChange(
         (_event, session) => {
@@ -182,7 +170,6 @@ const onAuthStateChange = (callback) => {
  * Refresh session token
  * @returns {Promise<{success: boolean, session?: Object, error?: string}>}
  */
-
 const refreshToken = async () => {
     try {
         const {data, error} = await supabase.auth.refreshSession();
@@ -198,7 +185,6 @@ const refreshToken = async () => {
  * @param {string} email - The email to check
  * @returns {Promise<{exists: boolean, error?: string}>}
  */
-
 const checkUserExists = async (email) => {
     try {
         const {data, error} = await supabase
@@ -226,7 +212,6 @@ const checkUserExists = async (email) => {
  * @param {string} email - The email to send reset link to
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-
 const sendPasswordResetEmail = async (email) => {
     try {
         const {error} = await supabase.auth.resetPasswordForEmail(email, {
@@ -246,7 +231,6 @@ const sendPasswordResetEmail = async (email) => {
  * @param {string} newPassword - The new password
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-
 const updatePassword = async (newPassword) => {
     try {
         const {error} = await supabase.auth.updateUser({
@@ -271,14 +255,12 @@ const updatePassword = async (newPassword) => {
  * @param {Object} updates - Profile updates
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-
-
-// updateUser als wrapper blijft als named export
+// updateUser wrapper remains as named export
 const updateUser = async (updates) => {
     if (updates.password) {
         return updatePassword(updates.password);
     }
-    // TODO: Voor andere updates, implementatie toevoegen
+    // For other updates, add implementation here
     return updatePassword(updates.password);
 };
 

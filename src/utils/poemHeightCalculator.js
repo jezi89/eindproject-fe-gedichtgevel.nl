@@ -1,11 +1,9 @@
-// TODO Checken of deze poemHeighCalculator.js versimpelt kan worden, aangezien we 500 regels code hebben.. Zie ook ref.poemHeighCalculator.js
-
 /**
- * Utility functies voor nauwkeurige berekening van gedicht uitklap hoogtes
- * Houdt rekening met responsive design en verschillende schermgroottes
+ * Utility functions for accurate poem expansion height calculation
+ * Considers responsive design and different screen sizes
  */
 
-// TODO Checken hoe deze functie werkt en linting errors oplossen
+
 
 /**
  * Calculate minimum expanded height to ensure it's never smaller than preview
@@ -56,7 +54,7 @@ export const isSmallPoem = (poem) => {
     return poem?.lines && poem.lines.length <= 10;
 };
 
-// Constanten voor verschillende breakpoints (moet overeenkomen met CSS)
+// Constants for different breakpoints (must match CSS)
 const BREAKPOINTS = {
     mobile: 480,
     tablet: 768,
@@ -64,7 +62,7 @@ const BREAKPOINTS = {
     large: 1400
 };
 
-// Base configuratie voor verschillende schermgroottes - gebaseerd op werkelijke CSS
+// Base configuration for different screen sizes - based on actual CSS
 const getBaseConfig = (screenWidth) => {
     if (screenWidth <= BREAKPOINTS.mobile) {
         return {
@@ -72,7 +70,7 @@ const getBaseConfig = (screenWidth) => {
             lineHeight: 1.5, // CSS: line-height: 1.5
             padding: 16, // var(--spacing-md)
             buttonHeight: 44,
-            buttonMargin: 8 // Minder margin
+            buttonMargin: 8 // Less margin
         };
     }
 
@@ -96,7 +94,7 @@ const getBaseConfig = (screenWidth) => {
         };
     }
 
-    // Desktop en groter - gebaseerd op .poemLine CSS
+    // Desktop and larger - based on .poemLine CSS
     return {
         fontSize: 18, // CSS: font-size: 18px
         lineHeight: 1.625, // CSS: line-height: 1.625
@@ -107,60 +105,60 @@ const getBaseConfig = (screenWidth) => {
 };
 
 /**
- * Berekent de exacte hoogte die een uitgeklapt gedicht zal innemen
- * Rekening houdend met witruimte tussen regels en performance optimalisatie
- * @param {Object} poem - Het gedicht object met lines array
- * @param {number} screenWidth - Huidige scherm breedte
- * @param {number} cardWidth - Breedte van de gedicht card
- * @param {boolean} forceCalculation - Forceer berekening (gebruikt voor max 3 gedichten)
- * @returns {Object} Hoogte informatie voor animatie
+ * Calculates the exact height an expanded poem will occupy
+ * Considering whitespace between lines and performance optimization
+ * @param {Object} poem - The poem object with lines array
+ * @param {number} screenWidth - Current screen width
+ * @param {number} cardWidth - Width of the poem card
+ * @param {boolean} forceCalculation - Force calculation (used for max 3 poems)
+ * @returns {Object} Height information for animation
  */
 export const calculateExpandedHeight = (poem, screenWidth = window.innerWidth, cardWidth = 570, forceCalculation = false) => {
     if (!poem || !poem.lines || poem.lines.length <= 4) {
         return {totalHeight: 0, contentHeight: 0, buttonHeight: 0};
     }
 
-    // Performance check - alleen berekenen voor eerste 3 gedichten tenzij geforceerd
+    // Performance check - only calculate for first 3 poems unless forced
     if (!forceCalculation && poem.index && poem.index >= 3) {
         return getFallbackHeight(poem, screenWidth);
     }
 
     const config = getBaseConfig(screenWidth);
-    const expandedLines = poem.lines.slice(4); // Regels na de preview
+    const expandedLines = poem.lines.slice(4); // Lines after preview
 
-    // Realistische text wrapping berekening - gebaseerd op werkelijke CSS
-    const averageCharWidth = config.fontSize * 0.5; // Conservatieve schatting voor Bitter font
+    // Realistic text wrapping calculation - based on actual CSS
+    const averageCharWidth = config.fontSize * 0.5; // Conservative estimate for Bitter font
     const textAreaWidth = cardWidth - (config.padding * 2);
     const maxCharsPerLine = Math.floor(textAreaWidth / averageCharWidth);
 
     let totalVisualLines = 0;
 
-    // Eenvoudigere, nauwkeurigere regel analyse
+    // Simpler, more accurate line analysis
     expandedLines.forEach((line) => {
         if (!line || line.trim() === '') {
-            // Lege regel - gewoon 1 regel spacing
-            totalVisualLines += 0.8; // CSS margin tussen regels
+            // Empty line - just 1 line spacing
+            totalVisualLines += 0.8; // CSS margin between lines
         } else {
-            // Tekst regel - meestal gewoon 1 regel per line
+            // Text line - usually just 1 line per line
             const cleanLine = line.trim();
             if (cleanLine.length > maxCharsPerLine) {
-                // Alleen wrapping voor zeer lange regels
+                // Only wrapping for very long lines
                 const wrappedLines = Math.ceil(cleanLine.length / maxCharsPerLine);
-                totalVisualLines += Math.min(wrappedLines, 3); // Max 3 regels per line
+                totalVisualLines += Math.min(wrappedLines, 3); // Max 3 lines per line
             } else {
                 totalVisualLines += 1;
             }
         }
     });
 
-    // Realistische hoogte berekening - gebaseerd op CSS
+    // Realistic height calculation - based on CSS
     const baseLineHeight = config.fontSize * config.lineHeight; // 18px * 1.625 = 29.25px
-    const marginBottom = config.fontSize * 0.3; // CSS margin tussen regels (var(--spacing-sm))
+    const marginBottom = config.fontSize * 0.3; // CSS margin between lines (var(--spacing-sm))
     const lineWithMargin = baseLineHeight + marginBottom;
 
     const contentHeight = totalVisualLines * lineWithMargin;
 
-    // Button sectie - realistisch
+    // Button section - realistic
     const buttonHeight = config.buttonHeight + config.buttonMargin;
     const topPadding = config.buttonMargin; // CSS padding-top
 
@@ -178,16 +176,16 @@ export const calculateExpandedHeight = (poem, screenWidth = window.innerWidth, c
 };
 
 /**
- * Fallback hoogte berekening voor performance (gebruikt voor gedichten index > 2)
- * @param {Object} poem - Het gedicht object
- * @param {number} screenWidth - Scherm breedte
- * @returns {Object} Geschatte hoogte informatie
+ * Fallback height calculation for performance (used for poems index > 2)
+ * @param {Object} poem - The poem object
+ * @param {number} screenWidth - Screen width
+ * @returns {Object} Estimated height information
  */
 const getFallbackHeight = (poem, screenWidth) => {
     const config = getBaseConfig(screenWidth);
     const expandedLines = poem.lines.slice(4);
 
-    // Eenvoudige schatting: 1 regel per tekstregel + margin
+    // Simple estimation: 1 line per text line + margin
     const baseLineHeight = config.fontSize * config.lineHeight;
     const marginBottom = config.fontSize * 0.3;
     const lineWithMargin = baseLineHeight + marginBottom;
@@ -208,19 +206,19 @@ const getFallbackHeight = (poem, screenWidth) => {
 };
 
 /**
- * Berekent staggered animatie delays voor gedichtregels
- * @param {number} totalLines - Totaal aantal uit te klappen regels
+ * Calculates staggered animation delays for poem lines
+ * @param {number} totalLines - Total number of lines to expand
  * @param {number} baseDelay - Base delay in ms
- * @param {number} staggerIncrement - Increment per regel in ms
- * @returns {Array} Array van delays voor elke regel
+ * @param {number} staggerIncrement - Increment per line in ms
+ * @returns {Array} Array of delays for each line
  */
 export const calculateStaggeredDelays = (totalLines, baseDelay = 300, staggerIncrement = 80) => {
     return Array.from({length: totalLines}, (_, index) => baseDelay + (index * staggerIncrement));
 };
 
 /**
- * Intelligente carousel hoogte cache manager
- * Beheert pre-loading en caching van hoogte berekeningen voor carousel navigatie
+ * Intelligent carousel height cache manager
+ * Manages pre-loading and caching of height calculations for carousel navigation
  */
 class CarouselHeightCache {
     constructor() {
@@ -230,7 +228,7 @@ class CarouselHeightCache {
     }
 
     /**
-     * Haal hoogte op uit cache of bereken indien nodig
+     * Get height from cache or calculate if needed
      */
     async getHeight(poem, index, screenWidth, cardWidth) {
         const cacheKey = `${index}-${screenWidth}-${cardWidth}`;
@@ -240,7 +238,7 @@ class CarouselHeightCache {
         }
 
         if (this.isCalculating.has(cacheKey)) {
-            // Wacht tot berekening klaar is
+            // Wait until calculation is finished
             return new Promise(resolve => {
                 const checkInterval = setInterval(() => {
                     if (this.cache.has(cacheKey)) {
@@ -255,9 +253,9 @@ class CarouselHeightCache {
     }
 
     /**
-     * Pre-load hoogtes voor carousel navigatie
-     * Bij navigatie naar rechts: cache huidige + volgende
-     * Bij navigatie naar links: cache huidige + vorige
+     * Pre-load heights for carousel navigation
+     * On navigation right: cache current + next
+     * On navigation left: cache current + previous
      */
     preloadForNavigation(poems, currentIndex, direction, screenWidth, cardWidth) {
         if (!poems || poems.length <= 1) return;
@@ -274,30 +272,30 @@ class CarouselHeightCache {
             }
         });
 
-        // Process preload queue asynchroon
+        // Process preload queue asynchronously
         this._processPreloadQueue();
     }
 
     /**
-     * Bepaal welke indices vooraf geladen moeten worden
+     * Determine which indices should be preloaded
      */
     _getPreloadIndices(totalPoems, currentIndex, direction) {
-        const indices = [currentIndex]; // Altijd huidige index
+        const indices = [currentIndex]; // Always current index
 
         if (direction === 'next' || direction === 'right') {
-            // Navigeer naar rechts: preload volgende 1-2 items
+            // Navigate right: preload next 1-2 items
             for (let i = 1; i <= 2; i++) {
                 const nextIndex = (currentIndex + i) % totalPoems;
                 indices.push(nextIndex);
             }
         } else if (direction === 'prev' || direction === 'left') {
-            // Navigeer naar links: preload vorige 1-2 items
+            // Navigate left: preload previous 1-2 items
             for (let i = 1; i <= 2; i++) {
                 const prevIndex = (currentIndex - i + totalPoems) % totalPoems;
                 indices.push(prevIndex);
             }
         } else {
-            // Initiële load: preload huidige + volgende + vorige
+            // Initial load: preload current + next + previous
             const nextIndex = (currentIndex + 1) % totalPoems;
             const prevIndex = (currentIndex - 1 + totalPoems) % totalPoems;
             indices.push(nextIndex, prevIndex);
@@ -307,7 +305,7 @@ class CarouselHeightCache {
     }
 
     /**
-     * Bereken en cache hoogte
+     * Calculate and cache height
      */
     async _calculateAndCache(poem, index, screenWidth, cardWidth) {
         const cacheKey = `${index}-${screenWidth}-${cardWidth}`;
@@ -329,7 +327,7 @@ class CarouselHeightCache {
     }
 
     /**
-     * Process preload queue asynchroon
+     * Process preload queue asynchronously
      */
     async _processPreloadQueue() {
         if (this.preloadQueue.size === 0) return;
@@ -341,13 +339,13 @@ class CarouselHeightCache {
         for (const item of items) {
             await this._calculateAndCache(item.poem, item.index, item.screenWidth, item.cardWidth);
 
-            // Kleine pauze tussen berekeningen
+            // Small pause between calculations
             await new Promise(resolve => setTimeout(resolve, 5));
         }
     }
 
     /**
-     * Clear cache bij resize of andere wijzigingen
+     * Clear cache on resize or other changes
      */
     clearCache() {
         this.cache.clear();
@@ -356,7 +354,7 @@ class CarouselHeightCache {
     }
 
     /**
-     * Get cache statistieken voor debugging
+     * Get cache statistics for debugging
      */
     getCacheStats() {
         return {
@@ -371,25 +369,25 @@ class CarouselHeightCache {
 const globalCarouselCache = new CarouselHeightCache();
 
 /**
- * Carousel-specifieke hoogte berekening met intelligente caching
- * @param {Object} poem - Gedicht object
- * @param {number} currentIndex - Huidige carousel index
- * @param {Array} allPoems - Alle gedichten in carousel
+ * Carousel-specific height calculation with intelligent caching
+ * @param {Object} poem - Poem object
+ * @param {number} currentIndex - Current carousel index
+ * @param {Array} allPoems - All poems in carousel
  * @param {string} navigationDirection - 'next', 'prev', 'initial'
- * @param {number} screenWidth - Scherm breedte
- * @param {number} cardWidth - Card breedte
- * @returns {Promise<Object>} Hoogte informatie
+ * @param {number} screenWidth - Screen width
+ * @param {number} cardWidth - Card width
+ * @returns {Promise<Object>} Height information
  */
 export const getCarouselPoemHeight = async (poem, currentIndex, allPoems, navigationDirection = 'initial', screenWidth, cardWidth) => {
-    // Pre-load voor toekomstige navigatie
+    // Pre-load for future navigation
     globalCarouselCache.preloadForNavigation(allPoems, currentIndex, navigationDirection, screenWidth, cardWidth);
 
-    // Haal hoogte op (uit cache of bereken)
+    // Get height (from cache or calculate)
     return await globalCarouselCache.getHeight(poem, currentIndex, screenWidth, cardWidth);
 };
 
 /**
- * Clear carousel cache bij resize events
+ * Clear carousel cache on resize events
  */
 export const clearCarouselCache = () => {
     globalCarouselCache.clearCache();
@@ -399,9 +397,9 @@ export const clearCarouselCache = () => {
  * Get carousel cache stats voor debugging
  */
 /**
- * Responsive utility om te detecteren wanneer layout aanpassingen nodig zijn
- * @param {number} width - Scherm breedte
- * @returns {Object} Layout informatie
+ * Responsive utility to detect when layout adjustments are needed
+ * @param {number} width - Screen width
+ * @returns {Object} Layout information
  */
 export const getResponsiveLayout = (width = window.innerWidth) => {
     return {
@@ -419,18 +417,18 @@ export const getResponsiveLayout = (width = window.innerWidth) => {
 };
 
 /**
- * Scroll naar search results na een zoekactie
- * ALTIJD scrollen naar bovenkant van searchbar container
- * @param {string} searchResultsSelector - CSS selector voor search results container
- * @param {string} searchBarSelector - CSS selector voor search bar container
- * @param {number} offset - Extra offset vanaf searchbar (standaard 20px)
+ * Scroll to search results after a search action
+ * ALWAYS scroll to top of searchbar container
+ * @param {string} searchResultsSelector - CSS selector for search results container
+ * @param {string} searchBarSelector - CSS selector for search bar container
+ * @param {number} offset - Extra offset from searchbar (default 20px)
  */
 
 /**
- * Berekent de optimale scroll positie na het inklappen van een gedicht
- * @param {string} targetSelector - CSS selector voor het target element (globalToggleContainer of resultsOverview)
- * @param {number} offset - Extra offset vanaf target (standaard 100px)
- * @returns {Object} Scroll informatie met shouldScroll, targetPosition, estimatedDuration
+ * Calculates optimal scroll position after collapsing a poem
+ * @param {string} targetSelector - CSS selector for target element (globalToggleContainer or resultsOverview)
+ * @param {number} offset - Extra offset from target (default 100px)
+ * @returns {Object} Scroll information with shouldScroll, targetPosition, estimatedDuration
  */
 export const calculateCollapseScroll = (targetSelector, offset = 100) => {
     const targetElement = document.querySelector(targetSelector);
@@ -443,15 +441,15 @@ export const calculateCollapseScroll = (targetSelector, offset = 100) => {
     const currentScrollY = window.scrollY;
     // const viewportHeight = window.innerHeight;
 
-    // Bereken target positie - bovenkant van element minus offset
+    // Calculate target position - top of element minus offset
     const targetTop = targetRect.top + currentScrollY;
     const targetScrollY = Math.max(0, targetTop - offset);
 
-    // Check of we al op de juiste positie zijn
+    // Check if we are already at the right position
     const scrollDistance = Math.abs(targetScrollY - currentScrollY);
-    const shouldScroll = scrollDistance > 50; // Alleen scrollen bij significant verschil
+    const shouldScroll = scrollDistance > 50; // Only scroll if significant difference
 
-    // Bereken scroll duratie gebaseerd op afstand
+    // Calculate scroll duration based on distance
     const estimatedDuration = Math.min(800, Math.max(300, scrollDistance * 0.5));
 
     return {
@@ -464,10 +462,10 @@ export const calculateCollapseScroll = (targetSelector, offset = 100) => {
 };
 
 /**
- * Debounced resize handler voor performance
- * @param {Function} callback - Functie om aan te roepen na resize
+ * Debounced resize handler for performance
+ * @param {Function} callback - Function to call after resize
  * @param {number} delay - Debounce delay in ms
- * @returns {Function} Debounced functie
+ * @returns {Function} Debounced function
  */
 export const createResizeHandler = (callback, delay = 150) => {
     let timeoutId;

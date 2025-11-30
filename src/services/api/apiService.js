@@ -2,9 +2,9 @@ import { pexelsApi, flickrApi } from './axios';
 import { supabase } from '../supabase/supabase';
 
 /**
- * Generieke, herbruikbare fetcher voor alle Axios-aanroepen.
- * @param {import('axios').AxiosInstance} apiClient - De te gebruiken Axios-instantie.
- * @param {object} config - De request-configuratie (url, params, etc.).
+ * Generic, reusable fetcher for all Axios calls.
+ * @param {import('axios').AxiosInstance} apiClient - The Axios instance to use.
+ * @param {object} config - The request configuration (url, params, etc.).
  * @returns {Promise<any>}
  */
 const fetchWithAxios = async (apiClient, config) => {
@@ -12,12 +12,12 @@ const fetchWithAxios = async (apiClient, config) => {
         const response = await apiClient.request(config);
         return response.data;
     } catch (error) {
-        // Gooi een gestandaardiseerde error zodat Tanstack Query deze kan opvangen.
+        // Throw a standardized error for TanStack Query to catch.
         throw new Error(error.response?.data?.message || error.message);
     }
 };
 
-// --- Service Object voor Pexels API ---
+// --- Pexels API Service ---
 export const pexelsApiService = {
     search: (query, page = 1) => fetchWithAxios(pexelsApi, {
         url: 'search',
@@ -29,7 +29,7 @@ export const pexelsApiService = {
     }),
 };
 
-// --- Service Object voor Flickr API ---
+// --- Flickr API Service ---
 const FLICKR_API_KEY = import.meta.env.VITE_FLICKR_API_KEY;
 
 export const flickrApiService = {
@@ -92,8 +92,8 @@ export const flickrApiService = {
     },
 };
 
-// --- Service Object voor Supabase (GEBRUIKT DE JS CLIENT!) ---
-// We wrappen de Supabase-aanroep in een async functie die Tanstack Query kan consumeren.
+// --- Supabase Service (Uses JS Client) ---
+// Wraps the Supabase call in an async function for TanStack Query.
 export const supabaseApiService = {
     getUserSettings: async (userId) => {
         const { data, error } = await supabase
@@ -102,8 +102,8 @@ export const supabaseApiService = {
             .eq('id', userId)
             .maybeSingle();
 
-        if (error) throw error; // Tanstack Query vangt deze error op.
-        return data; // Returns null if no record exists, instead of throwing error
+        if (error) throw error; // TanStack Query catches this error.
+        return data; // Returns null if no record exists
     },
-    // Voeg hier andere Supabase query-functies toe...
+    // Add other Supabase query functions here...
 };

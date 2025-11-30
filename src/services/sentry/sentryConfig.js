@@ -1,11 +1,11 @@
 /**
- * Sentry Configuratie voor Gedichtgevel.nl
+ * Sentry Configuration for Gedichtgevel.nl
  *
- * Deze configuratie initialiseert Sentry voor:
- * - Error tracking (automatisch opvangen van errors)
- * - Performance monitoring (tracing van pagina navigaties)
- * - React Router v7 integratie
- * - Session replay (optioneel)
+ * This configuration initializes Sentry for:
+ * - Error tracking (automatic error capturing)
+ * - Performance monitoring (tracing of page navigations)
+ * - React Router v7 integration
+ * - Session replay (optional)
  */
 
 import * as Sentry from '@sentry/react';
@@ -18,14 +18,14 @@ import {
 } from 'react-router';
 
 /**
- * Initialiseert Sentry met React Router v7 integratie
+ * Initializes Sentry with React Router v7 integration
  *
- * @param {Object} options - Configuratie opties
+ * @param {Object} options - Configuration options
  * @param {string} options.dsn - Sentry DSN (Data Source Name)
- * @param {string} options.environment - Omgeving (development, staging, production)
- * @param {number} options.tracesSampleRate - Percentage van traces om op te slaan (0.0 - 1.0)
- * @param {number} options.replaysSessionSampleRate - Percentage van sessies om op te nemen (0.0 - 1.0)
- * @param {number} options.replaysOnErrorSampleRate - Percentage van sessies met errors om op te nemen (0.0 - 1.0)
+ * @param {string} options.environment - Environment (development, staging, production)
+ * @param {number} options.tracesSampleRate - Percentage of traces to capture (0.0 - 1.0)
+ * @param {number} options.replaysSessionSampleRate - Percentage of sessions to record (0.0 - 1.0)
+ * @param {number} options.replaysOnErrorSampleRate - Percentage of sessions with errors to record (0.0 - 1.0)
  */
 export function initSentry({
     dsn = import.meta.env.VITE_SENTRY_DSN,
@@ -35,7 +35,7 @@ export function initSentry({
     replaysOnErrorSampleRate = 1.0,
     enableLogs = true,
 } = {}) {
-    // Skip initialisatie als geen DSN is geconfigureerd
+    // Skip initialization if no DSN is configured
     if (!dsn) {
         return;
     }
@@ -46,16 +46,16 @@ export function initSentry({
         dsn,
         environment,
 
-        // Send default PII (Personally Identifiable Information) zoals IP addresses
-        // Dit helpt bij debugging maar respecteer privacy regelgeving (GDPR)
+        // Send default PII (Personally Identifiable Information) like IP addresses
+        // This helps with debugging but respect privacy regulations (GDPR)
         sendDefaultPii: true,
 
-        // Development-specific configuratie
+        // Development-specific configuration
         ...(isDevelopment ? {
             // Spotlight voor local debugging
             spotlight: true,
 
-            // Capture alles in development
+            // Capture everything in development
             sampleRate: 1.0,
             tracesSampleRate: 1.0,
             enableLogs: true,
@@ -65,7 +65,7 @@ export function initSentry({
                 // Spotlight Browser Integration voor local debugging
                 Sentry.spotlightBrowserIntegration(),
 
-                // React Router v7 Browser Tracing voor performance monitoring
+                // React Router v7 Browser Tracing for performance monitoring
                 Sentry.reactRouterV7BrowserTracingIntegration({
                     useEffect: React.useEffect,
                     useLocation,
@@ -74,13 +74,13 @@ export function initSentry({
                     matchRoutes,
                 }),
 
-                // Console logging integratie (alle levels in dev)
+                // Console logging integration (all levels in dev)
                 Sentry.consoleLoggingIntegration({
                     levels: ['log', 'warn', 'error']
                 }),
             ],
         } : {
-            // Production configuratie
+            // Production configuration
             tracesSampleRate,
             replaysSessionSampleRate,
             replaysOnErrorSampleRate,
@@ -88,7 +88,7 @@ export function initSentry({
 
             // Production integrations
             integrations: [
-                // React Router v7 Browser Tracing voor performance monitoring
+                // React Router v7 Browser Tracing for performance monitoring
                 Sentry.reactRouterV7BrowserTracingIntegration({
                     useEffect: React.useEffect,
                     useLocation,
@@ -97,46 +97,44 @@ export function initSentry({
                     matchRoutes,
                 }),
 
-                // Session Replay voor het opnemen van gebruikerssessies
+                // Session Replay for recording user sessions
                 Sentry.replayIntegration({
-                    maskAllText: false, // Masker alle tekst voor privacy
-                    blockAllMedia: false, // Blokkeer alle media (images, video, audio)
+                    maskAllText: false, // Mask all text for privacy
+                    blockAllMedia: false, // Block all media (images, video, audio)
                 }),
 
-                // Console logging integratie (alleen errors en warnings in production)
+                // Console logging integration (only errors and warnings in production)
                 Sentry.consoleLoggingIntegration({
                     levels: ['error', 'warn']
                 }),
             ],
         }),
 
-        // Omgevingsspecifieke configuratie
+        // Environment specific configuration
         beforeSend(event) {
-            // In development, log events naar console maar stuur ze ook naar Sentry
-            // (dit is nuttig voor local debugging met Spotlight)
-            // In development, log events naar console maar stuur ze ook naar Sentry
-            // (dit is nuttig voor local debugging met Spotlight)
+            // In development, log events to console but also send to Sentry
+            // (this is useful for local debugging with Spotlight)
             // if (isDevelopment) {
             // }
             return event;
         },
 
-        // Ignore bepaalde errors
+        // Ignore certain errors
         ignoreErrors: [
-            // Browser extensie errors
+            // Browser extension errors
             'top.GLOBALS',
             'canvas.contentDocument',
             // Random plugin errors
             'atomicFindClose',
-            // Network errors die buiten onze controle zijn
+            // Network errors that are out of our control
             'NetworkError',
             'Failed to fetch',
-            // ResizeObserver errors (vaak false positives)
+            // ResizeObserver errors (often false positives)
             'ResizeObserver loop limit exceeded',
             'ResizeObserver loop completed with undelivered notifications',
         ],
 
-        // Stel de release versie in (handig voor versie tracking)
+        // Set the release version (useful for version tracking)
         release: import.meta.env.VITE_APP_VERSION || 'unknown',
     });
 }

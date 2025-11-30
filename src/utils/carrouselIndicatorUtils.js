@@ -1,29 +1,29 @@
 /**
- * Utility functies voor intelligente carousel indicatoren
+ * Utility functions for intelligent carousel indicators
  *
- * Systeem:
- * - Tot 10 gedichten: toon alle dots, actieve zijn doorgestreept
- * - 11+ gedichten: maximaal 10 dots die doorschuiven
- * - Romeinse notatie toont het "tiental" waarin we zitten (X = 10-19, XX = 20-29, etc.)
+ * System:
+ * - Up to 10 poems: show all dots, active ones are crossed out
+ * - 11+ poems: maximum 10 dots that slide
+ * - Roman notation shows the "decade" we are in (X = 10-19, XX = 20-29, etc.)
  */
 
 import {getDecadeRoman, generateDropdownDecades} from './romanNumerals.js';
 
 /**
- * Bereken indicator configuratie voor carousel
- * @param {number} totalCount - Totaal aantal gedichten
- * @param {number} currentIndex - Huidige carousel index (0-based)
- * @returns {Object} Configuratie voor dots en Romeinse cijfers
+ * Calculate indicator configuration for carousel
+ * @param {number} totalCount - Total number of poems
+ * @param {number} currentIndex - Current carousel index (0-based)
+ * @returns {Object} Configuration for dots and Roman numerals
  */
 export const calculateIndicatorConfig = (totalCount, currentIndex) => {
-    // Voor 1-3 gedichten: geen carousel
+    // For 1-3 poems: no carousel
     if (totalCount <= 3) {
         return {
             showIndicator: false
         };
     }
 
-    // Voor 4-10 gedichten: toon alle dots
+    // For 4-10 poems: show all dots
     if (totalCount <= 10) {
         const activeDots = new Set();
         for (let i = 0; i < 3; i++) {
@@ -44,36 +44,36 @@ export const calculateIndicatorConfig = (totalCount, currentIndex) => {
         };
     }
 
-    // Voor 11+ gedichten: sliding dots (max 10) + romeinse tiental indicator
+    // For 11+ poems: sliding dots (max 10) + Roman decade indicator
     const MAX_DOTS = 10;
 
-    // Bereken welke gedichten zichtbaar zijn (3 tegelijk)
+    // Calculate which poems are visible (3 at a time)
     const visibleIndices = [];
-    const rawIndices = []; // Voor debugging
+    const rawIndices = []; // For debugging
     for (let i = 0; i < 3; i++) {
         const rawIndex = currentIndex + i;
         rawIndices.push(rawIndex);
         visibleIndices.push(rawIndex % totalCount);
     }
 
-    // Check voor wrap-around situatie (bijv. 69, 70, 0)
+    // Check for wrap-around situation (e.g. 69, 70, 0)
     const isWrapping = visibleIndices[2] < visibleIndices[0];
 
-    // Bepaal het "tiental" waarin we zitten
+    // Determine the "decade" we are in
     const currentDecade = Math.floor(currentIndex / 10);
     // const lastDecade = Math.floor((totalCount - 1) / 10);
     const romanDecade = currentDecade > 0 ? getDecadeRoman(currentDecade) : '';
 
-    // Check of we over een tiental grens heen gaan
+    // Check if we are spanning across a decade boundary
     let isSpanningDecades = false;
     let nextDecade = -1;
 
     if (isWrapping) {
-        // Bij wrap-around: we gaan van laatste tiental naar eerste
+        // On wrap-around: we go from last decade to first
         isSpanningDecades = true;
         nextDecade = 0;
     } else {
-        // Normale situatie: check of alle indices in zelfde decade zijn
+        // Normal situation: check if all indices are in the same decade
         const decades = visibleIndices.map(idx => Math.floor(idx / 10));
         isSpanningDecades = !decades.every(d => d === currentDecade);
         if (isSpanningDecades) {
@@ -81,14 +81,14 @@ export const calculateIndicatorConfig = (totalCount, currentIndex) => {
         }
     }
 
-    // Bereken de dot window (welke 10 dots we tonen)
+    // Calculate the dot window (which 10 dots we show)
     let dotWindowStart = currentDecade * 10;
     let dotsInWindow = Math.min(MAX_DOTS, totalCount - dotWindowStart);
 
-    // Map zichtbare gedichten naar dot posities
+    // Map visible poems to dot positions
     const activeDots = new Set();
     const activeDotsNextDecade = new Set();
-    const activeDotsFirstDecade = new Set(); // Voor wrap-around
+    const activeDotsFirstDecade = new Set(); // For wrap-around
 
     visibleIndices.forEach(idx => {
         const decade = Math.floor(idx / 10);
@@ -97,7 +97,7 @@ export const calculateIndicatorConfig = (totalCount, currentIndex) => {
         if (decade === currentDecade) {
             activeDots.add(dotPosition);
         } else if (isWrapping && decade === 0) {
-            // Wrap-around naar eerste tiental
+            // Wrap-around to first decade
             activeDotsFirstDecade.add(dotPosition);
         } else if (decade === nextDecade) {
             activeDotsNextDecade.add(dotPosition);
@@ -131,16 +131,16 @@ export const calculateIndicatorConfig = (totalCount, currentIndex) => {
 };
 
 /**
- * Format de indicator elementen voor rendering
- * @param {Object} config - Indicator configuratie
- * @returns {Array} Array van elementen om te renderen
+ * Format the indicator elements for rendering
+ * @param {Object} config - Indicator configuration
+ * @returns {Array} Array of elements to render
  */
 export const formatIndicatorElements = (config) => {
     if (!config.showIndicator) return [];
 
     const elements = [];
 
-    // Als we een romeins tiental hebben, voeg het toe aan het begin
+    // If we have a Roman decade, add it at the beginning
     if (config.showRoman && config.romanNumeral) {
         elements.push({
             type: 'roman',
@@ -156,7 +156,7 @@ export const formatIndicatorElements = (config) => {
         });
     }
 
-    // Voeg alle dots toe voor huidige tiental
+    // Add all dots for current decade
     for (let i = 0; i < config.totalDots; i++) {
         const poemNumber = config.mode === 'sliding-dots'
             ? config.dotWindowStart + i + 1
@@ -170,19 +170,19 @@ export const formatIndicatorElements = (config) => {
         });
     }
 
-    // Als we over tientallen heen gaan, voeg extra dots toe
+    // If we span across decades, add extra dots
     if (config.isSpanningDecades) {
         elements.push({
             type: 'separator',
-            content: '—',  // Em dash voor tiental overgang
+            content: '—',  // Em dash for decade transition
             key: 'sep-next-decade',
             isDecadeSeparator: true
         });
 
-        // Speciale behandeling voor wrap-around (bijv. 69, 70, 0)
+        // Special handling for wrap-around (e.g. 69, 70, 0)
         if (config.isWrapping && config.activeDotsFirstDecade) {
-            // Geen romeins cijfer bij wrap naar begin
-            // Direct de dots van het eerste tiental
+            // No Roman numeral on wrap to beginning
+            // Directly show the dots of the first decade
             for (let i = 0; i < 3; i++) {
                 if (config.activeDotsFirstDecade.has(i)) {
                     elements.push({
@@ -202,9 +202,9 @@ export const formatIndicatorElements = (config) => {
                 }
             }
         }
-        // Normale tiental overgang
+        // Normal decade transition
         else if (config.activeDotsNextDecade) {
-            // Voeg het volgende tiental romeins cijfer toe indien nodig
+            // Add the next decade Roman numeral if needed
             if (config.nextDecadeRoman) {
                 elements.push({
                     type: 'roman',
@@ -220,7 +220,7 @@ export const formatIndicatorElements = (config) => {
                 });
             }
 
-            // Voeg de actieve dots van het volgende tiental toe
+            // Add the active dots of the next decade
             for (let i = 0; i < 3; i++) {
                 if (config.activeDotsNextDecade.has(i)) {
                     elements.push({
@@ -246,20 +246,20 @@ export const formatIndicatorElements = (config) => {
 };
 
 /**
- * Helper functie voor dot click navigatie
- * @param {number} dotIndex - Geklikte dot index
- * @param {Object} config - Huidige configuratie
- * @returns {number|null} Nieuwe carousel index of null als niet mogelijk
+ * Helper function for dot click navigation
+ * @param {number} dotIndex - Clicked dot index
+ * @param {Object} config - Current configuration
+ * @returns {number|null} New carousel index or null if not possible
  */
 export const calculateDotNavigation = (dotIndex, config) => {
     if (config.mode === 'dots-only' || config.mode === 'static-dots') {
-        // Voor 4-10 gedichten: directe mapping met bounds checking
+        // For 4-10 poems: direct mapping with bounds checking
         const targetIndex = dotIndex;
         return Math.min(Math.max(targetIndex, 0), config.totalCount - 1);
     }
 
     if (config.mode === 'sliding-dots') {
-        // Voor 11+ gedichten: map dot index naar gedicht index binnen huidige decade
+        // For 11+ poems: map dot index to poem index within current decade
         const targetIndex = config.dotWindowStart + dotIndex;
 
         // Bounds checking to prevent index >= totalCount
@@ -275,9 +275,9 @@ export const calculateDotNavigation = (dotIndex, config) => {
 };
 
 /**
- * Bereken alle beschikbare decades voor navigatie dropdown
- * @param {number} totalCount - Totaal aantal gedichten
- * @returns {Array} Array van decade objecten voor navigatie
+ * Calculate all available decades for navigation dropdown
+ * @param {number} totalCount - Total number of poems
+ * @returns {Array} Array of decade objects for navigation
  */
 export const getAvailableDecades = (totalCount) => {
     return generateDropdownDecades(totalCount);

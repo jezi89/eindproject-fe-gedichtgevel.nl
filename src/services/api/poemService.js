@@ -281,9 +281,3 @@ function removeDuplicatePoems(poems) {
 export {
     fetchPoemsFromPoetryDBByAuthorAndTitle
 };
-
-// TODO: Future functionality
-// - Full-text search in poem lines
-// - Pagination for search results
-// - Advanced filtering (language, period, etc.)
-// - User-specific poem collections
