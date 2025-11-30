@@ -37,7 +37,6 @@ export const PoemExpansionControls = ({
                                       }) => {
     if (!canExpand) return null;
 
-    // TODO goed begrijpen hoe deze expansion controls werken en hoe ze zich verhouden tot de rest van de UI
     return (
         <AnimatePresence mode="wait">
             {!isExpanded && animationPhase === 'idle' && (
