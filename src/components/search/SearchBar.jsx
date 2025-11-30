@@ -1,5 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
+import { useToast } from '@/context/ui/ToastContext.jsx';
 import styles from './SearchBar.module.scss';
+
+// Only rare special characters trigger warning (not punctuation)
+const RARE_SPECIAL_CHARS = /[@#$%^&*{}|<>\\~]/;
 
 export function SearchBar({
                               onSearch,
@@ -14,6 +18,7 @@ export function SearchBar({
                           }) {
     const [searchTerm, setSearchTerm] = useState(externalSearchTerm || initialValue);
     const textareaRef = useRef(null);
+    const { addToast } = useToast();
 
     useEffect(() => {
         setSearchTerm(externalSearchTerm || initialValue);
@@ -33,6 +38,14 @@ export function SearchBar({
 
         if (value.length > MAX_CHARACTERS) {
             value = value.slice(0, MAX_CHARACTERS);
+        }
+
+        // Check for rare special characters in the newly typed character
+        if (value.length > searchTerm.length) {
+            const newChar = value.slice(-1);
+            if (RARE_SPECIAL_CHARS.test(newChar)) {
+                addToast(`Je typte "${newChar}" — Maak je misschien een fout?`, 'info', 3000);
+            }
         }
 
         setSearchTerm(value);

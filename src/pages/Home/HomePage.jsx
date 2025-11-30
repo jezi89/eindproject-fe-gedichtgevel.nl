@@ -15,7 +15,8 @@ import { useCanvasNavigation } from "@/hooks/canvas/useCanvasNavigation.js";
 import { useAuth } from '@/hooks/auth/useAuth';
 import { DailyPoemsProvider, useDailyPoems } from '@/context/poem/DailyPoemsContext.jsx';
 import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
-import { ERAS, filterPoemsByEra } from '@/utils/eraMapping.js';
+import { useToast } from '@/context/ui/ToastContext.jsx';
+import { ERAS, filterPoemsByEras } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
 import {ErrorButton} from "@/components/ErrorBoundary/ErrorButton.jsx";
 
@@ -32,6 +33,7 @@ function HomePageContent() {
     const navigate = useNavigate();
     const dailyPoemsSectionRef = useRef(null);
     const { user } = useAuth();
+    const { addToast } = useToast();
     const [showAnimation, setShowAnimation] = useState(false);
 
 
@@ -78,9 +80,14 @@ function HomePageContent() {
 
     // --- Filter State Management ---
     const [maxLength, setMaxLength] = useState(60); // Default: 60 lines
-    const [selectedEra, setSelectedEra] = useState(ERAS.ALL.id); // Default: all eras
+    const [selectedEras, setSelectedEras] = useState([]); // Empty array = all eras (multi-select)
     const [language, setLanguage] = useState('en'); // Default: English (only available option)
     const [onlyMyDesigns, setOnlyMyDesigns] = useState(false); // Creative Canvas filter (disabled)
+
+    // Handler for disabled filter buttons
+    const handleComingSoonClick = useCallback(() => {
+        addToast('Binnenkort beschikbaar', 'info', 3000);
+    }, [addToast]);
     // ------------------------------
 
     // Canvas navigation hook
@@ -97,7 +104,7 @@ function HomePageContent() {
         updateSearchTerm,
         searchMeta,
         carouselPosition
-    } = useSearchPoems('homepage');
+    } = useSearchPoems({ selectedEras });
 
     // --- Apply Filters to Search Results ---
     const filteredResults = useMemo(() => {
@@ -113,9 +120,9 @@ function HomePageContent() {
             });
         }
 
-        // 2. Filter by era (based on author birth year)
-        if (selectedEra !== ERAS.ALL.id) {
-            filtered = filterPoemsByEra(filtered, selectedEra);
+        // 2. Filter by era (multi-select, based on author birth year)
+        if (selectedEras.length > 0) {
+            filtered = filterPoemsByEras(filtered, selectedEras);
         }
 
         // 3. Filter by language (currently only English is available)
@@ -128,7 +135,7 @@ function HomePageContent() {
         // }
 
         return filtered;
-    }, [results, maxLength, selectedEra]);
+    }, [results, maxLength, selectedEras]);
     // ---------------------------------------
 
     // Bepaal search state gebaseerd op hook
@@ -243,17 +250,17 @@ function HomePageContent() {
                                     />
                                 </div>
 
-                                {/* Era Filter */}
+                                {/* Era Filter (Multi-select) */}
                                 <div className={styles.filterItem}>
                                     <FilterDropdown
                                         type="era"
-                                        value={selectedEra}
-                                        onChange={setSelectedEra}
+                                        value={selectedEras}
+                                        onChange={setSelectedEras}
                                     />
                                 </div>
 
                                 {/* Creative Canvas Filter (disabled mock-up) */}
-                                <div className={styles.filterItem}>
+                                <div className={styles.filterItem} onClick={handleComingSoonClick}>
                                     <FilterToggle
                                         checked={onlyMyDesigns}
                                         onChange={setOnlyMyDesigns}
@@ -264,7 +271,7 @@ function HomePageContent() {
                                 </div>
 
                                 {/* Meer Filters - toekomstige uitbreiding */}
-                                <div className={styles.filterItemAdvanced}>
+                                <div className={styles.filterItemAdvanced} onClick={handleComingSoonClick}>
                                     <span className={styles.filterTextAdvanced}>Meer Filters</span>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 /**
  * FilterDropdown Component
  * Dropdown selector for era and language filters
+ * Supports both single-select (language) and multi-select (era) modes
  */
 
 import { useState, useRef, useEffect } from 'react';
@@ -12,7 +13,7 @@ import { countAuthorsPerEra } from '@/utils/eraMapping.js';
 /**
  * @param {Object} props
  * @param {string} props.type - 'era' or 'language'
- * @param {string} props.value - Current selected value
+ * @param {string|string[]} props.value - Current selected value(s) - string for language, array for era
  * @param {function} props.onChange - Callback when value changes
  * @param {string} [props.label] - Dropdown label (defaults based on type)
  */
@@ -24,6 +25,10 @@ export function FilterDropdown({
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    // For era type, value is an array; for language, value is a string
+    const isMultiSelect = type === 'era';
+    const selectedValues = isMultiSelect ? (Array.isArray(value) ? value : []) : value;
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -44,8 +49,15 @@ export function FilterDropdown({
 
     const getDisplayValue = () => {
         if (type === 'era') {
-            const era = Object.values(ERAS).find(e => e.id === value);
-            return era ? era.label : ERAS.ALL.label;
+            // Multi-select: show count or "Alle Tijdperken"
+            if (selectedValues.length === 0) {
+                return 'Alle Tijdperken';
+            } else if (selectedValues.length === 1) {
+                const era = Object.values(ERAS).find(e => e.id === selectedValues[0]);
+                return era ? era.label : 'Selecteer tijdperk';
+            } else {
+                return `${selectedValues.length} geselecteerd`;
+            }
         }
         if (type === 'language') {
             return value === 'en' ? 'Engels' : 'Selecteer taal';
@@ -54,12 +66,27 @@ export function FilterDropdown({
     };
 
     const handleSelect = (newValue) => {
-        onChange(newValue);
-        setIsOpen(false);
+        if (isMultiSelect) {
+            // For era multi-select: toggle the value in the array
+            if (newValue === 'all') {
+                // Toggle all: if any selected, clear all; otherwise select none (same behavior)
+                onChange([]);
+            } else {
+                const newValues = selectedValues.includes(newValue)
+                    ? selectedValues.filter(v => v !== newValue)
+                    : [...selectedValues, newValue];
+                onChange(newValues);
+            }
+            // Don't close dropdown for multi-select
+        } else {
+            // Single select: just set the value and close
+            onChange(newValue);
+            setIsOpen(false);
+        }
     };
 
     const isActive = () => {
-        if (type === 'era') return value !== ERAS.ALL.id;
+        if (type === 'era') return selectedValues.length > 0;
         if (type === 'language') return value !== 'en';
         return false;
     };
@@ -67,27 +94,56 @@ export function FilterDropdown({
     const eraCounts = countAuthorsPerEra({ excludeContemporary: true });
 
     const renderEraOptions = () => {
-        return Object.values(ERAS).map(era => (
-            <button
-                key={era.id}
-                className={`${styles.dropdownOption} ${value === era.id ? styles.selected : ''}`}
-                onClick={() => handleSelect(era.id)}
-            >
-                {era.label}
-                {/* Show count if available */}
-                {eraCounts[era.id] !== undefined && (
-                    <span className={styles.countBadge}>{eraCounts[era.id]}</span>
-                )}
-                {value === era.id && (
-                    <svg className={styles.checkIcon} viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
-                            fill="currentColor"
-                        />
-                    </svg>
-                )}
-            </button>
-        ));
+        return Object.values(ERAS).map(era => {
+            // Skip 'all' for multi-select - we handle it separately
+            if (era.id === 'all') {
+                return (
+                    <button
+                        key={era.id}
+                        className={`${styles.dropdownOption} ${selectedValues.length === 0 ? styles.selected : ''}`}
+                        onClick={() => handleSelect('all')}
+                    >
+                        {era.label}
+                        {selectedValues.length === 0 && (
+                            <svg className={styles.checkIcon} viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                                    fill="currentColor"
+                                />
+                            </svg>
+                        )}
+                    </button>
+                );
+            }
+
+            const isSelected = selectedValues.includes(era.id);
+
+            return (
+                <button
+                    key={era.id}
+                    className={`${styles.dropdownOption} ${isSelected ? styles.selected : ''}`}
+                    onClick={() => handleSelect(era.id)}
+                >
+                    <span className={styles.checkboxWrapper}>
+                        <span className={`${styles.checkbox} ${isSelected ? styles.checked : ''}`}>
+                            {isSelected && (
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            )}
+                        </span>
+                    </span>
+                    {era.label}
+                    {/* Show count if available */}
+                    {eraCounts[era.id] !== undefined && (
+                        <span className={styles.countBadge}>{eraCounts[era.id]}</span>
+                    )}
+                </button>
+            );
+        });
     };
 
     // Render language options

@@ -5,12 +5,21 @@
 
 import {useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {searchPoemsGeneral} from '@/services/api/poemSearchService.js';
+import {searchPoemsGeneral, searchPoemsByEra} from '@/services/api/poemSearchService.js';
 
-export function useSearchPoems() {
+/**
+ * @param {Object} options - Hook options
+ * @param {Array<string>} options.selectedEras - Selected era IDs for filtering
+ */
+export function useSearchPoems({ selectedEras = [] } = {}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchHistory, setSearchHistory] = useState([]);
     const [hasSearched, setHasSearched] = useState(false); // Track if user has initiated a search
+
+    // Determine search mode
+    const trimmedTerm = searchTerm.trim();
+    const isEraOnlySearch = !trimmedTerm && selectedEras.length === 1;
+    const singleEraId = isEraOnlySearch ? selectedEras[0] : null;
 
     // TanStack Query hook - automatic caching and state management
     const {
@@ -20,16 +29,23 @@ export function useSearchPoems() {
         isFetching,
         refetch
     } = useQuery({
-        queryKey: ['poems', 'search', searchTerm.trim()],
-        queryFn: async ({ signal }) => { // Destructure the signal from the query context
-            const trimmed = searchTerm.trim();
-            // Pass the signal to the search function
-            const data = await searchPoemsGeneral(trimmed, { signal });
+        queryKey: isEraOnlySearch
+            ? ['poems', 'era', singleEraId]
+            : ['poems', 'search', trimmedTerm],
+        queryFn: async ({ signal }) => {
+            // Era-only search (empty term + single era selected)
+            if (isEraOnlySearch) {
+                const data = await searchPoemsByEra(singleEraId, { signal });
+                return data || [];
+            }
+
+            // Normal text search
+            const data = await searchPoemsGeneral(trimmedTerm, { signal });
 
             // Update search history when successful (only for non-empty searches)
-            if (trimmed && data && data.length > 0) {
+            if (trimmedTerm && data && data.length > 0) {
                 setSearchHistory(prev =>
-                    [trimmed, ...prev.filter(item => item !== trimmed)].slice(0, 10)
+                    [trimmedTerm, ...prev.filter(item => item !== trimmedTerm)].slice(0, 10)
                 );
             }
 

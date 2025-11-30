@@ -13,6 +13,8 @@
 
 import {fetchPoemsFromPoetryDBByAuthorAndTitle, searchPoemsByAuthor as searchByAuthorInService, searchPoemsByTitle as searchByTitleInService} from './poemService.js';
 import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js';
+import authorLifespans from '@/data/author_lifespans.json';
+import {ERAS} from '@/utils/eraMapping.js';
 
 // Request deduplication cache
 const pendingRequests = new Map();
@@ -380,4 +382,114 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
         return a.title.localeCompare(b.title);
     });
     return uniqueResults;
+}
+
+
+/**
+ * Helper function to calculate active middle year of an author
+ * @param {number|null} birthYear
+ * @param {number|null} deathYear
+ * @returns {number|null}
+ */
+function getActiveMiddleYear(birthYear, deathYear) {
+    if (birthYear != null && deathYear != null) {
+        return Math.round((birthYear + deathYear) / 2);
+    }
+    if (birthYear != null) {
+        return birthYear + 35;
+    }
+    if (deathYear != null) {
+        return deathYear - 35;
+    }
+    return null;
+}
+
+
+/**
+ * Get authors that belong to a specific era
+ * @param {string} eraId - Era ID (e.g., 'romantic', 'victorian')
+ * @returns {Array<string>} Array of author names
+ */
+function getAuthorsInEra(eraId) {
+    const era = Object.values(ERAS).find(e => e.id === eraId);
+    if (!era || era.minYear === null || era.maxYear === null) {
+        return [];
+    }
+
+    return authorLifespans
+        .filter(entry => {
+            const activeMiddle = getActiveMiddleYear(entry.birth_year, entry.death_year);
+            return activeMiddle !== null &&
+                   activeMiddle >= era.minYear &&
+                   activeMiddle <= era.maxYear;
+        })
+        .map(entry => entry.author);
+}
+
+
+/**
+ * Search poems by era - fetches all poems from authors in that era
+ *
+ * @param {string} eraId - The era ID to search for
+ * @param {Object} options - Options object
+ * @param {AbortSignal} options.signal - Abort signal for cancellation
+ * @returns {Promise<Array<object>>} Array of poems from authors in that era
+ */
+export async function searchPoemsByEra(eraId, { signal } = {}) {
+    if (!eraId || eraId === 'all') {
+        return [];
+    }
+
+    const authorsInEra = getAuthorsInEra(eraId);
+
+    if (authorsInEra.length === 0) {
+        return [];
+    }
+
+    // Fetch poems for each author in parallel (limit concurrent requests)
+    const BATCH_SIZE = 5;
+    const allPoems = [];
+
+    for (let i = 0; i < authorsInEra.length; i += BATCH_SIZE) {
+        // Check if aborted before starting batch
+        if (signal?.aborted) {
+            throw new DOMException('Aborted', 'AbortError');
+        }
+
+        const batch = authorsInEra.slice(i, i + BATCH_SIZE);
+        const batchPromises = batch.map(author => {
+            const key = `era-author:${author.toLowerCase()}`;
+            return dedupeRequest(key, () =>
+                searchByAuthorInService(author, { signal }).catch(() => [])
+            );
+        });
+
+        const batchResults = await Promise.all(batchPromises);
+        batchResults.forEach(poems => {
+            if (Array.isArray(poems)) {
+                allPoems.push(...poems);
+            }
+        });
+    }
+
+    // Deduplicate results
+    const uniquePoems = [];
+    const seenKeys = new Set();
+
+    for (const poem of allPoems) {
+        const key = `${poem.title}-${poem.author}`.toLowerCase();
+        if (!seenKeys.has(key)) {
+            uniquePoems.push({ ...poem, matchType: 'era_search', score: 50 });
+            seenKeys.add(key);
+        }
+    }
+
+    // Sort alphabetically by author, then title
+    uniquePoems.sort((a, b) => {
+        const authorComp = a.author.localeCompare(b.author);
+        if (authorComp !== 0) return authorComp;
+        return a.title.localeCompare(b.title);
+    });
+
+    return uniquePoems;
 }
