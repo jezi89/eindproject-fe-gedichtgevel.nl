@@ -18,7 +18,6 @@ import { useEasterEgg } from '@/hooks/utils/useEasterEgg.js';
 import { useToast } from '@/context/ui/ToastContext.jsx';
 import { ERAS, filterPoemsByEras } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
-import {ErrorButton} from "@/components/ErrorBoundary/ErrorButton.jsx";
 
 // Plaats hier de Public URL van je video in Supabase Storage
 const WELCOME_ANIMATION_URL = "https://fwaxobqcxzrrttzfvdsw.supabase.co/storage/v1/object/public/site-video-assets/Gedichtgevel%20Animatie%20Bewerkt%20optimized%20Res.mp4";
@@ -355,7 +354,7 @@ function HomePageContent() {
             <div ref={dailyPoemsSectionRef}>
                 <DailyPoems/>
             </div>
-            <ErrorButton/>
+
             {/* Footer - altijd onderaan */}
             <Footer/>
         </div>

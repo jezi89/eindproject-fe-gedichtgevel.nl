@@ -19,16 +19,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "test:coverage:open": "vitest run --coverage && start coverage/index.html",
-    "codecov:upload": "./.codecov/codecov.exe upload-process --fail-on-error",
-    "analyze": "pnpm knip || true && pnpm build && echo \"✓ Analysis complete! Check stats.html for bundle visualization\"",
-    "analyze:bundle": "pnpm build && start stats.html",
-    "analyze:dead-code": "pnpm knip || true",
-    "analyze:all": "pnpm analyze:dead-code && pnpm test:coverage && pnpm analyze:bundle"
+    "test:coverage:open": "vitest run --coverage && start coverage/index.html"
   },
   "dependencies": {
     "@pixi/react": "^8.0.3",
-    "@sentry/react": "^10.17.0",
     "@supabase/supabase-js": "^2.58.0",
     "@tanstack/query-sync-storage-persister": "^5.90.2",
     "@tanstack/react-query": "^5.90.2",
@@ -49,7 +43,6 @@
     "wavesurfer.js": "^7.10.3"
   },
   "devDependencies": {
-    "@codecov/vite-plugin": "^1.9.1",
     "@eslint/js": "^9.36.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",

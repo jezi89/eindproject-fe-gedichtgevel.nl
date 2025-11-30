@@ -1,43 +1,15 @@
-import { useEffect } from 'react';
 import { useRouteError, Link, isRouteErrorResponse } from 'react-router';
-import * as Sentry from '@sentry/react';
 import styles from './GlobalErrorBoundary.module.scss';
 
 /**
  * Router Error Boundary voor React Router v7
- * Vangt routing errors op en stuurt deze naar Sentry
+ * Vangt routing errors op en toont gebruikersvriendelijke foutmeldingen.
  *
  * React Router v7 gebruikt `errorElement` in plaats van een traditionele Error Boundary.
  * Deze component wordt gebruikt in de router configuratie als errorElement.
  */
 export function RouterErrorBoundary() {
     const error = useRouteError();
-
-    // Stuur error naar Sentry
-    useEffect(() => {
-        if (error) {
-            Sentry.withScope((scope) => {
-                // Voeg extra context toe
-                scope.setContext('routeError', {
-                    isRouteErrorResponse: isRouteErrorResponse(error),
-                    status: error?.status,
-                    statusText: error?.statusText,
-                    data: error?.data,
-                });
-
-                // Bepaal error level
-                if (error?.status === 404) {
-                    scope.setLevel('info'); // 404s zijn meestal niet kritiek
-                } else if (error?.status >= 500) {
-                    scope.setLevel('error'); // Server errors zijn kritiek
-                } else {
-                    scope.setLevel('warning');
-                }
-
-                Sentry.captureException(error);
-            });
-        }
-    }, [error]);
 
     // Bepaal error message
     let errorMessage = 'Er is iets misgegaan tijdens het laden van deze pagina.';
