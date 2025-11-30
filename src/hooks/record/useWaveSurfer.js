@@ -33,6 +33,7 @@ export const useRecording = (containerRef, timelineRef) => {
     const recordingStartTime = useRef(0);
     const timelinePluginRef = useRef(null);
     const timerSubscribers = useRef(new Set());
+    const isRecordingRef = useRef(false);
 
 
     // Create a memoized canvas gradient for the recorded waveform
@@ -117,12 +118,18 @@ export const useRecording = (containerRef, timelineRef) => {
         const unsubscribe = [
             wavesurfer.on('play', () => setIsPlaying(true)),
             wavesurfer.on('pause', () => setIsPlaying(false)),
-            wavesurfer.on('timeupdate', (time) => setCurrentTime(formatTime(time))),
+            wavesurfer.on('timeupdate', (time) => {
+                // Prevent state updates during recording to avoid re-renders
+                if (!isRecordingRef.current) {
+                    setCurrentTime(formatTime(time));
+                }
+            }),
             record.on('record-start', () => {
                 recordingTimeRef.current = 0;
                 setRecordingTime(0);
                 setTimeWarning(''); // Reset warning on new recording
                 setIsRecording(true);
+                isRecordingRef.current = true;
                 setIsTimelineVisible(false);
 
                 // Store the start time using performance.now()
@@ -182,6 +189,7 @@ export const useRecording = (containerRef, timelineRef) => {
             setTimeWarning(''); // Clear any existing warnings
             setRecordedAudioBlob(blob);
             setIsRecording(false);
+            isRecordingRef.current = false;
             setIsTimelineVisible(true);
 
             const onReady = () => {

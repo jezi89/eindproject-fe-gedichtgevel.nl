@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react';
+
 /**
  * Auto-centers viewport content with responsive positioning
  *

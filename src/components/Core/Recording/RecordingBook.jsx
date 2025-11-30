@@ -1,4 +1,4 @@
-import React, {useRef, useState, useContext, useEffect} from 'react';
+import React, {useRef, useState, useContext, useEffect, useMemo} from 'react';
 import {useLocation, useNavigate} from 'react-router';
 import {AltSearchBar} from './ui/AltSearchBar';
 import {AudioControls} from './ui/AudioControls';
@@ -247,9 +247,13 @@ export function RecordingBook() {
         };
     }, [controlsState.isRecording, isAutoScrollArmed]);
 
-    useEffect(() => {
-        return () => stopScrollingLoop();
-    }, []);
+    const memoizedPoemLines = useMemo(() => (
+        (selectedPoem?.lines || INSTRUCTION_POEM.lines)?.map((line, i) => (
+            <React.Fragment key={i}>
+                {line}<br/>
+            </React.Fragment>
+        ))
+    ), [selectedPoem?.lines]);
 
     return (
         <ControlsContext.Provider value={controlsState}>
@@ -405,11 +409,7 @@ export function RecordingBook() {
                                                 )}
                                             </div>
                                             <div className={componentStyles.PoemPanel_content} ref={poemContentRef}>
-                                                {(selectedPoem?.lines || INSTRUCTION_POEM.lines)?.map((line, i) => (
-                                                    <React.Fragment key={i}>
-                                                        {line}<br/>
-                                                    </React.Fragment>
-                                                ))}
+                                                {memoizedPoemLines}
                                             </div>
                                             <div className={componentStyles.BottomButtonWrapper}>
                                                 <button className={componentStyles.BrowseButton} onClick={handleComingSoon}>
