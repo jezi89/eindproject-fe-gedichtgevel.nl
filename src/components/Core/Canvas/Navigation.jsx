@@ -3,8 +3,9 @@ import {MoveControls} from "./MoveControls.jsx";
 import {FloatingShortcutPanel} from "./FloatingShortcutPanel.jsx";
 import {HintLabel} from "./HintLabel.jsx";
 import {SaveDesignButton} from "./SaveDesignButton.jsx";
-import {useRef, useState} from "react";
-import {uploadSharedImage, shareToSocialMedia, openShareDialog} from "@/services/share/shareService.js";
+import {useRef, useState, useMemo} from "react";
+import {shareToSocialMedia, openShareDialog} from "@/services/share/shareService.js";
+import {useCanvasShare} from "@/hooks/canvas/useCanvasShare.js";
 
 export default function Navigation({
                                        toggle,
@@ -34,52 +35,31 @@ export default function Navigation({
                                        controlsVisible, // <-- NIEUW
                                        controlsWidth,   // <-- NIEUW
                                    }) {
-    const navbarToggleRef = useRef(null);
-    const [isSharing, setIsSharing] = useState(false);
-    const [shareUrl, setShareUrl] = useState(null);
-    const [shareError, setShareError] = useState(null);
+    const navbarToggleRef = useRef(null); // Ref for the navbar toggle button
+
+    // Create export utils object for the hook
+    const exportUtils = useMemo(() => ({
+        getExportDataUrl
+    }), [getExportDataUrl]);
+
+    const { shareDesign, isSharing, shareError, shareUrl } = useCanvasShare(exportUtils);
 
     // Handle share button click
     const handleShare = async () => {
-        if (!getExportDataUrl) {
-            setShareError('Export niet beschikbaar');
-            return;
-        }
+        // Pass currentDesignId if available to link image to database record
+        const url = await shareDesign(currentDesignId);
 
-        setIsSharing(true);
-        setShareError(null);
+        if (url) {
+            // Try Web Share API first, fallback to copy
+            const shared = await shareToSocialMedia(url, {
+                title: 'Mijn Gedicht op Gedichtgevel.nl',
+                text: 'Bekijk mijn visualisatie!'
+            });
 
-        try {
-            // Get export data URL
-            const dataUrl = await getExportDataUrl('png');
-            if (!dataUrl) {
-                throw new Error('Export mislukt');
+            if (!navigator.share) {
+                // Show notification that URL was copied
+                alert('🔗 Link gekopieerd naar klembord!');
             }
-
-            // Upload to Supabase storage
-            const result = await uploadSharedImage(dataUrl, 'png');
-
-            if (result.success && result.url) {
-                setShareUrl(result.url);
-
-                // Try Web Share API first, fallback to copy
-                const shared = await shareToSocialMedia(result.url, {
-                    title: 'Mijn Gedicht op Gedichtgevel.nl',
-                    text: 'Bekijk mijn visualisatie!'
-                });
-
-                if (!navigator.share) {
-                    // Show notification that URL was copied
-                    alert('🔗 Link gekopieerd naar klembord!');
-                }
-            } else {
-                setShareError(result.error || 'Upload mislukt');
-            }
-        } catch (error) {
-            console.error('Share error:', error);
-            setShareError(error.message);
-        } finally {
-            setIsSharing(false);
         }
     };
 

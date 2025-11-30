@@ -156,9 +156,8 @@ function mapActiveMiddleToEra(activeMiddleYear) {
  *
  * @param {string} authorName - Author name
  * @returns {string} Era ID
- * @internal
  */
-function getAuthorEra(authorName) {
+export function getAuthorEra(authorName) {
     const activeMiddle = getAuthorActiveMiddle(authorName);
     return mapActiveMiddleToEra(activeMiddle);
 }

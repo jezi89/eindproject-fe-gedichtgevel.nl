@@ -54,6 +54,7 @@ export function useSearchPoems() {
 
     const updateSearchTerm = (term) => {
         setSearchTerm(term);
+        setHasSearched(false); // Reset search state to prevent auto-fetch on typing
     };
 
     const clearResults = () => {

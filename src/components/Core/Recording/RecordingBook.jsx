@@ -14,10 +14,11 @@ import {SearchResults} from '../../search/SearchResults';
 import HighlightIcon from './icons/Higlight-icon.svg?react';
 import DownArrowIcon from './icons/Down-arrow-icon.svg?react';
 import {MicOnIcon} from './icons/MicOnIcon.jsx';
+import {CanvasDataService} from '@/services/canvas/canvasDataService.js';
 
 // Instruction text to show before any poem is selected
 const INSTRUCTION_POEM = {
-    title: 'Zoek een gedicht',
+    title: 'Geen gedicht geladen',
     author: '',
     lines: [
         'Gebruik de zoekbalk hierboven of',
@@ -112,15 +113,27 @@ export function RecordingBook() {
     // Auto-scroll refs
     const poemContentRef = useRef(null);
     const scrollIntervalRef = useRef(null);
-    const [isScrolling, setIsScrolling] = useState(false);
+    const scrollAccumulatorRef = useRef(0);
+    const scrollSpeedRef = useRef(3); // Ref for immediate access in loop
+    
+    // State
+    const [isAutoScrollArmed, setIsAutoScrollArmed] = useState(false); // "Ready" state
+    const [isActuallyScrolling, setIsActuallyScrolling] = useState(false); // Active state
+    const [scrollSpeed, setScrollSpeed] = useState(3);
+
+    // Sync state to ref for animation loop
+    useEffect(() => {
+        scrollSpeedRef.current = scrollSpeed;
+    }, [scrollSpeed]);
 
     // Load poem from navigation state on mount
     useEffect(() => {
         try {
             const savedPoem = location.state?.selectedPoem;
             if (savedPoem) {
-                setSelectedPoem(savedPoem);
-                console.log('📚 Loaded poem from navigation state:', savedPoem);
+                const standardized = CanvasDataService.standardizePoemData(savedPoem);
+                setSelectedPoem(standardized);
+                console.log('📚 Loaded poem from navigation state:', standardized);
             }
         } catch (error) {
             console.error('Failed to load poem from navigation state:', error);
@@ -129,9 +142,10 @@ export function RecordingBook() {
 
     const handlePoemSelect = (poem) => {
         if (poem) {
-            setSelectedPoem(poem);
+            const standardized = CanvasDataService.standardizePoemData(poem);
+            setSelectedPoem(standardized);
             setShowOverlay(false);
-            console.log('📝 Selected poem:', poem);
+            console.log('📝 Selected poem:', standardized);
         } else {
             // No results found
             setSelectedPoem({
@@ -177,44 +191,103 @@ export function RecordingBook() {
         alert("Binnenkort beschikbaar (v2)");
     };
 
-    // Auto-scroll functionality
-    const handleAutoScroll = () => {
-        if (isScrolling) {
-            stopAutoScroll();
-            return;
-        }
+    // --- Auto-scroll Logic ---
 
+    // Speed levels in pixels per second
+    // Level 1: 3px/s (Very slow, for deep reading)
+    // Level 2: 5.0px/s
+    // Level 3: 8.0px/s (Moderate)
+    // Level 4: 12.0px/s
+    // Level 5: 16.0px/s (Fast)
+    const SPEED_LEVELS_PX_PER_SEC = [3, 5, 8, 12, 16];
+
+    // Toggle "Armed" state
+    const toggleAutoScrollArm = () => {
+        setIsAutoScrollArmed(prev => !prev);
+    };
+
+    // Start the actual scrolling loop
+    const startScrollingLoop = () => {
         const element = poemContentRef.current;
         if (!element) return;
 
-        setIsScrolling(true);
-        const speed = 1; // pixels per frame
+        setIsActuallyScrolling(true);
+        scrollAccumulatorRef.current = 0;
+        let lastFrameTime = performance.now();
 
-        const scrollStep = () => {
-            if (element) {
-                // Check if we've reached the bottom
-                if (Math.ceil(element.scrollTop + element.clientHeight) >= element.scrollHeight) {
-                    stopAutoScroll();
-                    return;
-                }
-                
-                element.scrollTop += speed;
-                scrollIntervalRef.current = requestAnimationFrame(scrollStep);
+        const scrollStep = (currentTime) => {
+            if (!element) return;
+            
+            // Calculate delta time in seconds
+            const deltaTime = (currentTime - lastFrameTime) / 1000;
+            lastFrameTime = currentTime;
+
+            // Check if we've reached the bottom
+            if (Math.ceil(element.scrollTop + element.clientHeight) >= element.scrollHeight) {
+                stopScrollingLoop(); // Just stop the loop, don't disarm
+                return;
             }
+            
+            // Get target speed in pixels per second
+            const speedIndex = scrollSpeedRef.current - 1; // 1-based to 0-based
+            const targetSpeed = SPEED_LEVELS_PX_PER_SEC[speedIndex] || SPEED_LEVELS_PX_PER_SEC[2]; // Default to speed 3 if out of bounds
+
+            // Calculate pixels to move this frame
+            const pixelsToMove = targetSpeed * deltaTime;
+
+            scrollAccumulatorRef.current += pixelsToMove;
+
+            if (scrollAccumulatorRef.current >= 1) {
+                const pixelsToScroll = Math.floor(scrollAccumulatorRef.current);
+                element.scrollTop += pixelsToScroll;
+                scrollAccumulatorRef.current -= pixelsToScroll;
+            }
+            
+            scrollIntervalRef.current = requestAnimationFrame(scrollStep);
         };
         scrollIntervalRef.current = requestAnimationFrame(scrollStep);
     };
 
-    const stopAutoScroll = () => {
+    const stopScrollingLoop = () => {
         if (scrollIntervalRef.current) {
             cancelAnimationFrame(scrollIntervalRef.current);
+            scrollIntervalRef.current = null;
         }
-        setIsScrolling(false);
+        setIsActuallyScrolling(false);
     };
 
-    // Clean up scroll on unmount
+    // Watch for Recording State Changes
     useEffect(() => {
-        return () => stopAutoScroll();
+        let startTimeout;
+
+        if (controlsState.isRecording) {
+            // Recording started!
+            if (isAutoScrollArmed) {
+                // Wait 3 seconds before starting scroll
+                startTimeout = setTimeout(() => {
+                    startScrollingLoop();
+                }, 3000);
+            }
+        } else {
+            // Recording stopped or hasn't started
+            stopScrollingLoop();
+            
+            // Reset scroll to top if we were recording
+            if (poemContentRef.current) {
+                 // Smooth scroll back to top
+                 poemContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        return () => {
+            if (startTimeout) clearTimeout(startTimeout);
+            stopScrollingLoop();
+        };
+    }, [controlsState.isRecording, isAutoScrollArmed]); // Re-run if recording state or armed state changes
+
+    // Clean up on unmount
+    useEffect(() => {
+        return () => stopScrollingLoop();
     }, []);
 
     return (
@@ -287,7 +360,9 @@ export function RecordingBook() {
                                                 ))}
                                             </select>
                                         ) : (
-                                            <span className={componentStyles.micPlaceholder}>Klik hier om microfoons te laden...</span>
+                                            <span className={componentStyles.micPlaceholder}>
+                                                <strong style={{color: '#d09a47', cursor: 'pointer'}}>Klik hier</strong> om microfoons te laden...
+                                            </span>
                                         )}
                                         {/* Display error messages */}
                                         {controlsState.error && <p className={componentStyles.errorMessage}>{controlsState.error}</p>}
@@ -381,14 +456,45 @@ export function RecordingBook() {
                                                     <span>Klik voor text highlight</span>
                                                     <HighlightIcon className={componentStyles.ButtonIcon}/>
                                                 </button>
-                                                <button 
-                                                    className={componentStyles.ListenButton} 
-                                                    onClick={handleAutoScroll}
-                                                    style={{backgroundColor: isScrolling ? '#e6b85c' : undefined}}
-                                                >
-                                                    <span>{isScrolling ? 'Stop auto-scroll' : 'Klik om te auto-scrollen'}</span>
-                                                    <DownArrowIcon className={componentStyles.ButtonIcon}/>
-                                                </button>
+                                                
+                                                <div className={componentStyles.AutoScrollContainer}>
+                                                    {/* Speed Controls - Moved ABOVE button */}
+                                                    <div className={componentStyles.SpeedControl}>
+                                                        <span className={componentStyles.SpeedLabel}>Snelheid:</span>
+                                                        <div className={componentStyles.SpeedButtons}>
+                                                            {[1, 2, 3, 4, 5].map(speed => (
+                                                                <button 
+                                                                    key={speed}
+                                                                    className={`${componentStyles.SpeedBtn} ${scrollSpeed === speed ? componentStyles.active : ''}`}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setScrollSpeed(speed);
+                                                                    }}
+                                                                    title={`Snelheid ${speed}`}
+                                                                >
+                                                                    {speed}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    <button 
+                                                        className={componentStyles.ListenButton} 
+                                                        onClick={toggleAutoScrollArm}
+                                                        style={{
+                                                            backgroundColor: isAutoScrollArmed ? '#e6b85c' : undefined,
+                                                            borderColor: isAutoScrollArmed ? '#c29a4b' : undefined
+                                                        }}
+                                                        title="Activeer om automatisch te scrollen tijdens opname"
+                                                    >
+                                                        <span>
+                                                            {isAutoScrollArmed 
+                                                                ? (isActuallyScrolling ? 'Aan het scrollen...' : 'Auto-scroll GEREED') 
+                                                                : 'Activeer Auto-scroll'}
+                                                        </span>
+                                                        <DownArrowIcon className={componentStyles.ButtonIcon}/>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </>
                                     )}

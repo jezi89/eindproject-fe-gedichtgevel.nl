@@ -99,6 +99,10 @@ const router = sentryCreateBrowserRouter([
     {path: "auth/callback", element: <Suspense fallback={<PageLoader/>}><AuthCallback/></Suspense>},
 ]);
 
+import {ToastProvider} from './context/ui/ToastContext.jsx';
+
+// ... existing imports ...
+
 // Create the root element for React 19
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -108,7 +112,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 persistOptions={{persister: localStoragePersister}}
             >
                 <AuthProvider>
-                    <RouterProvider router={router}/>
+                    <ToastProvider>
+                        <RouterProvider router={router}/>
+                    </ToastProvider>
                 </AuthProvider>
             </PersistQueryClientProvider>
         </GlobalErrorBoundary>

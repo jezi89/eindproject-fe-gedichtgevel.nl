@@ -30,6 +30,7 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
     // Route detection
     const location = useLocation();
     const isDesignPage = location.pathname.startsWith("/designgevel");
+    const isHome = location.pathname === '/';
 
     const navigate = useNavigate();
 
@@ -65,6 +66,7 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
             await signOut();
             navigate('/'); // Navigate to homepage after logout
         } catch (error) {
+            console.error("Logout failed", error);
         }
     };
 
@@ -94,7 +96,11 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
         <div className={`${styles.navbar} ${isDesignPage ? styles.fixedOverlay : ''} ${isDesignPage && isOverlayOpen ? styles.open : ''}`}>
             <div className={styles.navbarContainer}>
                 {/* Logo - always visible */}
-                <Link to="/" className={styles.logo}>
+                <Link 
+                    to="/" 
+                    className={styles.logo}
+                    data-active={isHome}
+                >
                     <LogoIcon aria-hidden="true" />
                     GedichtGevel
                 </Link>
@@ -111,8 +117,8 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
                 )}
 
                 {/* Desktop navigation wrapper */}
-                <nav className={styles.desktopNav}> {/* Changed from div, use <nav> for semantics */}
-                    <ul className={styles.navLinks}> {/* This is the <ul> */}
+                <nav className={styles.desktopNav}>
+                    <ul className={styles.navLinks}>
                         <li className={styles.navLink}>
                             <MainNavLink to="/designgevel">Designgevel</MainNavLink>
                         </li>
@@ -130,15 +136,15 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
                         {/* Dropdown menu */}
                         <li className={`${styles.navLink} ${styles.dropdown}`} ref={dropdownRef}>
                             <button
-                                className={styles.dropdownToggle} // This button has anchor-name via SCSS
+                                className={styles.dropdownToggle}
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                 aria-expanded={isDropdownOpen}
-                                aria-controls="meer-dropdown-menu" // Good for accessibility
+                                aria-controls="meer-dropdown-menu"
                             >
                                 Meer <span className={styles.arrow} aria-hidden="true">▼</span>
                             </button>
                             <div
-                                id="meer-dropdown-menu" // For aria-controls
+                                id="meer-dropdown-menu"
                                 className={`${styles.dropdownMenu} ${isDropdownOpen ? styles.open : ''}`}
                             >
                                 <Link to="/hoedan" onClick={() => setIsDropdownOpen(false)}>Hoe dan?</Link>
@@ -151,26 +157,25 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
 
                 {/* Desktop Auth Button Area */}
                 <div className={styles.desktopAuth}>
-                    <AuthButton/> {/* AuthButton component already applies .authButton */}
+                    <AuthButton/>
                 </div>
 
                 {/* Mobile controls: AuthButton and MenuToggle */}
                 <div className={styles.mobileControls}>
-                    <AuthButton/> {/* Mobile Auth Button */}
+                    <AuthButton/>
                     <button
                         className={`${styles.menuToggle} ${isMenuOpen ? styles.isOpen : ''}`}
                         onClick={toggleMenu}
                         aria-label={isMenuOpen ? 'Sluit menu' : 'Open menu'}
                         aria-expanded={isMenuOpen}
-                        aria-controls="mobile-menu-nav" // Good for accessibility
+                        aria-controls="mobile-menu-nav"
                     >
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
-            {/* End of navbarContainer */}
 
-            {/* Mobile menu (ensure it has an id for aria-controls) */}
+            {/* Mobile menu */}
             <nav
                 id="mobile-menu-nav"
                 className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}
@@ -204,7 +209,7 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
             </nav>
 
             {/* Mobile menu overlay */}
-            {isMenuOpen && ( // Conditionally render overlay or use class for visibility
+            {isMenuOpen && (
                 <div
                     className={`${styles.menuOverlay} ${isMenuOpen ? styles.open : ''}`}
                     onClick={toggleMenu}

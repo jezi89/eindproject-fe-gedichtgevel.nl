@@ -87,15 +87,16 @@ export class CanvasDataService {
         }
         
         // Extract lines from various possible formats
+        // Extract lines from various possible formats
         let lines = [];
         if (Array.isArray(poemData.lines)) {
             lines = poemData.lines.filter(line => typeof line === 'string');
         } else if (typeof poemData.text === 'string') {
-            lines = poemData.text.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.text.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         } else if (typeof poemData.content === 'string') {
-            lines = poemData.content.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.content.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         } else if (typeof poemData.body === 'string') {
-            lines = poemData.body.split('\n').filter(line => line.trim() !== '');
+            lines = poemData.body.split(/\r\n|\r|\n|<br\s*\/?>/i).filter(line => line.trim() !== '');
         }
         
         // Ensure we have at least some content

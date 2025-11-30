@@ -32,7 +32,7 @@ export function AltSearchBar({ searchTerm, onSearchTermChange, onSearch, loading
     };
 
     const handleBlur = (e) => {
-        e.target.placeholder = "Verschuur: De Gevel van Mijn Dromen";
+        e.target.placeholder = "Zoek op dichter en/of titel...";
     };
 
     return (

@@ -37,7 +37,7 @@
   }
 
   &.active {
-    color: $secondary-carribean-current;
+    color: $primary-flame;
     font-weight: 600;
   }
 }
@@ -58,7 +58,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, $secondary-carribean-current, $accent-gold);
+  background: linear-gradient(90deg, $primary-flame, $accent-gold);
 }
 
 // Responsive adjustments

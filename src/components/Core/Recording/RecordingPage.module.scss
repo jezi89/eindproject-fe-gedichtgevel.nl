@@ -163,8 +163,8 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   color:           $text-inverse;
   gap:             1.5rem;
   /* flex-basis: 820px; Removed to allow width to be controlled by max-width */
-  /* max-height: 85vh; Removed to prevent spiral misalignment */
-  overflow: hidden; /* Prevent container from scrolling, force internal scroll */
+  max-height:      80vh; /* Constrain height to force internal scrolling */
+  overflow:        hidden; /* Prevent container from scrolling, force internal scroll */
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
@@ -182,8 +182,8 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   transform: translateX(-50%);
   height: 100%;
 
-  @media screen and (max-width: 900px) {
-    display: none; /* Hide spiral on mobile stack */
+  @media screen and (max-width: 1200px) {
+    display: none; /* Hide spiral on smaller screens */
   }
   }
 
@@ -198,6 +198,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   border-radius:    0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
   background-color: $neutral-cream;
   box-shadow:       0 4px 15px rgb(0 0 0 / 20%);
+  min-height:       0; /* Fix for nested flex scrolling */
 
   @media screen and (max-width: 900px) {
     width: 100%;
@@ -208,6 +209,21 @@ input[type="checkbox"]:checked + .CustomCheckbox {
       border-radius: 0 0 5px 5px;
     }
   }
+  }
+
+/* ... existing code ... */
+
+.PoemPanel_content {
+  font-size:    1.25rem;
+  line-height:  1.4;
+  display:      flex;
+  flex-direction: column; /* Ensure content stacks vertically */
+  overflow-y:   auto;
+  align-items:  flex-start;
+  flex-grow:    1;
+  padding-left: 1rem;
+  gap:          1rem;
+  min-height:   0; /* Fix for nested flex scrolling */
   }
 
 .RecordingPanel {
@@ -326,17 +342,7 @@ align-items:     center;
   color:       $text-inverse;
   }
 
-.PoemPanel_content {
-  font-size:    1.25rem;
-  line-height:  1.4;
-  display:      flex;
-  flex-direction: column; /* Ensure content stacks vertically */
-  overflow-y:   auto;
-  align-items:  flex-start;
-  flex-grow:    1;
-  padding-left: 1rem;
-  gap:          1rem;
-  }
+
 
 .RecordButton {
   position:         relative; /* For countdown overlay positioning */
@@ -586,6 +592,7 @@ align-items:     center;
   display:         flex;
   justify-content: space-evenly;
   gap:             0.5rem;
+  align-items: flex-end;
   }
 
 .BrowseButton,
@@ -611,6 +618,77 @@ align-items:     center;
   background:      var(--Core-neutral-cream, #FFF5E1);
   gap:             0.3125rem;
   }
+
+.AutoScrollContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  /* Ensure the button inside takes full width/height of its original design if needed, 
+     but here we are wrapping the button. 
+     The button has fixed width/height, so we just need to center the speed controls below it. */
+}
+
+/* Adjust ListenButton when inside AutoScrollContainer if necessary. 
+   Currently ListenButton has fixed dimensions. */
+
+.SpeedControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  padding: 2px 0;
+  border-radius: 4px;
+}
+
+.SpeedLabel {
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--Core-neutral-dark, #4D5061);
+  text-transform: uppercase;
+}
+
+.SpeedButtons {
+  display: flex;
+  gap: 0; /* Connected buttons */
+}
+
+.SpeedBtn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--Core-neutral-dark, #4D5061);
+  border-right: none; /* Remove right border for middle buttons */
+  background-color: var(--Core-neutral-cream, #FFF5E1);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--Core-neutral-dark, #4D5061);
+  transition: all 0.2s ease;
+  padding: 0;
+  
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+  
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+    border-right: 1px solid var(--Core-neutral-dark, #4D5061); /* Restore right border for last one */
+  }
+  
+  &:hover {
+    background-color: #f0e6d2;
+  }
+  
+  &.active {
+    background-color: var(--Core-neutral-dark, #4D5061);
+    color: var(--Core-neutral-cream, #FFF5E1);
+  }
+}
 
 .BrowseButton:hover,
 .ListenButton:hover {

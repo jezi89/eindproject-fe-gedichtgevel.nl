@@ -179,7 +179,8 @@
   overflow:         hidden;
   flex-direction:   column;
   justify-content:  center;
-  height:           $height-min-text-area; // Was 120px;
+  min-height:       $height-min-text-area; // Was 120px;
+  height:           auto; // Allow expansion
   padding:          $spacing-m; // Changed from $spacing-xl (2rem) to $spacing-m (1rem)
   padding-bottom:   $spacing-l;
   text-align:       center;
@@ -191,11 +192,11 @@
 	font-size:   $font-size-sm-md; // Was 18px;
 	font-weight: $font-weight-regular; // Was 400;
 	line-height: $line-height-tight; // Was 1.1;
-	flex-shrink: 0;
-	max-height:  2.2em;
+	flex-shrink: 1; // Allow shrinking if needed, but wrapping is better
+	// max-height removed to allow expansion
 
-	// Ellipsis for long titles - max 2 lines
-	@include text-clamp(2);
+	// Allow wrapping
+	white-space: normal;
 	margin:      0 0 $spacing-xs 0; // Was 8px
 	color:       $neutral-soft-black; // Was $smoky-black; // Dark color for better contrast
 	}

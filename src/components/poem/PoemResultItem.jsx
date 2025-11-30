@@ -10,6 +10,8 @@ import styles from "../search/SearchResults.module.scss";
 // Custom hooks
 import { useExpandablePoem } from "@/hooks/useExpandablePoem.js";
 import { useHeightCalculation } from "@/hooks/poem/useHeightCalculation.js";
+import { useFavorites } from "@/hooks/poem/useFavorites.js";
+import { useToast } from "@/context/ui/ToastContext.jsx";
 import {
   AddressDisplay,
   ExpandedContent,
@@ -19,6 +21,11 @@ import {
   PoemHeader,
   PoemPreview,
 } from "@/components/poem";
+
+import {
+  nonExpandableVariants,
+  SPRING_CONFIG,
+} from "@/utils/animationVariants.js";
 
 // Utilities
 import { getPoemDisplayProps } from "@/utils/poem/textFormatting.js";
@@ -31,10 +38,6 @@ import {
   calculateStaggeredDelays,
   isSmallPoem,
 } from "@/utils/poemHeightCalculator.js";
-import {
-  nonExpandableVariants,
-  SPRING_CONFIG,
-} from "@/utils/animationVariants.js";
 
 export const PoemResultItem = memo(
   ({
@@ -56,6 +59,12 @@ export const PoemResultItem = memo(
     // Calling hooks before any other logic
     const contentContainerRef = useRef(null);
     const [, setSynchronizedHeight] = useState(null);
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const { addToast } = useToast();
+
+    const handleAuthorFavorite = () => {
+        addToast('Deze functie komt beschikbaar in versie 2.0', 'info');
+    };
 
     // Create expandable preview - with fallback for invalid poems
     const expandablePreview = useMemo(() => {
@@ -143,7 +152,6 @@ export const PoemResultItem = memo(
     if (!poemDisplayProps.isValid) {
       return null;
     }
-
     return (
       <PoemCard
         ref={cardRef}
@@ -155,6 +163,9 @@ export const PoemResultItem = memo(
           title={poemDisplayProps.title}
           author={poemDisplayProps.author}
           styles={styles}
+          isFavorite={isFavorite(poem)}
+          onToggleFavorite={() => toggleFavorite(poem)}
+          onAuthorFavorite={handleAuthorFavorite}
         />
 
         <AddressDisplay
