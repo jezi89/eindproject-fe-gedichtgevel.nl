@@ -16,7 +16,6 @@ import DownArrowIcon from './icons/Down-arrow-icon.svg?react';
 import {MicOnIcon} from './icons/MicOnIcon.jsx';
 import {CanvasDataService} from '@/services/canvas/canvasDataService.js';
 
-// Instruction text to show before any poem is selected
 const INSTRUCTION_POEM = {
     title: 'Geen gedicht geladen',
     author: '',
@@ -28,16 +27,14 @@ const INSTRUCTION_POEM = {
     isInstruction: true
 };
 
-// Helper to format time from milliseconds to MM:SS (like imperative example)
 const formatRecordingTime = (timeInMs) => {
-    const minutes = Math.floor((timeInMs % 3600000) / 60000); // minutes
-    const secs = Math.floor((timeInMs % 60000) / 1000); // seconds
+    const minutes = Math.floor((timeInMs % 3600000) / 60000);
+    const secs = Math.floor((timeInMs % 60000) / 1000);
     return [minutes, secs]
         .map((v) => (v < 10 ? '0' + v : v))
         .join(':');
 };
 
-// Timer display component that uses direct DOM updates for recording time
 const TimerDisplay = () => {
     const {isRecording, subscribeToTimer} = useContext(ControlsContext);
     const {currentTime} = useContext(TimeContext);
@@ -46,7 +43,6 @@ const TimerDisplay = () => {
     useEffect(() => {
         if (!isRecording || !subscribeToTimer) return;
 
-        // Subscribe to timer updates and update DOM directly (no re-renders!)
         const unsubscribe = subscribeToTimer((timeInMs) => {
             const displayElement = displayRef.current;
             if (displayElement) {
