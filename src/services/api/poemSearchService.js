@@ -1,10 +1,5 @@
 /**
- * poemSearchService.js
- * Geavanceerde zoekfuncties (filters, multi-search, combinaties van velden)
- * Complexere zoekopbouw en combinaties, eventueel op basis van een enkele dataset (nog géén cache/cross-data).
- *
- * @description Advanced search functions (filters, multi-search, field combinations)
- * Complex search construction and combinations, potentially based on a single dataset (not yet cache/cross-data).
+ * Advanced Poem Search Service
  *
  * OPTIMIZATIONS IMPLEMENTED:
  * 1. Smart Request Routing - Only makes necessary API calls based on search term analysis
@@ -16,23 +11,21 @@
  * @module poemSearchService
  */
 
-// src/services/api/poemSearchService.js
 import {fetchPoemsFromPoetryDBByAuthorAndTitle, searchPoemsByAuthor as searchByAuthorInService, searchPoemsByTitle as searchByTitleInService} from './poemService.js';
-import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js'; // Zorg ervoor dat je deze lijst hebt gedefinieerd in een apart bestand
+import {poetrydbAuthors} from '@/constants/poetryDbAuthors_2025-05-16.js';
 
 // Request deduplication cache
 const pendingRequests = new Map();
 
 
 /**
- * Analyseert een zoekterm en probeert deze intelligent op te splitsen in auteur en titel.
- * Herkent verschillende patronen in de zoekterm.
+ * Analyzes a search term and intelligently splits it into author and title.
+ * Recognizes various patterns in the search term.
  *
- * @param {string} searchTerm De complete zoekterm ingevoerd door de gebruiker
- * @returns {Object} Een object met authorTerm, titleTerm, matchType, en confidence
+ * @param {string} searchTerm Complete search term entered by the user
+ * @returns {Object} Object with authorTerm, titleTerm, matchType, and confidence
  */
 function analyzeSearchTerm(searchTerm) {
-    // Log the original search term for debugging
     // 1. Check for explicit patterns "author - title" or "title by author"
     const dashPattern = /(.+?)\s+-\s+(.+)/i;
     const byPattern = /(.+?)\s+(?:door|by|van)\s+(.+)/i;
@@ -63,8 +56,6 @@ function analyzeSearchTerm(searchTerm) {
 
     // For 3+ words, assume pattern "First Last Title"
     if (words.length >= 3) {
-        // In a production version this would be a much more extensive list or an API
-        // Ensure poetrydbAuthors is available in this scope
         const knownAuthorsLower = poetrydbAuthors.map(a => a.toLowerCase());
 
         // Enhanced author detection for queries with 1 or more words
@@ -194,17 +185,6 @@ function analyzeSearchTerm(searchTerm) {
  * @param {Function} requestFn - Function that returns a promise
  * @returns {Promise} The deduped promise
  */
-
-// TODO Nog implementeren
-
-// TEMP
-
-/**
- * Helper function to deduplicate requests
- * @param {string} key - Unique key for the request
- * @param {Function} requestFn - Function that returns a promise
- * @returns {Promise} The deduped promise
- */
 async function dedupeRequest(key, requestFn) {
     // Check if request is already pending
     if (pendingRequests.has(key)) {
@@ -225,15 +205,12 @@ async function dedupeRequest(key, requestFn) {
 
 
 /**
- * Voert een algemene zoekopdracht uit op gedichten.
- * Probeert de zoekterm intelligent te matchen tegen zowel titels als auteurs.
+ * Performs a general search on poems.
+ * Intelligently matches the search term against both titles and authors.
  *
- * @description Performs a general search on poems.
- * Tries to intelligently match the search term against both titles and authors.
- *
- * @param {string} searchTerm De ingevoerde zoekterm. / The entered search term.
- * @param {Object} filters Optionele filters voor de zoekopdracht (taal, periode, enz.) / Optional filters for the search (language, period, etc.)
- * @returns {Promise<Array<object>>} Een array van gevonden gedichten. / An array of found poems.
+ * @param {string} searchTerm The entered search term
+ * @param {Object} filters Optional filters for the search (language, period, etc.)
+ * @returns {Promise<Array<object>>} Array of found poems
  */
 export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = {}) {
     if (!searchTerm || !searchTerm.trim()) {
@@ -424,33 +401,3 @@ export async function searchPoemsGeneral(searchTerm, { filters = {}, signal } = 
     });
     return uniqueResults;
 }
-
-
-/**
- * Zoek gedichten op titel (behoudt de originele specialisatie als nodig).
- *
- * @description Search poems by title (maintains the original specialization if needed).
- * @param {string} title De titel om op te zoeken. / The title to search for.
- * @returns {Promise<Array<object>>} Found poems
- */
-
-/**
- * Zoek gedichten op auteur (behoudt de originele specialisatie als nodig).
- *
- * @description Search poems by author (maintains the original specialization if needed).
- * @param {string} author De auteur om op te zoeken. / The author to search for.
- * @returns {Promise<Array<object>>} Found poems
- */
-
-/**
- * Concept voor een functie die zoeken met filters toepast.
- * Dit is een opzet die verder uitgewerkt kan worden.
- *
- * @description Concept for a function that applies filtered search.
- * This is a setup that can be further developed.
- *
- * @param {string} searchTerm De zoekterm / The search term
- * @param {Object} filters De toegepaste filters / The applied filters
- * @returns {Promise<Array<object>>} Gefilterde resultaten / Filtered results
- */
-// TODO implementeren
