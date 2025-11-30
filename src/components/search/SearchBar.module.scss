@@ -212,7 +212,8 @@
 	transform:  translateY(-1px);
 	background: color.adjust($button-tertiary-background, $lightness: -15%);
 	// Enhanced Figma shadow on hover
-	box-shadow: 0 0 2px 3px $secondary-light, inset 2px 2px 1px 4px $secondary-light, inset -2px -2px 1px 4px $secondary-light; // Was $secondary-300
+	box-shadow: 0 0 3px 3px $secondary-light, inset 1px 1px 0px 3px $secondary-light, inset -1px 0px 1px 4px $secondary-light; // Was $secondary-300
+
 	}
 
   &:disabled {
