@@ -1,4 +1,3 @@
-// TODO useSearchOrchestration.js hook werking checken en testen
 /**
  * useSearchOrchestration Hook
  * Unified search state management combining layout, navigation, and poem state
@@ -6,7 +5,6 @@
  * Extracted from SearchResults for better separation of concerns
  */
 
-// OPTIMIZED IMPORTS - alleen wat nodig is
 import {useCallback, useDeferredValue, useEffect, useState, useTransition} from 'react';
 import {calculateCollapseScroll, getCarouselPoemHeight} from '@/utils/poemHeightCalculator';
 import {analyzeExpandablePoems} from '@/utils/shortPoemUtils.js';
@@ -14,22 +12,21 @@ import {analyzeExpandablePoems} from '@/utils/shortPoemUtils.js';
 // LocalStorage key for carousel position
 const CAROUSEL_POSITION_KEY = 'gedichtgevel_carousel_position';
 
-// Navigation handler for carousel dots
 export const useSearchOrchestration = (results, layout) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [navigationDirection, setNavigationDirection] = useState('initial');
     const [hasLoadedPosition, setHasLoadedPosition] = useState(false);
 
-    // UNIFIED STATE MANAGEMENT - elk gedicht heeft zijn eigen complete state
+    // UNIFIED STATE MANAGEMENT - each poem has its own complete state
     const [poemStates, setPoemStates] = useState({}); // { [index]: { expanded: false, phase: 'idle', height: null, globalTrigger: null } }
-    const [preCalculatedHeights, setPreCalculatedHeights] = useState({}); // Cache voor alle heights
-    const [isPending, startTransition] = useTransition(); // Voor smooth state updates
+    const [preCalculatedHeights, setPreCalculatedHeights] = useState({}); // Cache for all heights
+    const [isPending, startTransition] = useTransition(); // For smooth state updates
 
     // Deferred values for smooth animations
     const deferredPoemStates = useDeferredValue(poemStates);
     const deferredCurrentIndex = useDeferredValue(currentIndex);
 
-    // Helper function om poem state te updaten
+    // Helper function to update poem state
     const updatePoemState = useCallback((index, updates) => {
         setPoemStates(prev => ({
             ...prev,
@@ -94,7 +91,7 @@ export const useSearchOrchestration = (results, layout) => {
         }
     }, [results, poemStates]);
 
-    // Pre-calculate heights voor alle zichtbare + carousel gedichten
+    // Pre-calculate heights for all visible + carousel poems
     useEffect(() => {
         const preCalculateHeights = async () => {
             if (!results || results.length === 0 || !layout.indicesToCalculate) return;
@@ -102,7 +99,6 @@ export const useSearchOrchestration = (results, layout) => {
             const cardWidth = layout.isDesktop ? 570 : 350;
             const newHeights = {};
 
-            // Bereken heights parallel
             const heightPromises = Array.from(layout.indicesToCalculate).map(async (index) => {
                 const poem = results[index];
                 if (!poem || !poem.lines || poem.lines.length <= 4) return null;
@@ -136,12 +132,10 @@ export const useSearchOrchestration = (results, layout) => {
         preCalculateHeights();
     }, [results, currentIndex, layout.isCarousel, layout.resultCount, layout.isDesktop, layout.indicesToCalculate]);
 
-    // Navigation handlers
     const handlePrevious = useCallback(() => {
         if (!layout.isCarousel) return;
 
         const newIndex = (currentIndex - 1 + layout.resultCount) % layout.resultCount;
-
 
         setNavigationDirection('prev');
         setCurrentIndex(newIndex);
@@ -149,7 +143,7 @@ export const useSearchOrchestration = (results, layout) => {
         // Save carousel position to localStorage
         localStorage.setItem(CAROUSEL_POSITION_KEY, String(newIndex));
 
-        // Cleanup: Reset navigation direction na korte delay
+        // Reset navigation direction after short delay
         setTimeout(() => {
             setNavigationDirection('initial');
         }, 500);
@@ -160,26 +154,23 @@ export const useSearchOrchestration = (results, layout) => {
 
         const newIndex = (currentIndex + 1) % layout.resultCount;
 
-
         setNavigationDirection('next');
         setCurrentIndex(newIndex);
 
         // Save carousel position to localStorage
         localStorage.setItem(CAROUSEL_POSITION_KEY, String(newIndex));
 
-        // Cleanup: Reset navigation direction na korte delay
+        // Reset navigation direction after short delay
         setTimeout(() => {
             setNavigationDirection('initial');
         }, 500);
     }, [layout.isCarousel, layout.resultCount, currentIndex]);
 
-    // NIEUWE GLOBAL TOGGLE - werkt met unified poem states
+    // GLOBAL TOGGLE - works with unified poem states
     const handleGlobalExpandToggle = useCallback(() => {
-
-        // Bepaal welke gedichten relevant zijn - VOOR BESLISSING: gebruik zichtbare gedichten
+        // Determine which poems are relevant - FOR DECISION: use visible poems
         const visibleIndices = layout.visibleIndices.map(item => item.actualIndex);
 
-        // Analyseer welke gedichten daadwerkelijk kunnen expanderen
         const expandableAnalysis = analyzeExpandablePoems(results, visibleIndices);
 
         if (!expandableAnalysis.hasExpandablePoems) {
@@ -187,7 +178,7 @@ export const useSearchOrchestration = (results, layout) => {
             return;
         }
 
-        // Check zichtbare expandable gedichten voor beslissing expand/collapse
+        // Check visible expandable poems for expand/collapse decision
         const visibleStates = expandableAnalysis.expandableIndices.map(index => {
             const state = poemStates[index];
             return {
@@ -200,15 +191,14 @@ export const useSearchOrchestration = (results, layout) => {
         const visibleExpandedCount = visibleStates.filter(s => s.expanded).length;
         const allVisibleExpanded = visibleExpandedCount === visibleStates.length && visibleExpandedCount > 0;
 
-        // Voor ACTIE: gebruik dezelfde scope als voor BESLISSING - alleen zichtbare expandable gedichten
+        // For ACTION: use same scope as for DECISION - only visible expandable poems
         const actionIndices = new Set();
         expandableAnalysis.expandableIndices.forEach(index => actionIndices.add(index));
 
-        // BESLISSING gebaseerd op ZICHTBARE gedichten
+        // DECISION based on VISIBLE poems
         const shouldExpandAll = !allVisibleExpanded;
         const action = shouldExpandAll ? 'expand' : 'collapse';
 
-        // Trigger voor alle relevante gedichten die in idle state zijn
         const trigger = {
             action,
             timestamp: Date.now(),
@@ -216,14 +206,13 @@ export const useSearchOrchestration = (results, layout) => {
         };
 
         startTransition(() => {
-            // Update alle relevante poem states met global trigger
             const updates = {};
 
             actionIndices.forEach(index => {
                 const currentState = poemStates[index];
                 const currentPhase = currentState?.phase || 'idle';
 
-                // Voor expand: alleen idle state, voor collapse: idle OF complete state
+                // For expand: only idle state, for collapse: idle OR complete state
                 const canExpand = currentPhase === 'idle' && !currentState?.expanded;
                 const canCollapse = (currentPhase === 'idle' || currentPhase === 'complete') && currentState?.expanded;
 
@@ -238,7 +227,6 @@ export const useSearchOrchestration = (results, layout) => {
                 }
             });
 
-            // Apply alle updates tegelijk
             if (Object.keys(updates).length > 0) {
                 setPoemStates(prev => {
                     const newStates = {...prev};
@@ -255,14 +243,12 @@ export const useSearchOrchestration = (results, layout) => {
                     return newStates;
                 });
 
-                // Voor global collapse: scroll naar resultsOverview na een korte delay
+                // For global collapse: scroll to resultsOverview after short delay
                 if (!shouldExpandAll) {
                     setTimeout(() => {
                         const scrollInfo = calculateCollapseScroll('.resultsOverview', 100);
 
                         if (scrollInfo.shouldScroll) {
-
-                            // Smooth scroll animatie
                             const startPosition = window.scrollY;
                             const targetPosition = scrollInfo.targetPosition;
                             const duration = scrollInfo.estimatedDuration;
@@ -283,25 +269,22 @@ export const useSearchOrchestration = (results, layout) => {
 
                             requestAnimationFrame(animation);
                         }
-                    }, 600); // Wacht tot collapse animaties zijn begonnen
+                    }, 600); // Wait for collapse animations to start
                 }
-            } else {
-
             }
         });
     }, [poemStates, layout.isCarousel, layout.resultCount, layout.visibleIndices, results]);
 
-    // Helper function om expanded status te bepalen voor UI
+    // Helper function to determine expanded status for UI
     const getExpandedState = useCallback((index) => {
         return poemStates[index]?.expanded || false;
     }, [poemStates]);
 
-    // Helper function voor VISUAL button text - alleen zichtbare expandable gedichten tellen
+    // Helper function for VISUAL button text - only count visible expandable poems
     const getGlobalToggleState = useCallback(() => {
-        // Voor button text: ALTIJD alleen zichtbare gedichten tellen (max 3)
+        // For button text: ALWAYS only count visible poems (max 3)
         const visibleIndices = layout.visibleIndices.map(item => item.actualIndex);
 
-        // Analyseer welke zichtbare gedichten kunnen expanderen
         const expandableAnalysis = analyzeExpandablePoems(results, visibleIndices);
 
         if (!expandableAnalysis.hasExpandablePoems) {
@@ -325,7 +308,7 @@ export const useSearchOrchestration = (results, layout) => {
         return {
             allExpanded,
             expandedCount,
-            totalCount: expandableAnalysis.expandableIndices.length, // Alleen expandable gedichten
+            totalCount: expandableAnalysis.expandableIndices.length, // Only expandable poems
             hasAnyExpanded: expandedCount > 0
         };
     }, [poemStates, layout.visibleIndices, results]);
@@ -334,14 +317,12 @@ export const useSearchOrchestration = (results, layout) => {
         // Validate targetIndex is a valid number
         const validIndex = typeof targetIndex === 'number' ? targetIndex : parseInt(targetIndex, 10);
         if (isNaN(validIndex) || validIndex < 0) {
-
             return;
         }
         targetIndex = validIndex;
-        // FEATURE 1: Auto-collapse all poems when navigating to new series
-        if (options.seriesChange) {
 
-            // Trigger global collapse for all expanded poems
+        // FEATURE: Auto-collapse all poems when navigating to new series
+        if (options.seriesChange) {
             const collapseUpdates = {};
             Object.keys(poemStates).forEach(index => {
                 const state = poemStates[index];
@@ -387,7 +368,6 @@ export const useSearchOrchestration = (results, layout) => {
             return;
         }
 
-        // Regular navigation
         const direction = targetIndex > currentIndex ? 'next' : 'prev';
         setNavigationDirection(direction);
         setCurrentIndex(targetIndex);
@@ -395,7 +375,6 @@ export const useSearchOrchestration = (results, layout) => {
         // Save carousel position to localStorage
         localStorage.setItem(CAROUSEL_POSITION_KEY, String(targetIndex));
 
-        // Cleanup
         setTimeout(() => {
             setNavigationDirection('initial');
         }, 100);
