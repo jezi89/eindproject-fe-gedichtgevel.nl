@@ -1,13 +1,8 @@
-// src/components/Core/Canvas/components/FloatingPhotoGrid.jsx
-
 import React, {useState, useEffect} from "react";
-import styles from "./Canvas.module.scss"; // Updated import path
+import styles from "./Canvas.module.scss";
 import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
 import {calculateOptimalImageRequest} from "@/utils/imageOptimization.js";
 
-/**
- * Calculate simplified aspect ratio
- */
 function calculateAspectRatio(width, height) {
     if (!width || !height) return 'Unknown';
 
@@ -16,7 +11,6 @@ function calculateAspectRatio(width, height) {
     const ratioW = width / divisor;
     const ratioH = height / divisor;
 
-    // Common ratios
     const decimal = (width / height).toFixed(2);
     const common = {
         '1.33': '4:3', '1.78': '16:9', '1.50': '3:2',
@@ -31,41 +25,33 @@ export default function FloatingPhotoGrid({
                                               isLoading,
                                               error,
                                               onSetBackground,
-                                              onSetBackgroundLoadingFreeze, // NEW: Callback to control background loading freeze
+                                              onSetBackgroundLoadingFreeze,
                                               onClose,
                                               onNextPage,
                                               onPrevPage,
                                               hasNextPage,
                                               hasPrevPage,
                                               searchContext,
-                                              currentBackground,     // NEW: Current background to preserve
-                                              onPreviewChange,       // NEW: Callback for preview state changes
-                                              hoverFreezeActive,     // NEW: Combined hover freeze state (Alt+J + background loading)
-                                              imageQualityMode       // NEW: Image quality mode for smart image fetching
+                                              currentBackground,
+                                              onPreviewChange,
+                                              hoverFreezeActive,
+                                              imageQualityMode
                                           }) {
     const [isVisible, setIsVisible] = useState(false);
-
-    // Photo preview functionality
     const photoPreview = usePhotoPreview();
 
-    // Initialize preview system when grid opens
     useEffect(() => {
-
         photoPreview.openGrid(currentBackground);
 
-        // Cleanup when component unmounts
         return () => {
-
             const backgroundToRestore = photoPreview.closeGrid();
 
-            // Only restore background if it's different from current
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
                 onSetBackground(backgroundToRestore);
             }
         };
-    }, []); // Only run on mount/unmount
+    }, []);
 
-    // Update parent when preview state changes
     useEffect(() => {
         if (onPreviewChange) {
             onPreviewChange({
@@ -76,9 +62,6 @@ export default function FloatingPhotoGrid({
         }
     }, [photoPreview.previewMode, photoPreview.previewImage, photoPreview.hasHovered, onPreviewChange]);
 
-    // FloatingPhotoGrid component ready
-
-    // Generate title based on search context with source indicator
     const getTitle = () => {
         if (!searchContext) return "Achtergronden";
 
@@ -100,24 +83,17 @@ export default function FloatingPhotoGrid({
         }
     };
 
-    // Animate in when component mounts
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), 10);
         return () => clearTimeout(timer);
     }, []);
 
     const handleClose = () => {
-
-        // Clean up preview system and get background to restore
         const backgroundToRestore = photoPreview.closeGrid();
-
         setIsVisible(false);
 
-        // Wait for animation before actually closing
         setTimeout(() => {
-            // Restore background if needed
             if (backgroundToRestore && backgroundToRestore !== currentBackground) {
-
                 onSetBackground(backgroundToRestore);
             }
             onClose();
@@ -125,7 +101,6 @@ export default function FloatingPhotoGrid({
     };
 
     const handleBackgroundClick = (e) => {
-        // Close if clicking on backdrop (not the grid itself)
         if (e.target === e.currentTarget) {
             handleClose();
         }
@@ -185,19 +160,14 @@ export default function FloatingPhotoGrid({
                 )}
 
 
-                {/* Photo grid */}
                 <div className={styles.floatingPhotoGridContent}>
                     {(photos || []).map((photo) => {
-                        // Check if photo meets print-quality threshold (3000px on longest side for A4 @ 300 DPI)
                         const isPrintQuality = photo.width && photo.height &&
                             Math.max(photo.width, photo.height) >= 3000;
 
-                        // Check if photo is Low Quality / SD (max dimension <= 1024px)
                         const isLowQuality = photo.width && photo.height &&
                             Math.max(photo.width, photo.height) <= 1024;
 
-                        // Calculate crop percentage for "cover" effect
-                        // Viewport aspect ratio is typically 16:9 (or window dimensions)
                         const viewportWidth = window.innerWidth;
                         const viewportHeight = window.innerHeight;
                         const viewportAspect = viewportWidth / viewportHeight;
@@ -205,19 +175,13 @@ export default function FloatingPhotoGrid({
 
                         let cropPercentage = 0;
                         if (photoAspect > viewportAspect) {
-                            // Photo is wider - will crop horizontally
                             const usedWidth = photo.height * viewportAspect;
                             cropPercentage = Math.round((1 - usedWidth / photo.width) * 100);
                         } else {
-                            // Photo is taller - will crop vertically
                             const usedHeight = photo.width / viewportAspect;
                             cropPercentage = Math.round((1 - usedHeight / photo.height) * 100);
                         }
 
-                        // Local state for loading handled via a simple inline component or ref approach would be ideal,
-                        // but since we are mapping, we can use a data attribute or class on the parent.
-                        // However, React state is cleaner. Let's create a small sub-component for the thumbnail
-                        // to handle its own loading state without re-rendering the whole grid.
                         return (
                             <PhotoThumbnail
                                 key={photo.id}
@@ -226,18 +190,14 @@ export default function FloatingPhotoGrid({
                                 isLowQuality={isLowQuality}
                                 styles={styles}
                                 onClick={() => {
-                                    // Immediately activate background loading freeze to prevent hover conflicts
                                     if (onSetBackgroundLoadingFreeze) {
                                         onSetBackgroundLoadingFreeze(true);
 
-                                        // Auto-deactivate freeze after 3 seconds (enough time for background loading)
                                         setTimeout(() => {
                                             onSetBackgroundLoadingFreeze(false);
-
                                         }, 3000);
                                     }
 
-                                    // Calculate optimal image URL based on viewport and quality mode
                                     const optimalUrl = calculateOptimalImageRequest(
                                         photo,
                                         window.innerWidth,
@@ -247,7 +207,6 @@ export default function FloatingPhotoGrid({
 
                                     photoPreview.handlePhotoSelect(optimalUrl);
 
-                                    // Pass complete photo object with ALL metadata for reactive quality switching
                                     const backgroundData = {
                                         url: optimalUrl,
                                         thumbnail: photo.src.tiny,
@@ -257,7 +216,6 @@ export default function FloatingPhotoGrid({
                                         width: photo.width || null,
                                         height: photo.height || null,
 
-                                        // CRITICAL: For Flickr - store ALL URL variants for quality recalculation
                                         ...(photo.source === 'flickr' && {
                                             url_b: photo.url_b,
                                             url_h: photo.url_h,
@@ -273,24 +231,19 @@ export default function FloatingPhotoGrid({
                                             height_o: photo.height_o,
                                         }),
 
-                                        // For Pexels - store src object for dynamic URL generation
                                         ...(searchContext?.source === 'pexels' && photo.src && {
                                             src: photo.src
                                         })
                                     };
 
-
                                     onSetBackground(backgroundData);
-
-                                    handleClose(); // Close grid after selecting
+                                    handleClose();
                                 }}
                                 onMouseEnter={() => {
-                                    // Check if hover is frozen (e.g., after Alt+J navigation)
                                     if (hoverFreezeActive) {
                                         return;
                                     }
 
-                                    // Calculate optimal image URL for preview
                                     const optimalUrl = calculateOptimalImageRequest(
                                         photo,
                                         window.innerWidth,
@@ -336,7 +289,6 @@ export default function FloatingPhotoGrid({
     );
 }
 
-// Sub-component for individual thumbnails to handle loading state efficiently
 function PhotoThumbnail({ photo, isPrintQuality, isLowQuality, styles, onClick, onMouseEnter, searchContext }) {
     const [isLoaded, setIsLoaded] = useState(false);
 
