@@ -136,7 +136,7 @@ export const calculateExpandedHeight = (poem, screenWidth = window.innerWidth, c
     let totalVisualLines = 0;
 
     // Eenvoudigere, nauwkeurigere regel analyse
-    expandedLines.forEach((line, index) => {
+    expandedLines.forEach((line) => {
         if (!line || line.trim() === '') {
             // Lege regel - gewoon 1 regel spacing
             totalVisualLines += 0.8; // CSS margin tussen regels
@@ -441,7 +441,7 @@ export const calculateCollapseScroll = (targetSelector, offset = 100) => {
 
     const targetRect = targetElement.getBoundingClientRect();
     const currentScrollY = window.scrollY;
-    const viewportHeight = window.innerHeight;
+    // const viewportHeight = window.innerHeight;
 
     // Bereken target positie - bovenkant van element minus offset
     const targetTop = targetRect.top + currentScrollY;

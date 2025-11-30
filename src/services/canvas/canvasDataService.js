@@ -30,7 +30,7 @@ export class CanvasDataService {
             sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(standardizedData));
 
             return standardizedData;
-        } catch (error) {
+        } catch {
 
             throw new Error('Failed to store poem data for canvas');
         }
@@ -57,7 +57,7 @@ export class CanvasDataService {
             }
 
             return poemData;
-        } catch (error) {
+        } catch {
 
             this.clearPoemData(); // Clear corrupted data
             return null;
@@ -71,8 +71,8 @@ export class CanvasDataService {
         try {
             sessionStorage.removeItem(this.STORAGE_KEY);
 
-        } catch (error) {
-
+        } catch {
+            // Ignore storage errors
         }
     }   
  
@@ -210,7 +210,7 @@ export class CanvasDataService {
             // Normalize whitespace
             .replace(/\s+/g, ' ')
             // Remove any null bytes or control characters (except newlines and tabs)
-            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+            .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ''); // eslint-disable-line no-control-regex
     }
     
     /**
@@ -272,7 +272,7 @@ export class CanvasDataService {
             sessionStorage.setItem(test, test);
             sessionStorage.removeItem(test);
             return true;
-        } catch (error) {
+        } catch {
 
             return false;
         }

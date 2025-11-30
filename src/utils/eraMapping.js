@@ -212,7 +212,7 @@ export function countAuthorsPerEra({ excludeContemporary = false } = {}) {
     authorLifespans.forEach(entry => {
         const activeMiddle = getActiveMiddleYear(entry.birth_year, entry.death_year);
         const eraId = mapActiveMiddleToEra(activeMiddle);
-        if (counts.hasOwnProperty(eraId)) {
+        if (Object.prototype.hasOwnProperty.call(counts, eraId)) {
             counts[eraId]++;
         }
     });

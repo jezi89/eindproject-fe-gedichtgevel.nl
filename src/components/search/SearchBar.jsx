@@ -56,7 +56,9 @@ export function SearchBar({
         }
     };
 
-    const handleSearchClick = () => {
+    const handleSearchClick = (e) => {
+        if (e) e.preventDefault();
+        console.log('Search button clicked with term:', searchTerm);
         if (onSearch) {
             onSearch(searchTerm);
         }
@@ -92,6 +94,7 @@ export function SearchBar({
                     )}
                     <div className={styles.searchButtonContainer}>
                         <button
+                            type="button"
                             onClick={handleSearchClick}
                             className={styles.searchButton}
                             aria-label="Zoeken"
@@ -102,6 +105,5 @@ export function SearchBar({
                 </div>
             </div>
         </div>
-
     );
 }

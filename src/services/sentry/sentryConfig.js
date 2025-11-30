@@ -111,11 +111,13 @@ export function initSentry({
         }),
 
         // Omgevingsspecifieke configuratie
-        beforeSend(event, hint) {
+        beforeSend(event) {
             // In development, log events naar console maar stuur ze ook naar Sentry
             // (dit is nuttig voor local debugging met Spotlight)
-            if (isDevelopment) {
-            }
+            // In development, log events naar console maar stuur ze ook naar Sentry
+            // (dit is nuttig voor local debugging met Spotlight)
+            // if (isDevelopment) {
+            // }
             return event;
         },
 

@@ -107,7 +107,7 @@ const getDropdownDecadeRoman = (decadeNumber) => {
 
 const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat = false) => {
     const startDecade = Math.floor(startIndex / 10);
-    const endDecade = Math.floor(endIndex / 10);
+    // const endDecade = Math.floor(endIndex / 10);
 
     // Choose Roman numeral format based on usage
     const romanNumeral = useDropdownFormat

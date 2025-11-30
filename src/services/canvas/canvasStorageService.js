@@ -130,7 +130,7 @@ async function ensurePoemExists(poemData, userId) {
 
         return newPoem.id;
 
-    } catch (error) {
+    } catch {
 
         throw new Error('Failed to save poem data');
     }
@@ -211,7 +211,7 @@ export async function listUserDesigns(userId, options = {}) {
         } = options;
 
         // Debug: Check current auth user
-        const {data: {user: authUser}} = await supabase.auth.getUser();
+        // const {data: {user: authUser}} = await supabase.auth.getUser();
 
         let query = supabase
             .from('canvas_design')

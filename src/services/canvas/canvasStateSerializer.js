@@ -127,9 +127,10 @@ export function serializeCanvasState(canvasState, poemData = null) {
 
         // Validate serialized data size
         const jsonString = JSON.stringify(serialized);
-        const sizeInKB = (jsonString.length / 1024).toFixed(2);
+        // const sizeInKB = (jsonString.length / 1024).toFixed(2);
 
         if (jsonString.length > 1024 * 1024) { // 1MB limit
+            console.warn('Canvas state exceeds 1MB limit');
         }
 
         return serialized;
@@ -155,6 +156,7 @@ export function deserializeCanvasState(designSettings) {
         const version = designSettings.version || '1.0.0';
 
         if (version !== '1.0.0') {
+            // Handle future migrations here
         }
 
         // Return state object matching useCanvasState structure

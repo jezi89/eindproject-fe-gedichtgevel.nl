@@ -40,7 +40,7 @@ const handleAuthSuccess = (data = null) => {
  */
 
 // TODO Checken of profiledata paramtere gebruikt moet worden
-const register = async (email, password, captchaToken = null, profileData = {}) => {
+const register = async (email, password, captchaToken = null) => {
 
     // Todo captcha token implementeren en checken of het nu modulair is
     try {
@@ -261,73 +261,9 @@ const updatePassword = async (newPassword) => {
     }
 };
 
-/**
- * Create user profile after successful signup
- * @param {Object} user - The user object from Supabase auth
- * @param {Object} additionalData - Additional profile data
- * @returns {Promise<{success: boolean, error?: string}>}
- */
 
-const createUserProfile = async (user, additionalData = {}) => {
-    try {
-        // First check if profile already exists
-        const {data: existingProfile} = await supabase
-            .from('profile')
-            .select('id')
-            .eq('id', user.id)
-            .single();
 
-        if (existingProfile) {
-            return handleAuthSuccess();
-        }
 
-        // Create new profile
-        const {error} = await supabase
-            .from('profile')
-            .insert({
-                id: user.id,
-                email: user.email,
-                created_at: new Date().toISOString(),
-                ...additionalData
-            });
-
-        if (error) {
-            // Ignore duplicate key errors
-            if (error.code === '23505') {
-                return handleAuthSuccess();
-            }
-            throw error;
-        }
-
-        return handleAuthSuccess();
-    } catch (error) {
-        console.error('Profile creation error details:', error);
-        return handleAuthError('Profile creation', error);
-    }
-};
-
-/**
- * Get user profile
- * @param {string} userId - The user ID
- * @returns {Promise<{profile: Object|null, error?: string}>}
- */
-
-const getUserProfile = async (userId) => {
-    try {
-        const {data, error} = await supabase
-            .from('profile')
-            .select('*')
-            .eq('id', userId)
-            .single();
-
-        if (error) throw error;
-
-        return {profile: data};
-    } catch (error) {
-        console.error('Error getting user profile:', error);
-        return {profile: null, error: error.message};
-    }
-};
 
 /**
  * Update user profile

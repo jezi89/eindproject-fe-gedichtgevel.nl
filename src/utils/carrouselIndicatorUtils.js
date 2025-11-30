@@ -7,7 +7,7 @@
  * - Romeinse notatie toont het "tiental" waarin we zitten (X = 10-19, XX = 20-29, etc.)
  */
 
-import {toRoman, getDecadeRoman, generateDecades, generateDropdownDecades} from './romanNumerals.js';
+import {getDecadeRoman, generateDropdownDecades} from './romanNumerals.js';
 
 /**
  * Bereken indicator configuratie voor carousel
@@ -61,7 +61,7 @@ export const calculateIndicatorConfig = (totalCount, currentIndex) => {
 
     // Bepaal het "tiental" waarin we zitten
     const currentDecade = Math.floor(currentIndex / 10);
-    const lastDecade = Math.floor((totalCount - 1) / 10);
+    // const lastDecade = Math.floor((totalCount - 1) / 10);
     const romanDecade = currentDecade > 0 ? getDecadeRoman(currentDecade) : '';
 
     // Check of we over een tiental grens heen gaan
