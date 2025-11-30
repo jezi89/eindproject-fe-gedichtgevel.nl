@@ -63,7 +63,6 @@ const TimerDisplay = () => {
     );
 };
 
-// A new component for the record button that consumes the countdown context
 const RecordButton = () => {
     const {isRecording, handleRecordClick} = useContext(ControlsContext);
     const {isCountdownActive, countdownValue} = useContext(CountdownContext);
@@ -94,35 +93,28 @@ export function RecordingBook() {
     const [showOverlay, setShowOverlay] = useState(false);
     const storage = useRecordingStorage();
 
-    // Search hook
-    const { 
-        searchTerm, 
-        updateSearchTerm, 
-        results, 
-        loading: searchLoading, 
-        handleSearch: searchPoems 
+    const {
+        searchTerm,
+        updateSearchTerm,
+        results,
+        loading: searchLoading,
+        handleSearch: searchPoems
     } = useSearchPoems();
 
-    // All complex logic is now in the custom hook, split into three state objects
     const {timeState, controlsState, countdownState} = useRecording(waveformRef, timelineRef);
 
-    // Auto-scroll refs
     const poemContentRef = useRef(null);
     const scrollIntervalRef = useRef(null);
     const scrollAccumulatorRef = useRef(0);
-    const scrollSpeedRef = useRef(3); // Ref for immediate access in loop
-    
-    // State
-    const [isAutoScrollArmed, setIsAutoScrollArmed] = useState(false); // "Ready" state
-    const [isActuallyScrolling, setIsActuallyScrolling] = useState(false); // Active state
+    const scrollSpeedRef = useRef(3);
+
+    const [isAutoScrollArmed, setIsAutoScrollArmed] = useState(false);
+    const [isActuallyScrolling, setIsActuallyScrolling] = useState(false);
     const [scrollSpeed, setScrollSpeed] = useState(3);
 
-    // Sync state to ref for animation loop
     useEffect(() => {
         scrollSpeedRef.current = scrollSpeed;
     }, [scrollSpeed]);
-
-    // Load poem from navigation state on mount
     useEffect(() => {
         try {
             const savedPoem = location.state?.selectedPoem;
@@ -141,7 +133,6 @@ export function RecordingBook() {
             setSelectedPoem(standardized);
             setShowOverlay(false);
         } else {
-            // No results found
             setSelectedPoem({
                 title: 'Geen resultaat',
                 author: '',
@@ -157,7 +148,6 @@ export function RecordingBook() {
     };
 
     const handleSearchStart = () => {
-        // Clear instruction text when search starts
         if (selectedPoem?.isInstruction) {
             setSelectedPoem(null);
         }
@@ -183,22 +173,12 @@ export function RecordingBook() {
         alert("Binnenkort beschikbaar (v2)");
     };
 
-    // --- Auto-scroll Logic ---
-
-    // Speed levels in pixels per second
-    // Level 1: 3px/s (Very slow, for deep reading)
-    // Level 2: 5.0px/s
-    // Level 3: 8.0px/s (Moderate)
-    // Level 4: 12.0px/s
-    // Level 5: 16.0px/s (Fast)
     const SPEED_LEVELS_PX_PER_SEC = [3, 5, 8, 12, 16];
 
-    // Toggle "Armed" state
     const toggleAutoScrollArm = () => {
         setIsAutoScrollArmed(prev => !prev);
     };
 
-    // Start the actual scrolling loop
     const startScrollingLoop = () => {
         const element = poemContentRef.current;
         if (!element) return;
@@ -209,22 +189,18 @@ export function RecordingBook() {
 
         const scrollStep = (currentTime) => {
             if (!element) return;
-            
-            // Calculate delta time in seconds
+
             const deltaTime = (currentTime - lastFrameTime) / 1000;
             lastFrameTime = currentTime;
 
-            // Check if we've reached the bottom
             if (Math.ceil(element.scrollTop + element.clientHeight) >= element.scrollHeight) {
-                stopScrollingLoop(); // Just stop the loop, don't disarm
+                stopScrollingLoop();
                 return;
             }
-            
-            // Get target speed in pixels per second
-            const speedIndex = scrollSpeedRef.current - 1; // 1-based to 0-based
-            const targetSpeed = SPEED_LEVELS_PX_PER_SEC[speedIndex] || SPEED_LEVELS_PX_PER_SEC[2]; // Default to speed 3 if out of bounds
 
-            // Calculate pixels to move this frame
+            const speedIndex = scrollSpeedRef.current - 1;
+            const targetSpeed = SPEED_LEVELS_PX_PER_SEC[speedIndex] || SPEED_LEVELS_PX_PER_SEC[2];
+
             const pixelsToMove = targetSpeed * deltaTime;
 
             scrollAccumulatorRef.current += pixelsToMove;
@@ -248,25 +224,19 @@ export function RecordingBook() {
         setIsActuallyScrolling(false);
     };
 
-    // Watch for Recording State Changes
     useEffect(() => {
         let startTimeout;
 
         if (controlsState.isRecording) {
-            // Recording started!
             if (isAutoScrollArmed) {
-                // Wait 3 seconds before starting scroll
                 startTimeout = setTimeout(() => {
                     startScrollingLoop();
                 }, 3000);
             }
         } else {
-            // Recording stopped or hasn't started
             stopScrollingLoop();
-            
-            // Reset scroll to top if we were recording
+
             if (poemContentRef.current) {
-                 // Smooth scroll back to top
                  poemContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
@@ -275,9 +245,8 @@ export function RecordingBook() {
             if (startTimeout) clearTimeout(startTimeout);
             stopScrollingLoop();
         };
-    }, [controlsState.isRecording, isAutoScrollArmed]); // Re-run if recording state or armed state changes
+    }, [controlsState.isRecording, isAutoScrollArmed]);
 
-    // Clean up on unmount
     useEffect(() => {
         return () => stopScrollingLoop();
     }, []);
