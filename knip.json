@@ -18,9 +18,6 @@
     "eslint.config.mjs",
     "vitest.config.js"
   ],
-  "ignoreDependencies": [
-    "@testing-library/jest-dom"
-  ],
   "ignoreBinaries": [
     "powershell",
     "start"

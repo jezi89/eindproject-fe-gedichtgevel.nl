@@ -30,7 +30,7 @@ const ROMAN_NUMERALS = [
  * @param {number} num - The number to convert (1-3999)
  * @returns {string} Roman numeral representation
  */
-export const toRoman = (num) => {
+const toRoman = (num) => {
     if (num === 0) return '';
     if (num < 1 || num > 3999) {
         throw new Error('Roman numerals only support numbers between 1 and 3999');
@@ -126,36 +126,6 @@ const formatDecadeRange = (startIndex, endIndex, totalCount, useDropdownFormat =
     };
 };
 
-/**
- * Generate all available decades for a given total count
- * Used for dropdown navigation
- * @param {number} totalCount - Total number of items
- * @returns {Array} Array of decade objects
- */
-export const generateDecades = (totalCount) => {
-    if (totalCount <= 10) return [];
-
-    const decades = [];
-    const totalDecades = Math.ceil(totalCount / 10);
-
-    for (let i = 0; i < totalDecades; i++) {
-        const startIndex = i * 10;
-        const endIndex = Math.min((i + 1) * 10 - 1, totalCount - 1);
-        const rangeInfo = formatDecadeRange(startIndex, endIndex, totalCount);
-
-        decades.push({
-            decade: i,
-            romanNumeral: rangeInfo.romanNumeral,
-            displayName: rangeInfo.displayName,
-            startIndex: startIndex,
-            endIndex: endIndex,
-            poemCount: endIndex - startIndex + 1,
-            isFirstDecade: rangeInfo.isFirstDecade
-        });
-    }
-
-    return decades;
-};
 
 /**
  * Generate decades specifically formatted for dropdown display
