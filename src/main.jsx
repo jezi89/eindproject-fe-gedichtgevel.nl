@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from 'react';
+import { Analytics } from "@vercel/analytics/react";
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
@@ -95,19 +96,21 @@ import {ToastProvider} from './context/ui/ToastContext.jsx';
 // ... existing imports ...
 
 // Create the root element for React 19
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <GlobalErrorBoundary>
-            <PersistQueryClientProvider
-                client={queryClient}
-                persistOptions={{persister: localStoragePersister}}
-            >
-                <AuthProvider>
-                    <ToastProvider>
-                        <RouterProvider router={router}/>
-                    </ToastProvider>
-                </AuthProvider>
-            </PersistQueryClientProvider>
-        </GlobalErrorBoundary>
-    </React.StrictMode>,
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <GlobalErrorBoundary>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: localStoragePersister }}
+      >
+        <AuthProvider>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </AuthProvider>
+      </PersistQueryClientProvider>
+    </GlobalErrorBoundary>
+
+    <Analytics />
+  </React.StrictMode>
 );

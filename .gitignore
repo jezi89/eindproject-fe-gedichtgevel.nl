@@ -59,6 +59,7 @@ codecov.exe
 .branches
 .temp
 .supabase
+supabase/migrations/
 
 # Cache bestanden
 .cache

@@ -24,6 +24,7 @@
     "@tanstack/query-sync-storage-persister": "^5.90.2",
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-persist-client": "^5.90.2",
+    "@vercel/analytics": "^1.6.0",
     "@wavesurfer/react": "^1.0.11",
     "axios": "^1.12.2",
     "dexie": "^4.2.1",
