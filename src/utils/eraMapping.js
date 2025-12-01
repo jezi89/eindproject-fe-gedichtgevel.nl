@@ -178,24 +178,6 @@ function getAuthorActiveMiddle(authorName) {
 }
 
 /**
- * Filter poems by era (single)
- *
- * @param {Array} poems - Array of poem objects
- * @param {string} selectedEraId - Era ID to filter by (or 'all')
- * @returns {Array} Filtered poems
- */
-export function filterPoemsByEra(poems, selectedEraId) {
-    if (!selectedEraId || selectedEraId === ERAS.ALL.id) {
-        return poems;
-    }
-
-    return poems.filter(poem => {
-        const authorEra = getAuthorEra(poem.author);
-        return authorEra === selectedEraId;
-    });
-}
-
-/**
  * Filter poems by multiple eras
  *
  * @param {Array} poems - Array of poem objects

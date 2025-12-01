@@ -6,13 +6,13 @@
 import {supabase} from '../supabase/supabase';
 
 // Helper for consistent error handling
-export const handleError = (operation, error) => {
+const handleError = (operation, error) => {
     console.error(`${operation} error:`, error);
     return {success: false, error: error.message};
 };
 
 // Helper for successful responses
-export const handleSuccess = (data = null) => {
+const handleSuccess = (data = null) => {
     return {success: true, ...(data && {data})};
 };
 
@@ -22,7 +22,7 @@ export const handleSuccess = (data = null) => {
  * @param {Object} poem - Poem object with title, author, lines
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
-export const addFavoritePoem = async (userId, poem) => {
+const addFavoritePoem = async (userId, poem) => {
     try {
         // 1. Check if we already have a valid UUID (e.g. for Straatgedichten)
         let poemId = poem.id;
@@ -110,7 +110,7 @@ export const addFavoritePoem = async (userId, poem) => {
  * @param {string} poemId - Favorite poem ID (this is the item_id in favorite table)
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-export const removeFavoritePoem = async (userId, poemId) => {
+const removeFavoritePoem = async (userId, poemId) => {
     try {
         const {error} = await supabase
             .from('favorite')
@@ -132,7 +132,7 @@ export const removeFavoritePoem = async (userId, poemId) => {
  * @param {string} userId - User ID
  * @returns {Promise<{success: boolean, data?: Array, error?: string}>}
  */
-export const getFavoritePoems = async (userId) => {
+const getFavoritePoems = async (userId) => {
     try {
         // 1. Get favorite IDs
         const {data: favorites, error: favError} = await supabase
@@ -182,7 +182,7 @@ export const getFavoritePoems = async (userId) => {
  * @param {string} poemAuthor - Poem author
  * @returns {Promise<{isFavorited: boolean, favoriteId?: string, error?: string}>}
  */
-export const checkPoemFavorited = async (userId, poemTitle, poemAuthor) => {
+const checkPoemFavorited = async (userId, poemTitle, poemAuthor) => {
     try {
         // 1. Find poem ID
         const { data: poem, error: poemError } = await supabase
@@ -225,7 +225,7 @@ export const checkPoemFavorited = async (userId, poemTitle, poemAuthor) => {
  * @param {string} authorName - Author name
  * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
  */
-export const addFavoriteAuthor = async (userId, authorName) => {
+const addFavoriteAuthor = async (userId, authorName) => {
     try {
         const {data, error} = await supabase
             .from('user_favorite_authors')
@@ -256,7 +256,7 @@ export const addFavoriteAuthor = async (userId, authorName) => {
  * @param {string} authorId - Favorite author ID
  * @returns {Promise<{success: boolean, error?: string}>}
  */
-export const removeFavoriteAuthor = async (userId, authorId) => {
+const removeFavoriteAuthor = async (userId, authorId) => {
     try {
         const {error} = await supabase
             .from('user_favorite_authors')
@@ -277,7 +277,7 @@ export const removeFavoriteAuthor = async (userId, authorId) => {
  * @param {string} userId - User ID
  * @returns {Promise<{success: boolean, data?: Array, error?: string}>}
  */
-export const getFavoriteAuthors = async (userId) => {
+const getFavoriteAuthors = async (userId) => {
     try {
         const {data, error} = await supabase
             .from('user_favorite_authors')
@@ -299,7 +299,7 @@ export const getFavoriteAuthors = async (userId) => {
  * @param {string} authorName - Author name
  * @returns {Promise<{isFavorited: boolean, favoriteId?: string, error?: string}>}
  */
-export const checkAuthorFavorited = async (userId, authorName) => {
+const checkAuthorFavorited = async (userId, authorName) => {
     try {
         const {data, error} = await supabase
             .from('user_favorite_authors')
