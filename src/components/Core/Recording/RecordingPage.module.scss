@@ -370,11 +370,29 @@ align-items:     center;
 .micPlaceholder {
   color: $search-placeholder;
   font-style: italic;
+  font-size: $font-size-l;
+  padding-top: $spacing-s;
+
+  .micPlaceholderClick {
+    color: #d09a47;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-weight: bold;
+
+    &:hover {
+      transform: scale(1.05);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      color: color.adjust(#d09a47, $lightness: 5%);
+    }
+  }
 }
 
 .errorMessage {
   color: $feedback-error;
-  font-size: $font-size-xs;
+  font-size: $font-size-m;
+  font-weight: 700;
   margin-top: $spacing-xs;
   text-align: left; // Align with the label
   width: 100%;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../Canvas.module.scss";
+import styles from "../CanvasControls.module.scss";
+import fontStyles from "../FontSelect.module.scss";
 import { getFontPreviewUrl } from "../../../../hooks/canvas/useFontManager";
 import fontMetadata from "../../../../data/font-metadata.json";
 import ColorPicker from './ColorPicker';
@@ -37,7 +38,7 @@ const FontOption = ({ font, onSelect, isSelected }) => {
 
     return (
         <div
-            className={`${styles.fontOption} ${isSelected ? styles.selected : ''}`}
+            className={`${fontStyles.fontOption} ${isSelected ? fontStyles.selected : ''}`}
             onClick={() => onSelect(font.value)}
             style={{ 
                 fontFamily: isLoaded ? font.value : 'inherit',
@@ -105,7 +106,7 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
                 // The dropdown content is in a portal, so `triggerRef.current.contains` will return false.
                 
                 // We can check if the click target is inside the dropdown by ID or class
-                if (!event.target.closest(`.${styles.optionsList}`)) {
+                if (!event.target.closest(`.${fontStyles.optionsList}`)) {
                      setIsOpen(false);
                 }
             }
@@ -121,20 +122,20 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
     const currentLabel = options.flatMap(g => g.fonts).find(f => f.value === value)?.label || value;
 
     return (
-        <div className={styles.customSelect}>
+        <div className={fontStyles.customSelect}>
             <button 
                 ref={triggerRef}
-                className={styles.selectTrigger} 
+                className={fontStyles.selectTrigger} 
                 onClick={() => setIsOpen(!isOpen)}
                 style={{ fontFamily: value }}
             >
                 {currentLabel}
-                <span className={styles.arrow}>▼</span>
+                <span className={fontStyles.arrow}>▼</span>
             </button>
 
             {isOpen && createPortal(
                 <div 
-                    className={styles.optionsList}
+                    className={fontStyles.optionsList}
                     style={{
                         position: 'absolute',
                         top: `${dropdownPosition.top}px`,
@@ -144,8 +145,8 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
                     }}
                 >
                     {options.map((group) => (
-                        <div key={group.label} className={styles.optGroup}>
-                            <div className={styles.groupLabel}>{group.label}</div>
+                        <div key={group.label} className={fontStyles.optGroup}>
+                            <div className={fontStyles.groupLabel}>{group.label}</div>
                             {group.fonts.map((font) => (
                                 <FontOption 
                                     key={font.value} 

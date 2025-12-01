@@ -1,7 +1,7 @@
 // src/components/Core/Canvas/components/controls/BackgroundControls.jsx
 
 import React, {useState} from "react";
-import styles from "../Canvas.module.scss"; // Updated import path
+import styles from "../CanvasControls.module.scss";
 import {
     anwbCities,
     capitalCities,

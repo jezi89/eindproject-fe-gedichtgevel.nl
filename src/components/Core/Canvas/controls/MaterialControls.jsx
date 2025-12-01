@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Canvas.module.scss';
+import styles from '../CanvasControls.module.scss';
 
 const AVAILABLE_MATERIALS = [
     { name: 'Geen', value: null },

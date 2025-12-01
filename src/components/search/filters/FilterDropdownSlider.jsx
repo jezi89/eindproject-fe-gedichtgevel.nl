@@ -69,7 +69,7 @@ export function FilterDropdownSlider({
                         value={value}
                         onChange={onChange}
                         min={10}
-                        max={251}
+                        max={250}
                         label="Maximale lengte"
                     />
                 </div>

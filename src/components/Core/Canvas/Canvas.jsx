@@ -17,7 +17,7 @@ import Navigation from "./Navigation.jsx";
 import FloatingPhotoGrid from "./FloatingPhotoGrid.jsx";
 import XYMoveSliders from "./XYMoveSliders.jsx";
 import ShortcutFeedback from "./ShortcutFeedback.jsx";
-import styles from "./Canvas.module.scss";
+import styles from "./CanvasLayout.module.scss";
 import {debugManager} from "../../../debug/DebugManager.js";
 import {useResponsiveTextPosition} from "../../../hooks/canvas/useResponsiveTextPosition";
 import {clearAllPersistedState} from "../../../hooks/canvas/usePersistedState";

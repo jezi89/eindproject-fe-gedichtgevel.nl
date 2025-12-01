@@ -65,7 +65,14 @@
     "declaration-property-unit-allowed-list": {
       "/^font-size$/": ["rem", "em", "vw"],
       "/^(margin|padding|gap)$/": ["rem", "%", "vw", "vh"],
-      "/^(inset|top|right|bottom|left)$/": ["rem", "px", "%", "vw", "vh"],
+      "/^(inset|top|right|bottom|left)$/": [
+        "rem",
+        "px",
+        "%",
+        "vw",
+        "vh",
+        "dvh"
+      ],
       "/^border(-.*)?-width$/": ["px"],
       "/^outline(-.*)?-width$/": ["px"],
       "stroke-width": ["px"],

@@ -93,129 +93,174 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
     );
 
     return (
-        <div className={`${styles.navbar} ${isDesignPage ? styles.fixedOverlay : ''} ${isDesignPage && isOverlayOpen ? styles.open : ''}`}>
-            <div className={styles.navbarContainer}>
-                {/* Logo - always visible */}
-                <Link 
-                    to="/" 
-                    className={styles.logo}
-                    data-active={isHome}
-                >
-                    <LogoIcon aria-hidden="true" />
-                    GedichtGevel
-                </Link>
+      <div
+        className={`${styles.navbar} ${
+          isDesignPage ? styles.fixedOverlay : ""
+        } ${isDesignPage && isOverlayOpen ? styles.open : ""}`}
+      >
+        <div className={styles.navbarContainer}>
+          {/* Logo - always visible */}
+          <Link to="/" className={styles.logo} data-active={isHome}>
+            <LogoIcon aria-hidden="true" />
+            GedichtGevel
+          </Link>
 
-                {/* Close button for overlay mode on DesignPage */}
-                {isDesignPage && isOverlayOpen && (
-                    <button
-                        className={styles.overlayCloseButton}
-                        onClick={onOverlayClose}
-                        aria-label="Sluit navigatie"
-                    >
-                        ✕
-                    </button>
-                )}
-
-                {/* Desktop navigation wrapper */}
-                <nav className={styles.desktopNav}>
-                    <ul className={styles.navLinks}>
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/designgevel">Designgevel</MainNavLink>
-                        </li>
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/spreekgevel">Spreekgevel</MainNavLink>
-                        </li>
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/collectiegevel">Collectiegevel</MainNavLink>
-                        </li>
-                        {user && (
-                            <li className={styles.navLink}>
-                                <MainNavLink to="/account">Mijn Account</MainNavLink>
-                            </li>
-                        )}
-                        {/* Dropdown menu */}
-                        <li className={`${styles.navLink} ${styles.dropdown}`} ref={dropdownRef}>
-                            <button
-                                className={styles.dropdownToggle}
-                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                aria-expanded={isDropdownOpen}
-                                aria-controls="meer-dropdown-menu"
-                            >
-                                Meer <span className={styles.arrow} aria-hidden="true">▼</span>
-                            </button>
-                            <div
-                                id="meer-dropdown-menu"
-                                className={`${styles.dropdownMenu} ${isDropdownOpen ? styles.open : ''}`}
-                            >
-                                <Link to="/hoedan" onClick={() => setIsDropdownOpen(false)}>Hoe dan?</Link>
-                                <Link to="/voorwaarden" onClick={() => setIsDropdownOpen(false)}>Voorwaarden</Link>
-                                <Link to="/contact" onClick={() => setIsDropdownOpen(false)}>Over ons</Link>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-
-                {/* Desktop Auth Button Area */}
-                <div className={styles.desktopAuth}>
-                    <AuthButton/>
-                </div>
-
-                {/* Mobile controls: AuthButton and MenuToggle */}
-                <div className={styles.mobileControls}>
-                    <AuthButton/>
-                    <button
-                        className={`${styles.menuToggle} ${isMenuOpen ? styles.isOpen : ''}`}
-                        onClick={toggleMenu}
-                        aria-label={isMenuOpen ? 'Sluit menu' : 'Open menu'}
-                        aria-expanded={isMenuOpen}
-                        aria-controls="mobile-menu-nav"
-                    >
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-            </div>
-
-            {/* Mobile menu */}
-            <nav
-                id="mobile-menu-nav"
-                className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}
-                aria-hidden={!isMenuOpen}
+          {/* Close button for overlay mode on DesignPage */}
+          {isDesignPage && isOverlayOpen && (
+            <button
+              className={styles.overlayCloseButton}
+              onClick={onOverlayClose}
+              aria-label="Sluit navigatie"
             >
-                <ul>
-                    <li className={styles.navLink}>
-                        <MainNavLink to="/designgevel" onClick={toggleMenu}>Designgevel</MainNavLink>
-                    </li>
-                    <li className={styles.navLink}>
-                        <MainNavLink to="/spreekgevel" onClick={toggleMenu}>Spreekgevel</MainNavLink>
-                    </li>
-                    <li className={styles.navLink}>
-                        <MainNavLink to="/collectiegevel" onClick={toggleMenu}>Collectiegevel</MainNavLink>
-                    </li>
-                    {user && (
-                        <li className={styles.navLink}>
-                            <MainNavLink to="/account" onClick={toggleMenu}>Mijn Account</MainNavLink>
-                        </li>
-                    )}
-                    <li className={styles.navLink}>
-                        <Link to="/hoedan" onClick={toggleMenu}>Hoe dan?</Link>
-                    </li>
-                    <li className={styles.navLink}>
-                        <Link to="/voorwaarden" onClick={toggleMenu}>Voorwaarden</Link>
-                    </li>
-                    <li className={styles.navLink}>
-                        <Link to="/contact" onClick={toggleMenu}>Over ons</Link>
-                    </li>
-                </ul>
-            </nav>
+              ✕
+            </button>
+          )}
 
-            {/* Mobile menu overlay */}
-            {isMenuOpen && (
+          {/* Desktop navigation wrapper */}
+          <nav className={styles.desktopNav}>
+            <ul className={styles.navLinks}>
+              <li className={styles.navLink}>
+                <MainNavLink to="/designgevel">Designgevel</MainNavLink>
+              </li>
+              <li className={styles.navLink}>
+                <MainNavLink to="/spreekgevel">Spreekgevel</MainNavLink>
+              </li>
+              <li className={styles.navLink}>
+                <MainNavLink to="/collectiegevel">Collectiegevel</MainNavLink>
+              </li>
+              {user && (
+                <li className={styles.navLink}>
+                  <MainNavLink to="/account">Mijn Account</MainNavLink>
+                </li>
+              )}
+              {/* Dropdown menu */}
+              <li
+                className={`${styles.navLink} ${styles.dropdown}`}
+                ref={dropdownRef}
+              >
+                <button
+                  className={styles.dropdownToggle}
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  aria-expanded={isDropdownOpen}
+                  aria-controls="meer-dropdown-menu"
+                  data-active={["/hoedan", "/voorwaarden", "/contact"].includes(
+                    location.pathname
+                  )}
+                >
+                  Meer{" "}
+                  <span className={styles.arrow} aria-hidden="true">
+                    ▼
+                  </span>
+                </button>
                 <div
-                    className={`${styles.menuOverlay} ${isMenuOpen ? styles.open : ''}`}
-                    onClick={toggleMenu}
-                    aria-hidden="true"
-                ></div>
-            )}
+                  id="meer-dropdown-menu"
+                  className={`${styles.dropdownMenu} ${
+                    isDropdownOpen ? styles.open : ""
+                  }`}
+                >
+                  <Link
+                    to="/hoedan"
+                    onClick={() => setIsDropdownOpen(false)}
+                    data-active={location.pathname === "/hoedan"}
+                  >
+                    Hoe dan?
+                  </Link>
+                  <Link
+                    to="/voorwaarden"
+                    onClick={() => setIsDropdownOpen(false)}
+                    data-active={location.pathname === "/voorwaarden"}
+                  >
+                    Voorwaarden
+                  </Link>
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsDropdownOpen(false)}
+                    data-active={location.pathname === "/contact"}
+                  >
+                    Over ons
+                  </Link>
+                </div>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Desktop Auth Button Area */}
+          <div className={styles.desktopAuth}>
+            <AuthButton />
+          </div>
+
+          {/* Mobile controls: AuthButton and MenuToggle */}
+          <div className={styles.mobileControls}>
+            <AuthButton />
+            <button
+              className={`${styles.menuToggle} ${
+                isMenuOpen ? styles.isOpen : ""
+              }`}
+              onClick={toggleMenu}
+              aria-label={isMenuOpen ? "Sluit menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu-nav"
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
+
+        {/* Mobile menu */}
+        <nav
+          id="mobile-menu-nav"
+          className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}
+          aria-hidden={!isMenuOpen}
+        >
+          <ul>
+            <li className={styles.navLink}>
+              <MainNavLink to="/designgevel" onClick={toggleMenu}>
+                Designgevel
+              </MainNavLink>
+            </li>
+            <li className={styles.navLink}>
+              <MainNavLink to="/spreekgevel" onClick={toggleMenu}>
+                Spreekgevel
+              </MainNavLink>
+            </li>
+            <li className={styles.navLink}>
+              <MainNavLink to="/collectiegevel" onClick={toggleMenu}>
+                Collectiegevel
+              </MainNavLink>
+            </li>
+            {user && (
+              <li className={styles.navLink}>
+                <MainNavLink to="/account" onClick={toggleMenu}>
+                  Mijn Account
+                </MainNavLink>
+              </li>
+            )}
+            <li className={styles.navLink}>
+              <Link to="/hoedan" onClick={toggleMenu}>
+                Hoe dan?
+              </Link>
+            </li>
+            <li className={styles.navLink}>
+              <Link to="/voorwaarden" onClick={toggleMenu}>
+                Voorwaarden
+              </Link>
+            </li>
+            <li className={styles.navLink}>
+              <Link to="/contact" onClick={toggleMenu}>
+                Over ons
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Mobile menu overlay */}
+        {isMenuOpen && (
+          <div
+            className={`${styles.menuOverlay} ${isMenuOpen ? styles.open : ""}`}
+            onClick={toggleMenu}
+            aria-hidden="true"
+          ></div>
+        )}
+      </div>
     );
 }

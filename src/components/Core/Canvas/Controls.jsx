@@ -1,7 +1,7 @@
 // src/pages/CanvasPage/Controls.jsx
 
 import React, {useState, useMemo, useEffect} from "react";
-import styles from "./Canvas.module.scss";
+import styles from "./CanvasControls.module.scss";
 import BackgroundControls from "./controls/BackgroundControls.jsx";
 import FontControls from "./controls/FontControls.jsx";
 import LayoutControls from "./controls/LayoutControls.jsx";

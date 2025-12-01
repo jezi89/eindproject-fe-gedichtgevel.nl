@@ -1,7 +1,8 @@
 // src/components/Core/Canvas/controls/ImageQualityControls.jsx
 
 import React from "react";
-import styles from "../Canvas.module.scss";
+import styles from "../CanvasControls.module.scss";
+import qualityStyles from "../QualityControls.module.scss";
 import { IMAGE_QUALITY_MODE } from "../../../../utils/imageOptimization";
 
 export default function ImageQualityControls({
@@ -49,12 +50,12 @@ export default function ImageQualityControls({
 					!qualitySectionOpen ? styles.collapsed : ""
 				}`}
 			>
-				<div className={styles.qualityModeContainer}>
+				<div className={qualityStyles.qualityModeContainer}>
 					{qualityOptions.map((option) => (
 						<label
 							key={option.value}
-							className={`${styles.qualityOption} ${
-								imageQualityMode === option.value ? styles.active : ""
+							className={`${qualityStyles.qualityOption} ${
+								imageQualityMode === option.value ? qualityStyles.active : ""
 							}`}
 						>
 							<input
@@ -64,9 +65,9 @@ export default function ImageQualityControls({
 								checked={imageQualityMode === option.value}
 								onChange={(e) => setImageQualityMode(e.target.value)}
 							/>
-							<div className={styles.qualityOptionContent}>
-								<span className={styles.qualityLabel}>{option.label}</span>
-								<span className={styles.qualityDescription}>
+							<div className={qualityStyles.qualityOptionContent}>
+								<span className={qualityStyles.qualityLabel}>{option.label}</span>
+								<span className={qualityStyles.qualityDescription}>
 									{option.description}
 								</span>
 							</div>

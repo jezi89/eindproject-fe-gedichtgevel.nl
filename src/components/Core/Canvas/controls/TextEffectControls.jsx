@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Canvas.module.scss';
+import styles from '../CanvasControls.module.scss';
 
 export default function TextEffectControls({
     effectMode,

@@ -24,13 +24,13 @@
  */
 
 // Component-specifieke schaduwen
-$shadow-tooltip:        vars.$shadow-md;
-$shadow-modal:          0 10px 20px rgba(vars.$neutral-black, 0.3);
-$shadow-dropdown:       0 3px 5px rgba(vars.$neutral-black, 0.15);
+$shadow-tooltip:        vars.$shadow-md; // UNUSED
+$shadow-modal:          0 10px 20px rgba(vars.$neutral-black, 0.3); // UNUSED
+$shadow-dropdown:       0 3px 5px rgba(vars.$neutral-black, 0.15); // UNUSED
 
 // Interactieve schaduwen
-$shadow-button-hover:   0 5px 10px rgba(vars.$primary-cognac, 0.2);
-$shadow-button-active:  0 2px 3px rgba(vars.$primary-cognac, 0.3);
+$shadow-button-hover:   0 5px 10px rgba(vars.$primary-cognac, 0.2); // UNUSED
+$shadow-button-active:  0 2px 3px rgba(vars.$primary-cognac, 0.3); // UNUSED
 
 // Poëzievisualisatie schaduwen
 $shadow-poem-text:      0 2px 4px rgba(vars.$accent-gold, 0.25);
@@ -44,12 +44,12 @@ $shadow-poem-container: 0 8px 16px rgba(vars.$neutral-black, 0.25);
  */
 
 // Samengestelde transities voor componenten
-$transition-button:     vars.$transition-normal vars.$ease-out;
-$transition-hover:      vars.$transition-fast vars.$ease-default;
-$transition-fade:       opacity vars.$transition-normal vars.$ease-default;
-$transition-transform:  transform vars.$transition-normal vars.$ease-in-out-expo;
-$transition-color:      color vars.$transition-fast vars.$ease-default;
-$transition-background: background-color vars.$transition-normal vars.$ease-default;
+$transition-button:     vars.$transition-normal vars.$ease-out; // UNUSED
+$transition-hover:      vars.$transition-fast vars.$ease-default; // UNUSED
+$transition-fade:       opacity vars.$transition-normal vars.$ease-default; // UNUSED
+$transition-transform:  transform vars.$transition-normal vars.$ease-in-out-expo; // UNUSED
+$transition-color:      color vars.$transition-fast vars.$ease-default; // UNUSED
+$transition-background: background-color vars.$transition-normal vars.$ease-default; // UNUSED
 
 /* -------------------------------------------------------
  * ANIMATIES

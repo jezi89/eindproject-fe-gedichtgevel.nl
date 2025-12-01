@@ -189,8 +189,6 @@ export function LoginForm() {
                     {isSubmitting ? 'Bezig met inloggen...' : 'Inloggen'}
                 </SubmitButton>
 
-
-
                 <SubmitButton
                     type="button"
                     onClick={handleGoogleSignIn}

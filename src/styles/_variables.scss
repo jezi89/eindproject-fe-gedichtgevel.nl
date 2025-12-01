@@ -39,7 +39,7 @@ $primary-cognac:                      #943512; // primary-cognac
 $primary-flame:                       #e35712; // primary-flame
 $primary-dark:                        #3b1608; // primary-100
 $primary-darker:                      #68270d; // primary-200
-$primary-muted:                       #953813; // primary-300
+$primary-muted:                       #953813; // primary-300 // UNUSED
 $primary-light:                       #c24919; // primary-400
 $primary-lighter:                     #e3602b; // primary-500
 $primary-vibrant:                     #e35712; // primary-flame
@@ -49,11 +49,11 @@ $secondary-carribean-current:         #156064; // secondary-carribean-current
 $secondary-dark:                      #061d1e; // secondary-100
 $secondary-muted:                     #0f4648; // secondary-300
 $secondary-light:                     #156366; // secondary-400
-$secondary-lighter:                   #1b8083; // secondary-500
+$secondary-lighter:                   #1b8083; // secondary-500 // UNUSED
 $secondary-vibrant:                   #219da1; // secondary-600
-$secondary-brightest:                 #29c2c7; // secondary-700
-$secondary-pale:                      #62dbdf; // secondary-800
-$secondary-pastel:                    #b3edef; // secondary-900
+$secondary-brightest:                 #29c2c7; // secondary-700 // UNUSED
+$secondary-pale:                      #62dbdf; // secondary-800 // UNUSED
+$secondary-pastel:                    #b3edef; // secondary-900 // UNUSED
 
 // --- NEUTRAL COLORS ---
 $neutral-white:                       #ffffff; // white
@@ -68,7 +68,7 @@ $neutral-darker:                      #2b2d36; // grey-200
 $neutral-warm-grey:                   #a99489; // dusty-grey
 $neutral-black:                       #000000; // night
 $neutral-soft-black:                  #141204; // smoky-black
-$neutral-rich-black:                  #2b140b; // zinnwaldite-brown
+$neutral-rich-black:                  #2b140b; // zinnwaldite-brown // UNUSED
 $neutral-grey-figma:                  #C4C4C4; // Added: Specific grey from Figma design (SearchProgress)
 $neutral-dark-brown-figma:            #5D3A29; // Added: Dark brown color from Figma overview (SearchResults)
 
@@ -79,6 +79,7 @@ $accent-sage:                         #c8e9a0; // light-sage
 $accent-moss:                         #ccd698; // green-mist
 $accent-greyish:                      #b2b5c2; // grey-800
 $accent-golden-highlight:             #E6B17A; // Added: Golden highlight color from Figma (SearchResults)
+$accent-lilac:                        #c084fc; // Added: Purple color for metadata
 
 // --- FEEDBACK COLORS ---
 $feedback-success:                    #28a745; // apple
@@ -87,14 +88,14 @@ $feedback-error:                      #dc3545; // amaranth
 $feedback-info:                       #17a2b8; // pacific-blue
 
 // --- EFFECTS (SHADOWS & OVERLAYS) ---
-$shadow-light:                        rgba(0, 0, 0, 0.15);
+$shadow-light:                        rgba(0, 0, 0, 0.15); // UNUSED
 $shadow-base-light:                   rgba(0, 0, 0, 0.2);
 $shadow-base-darker:                  rgba(0, 0, 0, 0.3);
-$shadow-dark:                         rgba(1, 22, 14, 0.6);
-$shadow-subtle:                       rgba(26, 26, 26, 0.08);
+$shadow-dark:                         rgba(1, 22, 14, 0.6); // UNUSED
+$shadow-subtle:                       rgba(26, 26, 26, 0.08); // UNUSED
 $overlay-subtle:                      rgba(169, 148, 137, 0.2);
-$overlay-medium:                      rgba(169, 148, 137, 0.45);
-$overlay-dark:                        rgba(169, 148, 137, 0.8);
+$overlay-medium:                      rgba(169, 148, 137, 0.45); // UNUSED
+$overlay-dark:                        rgba(169, 148, 137, 0.8); // UNUSED
 
 // --- SEMANTIC COLORS ---
 // Semantic text colors
@@ -121,27 +122,27 @@ $border-subtle:                       $neutral-mid-light;
 $border-warm:                         $accent-brown;
 $border-focus:                        $primary-light;
 $border-accent:                       $accent-gold;
-$border-divider:                      $neutral-mid;
+$border-divider:                      $neutral-mid; // UNUSED
 
 // Semantic icon colors
-$icon-primary:                        $primary-cognac;
-$icon-secondary:                      $secondary-carribean-current;
-$icon-accent:                         $accent-gold;
-$icon-inverse:                        $neutral-cream;
+$icon-primary:                        $primary-cognac; // UNUSED
+$icon-secondary:                      $secondary-carribean-current; // UNUSED
+$icon-accent:                         $accent-gold; // UNUSED
+$icon-inverse:                        $neutral-cream; // UNUSED
 
 // --- COMPONENT-SPECIFIC COLORS ---
 // Navbar
 $navbar-background:                   $primary-cognac;
 $navbar-text:                         $primary-dark;
 $navbar-text-active:                  $accent-golden-highlight;
-$navbar-alt-background:               $primary-light;
+$navbar-alt-background:               $primary-light; // UNUSED
 
 // Button
 $button-primary-background:           $primary-light;
-$button-primary-background-alt:       $primary-cognac;
+$button-primary-background-alt:       $primary-cognac; // UNUSED
 $button-primary-text:                 $neutral-white;
 $button-primary-border:               $neutral-mid;
-$button-primary-shadow:               $shadow-base-light;
+$button-primary-shadow:               $shadow-base-light; // UNUSED
 
 $button-secondary-background:         $neutral-black;
 $button-secondary-text:               $neutral-light;
@@ -154,21 +155,21 @@ $search-background:                   $neutral-off-white;
 $search-placeholder:                  $neutral-mid-dark;
 $search-text:                         $neutral-darker;
 $search-border:                       $secondary-muted;
-$search-icon:                         $neutral-dark;
+$search-icon:                         $neutral-dark; // UNUSED
 
 // Card
 $card-background:                     $background-card;
 $card-border:                         $border-subtle;
-$card-shadow:                         $shadow-base-light;
+$card-shadow:                         $shadow-base-light; // UNUSED
 
 // Logo
-$logo-text:                           $neutral-cream;
+$logo-text:                           $neutral-cream; // UNUSED
 
 // Poem styling
 $poem-text:                           $neutral-darker;
 $poem-text-inverse:                   $neutral-cream;
-$poem-background:                     $neutral-cream;
-$poem-background-inverse:             $neutral-darker;
+$poem-background:                     $neutral-cream; // UNUSED
+$poem-background-inverse:             $neutral-darker; // UNUSED
 
 // Canvas Controls - Figma Design (Cream/Brown Theme)
 $canvas-bg-dark:                      #1a1f2e; // Dark background for main canvas area
@@ -194,12 +195,12 @@ $font-family-section-heading:         "Bitter", serif;
 $font-family-nav-item:                "Work Sans", sans-serif;
 $font-family-body:                    "Bitter", serif;
 $font-family-button:                  "Quilty", serif;
-$font-family-footer:                  "Bitter", serif;
+$font-family-footer:                  "Bitter", serif; // UNUSED
 $font-family-callout-heading:         "Work Sans", sans-serif;
 $font-family-searchbar:               "Work Sans", sans-serif;
 $font-family-bigger-body-special:     "Quilty", serif;
 $font-family-monospace:               "Courier New", monospace; // Added: Monospace font stack
-$font-family-canvas-serif:            "Cormorant Garamond", serif; // Added: Elegant serif for Canvas Design poem text. Unused ith current font manager.
+$font-family-canvas-serif:            "Cormorant Garamond", serif; // Added: Elegant serif for Canvas Design poem text. Unused ith current font manager. // UNUSED
 
 // --- FONT SIZES ---
 $font-size-xxxs:                      0.75rem; // Added: 12px extra extra small size
@@ -220,9 +221,9 @@ $font-weight-regular:                 400;
 $font-weight-semibold:                600;
 $font-weight-bold:                    700;
 $font-weight-extrabold:               800;
-$font-weight-extra-bold-special:      400;
-$font-weight-regular-italic:          400;
-$font-weight-bold-italic:             500;
+$font-weight-extra-bold-special:      400; // UNUSED
+$font-weight-regular-italic:          400; // UNUSED
+$font-weight-bold-italic:             500; // UNUSED
 
 // --- LINE HEIGHTS ---
 $line-height-tight:                   1.1; // Added: unitless tight line height
@@ -235,7 +236,7 @@ $line-height-bigger:                  2.8125rem; // 45px
 $line-height-dislectic:               2.5rem; // 40px
 
 // --- LETTERSPACING ---
-$letter-spacing-navbar-filter:        0.1563rem; // 2.5px
+$letter-spacing-navbar-filter:        0.1563rem; // 2.5px // UNUSED
 
 // --- SEMANTIC TYPOGRAPHY ---
 // Text styles for specific components
@@ -304,8 +305,8 @@ $searchbar-placeholder:               (
 // --- SIZING ---
 $width-medium-poem-showcase:          35.625rem; // 570px
 $height-medium-poem-showcase:         28.5rem; // 456px
-$width-small-poem-showcase:           34.375rem; // 550px
-$height-small-poem-showcase:          27.5rem; // 440px
+$width-small-poem-showcase:           34.375rem; // 550px // UNUSED
+$height-small-poem-showcase:          27.5rem; // 440px // UNUSED
 $height-progress-container:           25rem; // Added: 400px min height for progress container (SearchProgress)
 $width-error-container:               31.25rem; // Added: 500px max width for error container (SearchProgress)
 $height-max-error-stack:              12.5rem; // Added: 200px max height for error stack (SearchProgress)
@@ -315,7 +316,7 @@ $size-icon-container:                 1.125rem; // Added: 18px size for icon con
 $size-icon:                           1rem; // Added: 16px size for icons (SearchResults)
 $height-min-button:                   2.5rem; // Added: 40px min height for buttons (SearchResults)
 $height-min-card-header-mobile:       6.25rem; // Added: 100px min height for card header on mobile (SearchResults)
-$size-overview-circle:                12.5rem; // Added: 200px size for overview circle (SearchResults)
+$size-overview-circle:                12.5rem; // Added: 200px size for overview circle (SearchResults) // UNUSED
 $width-overview-lines:                3.75rem; // Added: 60px width for overview lines (SearchResults)
 $width-min-toast:                     11.25rem; // Added: 180px min-width for toast message (SearchResults)
 $width-max-toast:                     16.25rem; // Added: 260px max-width for toast message (SearchResults)
@@ -331,11 +332,11 @@ $spacing-xxl:                         3rem; // 48px
 $spacing-xxxl:                        4rem; // 64px
 
 // --- CONTAINERS ---
-$container-sm:                        540px; // small container
-$container-md:                        720px; // medium container
-$container-lg:                        960px; // large container
+$container-sm:                        540px; // small container // UNUSED
+$container-md:                        720px; // medium container // UNUSED
+$container-lg:                        960px; // large container // UNUSED
 $container-xl:                        1140px; // extra large container
-$container-xxl:                       1320px; // extra extra large container
+$container-xxl:                       1320px; // extra extra large container // UNUSED
 
 // --- BORDERS ---
 $border-radius-sm:                    4px;
@@ -371,11 +372,11 @@ $text-shadow-lg:                      0 4px 8px rgba($neutral-black, 0.25);
 $text-shadow-none:                    none;
 
 // --- GRADIENTS ---
-$gradient-primary:                    linear-gradient(135deg, $primary-cognac 0%, $primary-vibrant 100%);
-$gradient-secondary:                  linear-gradient(135deg, $secondary-dark 0%, $secondary-carribean-current 100%);
-$gradient-accent:                     linear-gradient(135deg, $accent-brown 0%, $accent-gold 100%);
-$gradient-dark:                       linear-gradient(135deg, $neutral-darker 0%, $neutral-black 100%);
-$gradient-light:                      linear-gradient(135deg, $neutral-white 0%, $neutral-off-white 100%);
+$gradient-primary:                    linear-gradient(135deg, $primary-cognac 0%, $primary-vibrant 100%); // UNUSED
+$gradient-secondary:                  linear-gradient(135deg, $secondary-dark 0%, $secondary-carribean-current 100%); // UNUSED
+$gradient-accent:                     linear-gradient(135deg, $accent-brown 0%, $accent-gold 100%); // UNUSED
+$gradient-dark:                       linear-gradient(135deg, $neutral-darker 0%, $neutral-black 100%); // UNUSED
+$gradient-light:                      linear-gradient(135deg, $neutral-white 0%, $neutral-off-white 100%); // UNUSED
 
 
 
@@ -398,15 +399,15 @@ $screen-xxl:                          1400px; // Extra extra large devices, very
 // 6. Z-INDEX
 // ==========================================================================
 
-$z-negative:                          -1; // Behind content
-$z-lowest:                            1; // Base level
+$z-negative:                          -1; // Behind content // UNUSED
+$z-lowest:                            1; // Base level // UNUSED
 $z-low:                               10; // Low elements
 $z-mid:                               100; // Mid-level elements
 $z-high:                              1000; // High priority elements like dropdowns
 $z-highest:                           10000; // Highest priority like modals
 $z-toast:                             9000; // Notifications/toasts
 $z-modal:                             9500; // Modal dialogs
-$z-tooltip:                           9900; // Tooltips/popovers
+$z-tooltip:                           9900; // Tooltips/popovers // UNUSED
 
 
 
@@ -416,20 +417,20 @@ $z-tooltip:                           9900; // Tooltips/popovers
 // ==========================================================================
 
 // --- TIMING ---
-$transition-fastest:                  0.1s;
+$transition-fastest:                  0.1s; // UNUSED
 $transition-fast:                     0.2s;
 $transition-normal:                   0.3s;
 $transition-slow:                     0.5s;
-$transition-slowest:                  0.8s;
+$transition-slowest:                  0.8s; // UNUSED
 
 // --- EASING CURVES ---
 $ease-default:                        ease;
 $ease-in:                             ease-in;
 $ease-out:                            ease-out;
 $ease-in-out:                         ease-in-out;
-$ease-in-out-quart:                   cubic-bezier(0.77, 0, 0.175, 1);
+$ease-in-out-quart:                   cubic-bezier(0.77, 0, 0.175, 1); // UNUSED
 $ease-in-out-expo:                    cubic-bezier(0.87, 0, 0.13, 1);
-$ease-spring:                         cubic-bezier(0.68, -0.55, 0.27, 1.55);
+$ease-spring:                         cubic-bezier(0.68, -0.55, 0.27, 1.55); // UNUSED
 
 
 // ==========================================================================

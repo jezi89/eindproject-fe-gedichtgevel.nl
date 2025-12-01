@@ -1,7 +1,8 @@
  // src/components/Core/Canvas/components/controls/LayoutControls.jsx
 
 import React from "react";
-import styles from "../Canvas.module.scss"; // Updated import path
+import styles from "../CanvasControls.module.scss";
+import optimizationStyles from "../OptimizationControls.module.scss";
 
 export default function LayoutControls({
                                            // State & Derived Values
@@ -55,21 +56,21 @@ export default function LayoutControls({
             >
                 {/* Tekst Optimalisatie - Prominent bovenaan */}
                 {/* Tekst Optimalisatie - Prominent bovenaan */}
-                <div className={styles.optimizationContainer}>
-                    <div className={styles.optimizationHeader}>
+                <div className={optimizationStyles.optimizationContainer}>
+                    <div className={optimizationStyles.optimizationHeader}>
                         <input
                             type="checkbox"
                             id="textOptimization"
                             checked={isOptimizationEnabled}
                             onChange={(e) => setIsOptimizationEnabled(e.target.checked)}
-                            className={styles.optimizationCheckbox}
+                            className={optimizationStyles.optimizationCheckbox}
                         />
-                        <label htmlFor="textOptimization" className={styles.optimizationTitle}>
+                        <label htmlFor="textOptimization" className={optimizationStyles.optimizationTitle}>
                             <span>✨ Scherper Tekst</span>
                             <span>(Print Kwaliteit)</span>
                         </label>
                     </div>
-                    <div className={styles.optimizationDescription}>
+                    <div className={optimizationStyles.optimizationDescription}>
                         Zet dit AAN voor haarscherpe export.
                         <br/>
                         <em>(Standaard uit voor betere performance)</em>

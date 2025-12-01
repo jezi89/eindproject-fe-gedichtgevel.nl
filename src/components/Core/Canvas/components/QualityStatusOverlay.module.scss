@@ -1,0 +1,48 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+/* Quality Status Overlay - Integrated into Header */
+.qualityStatusOverlay {
+  position:      absolute;
+  top:           0;
+  left:          50%;
+  transform:     translateX(-50%) translateY(-100%);
+  transition:    transform 0.3s ease;
+  pointer-events: none;
+  opacity:       0;
+  
+  &.visible {
+    transform: translateX(-50%) translateY(50%); // Slide down into view
+    opacity:   1;
+  }
+}
+
+.qualityStatusContent {
+  display:          flex;
+  align-items:      center;
+  gap:              0.5rem;
+  padding:          0.25rem 0.75rem;
+  border-radius:    16px;
+  background-color: rgba(vars.$canvas-control-bg, 0.95);
+  border:           1px solid vars.$canvas-control-accent;
+  box-shadow:       0 2px 8px rgba(0,0,0,0.2);
+  font-size:        0.75rem;
+  font-family:      vars.$font-family-section-heading;
+  color:            vars.$canvas-control-text;
+  white-space:      nowrap;
+}
+
+.qualityLabel, .dimensionsLabel {
+  opacity: 0.7;
+}
+
+.qualityValue, .dimensionsValue {
+  font-weight: 600;
+  color:       vars.$canvas-control-accent;
+}
+
+.separator {
+  opacity: 0.3;
+  margin:  0 0.25rem;
+}

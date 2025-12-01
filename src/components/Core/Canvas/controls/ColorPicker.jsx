@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from '../Canvas.module.scss';
+import styles from '../CanvasControls.module.scss';
 
 const MAX_RECENT_COLORS = 5;
 const STORAGE_KEY = 'gedichtgevel_recent_colors';
