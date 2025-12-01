@@ -162,8 +162,8 @@ export function DesignPage() {
     return (
       <div className={styles.stateContainer}>
         <div className={styles.icon}>🎨</div>
-        <h2>Loading Canvas...</h2>
-        <p className={styles.text}>Preparing poem data</p>
+        <h2>Canvas laden...</h2>
+        <p className={styles.text}>Gedichtgegevens voorbereiden</p>
       </div>
     );
   }
@@ -173,10 +173,10 @@ export function DesignPage() {
     return (
       <div className={styles.stateContainer}>
         <div className={styles.icon}>❌</div>
-        <h2>Something went wrong</h2>
+        <h2>Er ging iets mis</h2>
         <p className={styles.text}>{error}</p>
         <button onClick={() => navigate("/")} className={styles.button}>
-          Back to home
+          Terug naar home
         </button>
       </div>
     );
@@ -187,10 +187,12 @@ export function DesignPage() {
     return (
       <div className={styles.stateContainer}>
         <div className={styles.icon}>📝</div>
-        <h2>No poem data available</h2>
-        <p className={styles.text}>Go back and select a poem to edit</p>
+        <h2>Geen gedichtgegevens beschikbaar</h2>
+        <p className={styles.text}>
+          Ga terug en selecteer een gedicht om te bewerken
+        </p>
         <button onClick={() => navigate("/")} className={styles.button}>
-          Back to search
+          Terug naar zoeken
         </button>
       </div>
     );
@@ -200,15 +202,15 @@ export function DesignPage() {
   const getDataSourceMessage = () => {
     switch (dataSource) {
       case "saved-design":
-        return "✅ Saved design loaded";
+        return "✅ Opgeslagen ontwerp geladen";
       case "navigation":
-        return "✅ Poem loaded from search results";
+        return "✅ Gedicht geladen uit zoekresultaten";
       case "demo":
-        return "📝 Demo poem loaded";
+        return "📝 Demo gedicht geladen";
       case "fallback":
-        return "🎨 Standard demo poem loaded";
+        return "🎨 Standaard demo gedicht geladen";
       case "minimal":
-        return "⚠️ Minimal fallback data loaded";
+        return "⚠️ Minimale fallback data geladen";
       default:
         return "";
     }

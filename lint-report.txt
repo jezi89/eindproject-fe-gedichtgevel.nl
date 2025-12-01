@@ -1,0 +1,5 @@
+
+> projectmap@0.0.0 lint:css C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl
+> stylelint "src/**/*.{css,scss}" --ignore-pattern "**/LEGACY/**"
+
+ ELIFECYCLE  Command failed with exit code 2.

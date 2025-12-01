@@ -1,0 +1,367 @@
+
+> projectmap@0.0.0 lint:css C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl
+> stylelint "src/**/*.{css,scss}" --ignore-pattern "**/LEGACY/**"
+
+
+src/layouts/_auth-layout.scss
+   57:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   62:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   80:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   86:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  102:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  104:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  104:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  108:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  110:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  110:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  114:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  116:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  116:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/account/FavoritesSection.module.scss
+  424:1  ├ù  Unexpected duplicate selector ".tableTitle", first used at line 34  no-duplicate-selectors
+
+src/components/account/SettingsSection.module.scss
+  157:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  157:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  158:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  191:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  191:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  192:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/ErrorBoundary/GlobalErrorBoundary.module.scss
+   80:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  116:7  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  129:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/DailyPoems/DailyPoems.module.scss
+  229:16  ├ù  Unexpected unit "em" for property "padding"  declaration-property-unit-allowed-list
+  229:22  ├ù  Unexpected unit "em" for property "padding"  declaration-property-unit-allowed-list
+  230:17  ├ù  Unexpected unit "em" for property "margin"   declaration-property-unit-allowed-list
+
+src/components/search/Carrousel.module.scss
+  301:16  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+
+src/components/search/SearchBar.module.scss
+  112:19  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  116:19  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  214:21  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  223:19  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  245:21  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  254:20  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  291:21  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  305:23  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+
+src/components/search/SearchResults.module.scss
+  200:15  ├ù  Unexpected unit "em" for property "max-height"  declaration-property-unit-allowed-list
+  308:15  ├ù  Unexpected unit "em" for property "width"       declaration-property-unit-allowed-list
+  309:15  ├ù  Unexpected unit "em" for property "height"      declaration-property-unit-allowed-list
+
+src/context/ui/Toast.module.scss
+  37:9  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/layouts/NavBar/NavBar.module.scss
+  97:12  ├ù  Unexpected unit "em" for property "width"   declaration-property-unit-allowed-list
+  98:13  ├ù  Unexpected unit "em" for property "height"  declaration-property-unit-allowed-list
+
+src/pages/Audio/AudioPage.module.scss
+   82:20  ├ù  Unexpected unit "px" for property "gap"        declaration-property-unit-allowed-list
+   96:21  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+   96:25  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+  114:21  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  134:21  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+  134:26  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+  142:21  ├ù  Unexpected unit "px" for property "gap"        declaration-property-unit-allowed-list
+
+src/pages/Collections/CollectionPage.module.scss
+   86:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   86:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   90:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  229:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  237:2  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/pages/Home/HomePage.module.scss
+   31:20  ├ù  Unexpected unit "px" for property "gap"        declaration-property-unit-allowed-list
+   74:19  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+   83:13  ├ù  Unexpected unit "px" for property "padding"    declaration-property-unit-allowed-list
+   84:11  ├ù  Unexpected unit "px" for property "gap"        declaration-property-unit-allowed-list
+   90:11  ├ù  Unexpected unit "px" for property "gap"        declaration-property-unit-allowed-list
+  326:16  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  364:16  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  483:15  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  496:18  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  592:13  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+  614:13  ├ù  Unexpected unit "px" for property "font-size"  declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/Canvas.module.scss
+   111:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   111:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   140:21  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   141:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   141:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   163:14  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+   177:16  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   194:19  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   305:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   315:18  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   321:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   321:22  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   443:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   448:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   471:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   628:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   628:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   646:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   656:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   683:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   773:26  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   775:26  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   805:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   811:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   829:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   858:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   858:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   873:19  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   909:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   910:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   910:24  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   919:20  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   929:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   936:20  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   940:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   946:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   951:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   957:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  1029:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1029:24  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1102:12  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1102:16  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1121:12  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1121:17  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1201:12  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  1208:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1208:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1239:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1239:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1263:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1271:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1296:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  1304:21  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  1305:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1312:21  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  1313:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1323:18  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  1329:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1355:19  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  1361:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1379:15  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  1379:19  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  1389:19  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  1422:11  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  1436:25  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  1489:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1541:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1541:23  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1550:15  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  1550:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/FloatingShortcutPanel.module.scss
+   25:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   25:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   30:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   86:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   86:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   86:24  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   94:18  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+   96:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  101:9   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  124:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  138:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  144:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  144:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  148:17  ├ù  Unexpected unit "px" for property "margin"                  declaration-property-unit-allowed-list
+  151:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  154:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  160:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  161:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  185:10  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  193:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  193:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  196:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  204:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  204:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  213:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  218:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  219:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  225:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  239:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  239:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  259:16  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  259:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/HintLabel.module.scss
+  8:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  8:25  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/MoveControls.module.scss
+  12:14  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  13:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  32:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  43:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  43:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  47:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  47:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  55:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  55:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  56:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  60:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  60:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  64:14  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  65:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  72:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  77:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/Core/Canvas/Navigation.module.scss
+    9:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+   11:21  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+   27:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+   31:21  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+   38:20  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+   50:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+   50:25  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+   57:21  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+   76:19  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+   92:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+   95:21  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+  164:16  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+  211:16  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  226:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  226:26  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  245:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  245:25  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  298:19  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+  309:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  309:26  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  316:21  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+  340:26  ├ù  Unexpected unit "px" for property "gap"      declaration-property-unit-allowed-list
+  353:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  376:21  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+  376:25  ├ù  Unexpected unit "px" for property "padding"  declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/ResponsiveLayout.module.scss
+  19:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  35:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  58:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  58:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  86:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  86:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/Core/Canvas/SaveDesignButton.module.scss
+  100:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  110:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/Core/Canvas/ShortcutFeedback.module.scss
+  18:12  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  18:17  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  22:8   ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  34:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  69:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  69:19  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  77:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  89:14  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  89:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+
+src/components/Core/Canvas/XYMoveSliders.module.scss
+   12:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   43:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   55:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   55:24  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   58:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   65:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   66:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   66:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   77:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   77:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   78:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+   94:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  100:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  107:16  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  189:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  196:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  197:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  197:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  213:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  213:22  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  216:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  230:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  230:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  246:11  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  254:13  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  258:13  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  290:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  290:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  380:11  ├ù  Unexpected unit "em" for property "top"                     declaration-property-unit-allowed-list
+
+src/components/Core/Recording/AudioControls.module.scss
+  9:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  9:3  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+src/components/Core/Recording/RecordingPage.module.scss
+   50:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   50:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   58:45  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+   62:43  ├ù  Unexpected unit "%" for property "text-shadow"              declaration-property-unit-allowed-list
+   70:16  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+   78:21  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+   78:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  116:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  137:20  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  137:25  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  201:44  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  261:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  261:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  266:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  266:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  267:43  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  272:37  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  277:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  277:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  281:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  281:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  332:16  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  359:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  359:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  391:19  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  401:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  404:14  ├ù  Unexpected unit "%" for property "font-size"                declaration-property-unit-allowed-list
+  434:41  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  438:2   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  438:2   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  439:43  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  494:18  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  494:22  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  496:2   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  522:16  ├ù  Unexpected unit "px" for property "gap"                     declaration-property-unit-allowed-list
+  557:21  ├ù  Unexpected unit "px" for property "font-size"               declaration-property-unit-allowed-list
+  570:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  570:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  571:43  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  577:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  577:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  578:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  578:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  640:12  ├ù  Unexpected unit "px" for property "padding"                 declaration-property-unit-allowed-list
+  684:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  684:5   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  770:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  770:3   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  771:43  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  776:37  ├ù  Unexpected unit "%" for property "box-shadow"               declaration-property-unit-allowed-list
+  803:13  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  812:9   ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+  816:13  ├ù  Gebruik design tokens (vars.$...) i.p.v. hardcoded kleuren  scale-unlimited/declaration-strict-value
+
+├ù 310 problems (310 errors, 0 warnings)
+  111 errors potentially fixable with the "--fix" option.
+
+ÔÇëELIFECYCLEÔÇë Command failed with exit code 2.

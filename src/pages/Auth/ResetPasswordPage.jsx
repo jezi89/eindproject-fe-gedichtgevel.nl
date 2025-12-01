@@ -19,7 +19,6 @@ export default function ResetPasswordPage() {
         navigate("/password-reset");
       }
     }, [user, loading, navigate]);
-
     if (loading) {
       return (
         <div
@@ -43,8 +42,8 @@ export default function ResetPasswordPage() {
       <div className="auth-layout">
         <div className="auth-card">
           <div className="auth-header">
-            <h1>Set New Password</h1>
-            <p>Choose a strong password for your account</p>
+            <h1>Nieuw Wachtwoord Instellen</h1>
+            <p>Voer hieronder je nieuwe wachtwoord in.</p>
           </div>
 
           <NewPasswordForm />

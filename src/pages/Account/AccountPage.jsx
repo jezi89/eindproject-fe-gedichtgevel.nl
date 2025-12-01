@@ -70,7 +70,6 @@ export function AccountPage() {
         </div>
       );
     }
-
     // Don't render if not authenticated (will redirect)
     if (!user) {
       return null;
@@ -81,9 +80,9 @@ export function AccountPage() {
         <div className={styles.container}>
           {/* Page Header */}
           <header className={styles.header}>
-            <h1 className={styles.title}>My Account</h1>
+            <h1 className={styles.title}>Mijn Account</h1>
             <p className={styles.subtitle}>
-              Welcome back,{" "}
+              Welkom terug,{" "}
               {displayName || user.user_metadata?.full_name || user.email}
             </p>
           </header>
@@ -93,10 +92,7 @@ export function AccountPage() {
             activeTab={activeTab}
             onTabChange={(tab) => {
               if (tab === "stats") {
-                addToast(
-                  "This feature will be available in version 2.0",
-                  "info"
-                );
+                addToast("Deze functie is beschikbaar in versie 2.0", "info");
                 return;
               }
               setActiveTab(tab);

@@ -29,7 +29,6 @@ export function LoginAndSignupPage() {
   const { addToast } = useToast();
 
   // Check if we're coming from Signup with email
-  // Check if we're coming from Signup with email or confirmation
   useEffect(() => {
     if (location.pathname === "/login" && location.state?.email) {
       setShowLogin(true);

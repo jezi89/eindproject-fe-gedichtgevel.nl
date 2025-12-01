@@ -32,9 +32,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { supabase } from "@/services/supabase/supabase.js";
+import { useToast } from "@/context/ui/ToastContext";
+import styles from "./AuthCallBack.module.scss";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -53,8 +56,11 @@ const AuthCallback = () => {
           }
 
           if (data.session) {
-            // Redirect to welcome or dashboard
-            navigate("/account", { replace: true });
+            // Successful login
+            addToast("Succesvol ingelogd! Je wordt doorgestuurd...", "success");
+            setTimeout(() => {
+              navigate("/account");
+            }, 1500);
           } else {
             navigate("/welkom?confirmed=true", { replace: true });
           }
@@ -73,22 +79,15 @@ const AuthCallback = () => {
     };
 
     handleAuthCallback();
-  }, [navigate]);
+  }, [navigate, addToast]);
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "50vh",
-          flexDirection: "column",
-        }}
-      >
-        <div>Confirming your account...</div>
-        <div style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#666" }}>
-          Please wait, we are processing your email confirmation.
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <h2>Even geduld...</h2>
+          <p>Je account wordt bevestigd...</p>
+          <div className={styles.spinner}></div>
         </div>
       </div>
     );
@@ -106,14 +105,14 @@ const AuthCallback = () => {
         }}
       >
         <div style={{ color: "red", marginBottom: "1rem" }}>
-          Error confirming your account
+          Fout bij het bevestigen van je account
         </div>
         <div
           style={{ fontSize: "0.9rem", color: "#666", marginBottom: "1rem" }}
         >
           {error}
         </div>
-        <button onClick={() => navigate("/welkom")}>Back to login</button>
+        <button onClick={() => navigate("/welkom")}>Terug naar inloggen</button>
       </div>
     );
   }

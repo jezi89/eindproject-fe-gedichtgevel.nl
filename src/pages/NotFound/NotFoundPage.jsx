@@ -11,36 +11,38 @@ export function NotFoundPage() {
         <div className={styles.container}>
           <div className={styles.content}>
             <h1 className={styles.errorCode}>404</h1>
-            <h2 className={styles.title}>Page not found</h2>
+            <h2 className={styles.title}>Pagina niet gevonden</h2>
             <p className={styles.message}>
-              This page does not exist (anymore). Maybe the link is outdated or
-              you made a typo?
+              Deze pagina bestaat niet (meer). Misschien is de link verouderd of
+              heb je een typefout gemaakt?
             </p>
 
             <div className={styles.actions}>
               <Link to="/" className={styles.homeButton}>
-                Back to home
+                Terug naar home
               </Link>
             </div>
 
             <div className={styles.suggestions}>
-              <p className={styles.suggestionsTitle}>Popular pages:</p>
+              <p className={styles.suggestionsTitle}>Populaire pagina's:</p>
               <ul className={styles.linkList}>
                 <li>
                   <Link to="/designgevel">
-                    Design Facade - Design your own poem facade
+                    Designgevel - Ontwerp je eigen gedichtgevel
                   </Link>
                 </li>
                 <li>
-                  <Link to="/spreekgevel">Speak Facade - Record your poem</Link>
+                  <Link to="/spreekgevel">
+                    Spreekgevel - Spreek je gedicht in
+                  </Link>
                 </li>
                 <li>
                   <Link to="/collectiegevel">
-                    Collection Facade - View your collection
+                    Collectiegevel - Bekijk je verzameling
                   </Link>
                 </li>
                 <li>
-                  <Link to="/overmij">About this project</Link>
+                  <Link to="/overmij">Over dit project</Link>
                 </li>
               </ul>
             </div>

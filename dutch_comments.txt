@@ -1,0 +1,3086 @@
+Scanning for Dutch comments...
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\App.scss
+Line: 21
+Comment: // TODO Checken of we styles uit App.scss.old nodig hebben.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\account\AccountNav.jsx
+Line: 31
+Comment: /**
+ * AccountNav component
+ *
+ * @param {Object} props
+ * @param {string} props.activeTab - Currently active tab ID
+ * @param {Function} props.onTabChange - Callback when tab is changed
+ * @returns {JSX.Element}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\account\SettingsSection.jsx
+Line: 46
+Comment: /**
+     * Handle display name update
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\BackgroundImage.jsx
+Line: 27
+Comment: // Anchor is 0.5, 0 so x is center, y is top
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Canvas.jsx
+Line: 84
+Comment: // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Canvas.jsx
+Line: 147
+Comment: // If grid is open but user has hovered, show preview (not dimmed)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasContent.jsx
+Line: 184
+Comment: // Check if pointer is over any selected lines
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasContent.jsx
+Line: 237
+Comment: // Stable cursor update function
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasContent.jsx
+Line: 526
+Comment: // Update state if changed
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasContent.jsx
+Line: 559
+Comment: // Only apply if textMaterial is active (meaning we have a "stone slab")
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasControls.module.scss
+Line: 5
+Comment: /* Basisstijl voor alle control-knoppen */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasControls.module.scss
+Line: 19
+Comment: /* Stijl voor de ronde icon reset knoppen */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasControls.module.scss
+Line: 55
+Comment: /* Alleen voor groep-knoppen (scheidingslijnen en container rounding) */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\CanvasLayout.module.scss
+Line: 6
+Comment: /* AANGEPAST: Canvas container voor hoofdproject met NavBar */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\BackgroundControls.jsx
+Line: 62
+Comment: /* Hoofdknop om foto grid te openen */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\BackgroundControls.jsx
+Line: 108
+Comment: // Reset dropdowns wanneer vrij zoeken wordt geopend
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\BackgroundControls.jsx
+Line: 122
+Comment: // Verberg vrij zoeken balk
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\BackgroundControls.jsx
+Line: 141
+Comment: /* Vrij zoeken input (alleen als visible) */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 61
+Comment: // Update position when opening
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 73
+Comment: // Align right edge of dropdown with right edge of trigger
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 74
+Comment: // But since the dropdown is wider (300px), we need to adjust
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 101
+Comment: // Check if click is inside the portal content (which is not a child in DOM tree but is in React tree?
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 102
+Comment: // No, for Portal we need a specific check or just rely on the fact that the portal is at body level)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 103
+Comment: // Actually, checking if target is closest to .optionsList might be needed if we don't stop propagation.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 105
+Comment: // Wait, if we click inside the dropdown, we don't want to close immediately unless an option is selected.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\controls\FontControls.jsx
+Line: 108
+Comment: // We can check if the click target is inside the dropdown by ID or class
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Controls.jsx
+Line: 253
+Comment: // Open grid after short delay to allow API call to start
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Controls.jsx
+Line: 272
+Comment: // Verberg vrij zoeken balk bij dropdown selectie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Controls.jsx
+Line: 275
+Comment: // Zoek EN open modal
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\FloatingPhotoGrid.module.scss
+Line: 15
+Comment: /* CHANGED: Start from top */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\FloatingPhotoGrid.module.scss
+Line: 16
+Comment: /* CHANGED: Start from left */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\FloatingPhotoGrid.module.scss
+Line: 110
+Comment: /* Voor scrollbar ruimte en voorkomen overflow on hover van foto's */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\FloatingShortcutPanel.jsx
+Line: 203
+Comment: // Ensure left is auto
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\Navigation.jsx
+Line: 66
+Comment: // The XY sliders are only truly visible when the mode is 'poem' or 'line' AND the visibility flag is set.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\ResponsiveLayout.jsx
+Line: 35
+Comment: /* Open Buttons - Render OVER canvas when panels collapsed */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.jsx
+Line: 16
+Comment: // Callback voor focus request van parent
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.jsx
+Line: 22
+Comment: // Auto-focus en cursor overlay wanneer visibility verandert naar true
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.jsx
+Line: 40
+Comment: // Focus request handler voor callback van parent (met cursor overlay)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.jsx
+Line: 56
+Comment: // ESC key om focus overlay vroegtijdig te deactiveren
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.jsx
+Line: 70
+Comment: // Registreer de focus handler bij de parent
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 10
+Comment: /* Maximum om groei te voorkomen */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 18
+Comment: /* Voor betere drag-performance */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 186
+Comment: /* Voorkomt krimpen van button */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 241
+Comment: /* Alleen als popover NIET open is */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 267
+Comment: /* ========================================
+   FOCUS OVERLAY SYSTEEM voor Alt+J
+   - Cursor: none op hele pagina tijdens focus
+   - Alleen cursor zichtbaar op XY container
+   - Voorkomt thumbnail hovers tijdens positionering
+   ======================================== */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 315
+Comment: /* Zorg dat child elements ook focus styling krijgen */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Canvas\XYMoveSliders.module.scss
+Line: 317
+Comment: /* Erf cursor van parent */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Recording\RecordingPage.module.scss
+Line: 69
+Comment: // Zorg dat de AltSearchBar de volle breedte van de container pakt
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Recording\RecordingPage.module.scss
+Line: 215
+Comment: /* ... existing code ... */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\Core\Recording\RecordingPage.module.scss
+Line: 645
+Comment: /* Ensure the button inside takes full width/height of its original design if needed, 
+     but here we are wrapping the button. 
+     The button has fixed width/height, so we just need to center the speed controls below it. */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\DailyPoems\DailyPoems.module.scss
+Line: 11
+Comment: /// TODO Checken of er zo'n groot apart scss bestand nodig is, of dat we searchResults.module.scss verder kunnen hergebruiken
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\DailyPoems\DailyPoems.module.scss
+Line: 75
+Comment: // Dit behoudt text clarity en voorkomt browser rendering issues
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ErrorBoundary\RouterErrorBoundary.jsx
+Line: 4
+Comment: /**
+ * Router Error Boundary voor React Router v7
+ * Vangt routing errors op en toont gebruikersvriendelijke foutmeldingen.
+ *
+ * React Router v7 gebruikt `errorElement` in plaats van een traditionele Error Boundary.
+ * Deze component wordt gebruikt in de router configuratie als errorElement.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\forms\PasswordResetForm.jsx
+Line: 27
+Comment: // Basic email validation
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\forms\SignupForm.jsx
+Line: 59
+Comment: // Start countdown and redirect
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\forms\SignupForm.jsx
+Line: 66
+Comment: // More reliable state update
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\forms\SignupForm.jsx
+Line: 106
+Comment: // Validate email (required)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\ExpandedContent.jsx
+Line: 1
+Comment: /**
+ * ExpandedContent Component
+ * Displays the expanded poem content with staggered animations
+ * Extracted from PoemResultItem for modularity
+ *
+ * @component
+ * @param {Object} props
+ * @param {string[]} props.hiddenLines - The lines of the poem to display in expanded view.
+ * @param {number[]} props.staggeredDelays - Animation delays for each line.
+ * @param {boolean} [props.canvasMode] - Whether the component is in canvas mode.
+ * @param {string} props.animationPhase - Animation phase (e.g., 'collapsing', 'expanding').
+ * @param {boolean} [props.isSmallPoem=false] - Whether the poem is considered small (affects animation style).
+ * @param {string} [props.displayMode='search'] - Display mode for the component.
+ * @param {Function} [props.onLoadInCanvas] - Handler for loading in canvas.
+ * @param {Function} props.onNavigateToCanvas - Handler for navigating to canvas.
+ * @param {Function} [props.onNavigateToRecording] - Handler for navigating to recording.
+ * @param {Function} props.onToggle - Handler for toggling the expanded state.
+ * @param {Object} props.styles - CSS module or style object for class names.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\index.js
+Line: 15
+Comment: /// TODO : Verder code cleanup en refactoring. Zie verschil readme en nieuwe regelaantallen in poem componenten
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\PoemCard.jsx
+Line: 1
+Comment: /**
+ * PoemCard Component
+ * Main wrapper component for poem display
+ * Provides motion animations and layout structure with spring physics
+ *
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.isExpanded - Whether the card is expanded.
+ * @param {boolean} [props.canvasMode] - Whether the card is in canvas mode.
+ * @param {Function} [props.onClick] - Click handler for the card.
+ * @param {Function} [props.onDoubleClick] - Double click handler for the card.
+ * @param {Function} [props.onMouseEnter] - Mouse enter handler for the card.
+ * @param {Function} [props.onMouseLeave] - Mouse leave handler for the card.
+ * @param {Object} props.styles - CSS module or style object for class names.
+ * @param {React.ReactNode} props.children - Child nodes to render inside the card.
+ * @param {React.Ref} ref - Ref forwarded to the root element.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\PoemCard.jsx
+Line: 32
+Comment: // Debug logging voor animation states
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\PoemExpansionControls.jsx
+Line: 11
+Comment: /**
+ * @param {Object} props
+ * @param {boolean} props.isExpanded
+ * @param {string} props.animationPhase
+ * @param {boolean} [props.canvasMode]
+ * @param {boolean} props.canExpand
+ * @param {string} [props.displayMode]
+ * @param {Function} [props.onLoadInCanvas]
+ * @param {Function} props.onNavigateToCanvas
+ * @param {Function} [props.onNavigateToRecording]
+ * @param {Function} props.onToggle
+ * @param {Object} props.styles
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\poem\PoemHeader.jsx
+Line: 1
+Comment: /**
+ * PoemHeader Component
+ * Displays poem title and author information
+ * Extracted from PoemResultItem for modularity
+ *
+ * @component
+ * @param {Object} props
+ * @param {{display: string, title?: string}} props.title - Title object with display and optional title string.
+ * @param {{display: string, displayWithPrefix: string, title?: string}} props.author - Author object with display, displayWithPrefix, and optional title string.
+ * @param {Object} props.styles - CSS module or style object for class names.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ProtectedRoute.jsx
+Line: 12
+Comment: /**
+ * ProtectedRoute Component
+ *
+ * Wraps routes that require authentication. If the user is not authenticated,
+ * they will be redirected to the login page with a redirect URL to return
+ * after successful login.
+ *
+ * Uses React Router 7's Navigate component for declarative navigation.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - The child components to render if authenticated
+ * @param {string} [props.redirectTo="/login"] - Where to redirect unauthenticated users
+ * @returns {JSX.Element} The protected route component
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ProtectedRoute.jsx
+Line: 92
+Comment: /**
+ * De Navigate component van React Router 6/7 en je custom hook (useNavigationState) hebben verschillende doelen, maar werken samen om een goede gebruikerservaring te bieden bij protected routes.
+ *
+ * Navigate component (React Router 6/7)
+ * Doel: Declaratief navigeren (redirecten) naar een andere route.
+ * Gebruik: Je gebruikt <Navigate to="/login" state={{ from: location.pathname }} /> om een gebruiker te redirecten en optioneel extra state (zoals de oorspronkelijke URL) mee te geven.
+ * Voordeel: Je kunt eenvoudig een redirect uitvoeren en extra informatie (zoals waar de gebruiker vandaan kwam) meesturen via de state prop.
+ * useNavigationState custom hook
+ * Doel: Gemakkelijk data ophalen uit de navigation state die je met Navigate hebt meegestuurd.
+ * Gebruik: In je login-form kun je met useNavigationState('from', '/') ophalen waar de gebruiker vandaan kwam, zodat je na inloggen weer terug kunt sturen.
+ * Voordeel: Je hoeft niet telkens handmatig location.state?.from te schrijven; de hook maakt dit herbruikbaar en leesbaar.
+ * Hoe werken ze samen?
+ * Redirect met state:
+ * In ProtectedRoute stuur je de gebruiker naar /login en geef je de oorspronkelijke locatie mee:
+ * <Navigate
+ * Ophalen van state:
+ * In je login-form gebruik je de custom hook om de oorspronkelijke locatie op te halen:
+ * const redirectTo = useNavigationState('from', '/');
+ * Na succesvol inloggen kun je dan weer terugnavigeren naar de oorspronkelijke pagina.
+ * Samenvatting
+ * Navigate stuurt de gebruiker (met extra state) naar een andere route.
+ * useNavigationState haalt die extra state weer op in de nieuwe route.
+ * Ze vullen elkaar aan: declaratief navigeren én makkelijk state ophalen.
+ * Kortom:
+ * Navigate is voor het navigeren en state doorgeven, je custom hook is voor het uitlezen van die state. Ze zijn complementair.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 43
+Comment: // Voor canvas mode: gebruik searchResultsArea als referentie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 45
+Comment: // Zoek naar searchResultsArea in de parent hierarchy
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 60
+Comment: // Voor HomePage: betere berekening voor statische arrows
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 62
+Comment: // Gebruik resultsList maar verbeter de berekening
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 69
+Comment: // Voor homepage: neem eerste 225px van de lijst (helft van 450px min-height)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 159
+Comment: // UPPER BOUNDARY: Huidige statische positie (niet hoger dan dit)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselArrows.jsx
+Line: 220
+Comment: // Static en canvas mode gebruiken nu CSS centering
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselDots.jsx
+Line: 71
+Comment: // Early return NA alle hooks om React hooks error te voorkomen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselDots.jsx
+Line: 79
+Comment: // Voor wrapped dots: direct naar de echte index (0, 1, 2, etc.)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselDots.jsx
+Line: 82
+Comment: // Voor normale dots: gebruik de bestaande logica
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselDots.jsx
+Line: 141
+Comment: // Voor wrapped dots: direct naar index (0, 1, 2)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\CarrouselDots.jsx
+Line: 145
+Comment: // poemNumber is 1-based
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\filters\FilterDropdown.jsx
+Line: 13
+Comment: /**
+ * @param {Object} props
+ * @param {string} props.type - 'era' or 'language'
+ * @param {string|string[]} props.value - Current selected value(s) - string for language, array for era
+ * @param {function} props.onChange - Callback when value changes
+ * @param {string} [props.label] - Dropdown label (defaults based on type)
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\filters\FilterDropdown.jsx
+Line: 29
+Comment: // For era type, value is an array; for language, value is a string
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\filters\FilterToggle.jsx
+Line: 10
+Comment: /**
+ * @param {Object} props
+ * @param {boolean} props.checked - Toggle state
+ * @param {function} props.onChange - Callback when toggle changes
+ * @param {string} props.label - Toggle label text
+ * @param {boolean} [props.disabled=false] - Whether toggle is disabled
+ * @param {string} [props.tooltipText] - Tooltip text to display on hover
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchProgress.module.scss
+Line: 14
+Comment: // TODO Checken of dit niet naar het _searchShared bestand moet
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchProgress.module.scss
+Line: 144
+Comment: // TODO variabele css namen met figma in de naam checken en beter specificeren
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchProgress.module.scss
+Line: 177
+Comment: /// TODO mooiere loading state bouwen met svgof in content zelf met url()
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchResults.jsx
+Line: 18
+Comment: /**
+ * SearchResults component for displaying poem search results
+ *
+ * @component
+ * @param {Object} props
+ * @param {Array} props.results - Array of poem objects
+ * @param {string} props.layoutMode - Layout mode: 'search' or 'daily'
+ * @param {string} props.cardSize - Card size: 'normal' or 'compact'
+ * @param {boolean} props.showGlobalToggle - Show global expand/collapse toggle
+ * @param {string} props.sectionTitle - Optional section title
+ * @param {string} props.sectionSubtitle - Optional section subtitle
+ * @returns {JSX.Element|null} Search results container or null if no results
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchResults.jsx
+Line: 58
+Comment: // Start with saved index
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\SearchResults.jsx
+Line: 142
+Comment: /* TODO Checken of dit allemaal nodig is */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\search\_searchShared.scss
+Line: 9
+Comment: // TODO Checken of we niet dubbele button styling hebben, aangezien we ook buttons stylen in ui map.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ui\button\Button.jsx
+Line: 11
+Comment: /**
+ * @typedef {Object} ButtonProps
+ * @property {React.ReactNode} children - Button content
+ * @property {Function} [onClick] - Click handler function
+ * @property {('button'|'submit'|'reset')} [type] - Button type attribute
+ * @property {('primary'|'secondary'|'tertiary'|'danger'|'success')} [variant] - Button style variant
+ * @property {('small'|'large')} [size] - Button size
+ * @property {boolean} [disabled] - Whether the button is disabled
+ * @property {boolean} [loading] - Whether the button is in a loading state
+ * @property {boolean} [fullWidth] - Whether the button should take up the full width of its container
+ * @property {string} [className] - Additional CSS class names
+ * @property {React.ElementType} [as] - The HTML element to render the button as
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ui\WelcomeAnimation\WelcomeAnimation.module.scss
+Line: 13
+Comment: // Zorgt ervoor dat het boven alles staat
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\components\ui\WelcomeAnimation\WelcomeAnimation.module.scss
+Line: 21
+Comment: // Zorgt dat de hele video zichtbaar is
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\context\auth\AuthProvider.jsx
+Line: 1
+Comment: /**
+ * AuthProvider Component
+ *
+ * Provides authentication context to the entire application.
+ * This is now a thin wrapper around the useSupabaseAuth hook.
+ *
+ * Architecture Benefits:
+ * - All auth logic is centralized in useSupabaseAuth hook
+ * - AuthProvider simply provides context distribution
+ * - Components can either use useAuth (context) or useSupabaseAuth directly
+ * - Maintains backward compatibility with existing code using signIn/signUp
+ *
+ * The provider maintains the original API (signIn, signUp, signOut) for
+ * backward compatibility while internally using the new hook methods.
+ *
+ * Conclusie:
+ * De refactor klopt als de context en alle consumers (zoals useAuth) alleen de canonical methoden gebruiken.
+ * Dit houdt de architectuur schoon en consistent met Supabase conventies.
+ * WWe hoeven dus alleen te zorgen dat de context en alle hooks/forms de juiste methoden aanroepen.
+ *
+ *  @module context/auth/AuthProvider
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 226
+Comment: // Dit script verwerkt de ruwe GeoJSON naar het formaat dat we nodig hebben
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 231
+Comment: // Bereken het centrum van de bounding box
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 246
+Comment: // Radius van de aarde
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 258
+Comment: /*Deze functie berekent de afstand tussen twee punten op aarde, gegeven hun breedte- en lengtegraad (in graden).
+Het gebruikt de haversine-formule, die rekening houdt met de kromming van de aarde:
+    R is de straal van de aarde in kilometers.
+    dLat en dLon zijn het verschil in breedte- en lengtegraad, omgerekend naar radialen.
+    a berekent een tussenwaarde met behulp van sinus- en cosinusfuncties.
+    c is de centrale hoek tussen de punten.
+    De functie retourneert de afstand in kilometers tussen de twee coördinaten.*/
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 266
+Comment: /**
+ * Haalt de geo-data voor een stad op, inclusief een berekende radius.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 271
+Comment: // Speciale optimalisatie voor Baden-Baden met exacte Wikipedia coördinaten
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 284
+Comment: // Bereken de afstand van het centrum tot de hoek van de bounding box
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 290
+Comment: // Rond de radius af naar boven en voeg 10% marge toe voor de zekerheid.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\cityGeoData.js
+Line: 291
+Comment: // Maximaal 20km om te voorkomen dat we te breed zoeken bij grote gemeentes.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\data\canvas\searchData.js
+Line: 21
+Comment: // Mapping voor custom display namen in de dropdown
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 1
+Comment: /**
+ * @fileoverview Centralized Debug Manager for PIXI Canvas Learning Project
+ * 
+ * @description
+ * This file contains ALL debug functionality in one place, keeping the main
+ * learning codebase clean and focused. It integrates with PIXI DevTools
+ * and provides comprehensive development insights.
+ * 
+ * @version 1.0.0
+ * @author Learning Project - Debug Tooling
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 13
+Comment: /**
+ * Debug Manager Class - Singleton Pattern
+ * 
+ * @description
+ * Centralizes all debug functionality without polluting main code.
+ * Integrates with PIXI DevTools and provides real-time monitoring.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 97
+Comment: /**
+   * Enable debug mode
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 109
+Comment: /**
+   * Disable debug mode
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 119
+Comment: /**
+   * Start real-time monitoring
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 139
+Comment: // Update debug data
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 198
+Comment: /**
+   * Stop monitoring
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 208
+Comment: /**
+   * Create debug overlay UI
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 264
+Comment: /**
+   * Update debug overlay content
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\debug\DebugManager.js
+Line: 301
+Comment: /**
+   * Remove debug overlay
+   */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\dev\useInitial.js
+Line: 10
+Comment: /*
+      Implement hook functionality here.
+      If you need to execute async operation, set loading to true and when it's over, set loading to false.
+      If you caught some errors, set error status to true.
+      Initial hook is considered to be successfully completed if it will return {loading: false, error: false}.
+    */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\account\useUserSettings.js
+Line: 47
+Comment: /**
+     * Update display name
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\account\useUserSettings.js
+Line: 54
+Comment: /**
+     * Toggle email notifications
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\account\useUserSettings.js
+Line: 62
+Comment: /**
+     * Update theme preference
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuth.js
+Line: 1
+Comment: /**
+ * useAuth Hook
+ *
+ * Provides access to authentication state and methods from the AuthContext.
+ * This hook separates the logic of authentication from the UI components,
+ * making it easier to use auth functionality throughout the application.
+ *
+ * Uses JavaScript object definitions pattern for better organization and clarity.
+ *
+ * @returns {Object} Authentication state and methods
+ * @returns {Object|null} .user - The current authenticated user or null
+ * @returns {boolean} .loading - Whether auth is in a loading state
+ * @returns {string|null} .error - Authentication error message or null
+ * @returns {Function} .signUp - Function to register a new user
+ * @returns {Function} .signIn - Function to log in an existing user
+ * @returns {Function} .signOut - Function to log out the current user
+ * @returns {Function} .checkAuth - Function to check authentication status
+ * @returns {Function} .signUpWithCheck - Enhanced signup with email existence check
+ * @returns {Function} .requestPasswordResetEmail - Request password reset email
+ * @returns {Function} .updateUserPasswordAfterReset - Update password after reset
+ * @returns {Function} .checkEmailExists - Check if email already exists
+ * @returns {boolean} .resetEmailSent - Whether reset email was sent successfully
+ * @returns {string|null} .resetError - Password reset error message
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuth.js
+Line: 37
+Comment: /**
+     * Enhanced signup with user existence check
+     * Handles duplicate emails gracefully with clear user messaging
+     *
+     * @param {string} email - User email address
+     * @param {string} password - User password
+     * @returns {Promise<Object>} Result object with success status and data/error
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuth.js
+Line: 92
+Comment: /**
+     * Request password reset email
+     * Sends a password reset link to the user's email
+     *
+     * @param {string} email - Email address to send reset link to
+     * @returns {Promise<Object>} Result object with success status
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuth.js
+Line: 133
+Comment: /**
+     * Update user password after reset
+     * Used when user clicks the reset link and sets a new password
+     *
+     * @param {string} newPassword - The new password to set
+     * @returns {Promise<Object>} Result object with success status
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuth.js
+Line: 159
+Comment: /**
+     * Check if email already exists in the system
+     * Useful for form validation before submission
+     *
+     * @param {string} email - Email address to check
+     * @returns {Promise<Object>} Object with exists boolean and optional error
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\auth\useAuthForm.js
+Line: 9
+Comment: /**
+ * useAuthForm Hook
+ *
+ * Manages form state for authentication forms (login, registration),
+ * including values, errors, submission state, and form actions.
+ *
+ * Features:
+ * - Form values management
+ * - Error handling
+ * - Submission state tracking
+ * - Form reset
+ * - Form action creation
+ *
+ * @param {Object} initialValues - Initial form values (default: {email: "", password: ""})
+ * @returns {Object} Form state and methods
+ * @returns {Object} .values - Current form values
+ * @returns {Object} .errors - Form validation errors
+ * @returns {boolean} .isSubmitting - Whether form is submitting
+ * @returns {string} .formStatus - Current form status ("idle", "submitting", "success", "error")
+ * @returns {Function} .handleChange - Handler for input changes
+ * @returns {Function} .setValues - Function to update all values
+ * @returns {Function} .setErrors - Function to update errors
+ * @returns {Function} .resetForm - Function to reset form to initial state
+ * @returns {Function} .createFormAction - Creates a form action function
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useAutoRecenter.js
+Line: 3
+Comment: /**
+ * Auto-centers viewport content with responsive positioning
+ *
+ * @param {Object} config
+ * @param {React.RefObject} config.viewportRef - PIXI Viewport instance
+ * @param {React.RefObject} config.contentRef - Content container
+ * @param {Array} config.deps - Triggers for re-centering
+ * @param {Object} config.poemOffset - Poem offset for move detection
+ * @param {Object} config.lineOverrides - Line overrides for move detection
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasExport.js
+Line: 18
+Comment: /**
+ * Custom hook for exporting canvas as image files
+ * Uses html-to-image for viewport capture and PixiJS Extract API for full sprite export
+ *
+ * @param {Object} canvasContainerRef - Ref to the canvas container DOM element
+ * @param {Object} appRef - Ref to the PixiJS Application
+ * @param {Object} backgroundImageRef - Ref to BackgroundImage component (for sprite bounds)
+ * @param {string} imageQualityMode - Current quality mode for resolution scaling
+ * @returns {Object} Export utilities
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 312
+Comment: // Sync naar lineOverrides voor consistentie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 324
+Comment: // Sync naar lineOverrides voor consistentie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 335
+Comment: // Ook uit lineOverrides verwijderen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 352
+Comment: // Ook uit lineOverrides verwijderen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 640
+Comment: // <-- Hernoemd voor duidelijkheid
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 655
+Comment: // <-- Exporteer de nieuwe handlerv
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasHandlers.js
+Line: 673
+Comment: // <-- Exporteer de nieuwe handler
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasNavigation.js
+Line: 16
+Comment: /**
+     * Navigate to canvas with poem data
+     * 
+     * Stores the poem data in sessionStorage and navigates to the
+     * canvas route with the poem ID. Handles data validation and
+     * error cases gracefully.
+     * 
+     * @param {Object} poemData - Poem data to transport to canvas
+     * @param {string} poemData.title - Poem title
+     * @param {string} poemData.author - Poem author
+     * @param {Array<string>|string} poemData.lines - Poem lines or text content
+     * @param {string} [poemData.id] - Optional poem ID
+     * @param {Object} [options] - Navigation options
+     * @param {string} [options.source='search'] - Source of navigation for tracking
+     * @param {boolean} [options.replace=false] - Whether to replace current history entry
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasNavigation.js
+Line: 163
+Comment: /**
+     * Check if canvas data is available
+     * 
+     * Utility function to check if there's poem data available
+     * for canvas without actually retrieving it.
+     * 
+     * @returns {boolean} True if canvas data is available
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasNavigation.js
+Line: 180
+Comment: /**
+     * Get canvas data info
+     * 
+     * Returns information about stored canvas data without
+     * retrieving the full data object.
+     * 
+     * @returns {Object} Canvas data information
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasShare.js
+Line: 4
+Comment: /**
+ * Custom hook for sharing canvas designs
+ *
+ * @param {Object} exportUtils - The export utilities from useCanvasExport
+ * @returns {Object} Share utilities and state
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasState.js
+Line: 63
+Comment: // URL of texture
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasState.js
+Line: 163
+Comment: // Auto-sync lineOverrides naar titleColorOverride/authorColorOverride
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasState.js
+Line: 168
+Comment: // Sync alleen als er daadwerkelijk een override is en deze verschilt
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasStorage.js
+Line: 142
+Comment: /**
+     * Update design metadata
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useCanvasStorage.js
+Line: 158
+Comment: // Update local state
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useFontManager.js
+Line: 5
+Comment: // De lijst met lettertypen die we in de UI willen tonen.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useFontManager.js
+Line: 89
+Comment: // Een helper map voor de Google Fonts API URL's
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useFontManager.js
+Line: 149
+Comment: // 1. Check of we deze actie moeten negeren.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useFontManager.js
+Line: 158
+Comment: // 2. Update de state om aan te geven dat we beginnen met laden.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 5
+Comment: /**
+ * Hook for managing keyboard shortcuts including mode cycling with SPACEBAR
+ * and selection management with ESCAPE.
+ * 
+ * @param {Object} options - Configuration object
+ * @param {string} options.moveMode - Current move mode ('edit', 'line', 'poem')
+ * @param {Function} options.setMoveMode - Function to set the move mode
+ * @param {Set} options.selectedLines - Set of currently selected line indices
+ * @param {Function} options.clearSelection - Function to clear all selections
+ * @param {Function} options.selectAll - Function to select all lines
+ * @param {Object} options.currentPoem - Current poem data with lines array
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 29
+Comment: // Callback om focus handler van XYMoveSliders te ontvangen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 97
+Comment: // Helper functie om muiscursor te simuleren naar container centrum
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 110
+Comment: // Simuleer mouse move event naar het centrum van de container
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 119
+Comment: // Dispatch het event op de container zelf (voor hover effects)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 122
+Comment: // Optioneel: Dispatch ook op document.body voor globale mouse tracking
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 137
+Comment: // Verbeterde focus functie met ref callback, retry logic en muis verplaatsing
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 152
+Comment: // Wacht tot rendering voltooid is (250ms totaal voor state + render + focus)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 162
+Comment: // Wacht kort voor focus settling, dan mouse move
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 180
+Comment: // Fallback: Direct querySelector met retry en mouse move
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useKeyboardShortcuts.js
+Line: 206
+Comment: // Dan mouse move naar centrum
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\usePixiAutoRender.js
+Line: 33
+Comment: // Update last dependencies
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextEffects.js
+Line: 5
+Comment: /**
+ * Custom hook to generate PixiJS filters and style properties for text effects.
+ * 
+ * @param {string} mode - The active text effect mode ('none', 'painted', 'raised', 'engraved').
+ * @param {object} params - Parameters for the active effect (opacity, blur, distance, depth).
+ * @returns {object} - An object containing { filters, blendMode, alpha }.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 15
+Comment: // PIXI.js handelt resolution scaling automatisch af - fontSize hoeft NIET aangepast te worden
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 37
+Comment: // Bepaal de effectieve auteur-font met fallback naar de globale font
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 139
+Comment: // Apply selection styling ONLY if color picker is not active AND highlight is visible
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 166
+Comment: // DE FIX: Vervang de simpele override met de slimme fallback-logica
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 169
+Comment: // Gebruik de globalFont als fallback als de gevraagde niet geladen is
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\canvas\useTextStyles.js
+Line: 185
+Comment: // Pas de override alleen toe als deze bestaat, anders wordt de baseStyle al gebruikt.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\poem\useHeightCalculation.js
+Line: 10
+Comment: /**
+ * Custom hook for managing poem height calculations
+ * @param {Object} poem - The poem object
+ * @param {number} index - Poem index in list
+ * @param {Array} allPoems - All poems in carousel/list
+ * @param {string} navigationDirection - Navigation direction for carousel
+ * @param {Object} expandablePreview - Preview info from createExpandablePreview
+ * @param {Object} preCalculatedHeight - Pre-calculated height if available
+ * @returns {Object} Height calculation info and screen layout
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\record\useWaveSurfer.js
+Line: 177
+Comment: // Update every 100ms
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\record\useWaveSurfer.js
+Line: 237
+Comment: // We need to find the plugin again because 'record' variable is closed over from the effect scope
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\record\useWaveSurfer.js
+Line: 245
+Comment: // If just mic is active (e.g. during countdown or paused), stop it
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByGeo.js
+Line: 40
+Comment: // If one dimension is exactly 1024 and the other is smaller, it's likely constrained by that dimension.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByGeo.js
+Line: 44
+Comment: // No change needed to dims, but we can trust this is portrait
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByGeo.js
+Line: 63
+Comment: // Map ownername
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByText.js
+Line: 40
+Comment: // If one dimension is exactly 1024 and the other is smaller, it's likely constrained by that dimension.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByText.js
+Line: 44
+Comment: // No change needed to dims, but we can trust this is portrait
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\useFlickrSearchByText.js
+Line: 63
+Comment: // Map ownername
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\usePexelsSearch.js
+Line: 10
+Comment: // Handig om te weten of een background fetch bezig is
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\usePexelsSearch.js
+Line: 12
+Comment: // 1. De queryKey is uniek voor deze query. Tanstack gebruikt dit voor caching.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\usePexelsSearch.js
+Line: 15
+Comment: // 2. De queryFn is de functie die de data ophaalt.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\usePexelsSearch.js
+Line: 18
+Comment: // 3. 'enabled' voorkomt dat de query wordt uitgevoerd als er geen zoekterm is.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\search\usePexelsSearch.js
+Line: 23
+Comment: // Zorg voor een default waarde
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 1
+Comment: // TODO Werking useExpandablePoems.js testen en controleren of alles nog werkt na refactor
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 29
+Comment: // Update poem state helper
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 31
+Comment: // Poem state update
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 49
+Comment: // ✅ STEP 2: THEN start animation
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 93
+Comment: // Optional scroll after collapse (alleen als niet overridden door custom handler)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 127
+Comment: // Voor collapse: idle OF complete state
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 134
+Comment: // Voor global collapse: skip individual scroll, we doen één keer global scroll
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 138
+Comment: // Clear trigger anyway om infinite loops te voorkomen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 143
+Comment: // Navigation effect - reset naar juiste state bij carousel navigatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useExpandablePoem.js
+Line: 145
+Comment: // Bij carousel navigatie: alleen phase aanpassen als het gedicht echt expanded is EN in een actieve animatie fase zat
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useNavigationState.js
+Line: 17
+Comment: /**
+ * Hook specifically for email prefilling across auth forms
+ * @returns {string} The email from navigation state or empty string
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useNavigationState.js
+Line: 25
+Comment: /**
+ * Hook to get all navigation state
+ * @returns {Object} The entire navigation state object
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\hooks\useWindowSize.js
+Line: 3
+Comment: /**
+ * Hook to track window size changes
+ * @returns {Object} Object with width and height properties
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\index.scss
+Line: 1
+Comment: /**
+ * @file index.scss
+ * @description Hoofdstijlbestand voor import in React-applicatie "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Entry
+ * @imports Alle benodigde stijlbestanden
+ * @exports Globale CSS voor de applicatie
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\index.scss
+Line: 14
+Comment: /*
+ * Het beginpunt van onze stilistische reis,
+ * Import na import, in geordende wijs;
+ * Van essentiële reset tot typografisch sieraad,
+ * Hier start de harmonie van ons visueel apparaat.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\index.scss
+Line: 43
+Comment: /*
+ * Voor wie de muis vermijdt, de toets verkiest,
+ * Toegankelijkheid die niemand uitsluit of verliest;
+ * Focus-stijlen zo duidelijk en precies,
+ * Voor iedereen navigeerbaar, zonder verlies.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\layouts\Footer\Footer.module.scss
+Line: 126
+Comment: // Nog kleiner op kleine schermen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\layouts\NavBar\MainNavLink.jsx
+Line: 13
+Comment: /**
+ * MainNavLink component for route navigation with active state
+ * Uses React 19 features and React Router v7
+ *
+ * @component
+ * @param {Object} props
+ * @param {string} props.to - Target route path
+ * @param {React.ReactNode} props.children - Link content
+ * @param {Function} [props.onClick] - Optional click handler
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {boolean} [props.prefetch] - Enable prefetching (React Router v7)
+ * @param {Object} [props...rest] - Additional props to pass to NavLink
+ * @returns {JSX.Element} Styled navigation link
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\layouts\NavBar\NavBar.module.scss
+Line: 28
+Comment: // Show when open
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\layouts\NavBar\NavBar.module.scss
+Line: 185
+Comment: // Show when open
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\layouts\_auth-layout.scss
+Line: 16
+Comment: // Het gebruik van underscores voor _auth-layout.scss duidt op een Sass-partial, wat een goede praktijk is. Het globale index.scss-bestand importeert doorgaans deze partials en definieert echt globale stijlen.
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Audio\AudioPage.module.scss
+Line: 178
+Comment: /* Full width of MainContent */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\AuthCallBack.jsx
+Line: 1
+Comment: // TODO Checken of deze component nog nodig is en samenvatting verweken in  verantwoordingsdocumentatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\AuthCallBack.jsx
+Line: 2
+Comment: /**
+ * De AuthCallback component dient als tussenpagina voor het verwerken van de Supabase-authenticatie callback na bijvoorbeeld e-mailbevestiging of magic link login.
+ *
+ * Waarvoor dient deze component?
+ * Leest de hash uit de URL (waarin Supabase tokens staan na bevestiging).
+ * Vraagt Supabase om de huidige sessie (supabase.auth.getSession()).
+ * Redirect:
+ * Als er een geldige sessie is: naar /account.
+ * Geen sessie: naar /welkom.
+ * Bij fout: naar /welkom?error=....
+ * Is deze component nodig?
+ * Supabase handelt de callback grotendeels automatisch af:
+ * Supabase verwerkt de hash en slaat de sessie op in localStorage zodra de pagina wordt geladen.
+ * Toch is een callback-pagina aanbevolen:
+ * Je wilt de gebruiker een duidelijke redirect geven na bevestiging.
+ * Je kunt loading/foutmeldingen tonen.
+ * Je kunt extra logica toevoegen (bijv. onboarding, analytics).
+ * Zie ook de architectuurfile (AUTH_FLOW_ARCHITECTURE.md), waar onder "Email Confirmation Callback" staat:
+ *
+ * // Handles Supabase email confirmation redirects
+ * // Redirects to /welkom after processing
+ *
+ * Samenvatting
+ * Supabase verwerkt de hash automatisch, maar een eigen callback-component is handig voor UX, foutafhandeling en redirects.
+ * Je component volgt de aanbevolen architectuur en is dus zinvol in deze flow.
+ *
+ * @returns {JSX.Element|null}
+ * @constructor
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.jsx
+Line: 29
+Comment: // Check if we're coming from Signup with email
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 3
+Comment: // Gebruik de gedeelde styles uit de styles folder:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 5
+Comment: // 1. Import de benodigde modules:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 17
+Comment: // 3. States en feedback:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 28
+Comment: // Central card voor forms
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 48
+Comment: // Submit en forgot password
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Auth\LoginAndSignup\LoginAndSignupPage.module.scss
+Line: 56
+Comment: // Extra links en info
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Collections\CollectionPage.jsx
+Line: 196
+Comment: /* - Gedeeld met mij */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 22
+Comment: // Plaats hier de Public URL van je video in Supabase Storage
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 41
+Comment: // 1. Voer alleen uit voor ingelogde gebruikers
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 46
+Comment: // 2. Controleer of de animatie al is getoond in deze sessie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 51
+Comment: // 3. Toon de animatie direct bij het laden van de component
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 54
+Comment: // 4. Markeer als gezien voor deze sessie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 57
+Comment: // Afhankelijk van de user state
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.jsx
+Line: 358
+Comment: /* Gedichten van de Dag - met ref voor scroll-naar-sectie */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Home\HomePage.module.scss
+Line: 304
+Comment: // Gedichten van de Maand Showcase
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Settings\SettingsPage.module.scss
+Line: 3
+Comment: // Gebruik de gedeelde styles uit de styles folder:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Settings\SettingsPage.module.scss
+Line: 5
+Comment: // 1. Import de benodigde modules:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\pages\Settings\SettingsPage.module.scss
+Line: 19
+Comment: //    - Radio buttons en checkboxes
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\axios.js
+Line: 4
+Comment: /**
+ * Een factory-functie voor het aanmaken van een geconfigureerde Axios-instantie.
+ * @param {string} baseURL - De basis-URL van de API.
+ * @param {object} headers - Optionele extra headers.
+ * @returns {import('axios').AxiosInstance}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\axios.js
+Line: 20
+Comment: // Client voor PoetryDB
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\axios.js
+Line: 23
+Comment: // Client voor Flickr
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\axios.js
+Line: 27
+Comment: // Client voor Pexels
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 23
+Comment: /**
+ * Analyzes a search term and intelligently splits it into author and title.
+ * Recognizes various patterns in the search term.
+ *
+ * @param {string} searchTerm Complete search term entered by the user
+ * @returns {Object} Object with authorTerm, titleTerm, matchType, and confidence
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 71
+Comment: // If titlePart is empty, the entire search term is an author's name
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 103
+Comment: // 3a. Check if one of the words is a known author name
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 122
+Comment: // numWords - i = number of words from the start for title
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 208
+Comment: /**
+ * Performs a general search on poems.
+ * Intelligently matches the search term against both titles and authors.
+ *
+ * @param {string} searchTerm The entered search term
+ * @param {Object} filters Optional filters for the search (language, period, etc.)
+ * @returns {Promise<Array<object>>} Array of found poems
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 408
+Comment: /**
+ * Get authors that belong to a specific era
+ * @param {string} eraId - Era ID (e.g., 'romantic', 'victorian')
+ * @returns {Array<string>} Array of author names
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemSearchService.js
+Line: 430
+Comment: /**
+ * Search poems by era - fetches all poems from authors in that era
+ *
+ * @param {string} eraId - The era ID to search for
+ * @param {Object} options - Options object
+ * @param {AbortSignal} options.signal - Abort signal for cancellation
+ * @returns {Promise<Array<object>>} Array of poems from authors in that era
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 8
+Comment: /**
+ * Retrieves poems from PoetryDB based on a field and search term.
+ *
+ * @param {string} query – The search term.
+ * @param {string} field - The field to search for ('title', 'author', etc.).
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 40
+Comment: /**
+ * Retrieves poems from PoetryDB based on title.
+ *
+ * @param {string} titleQuery – The title to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 52
+Comment: /**
+ * Retrieves poems from PoetryDB based on author.
+ *
+ * @param {string} authorQuery - The author to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 64
+Comment: /**
+ * Retrieves poems from PoetryDB that match both author and title.
+ * Uses the AND operator of PoetryDB API.
+ *
+ * @param {string} authorTerm – The author to look up.
+ * @param {string} titleTerm - The title to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
+ * @returns {Promise<Array<object>>} - Array of poems found.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 96
+Comment: /**
+ * Retrieves corresponding title/author combinations from Supabase.
+ *
+ * @param {string} query – The search term.
+ * @param {string} field - The field to be searched for ('title' or 'author').
+ * @returns {Promise<Array<{title: string, author: string}>>} - Array of title/author combinations.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 109
+Comment: /**
+ * Retrieves one specific poem based on exact title and author.
+ *
+ * @param {string} title - The exact title of the poem.
+ * @param {string} author - The exact author of the poem.
+ * @returns {Promise<object|null>} - The poem found or null if not found.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 135
+Comment: /**
+ * Searches for poems based on title, with combined results from Supabase and PoetryDB.
+ *
+ * @param {string} title - The title to look up.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 198
+Comment: /**
+ * Searches for poems based on author, with combined results from Supabase and PoetryDB.
+ *
+ * @param {string} author – The author to look up.
+ * @param {object} [options] - Optional options object.
+ * @param {AbortSignal} [options.signal] - The abort signal for the request.
+ * @returns {Promise<Array<object>>} - An array of unique poems with citations.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\poemService.js
+Line: 259
+Comment: /**
+ * Removes duplicates from an array of poems based on title+author combination.
+ *
+ * @param {Array<object>} poems - Array of poems possible with duplicates.
+ * @returns {Array<object>} - Array of unique poems.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\queryClient.js
+Line: 7
+Comment: // Data wordt 5 minuten als 'fresh' beschouwd
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\api\queryClient.js
+Line: 8
+Comment: // Data wordt na 30 minuten inactiviteit uit de cache verwijderd
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 1
+Comment: /**
+ * Authentication Service
+ *
+ * This service provides pure functions for Supabase authentication operations.
+ * It serves as a thin wrapper around Supabase client with consistent error handling.
+ *
+ * Architecture Role:
+ * - Pure JavaScript functions (no React dependencies)
+ * - Can be used in any JavaScript environment (client, server, workers)
+ * - Handles all direct Supabase auth operations
+ * - Provides consistent response format
+ * - Used by React hooks (useSupabaseAuth) for UI integration
+ *
+ * Design Pattern: Functional Module Pattern
+ * - Each function is independent and stateless
+ * - Consistent error handling across all functions
+ * - Easy to test and mock
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 33
+Comment: /**
+ * Register a new user
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @param {string} captchaToken - Optional captcha token
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 72
+Comment: /**
+ * Login user
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @param {string} captchaToken - Optional captcha token
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 183
+Comment: /**
+ * Check if a user with the given email already exists
+ * @param {string} email - The email to check
+ * @returns {Promise<{exists: boolean, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 210
+Comment: /**
+ * Send password reset email
+ * @param {string} email - The email to send reset link to
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\auth\authService.js
+Line: 252
+Comment: /**
+ * Update user profile
+ * @param {string} userId - The user ID
+ * @param {Object} updates - Profile updates
+ * @returns {Promise<{success: boolean, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasDataService.js
+Line: 13
+Comment: /**
+     * Store poem data for canvas transport
+     * @param {Object} poemData - Raw poem data from search results
+     * @returns {Object} Standardized poem data
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasDataService.js
+Line: 79
+Comment: /**
+     * Standardize poem data format
+     * @param {Object} poemData - Raw poem data
+     * @returns {Object} Standardized poem data
+     */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasDataService.js
+Line: 143
+Comment: // Validate lines array
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStateSerializer.js
+Line: 8
+Comment: /**
+ * Serialize canvas state for database storage
+ * @param {Object} canvasState - Full state from useCanvasState
+ * @param {Object} poemData - Poem data from canvas
+ * @returns {Object} Serialized design settings for JSONB storage
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStateSerializer.js
+Line: 43
+Comment: // It's already an object
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStateSerializer.js
+Line: 144
+Comment: /**
+ * Deserialize canvas state from database
+ * @param {Object} designSettings - JSONB design_settings from database
+ * @returns {Object} Canvas state object ready for useCanvasState
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStorageService.js
+Line: 11
+Comment: /**
+ * Save or update a canvas design
+ * @param {string} userId - User ID from auth
+ * @param {Object} poemData - Poem data (title, author, lines)
+ * @param {Object} canvasState - Canvas state from useCanvasState
+ * @param {string} title - Optional design title
+ * @param {string} designId - Optional design ID for updates
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStorageService.js
+Line: 43
+Comment: // Update existing design
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStorageService.js
+Line: 198
+Comment: /**
+ * List all designs for a user
+ * @param {string} userId - User ID
+ * @param {Object} options - Query options (limit, offset, orderBy)
+ * @returns {Promise<{success: boolean, data?: Array, count?: number, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\canvas\canvasStorageService.js
+Line: 293
+Comment: /**
+ * Update design metadata (title, is_public, etc.)
+ * @param {string} designId - Design ID
+ * @param {string} userId - User ID
+ * @param {Object} updates - Fields to update
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\favorites\favoritesService.js
+Line: 19
+Comment: /**
+ * Add a poem to user's favorites
+ * @param {string} userId - User ID
+ * @param {Object} poem - Poem object with title, author, lines
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\settings\userSettingsService.js
+Line: 79
+Comment: /**
+ * Update user settings
+ * @param {string} userId - User ID
+ * @param {Object} updates - Settings to update
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\settings\userSettingsService.js
+Line: 111
+Comment: /**
+ * Update display name
+ * @param {string} userId - User ID
+ * @param {string} displayName - New display name
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\settings\userSettingsService.js
+Line: 121
+Comment: /**
+ * Update email notification preferences
+ * @param {string} userId - User ID
+ * @param {boolean} enabled - Enable/disable email notifications
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\settings\userSettingsService.js
+Line: 131
+Comment: /**
+ * Update theme preference
+ * @param {string} userId - User ID
+ * @param {string} theme - Theme preference ('dark' | 'light')
+ * @returns {Promise<{success: boolean, data?: Object, error?: string}>}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\supabase\storageService.js
+Line: 11
+Comment: /**
+ * Uploads an image blob to the shared designs bucket
+ *
+ * @param {Blob} imageBlob - The image blob to upload (must be JPEG)
+ * @param {string} fileName - The desired filename (e.g., 'design-uuid.jpg')
+ * @returns {Promise<{path: string, publicUrl: string, error: object}>} Result object
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\services\supabase\supabase.js
+Line: 40
+Comment: // export of the Supabase client instance for use in other parts of the application
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 3
+Comment: /**
+ * @file Pp.scss
+ * @description Hoofdstijlbestand voor de applicatie "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Pp
+ * @imports _variables, _typography, _layout, _mixins, _themes
+ * @exports Samengestelde applicatiestijlen
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 12
+Comment: /* =======================================================
+ * APP STYLES
+ * =======================================================
+ * Structuur voor de hoofdsamenstelling van de applicatie.
+ * Importeert alle basiscomponenten en definieert globale contextafhankelijke stijlen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 26
+Comment: /* -------------------------------------------------------
+ * BODY & ROOT
+ * -------------------------------------------------------
+ * Basisstijlen voor het document en root element.
+ * Definieert de basis voor de gehele applicatie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 48
+Comment: // Responsive aanpassingen voor body op medium schermen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 52
+Comment: /* -------------------------------------------------------
+ * CONTAINER STRUCTUREN
+ * -------------------------------------------------------
+ * Hoofdcontainers die de basisstructuur van de pagina bepalen.
+ * Deze vormen het skelet van de layout.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 76
+Comment: /* -------------------------------------------------------
+ * GLOBALE COMPONENTEN
+ * -------------------------------------------------------
+ * Stijlen voor componenten die door de gehele applicatie gebruikt worden,
+ * zoals knoppen, kaarten en navigatie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 135
+Comment: /* -------------------------------------------------------
+ * THEMA SPECIFIEKE OVERSCHRIJVINGEN
+ * -------------------------------------------------------
+ * Overschrijvingen voor thema-specifieke weergave.
+ * Deze worden toegepast via data-attributen of classes.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 143
+Comment: // Overschrijvingen voor donker thema
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 147
+Comment: // Toegankelijkheidsoverschrijvingen voor hoog contrast
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 150
+Comment: /* -------------------------------------------------------
+ * ANIMATIES & TRANSITIES
+ * -------------------------------------------------------
+ * Definities voor globale animaties en transities
+ * die door de gehele applicatie worden toegepast.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\App.scss
+Line: 185
+Comment: /* -------------------------------------------------------
+ * MEDIAQUERY AANPASSINGEN
+ * -------------------------------------------------------
+ * Globale responsieve aanpassingen die niet in de
+ * component-specifieke regels zijn opgenomen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 3
+Comment: /**
+ * @file _effects.scss
+ * @description Definitie van visuele effecten, schaduwen, transities en animaties voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables
+ * @exports SCSS variabelen en mixins voor visuele effecten
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 12
+Comment: /* =======================================================
+ * EFFECTS
+ * =======================================================
+ * Visuele effecten zoals schaduwen, transities en animaties
+ * die de gebruikerservaring verrijken en een coherente visuele hiërarchie creëren.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 19
+Comment: /* -------------------------------------------------------
+ * SCHADUWEN
+ * -------------------------------------------------------
+ * Definitie van box-shadows voor verschillende componenten en states.
+ * Creëert diepte en hiërarchie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 39
+Comment: /* -------------------------------------------------------
+ * TRANSITIES
+ * -------------------------------------------------------
+ * Definitie van overgang- en bewegingseigenschappen voor
+ * interactieve elementen en toestandsveranderingen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 46
+Comment: // Samengestelde transities voor componenten
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 54
+Comment: /* -------------------------------------------------------
+ * ANIMATIES
+ * -------------------------------------------------------
+ * Keyframe definities voor herbruikbare animaties die
+ * door de applicatie gebruikt kunnen worden.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 119
+Comment: /* -------------------------------------------------------
+ * MIXINS VOOR EFFECTEN
+ * -------------------------------------------------------
+ * Herbruikbare mixins om consistente effecten toe te passen
+ * op verschillende componenten.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_effects.scss
+Line: 139
+Comment: // Backdrop filters (voor glas-effecten)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_fonts.scss
+Line: 1
+Comment: /**
+ * @file _fonts.scss
+ * @description Font imports en @font-face declaraties voor Gedichtgevel.nl
+ * @author Jerôme
+ * @group Foundational
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 1
+Comment: /**
+ * @file _layout.scss
+ * @description Herbruikbare layout structuren en grid definitie voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables, _mixins
+ * @exports Sass classes voor layout
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 10
+Comment: /* ======================================================= 
+ * LAYOUT
+ * ======================================================= 
+ * De architectuur van onze gedichtgevel,
+ * Een raamwerk voor inhoud, sterk en flexibel;
+ * Structuren die vorm geven aan onze visie,
+ * Een canvas voor poëzie met technische precisie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 22
+Comment: /* ------------------------------------------------------- 
+ * CONTAINERS
+ * ------------------------------------------------------- 
+ * Omhullende grenzen die inhoud verzamelen,
+ * Containers als muren die betekenis bewaren;
+ * Centrerende kracht met responsieve zorg,
+ * De bakstenen die staan voor onze gebruikers als borg.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 31
+Comment: // Standaard container met modifiers
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 67
+Comment: // Container met padding specifiek voor gedichten
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 80
+Comment: // Container specifiek voor de poezie canvas
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 92
+Comment: // Container voor collecties
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 105
+Comment: /* -------------------------------------------------------
+ * GRID LAYOUT
+ * -------------------------------------------------------
+ * Ordening in rijen en kolommen,
+ * Het grid waar elementen op stromen;
+ * Flexibel en sterk, met ruimte exact,
+ * Een digitaal raster, zorgvuldig gevrakt.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 150
+Comment: // Grid voor gedichtkaarten op homepage
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 170
+Comment: // Grid voor collectie overzicht
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 186
+Comment: // Grid voor tools en controls
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 198
+Comment: // Grid voor gedicht-details pagina
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 210
+Comment: /* -------------------------------------------------------
+ * FLEX LAYOUTS
+ * -------------------------------------------------------
+ * Soepele verdeling, dynamische orde,
+ * Flexbox geeft ons vrijheid in vorm en borde;
+ * Van rij naar kolom, ruimte verdelen we wijs,
+ * Een flexibel systeem voor onze ontwerpsreis.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 260
+Comment: // Flex container voor gedichtdetails
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 280
+Comment: /* -------------------------------------------------------
+ * SPECIFIC LAYOUTS
+ * -------------------------------------------------------
+ * Unieke patronen voor specifieke secties,
+ * Toegespitste layouts met eigen selecties;
+ * Van header tot footer, elk gebied bedacht,
+ * Met zorgvuldige planning en ontwerperachtige kracht.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 289
+Comment: // App layout - hoofdstructuur voor de applicatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 299
+Comment: // Verhoogd naar highest om zeker te zijn
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 305
+Comment: // Toegevoegd voor visuele scheiding
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_layout.scss
+Line: 414
+Comment: /* -------------------------------------------------------
+ * SECTION UTILITIES
+ * -------------------------------------------------------
+ * Herbruikbare sectiestijlen voor consistente spacing
+ * en structuur door de hele applicatie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 1
+Comment: /**
+ * @file _mixins.scss
+ * @description Herbruikbare mixins en functies voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables.scss
+ * @exports Sass mixins en functies
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 16
+Comment: /* =======================================================
+ * MIXINS
+ * =======================================================
+ * Dit bestand bevat herbruikbare mixins voor het project gedichtgevel.nl
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 22
+Comment: /*
+ * Magie die herhaalt zonder kopie,
+ * Functies die verkorten onze typografie;
+ * Als dichters met herhalend refrein,
+ * Maken mixins onze code subliem en fijn.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 31
+Comment: /* -------------------------------------------------------
+ * 1. TYPOGRAFIE
+ * -------------------------------------------------------
+ * Woorden krijgen stijl en vorm,
+ * Typografische patronen als de norm;
+ * Van headers tot fijnzinnig detail,
+ * Weven wij met letters ons verhaal.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 40
+Comment: /// Mixin om gestandaardiseerde text styles toe te passen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 41
+Comment: /// @param {Map} $style - Een map met font-family, font-size, font-weight en line-height
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 66
+Comment: /// Mixin voor tekst die afbreekt met ellipsis
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 81
+Comment: /* -------------------------------------------------------
+ * 2. LAYOUT & POSITIONERING
+ * -------------------------------------------------------
+ * De structuur waarop alles rust,
+ * Flexbox en Grid, met parameters bewust;
+ * Containers en sections, in balans gebracht,
+ * Voor layouts die ademen, met elegante pracht.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 90
+Comment: /// Mixin voor absolute positionering, met optionele offsets
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 103
+Comment: /// Mixin voor fixed positionering, met optionele offsets
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 116
+Comment: /// Mixin voor sticky positionering
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 127
+Comment: /// Mixin voor centreren met absolute position
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 135
+Comment: /// Mixin voor vullen van container
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 150
+Comment: /// Mixin voor flexbox container
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 163
+Comment: /// Mixin voor flexbox child
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 171
+Comment: /// Mixin voor centreren met flexbox
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 178
+Comment: /// Mixin voor een grid container
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 189
+Comment: /// Mixin voor grid item
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 201
+Comment: /// Mixin voor responsieve grid met auto-fill
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 202
+Comment: /// @param {Number} $min-width [250px] - Minimale breedte van een grid item
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 210
+Comment: /* -------------------------------------------------------
+ * 4. RESPONSIVE DESIGN
+ * -------------------------------------------------------
+ * Van mobiel tot desktop, elk scherm omarmd,
+ * Responsive patronen die ons ontwerp beschermd;
+ * Media queries als verzen, vlot en klaar,
+ * Voor elk apparaat staat onze layout daar.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 219
+Comment: /// Mixin voor media query naar boven
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 227
+Comment: /// Mixin voor media query naar beneden
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 269
+Comment: /* -------------------------------------------------------
+ * 5. EFFECTEN
+ * -------------------------------------------------------
+ * Visuele illusies, subtiel maar sterk,
+ * Schaduwen en transities, een meesterwerk;
+ * Animaties die het oog verwennen,
+ * Effecten die het brein snel leren kennen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 278
+Comment: /// Mixin voor box shadow
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 296
+Comment: /// Mixin voor text shadow
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 310
+Comment: /// Mixin voor transitie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 311
+Comment: /// @param {String} $property [all] - CSS property om te animeren
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 312
+Comment: /// @param {String} $duration [vars.$transition-normal] - Duur van de transitie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 323
+Comment: /// @param {List} $transitions - Lijst van transitie strings
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 328
+Comment: /// Mixin voor glassmorphism effect
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 344
+Comment: /// Mixin voor basis buttonclass
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 399
+Comment: /// Mixin voor een kaart/card component
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 411
+Comment: /// Mixin voor input styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 442
+Comment: /// Mixin voor het toepassen van een aspect ratio
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 463
+Comment: /// Mixin voor het maken van een vierkant element
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 464
+Comment: /// @param {String} $size [100%] - Grootte van het vierkant
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 470
+Comment: /// Mixin voor het maken van een cirkelvormig element
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 471
+Comment: /// @param {String} $size [2rem] - Diameter van de cirkel
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 478
+Comment: /// Mixin voor het verwijderen van de standaard lijst styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 485
+Comment: /// Mixin voor het verwijderen van de standaard button styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 498
+Comment: /// Mixin voor het aanbrengen van een visually-hidden status (toegankelijkheid)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 511
+Comment: /// Mixin voor het aanbrengen van een custom scrollbar
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 536
+Comment: /// Mixin voor tekst afkappen met ellipsis (multi-line support)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 546
+Comment: /// Mixin voor responsive media queries - vervanger voor respond-to
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 564
+Comment: /// Mixin voor fade-in animatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 571
+Comment: /// Mixin voor slide-up animatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 578
+Comment: /// Mixin voor container met max-width en center
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 586
+Comment: /// Mixin voor heading-secondary styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 593
+Comment: /// Mixin voor body-text styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 600
+Comment: /// Mixin voor heading-primary styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 607
+Comment: /// Mixin voor card-base styling
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_mixins.scss
+Line: 615
+Comment: /// Mixin voor card-hover effect
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 1
+Comment: /**
+ * @file module.scss
+ * @description Component-specifieke stijlen template voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Components
+ * @imports _variables, _mixins
+ * @exports CSS Module classes voor componenten
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 10
+Comment: /* ======================================================= 
+ * COMPONENT TEMPLATE
+ * ======================================================= 
+ * Stijldefinities voor React componenten. CSS Modules zorgt voor 
+ * unieke class-namen in productie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 20
+Comment: /* ------------------------------------------------------- 
+ * HOOFDCONTAINER
+ * ------------------------------------------------------- 
+ * De buitenste container van het component die alle interne 
+ * elementen bevat. Definieert de grenzen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 37
+Comment: /* ------------------------------------------------------- 
+ * HEADER ELEMENT
+ * ------------------------------------------------------- 
+ * De kop of titel van het component.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 60
+Comment: /* ------------------------------------------------------- 
+ * CONTENT SECTIE
+ * ------------------------------------------------------- 
+ * Het hoofdgebied voor inhoud binnen het component.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 82
+Comment: /* ------------------------------------------------------- 
+ * ACTIE ELEMENTEN
+ * ------------------------------------------------------- 
+ * Interactieve elementen zoals knoppen, links of andere invoerelementen 
+ * die in het component voorkomen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 117
+Comment: /* ------------------------------------------------------- 
+ * MEDIA / VISUALISATIES
+ * ------------------------------------------------------- 
+ * Stijlen voor afbeeldingen, video's of andere media-elementen 
+ * binnen het component.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 136
+Comment: /* ------------------------------------------------------- 
+ * STATUS INDICATORS
+ * ------------------------------------------------------- 
+ * Elementen die status of feedback tonen aan de gebruiker, 
+ * zoals badges, notificaties of iconen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 166
+Comment: /* ------------------------------------------------------- 
+ * COMPONENTSPECIFIEKE ANIMATIES
+ * ------------------------------------------------------- 
+ * Keyframes en animatie-definities exclusief voor dit component.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_module-template.scss
+Line: 215
+Comment: /* ------------------------------------------------------- 
+ * PRINT STIJLEN
+ * ------------------------------------------------------- 
+ * Specifieke stijlen voor printweergave van het component.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 1
+Comment: /**
+ * @file _reset.scss
+ * @description CSS reset en normalizer voor consistente stijlen in "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports geen
+ * @exports Basis CSS reset/normalize regels
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 10
+Comment: /*
+✅ Good Parts of the Reset
+
+1. Universal box-sizing: Line 26-28 correctly sets box-sizing: border-box for all elements
+2. Comprehensive margin/padding reset: Removes default spacing from all common elements
+3. Text rendering optimization: Improves font display across browsers
+4. Media elements: Makes images and videos responsive by default
+5. Form normalization: Ensures consistent form styling across browsers
+6. HTML5 element support: Proper display for semantic elements
+
+ 🔧 For the Horizontal Scrollbar Issue
+
+ Since you already have box-sizing: border-box in your reset, we should remove the individual box-sizing declarations I was adding and instead focus on the
+actual cause of the horizontal scrollbar.
+*/
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 26
+Comment: /* ======================================================= 
+ * CSS RESET
+ * ======================================================= 
+ * Reset en normalisatie van standaard browserstijlen om een 
+ * consistente basis te creëren voor alle elementen over alle browsers heen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 35
+Comment: /* ------------------------------------------------------- 
+ * BOX MODEL RESET
+ * ------------------------------------------------------- 
+ * Zorgt dat padding en border worden opgenomen in element afmetingen.
+ * Voorkomt onverwachte overflow en maakt berekeningen eenvoudiger.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 46
+Comment: /* ------------------------------------------------------- 
+ * MARGINS & PADDING RESET
+ * ------------------------------------------------------- 
+ * Verwijdert alle standaard marges en padding die browsers aan 
+ * elementen toekennen. Dit geeft volledige controle over spacing.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 58
+Comment: /* ------------------------------------------------------- 
+ * TEKSTRENDERING
+ * ------------------------------------------------------- 
+ * Verbetert de weergave van tekst in ondersteunde browsers 
+ * voor betere leesbaarheid en scherpte.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 66
+Comment: // Voorkomt auto-tekstvergroting bij rotatie
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 71
+Comment: // Voor Firefox op macOS
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 76
+Comment: /* ------------------------------------------------------- 
+ * LINE HEIGHT NORMALISATIE
+ * ------------------------------------------------------- 
+ * Stelt een consistente basishoogte in voor tekst waardoor 
+ * tekst toegankelijker is en beter leesbaar.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 93
+Comment: // Volledig verbergen (visueel en voor schermlezers)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 111
+Comment: // Focuseerbare verborgen elementen zichtbaar maken bij focus
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 123
+Comment: // Onzichtbaar maar behoudt layout
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 128
+Comment: /* ------------------------------------------------------- 
+ * MEDIA ELEMENTEN
+ * ------------------------------------------------------- 
+ * Zorgt voor consistente weergave van media-elementen door inline 
+ * spacing te voorkomen en responsive gedrag te borgen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 138
+Comment: // Behoud van aspect ratio
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 141
+Comment: /* ------------------------------------------------------- 
+ * FORM ELEMENTEN
+ * ------------------------------------------------------- 
+ * Reset voor formulierelementen om consistenter gedrag te garanderen tussen browsers.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 180
+Comment: /* ------------------------------------------------------- 
+ * LINKS & INTERACTIEVE ELEMENTEN
+ * ------------------------------------------------------- 
+ * Consistente styling en gedrag voor links en interactieve elementen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 189
+Comment: // Voor oudere browsers
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 194
+Comment: // Zal worden overschreven door thema focus styles
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 203
+Comment: // Voorkom dat tekst in pre-elementen uit hun container breekt
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 207
+Comment: // Modern alternatief voor word-wrap
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 210
+Comment: // Consistentie voor code-elementen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 212
+Comment: // Zorgt voor consistent lettertype
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 216
+Comment: // Reset voor heading stijlen
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 222
+Comment: /* ------------------------------------------------------- 
+ * HTML5 DISPLAY DEFINITIONS
+ * ------------------------------------------------------- 
+ * Correcte weergavedefinities voor HTML5 elementen die in oudere browsers 
+ * problemen kunnen geven.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 245
+Comment: /* ------------------------------------------------------- 
+ * POËZIESPECIFIEKE RESETS
+ * ------------------------------------------------------- 
+ * Specifieke resets voor het poëzie-thema van de gedichtgevel applicatie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 251
+Comment: // Vers-elementen (blockquote voor poëzie)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_reset.scss
+Line: 264
+Comment: // Vers regel (gedichtregel)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 1
+Comment: /**
+ * @file _typography.scss
+ * @description Typografische stijlen en lettertype-definities voor "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables.scss
+ * @exports Typografische regels en hulpklassen
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 13
+Comment: /* =======================================================
+ * TYPOGRAFIE
+ * =======================================================
+ * Hier definiëren we alles wat met tekst te maken heeft:
+ * Lettertypefamilies, groottes (schalen), gewichten,
+ * lijnhoogtes, letterafstand. Gebruik altijd de onderstaande
+ * variabelen voor consistentie binnen de gehele "Gedichtgevel" applicatie.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 30
+Comment: /* Koppen (h1-h6)
+ * Hiërarchie van gedachten,
+ * Elk niveau vertelt zijn eigen verhaal,
+ * Richting in de chaos van tekst
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 48
+Comment: // Alternatieve styling met klasse
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 81
+Comment: /* Bodytekst
+ * Het canvas van gedachten,
+ * Woorden die samen dansen,
+ * De essentie van communicatie
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 149
+Comment: /* Gedicht-specifieke typografie
+ * Vormgeving voor onze kerncontent,
+ * Elk gedicht een kunststuk,
+ * Typografie als canvas
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 178
+Comment: // Voor dyslectische gebruikers
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_typography.scss
+Line: 216
+Comment: /* -------------------------------------------------------
+ * RESPONSIEVE TYPOGRAFIE
+ * -------------------------------------------------------
+ * Aanpassingen voor verschillende schermformaten:
+ * Mobile-first schalen
+ * Breakpoint-specifieke aanpassingen
+ * Fluid typography voor naadloze ervaring
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 1
+Comment: /**
+ * @file _utilities.scss
+ * @description Hulpklassen voor snelle styling en layout-aanpassingen in "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports _variables, _mixins
+ * @exports Herbruikbare utility classes
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 10
+Comment: /* ======================================================= 
+ * UTILITIES
+ * ======================================================= 
+ * Verzameling van kleine, doelgerichte hulpklassen die één specifieke stijleigenschap toepassen.
+ * Gebruikt voor snelle aanpassingen zonder custom CSS te schrijven.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 155
+Comment: /* ------------------------------------------------------- 
+ * TEXT STYLING UTILITIES
+ * ------------------------------------------------------- 
+ * Algemene tekststijlen, gewichten, groottes en uitlijning 
+ * zonder semantiek (puur voor visuele styling).
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 231
+Comment: /* ------------------------------------------------------- 
+ * DISPLAY & VISIBILITY
+ * ------------------------------------------------------- 
+ * Klassen voor het regelen van weergave-eigenschappen 
+ * en zichtbaarheid van elementen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 352
+Comment: /* ------------------------------------------------------- 
+ * POSITION & LAYOUT
+ * ------------------------------------------------------- 
+ * Hulpklassen voor positionering van elementen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 404
+Comment: /* ------------------------------------------------------- 
+ * BORDERS & BACKGROUNDS
+ * ------------------------------------------------------- 
+ * Klassen voor grenzen en achtergrondstijlen.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 444
+Comment: /* ------------------------------------------------------- 
+ * EFFECTEN & OVERGANGEN
+ * ------------------------------------------------------- 
+ * Hulpklassen voor animaties, transities en effecten.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_utilities.scss
+Line: 505
+Comment: /* ------------------------------------------------------- 
+ * RESPONSIVE UTILITIES
+ * ------------------------------------------------------- 
+ * Klassen die alleen op bepaalde schermformaten worden toegepast.
+ * Gebruikt in combinatie met responsive mixins.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_variables.scss
+Line: 1
+Comment: /**
+
+@file _variables.scss
+@description Centrale definities voor alle visuele variabelen gebruikt in "Gedichtgevel.nl"
+@author Jerôme
+@group Foundational
+@imports geen
+@exports SCSS variabelen en Sass maps
+*/
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\styles\_variables.scss
+Line: 22
+Comment: // TABLE OF CONTENTS:
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\test\setup.js
+Line: 1
+Comment: /**
+ * Vitest Test Setup
+ *
+ * Global test configuration en mocks voor alle tests.
+ * Dit bestand wordt automatisch geladen voor elke test suite.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\test\setup.js
+Line: 19
+Comment: //test.supabase.co';
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\test\setup.js
+Line: 124
+Comment: // Console spy setup (voor testing van logging)
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\test\setup.js
+Line: 141
+Comment: // Custom matchers kunnen hier worden toegevoegd
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\animationVariants.js
+Line: 1
+Comment: // TODO checken hoe dit nu gebruikt wordt en of er geen redundancy en css/framer conflicten optreden
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\carrouselIndicatorUtils.js
+Line: 12
+Comment: /**
+ * Calculate indicator configuration for carousel
+ * @param {number} totalCount - Total number of poems
+ * @param {number} currentIndex - Current carousel index (0-based)
+ * @returns {Object} Configuration for dots and Roman numerals
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\carrouselIndicatorUtils.js
+Line: 133
+Comment: /**
+ * Format the indicator elements for rendering
+ * @param {Object} config - Indicator configuration
+ * @returns {Array} Array of elements to render
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\carrouselIndicatorUtils.js
+Line: 277
+Comment: /**
+ * Calculate all available decades for navigation dropdown
+ * @param {number} totalCount - Total number of poems
+ * @returns {Array} Array of decade objects for navigation
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\eraMapping.js
+Line: 101
+Comment: /**
+ * Calculate the active middle year of a poet's life
+ * Uses average of birth and death year, or estimates based on available data
+ *
+ * @param {number|null} birthYear - Birth year
+ * @param {number|null} deathYear - Death year
+ * @returns {number|null} Active middle year or null
+ * @internal
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\eraMapping.js
+Line: 127
+Comment: /**
+ * Map an active middle year to a literary era
+ *
+ * @param {number|null} activeMiddleYear - Active middle year of the author
+ * @returns {string} Era ID (e.g., 'romantic', 'unknown')
+ * @internal
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\eraMapping.js
+Line: 180
+Comment: /**
+ * Filter poems by era (single)
+ *
+ * @param {Array} poems - Array of poem objects
+ * @param {string} selectedEraId - Era ID to filter by (or 'all')
+ * @returns {Array} Filtered poems
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\eraMapping.js
+Line: 198
+Comment: /**
+ * Filter poems by multiple eras
+ *
+ * @param {Array} poems - Array of poem objects
+ * @param {Array<string>} selectedEraIds - Array of era IDs to filter by (empty = all)
+ * @returns {Array} Filtered poems
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\eraMapping.js
+Line: 216
+Comment: /**
+ * Count the number of authors per era
+ *
+ * @param {Object} options - Options
+ * @param {boolean} options.excludeContemporary - Exclude contemporary era from count
+ * @returns {Object} Object with era IDs as keys and author counts as values
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\imageOptimization.js
+Line: 40
+Comment: /**
+ * Calculate optimal Pexels image URL (Contain/Fit-Width strategy)
+ * @param {Object} photo - Photo object with width, height, and src.original
+ * @param {number} viewportWidth - Viewport width (NOT multiplied by DPR)
+ * @param {number} viewportHeight - Viewport height (NOT multiplied by DPR)
+ * @param {string} qualityMode - Quality mode (preview, eco, auto, high)
+ * @returns {string} Optimized Pexels URL
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\imageOptimization.js
+Line: 89
+Comment: /**
+ * Calculate optimal Flickr image URL from available sizes (Contain/Fit-Width strategy)
+ * @param {Object} photo - Photo object with available URLs
+ * @param {number} viewportWidth - Viewport width (NOT multiplied by DPR)
+ * @param {number} viewportHeight - Viewport height (NOT multiplied by DPR)
+ * @param {string} qualityMode - Quality mode (preview, eco, auto, high)
+ * @returns {string} Best-fit Flickr URL
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\imageOptimization.js
+Line: 134
+Comment: /**
+ * Calculate optimal image request based on viewport (Contain/Fit-Width strategy)
+ * @param {Object} photo - Photo object from API
+ * @param {number} [windowWidth] - Window width (defaults to window.innerWidth)
+ * @param {number} [windowHeight] - Window height (defaults to window.innerHeight)
+ * @param {string} [qualityMode] - Quality mode (preview, eco, auto, high)
+ * @returns {string} Optimized image URL
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 1
+Comment: // TODO Werking en gebruik van deze utility functie voor text formatting controleren
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 8
+Comment: /**
+ * Get text with tooltip for long content
+ * @param {string} text - The text to format
+ * @param {number} maxLength - Maximum length before truncation
+ * @returns {Object} Object with display text and optional title
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 29
+Comment: /**
+ * Format poem title for display
+ * @param {string} title - The poem title
+ * @param {number} maxLength - Maximum display length
+ * @returns {Object} Formatted title object
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 39
+Comment: /**
+ * Format author name for display
+ * @param {string} author - The author name
+ * @param {number} maxLength - Maximum display length
+ * @returns {Object} Formatted author object
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 45
+Comment: /**
+ * Validate poem object has required properties
+ * @param {Object} poem - The poem object to validate
+ * @returns {boolean} Whether poem is valid
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poem\textFormatting.js
+Line: 58
+Comment: /**
+ * Get poem display properties with validation
+ * Always returns an object to avoid conditional rendering issues
+ * @param {Object} poem - The poem object
+ * @returns {Object} Display properties (never null)
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 8
+Comment: /**
+ * Calculate minimum expanded height to ensure it's never smaller than preview
+ * @param {Object} poem - The poem object
+ * @param {number} screenWidth - Current screen width
+ * @returns {number} Minimum height for expanded container
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 48
+Comment: /**
+ * Determine if a poem should use small poem animation (≤10 lines)
+ * @param {Object} poem - The poem object
+ * @returns {boolean} True if poem should use small poem animations
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 107
+Comment: /**
+ * Calculates the exact height an expanded poem will occupy
+ * Considering whitespace between lines and performance optimization
+ * @param {Object} poem - The poem object with lines array
+ * @param {number} screenWidth - Current screen width
+ * @param {number} cardWidth - Width of the poem card
+ * @param {boolean} forceCalculation - Force calculation (used for max 3 poems)
+ * @returns {Object} Height information for animation
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 178
+Comment: /**
+ * Fallback height calculation for performance (used for poems index > 2)
+ * @param {Object} poem - The poem object
+ * @param {number} screenWidth - Screen width
+ * @returns {Object} Estimated height information
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 208
+Comment: /**
+ * Calculates staggered animation delays for poem lines
+ * @param {number} totalLines - Total number of lines to expand
+ * @param {number} baseDelay - Base delay in ms
+ * @param {number} staggerIncrement - Increment per line in ms
+ * @returns {Array} Array of delays for each line
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\poemHeightCalculator.js
+Line: 371
+Comment: /**
+ * Carousel-specific height calculation with intelligent caching
+ * @param {Object} poem - Poem object
+ * @param {number} currentIndex - Current carousel index
+ * @param {Array} allPoems - All poems in carousel
+ * @param {string} navigationDirection - 'next', 'prev', 'initial'
+ * @param {number} screenWidth - Screen width
+ * @param {number} cardWidth - Card width
+ * @returns {Promise<Object>} Height information
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 58
+Comment: //     let result = 0;
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 59
+Comment: //     let i = 0;
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 95
+Comment: // +1 because we want the start of next decade range
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 99
+Comment: /**
+ * Format a range display with Roman numerals for decades
+ * @param {number} startIndex - Start index (0-based)
+ * @param {number} endIndex - End index (0-based)
+ * @param {number} totalCount - Total number of items
+ * @param {boolean} useDropdownFormat - Whether to use simplified dropdown format (X, XX, XXX)
+ * @returns {Object} Formatted range information
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 129
+Comment: /**
+ * Generate all available decades for a given total count
+ * Used for dropdown navigation
+ * @param {number} totalCount - Total number of items
+ * @returns {Array} Array of decade objects
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 160
+Comment: /**
+ * Generate decades specifically formatted for dropdown display
+ * Uses simplified Roman numerals: X, XX, XXX, etc.
+ * @param {number} totalCount - Total number of items
+ * @returns {Array} Array of decade objects formatted for dropdown
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 194
+Comment: /**
+ * Get the appropriate Roman numeral for display in carousel indicators
+ * @param {number} currentIndex - Current carousel position (0-based)
+ * @param {number} totalCount - Total number of items
+ * @returns {Object} Roman numeral display information
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\romanNumerals.js
+Line: 230
+Comment: //     return validPattern.test(cleanRoman);
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 7
+Comment: // TODO Util architectuur nakijken en begrijpen om deze utils te kunnen gebruiken in SearchResults
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 8
+Comment: /**
+ * Determines layout class based on result count and device
+ * @param {number} resultCount - Number of search results
+ * @param {boolean} isDesktop - Whether viewport is desktop size
+ * @returns {string} CSS class name for layout
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 25
+Comment: /**
+ * Calculates visible results for carousel mode
+ * @param {Array} results - All search results
+ * @param {number} currentIndex - Current carousel position
+ * @param {number} resultCount - Total number of results
+ * @param {boolean} isDesktop - Whether viewport is desktop size
+ * @param {boolean} isCarousel - Whether in carousel mode (4+ results)
+ * @returns {Array} Visible results for current view
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 58
+Comment: /**
+ * Maps display index to actual result index in carousel mode
+ * @param {number} displayIndex - Index in visible results (0-2)
+ * @param {number} currentIndex - Current carousel position
+ * @param {number} resultCount - Total number of results
+ * @param {boolean} isCarousel - Whether in carousel mode
+ * @returns {number} Actual index in results array
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 82
+Comment: /**
+ * Creates indices set for height pre-calculation
+ * @param {Array} results - All search results
+ * @param {number} currentIndex - Current carousel position
+ * @param {number} resultCount - Total number of results
+ * @param {boolean} isCarousel - Whether in carousel mode
+ * @param {boolean} isDesktop - Whether viewport is desktop size
+ * @param {Function} getVisibleResults - Function to get visible results
+ * @returns {Set} Set of indices that need height calculation
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 102
+Comment: // Voor carousel: ook volgende/vorige gedichten
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 113
+Comment: /**
+ * Maps visible results to their actual indices for state management
+ * @param {Array} visibleResults - Results currently visible
+ * @param {number} currentIndex - Current carousel position
+ * @param {number} resultCount - Total number of results
+ * @param {boolean} isCarousel - Whether in carousel mode
+ * @returns {Array} Array of objects with {displayIndex, actualIndex}
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\searchLayoutUtils.js
+Line: 129
+Comment: /**
+ * Determines if viewport is desktop size
+ * @returns {boolean} Whether viewport is desktop size
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\shortPoemUtils.js
+Line: 1
+Comment: /**
+ * Utility functies voor het hanteren van korte gedichten (≤4 regels)
+ *
+ * Voor korte gedichten:
+ * - Verberg alleen de laatste regel in preview
+ * - Min-height behouden voor consistente uitlijning
+ * - Global toggle functionaliteit in sync houden
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\shortPoemUtils.js
+Line: 10
+Comment: // TODO Util implementatie begrijpen en kijken of het minder verbose kan
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\shortPoemUtils.js
+Line: 12
+Comment: /**
+ * Berekent hoeveel regels verborgen zijn in preview mode
+ * EENVOUDIGE LOGICA: Alleen line-level counting
+ * @param {Object} poem - Gedicht object met lines array
+ * @param {Object} expandablePreview - Resultaat van createExpandablePreview
+ * @returns {Object} { hiddenLineCount, hiddenWordCount, displayText }
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\shortPoemUtils.js
+Line: 36
+Comment: /**
+ * EENVOUDIGE PREVIEW LOGICA: Terug naar originele, werkende implementatie
+ * Alleen gedichten > 4 regels zijn expandable
+ * Preview = eerste 4 regels, Hidden = regels vanaf regel 5
+ * @param {Object} poem - Gedicht object met lines array
+ * @returns {Object} { previewLines, hiddenContent, isExpandable }
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\shortPoemUtils.js
+Line: 66
+Comment: /**
+ * Berekent welke gedichten daadwerkelijk kunnen expanderen bij global toggle
+ * EENVOUDIGE LOGICA: Alleen gedichten > 4 regels zijn expandable
+ * @param {Array} poems - Array van alle gedichten
+ * @param {Array} visibleIndices - Indices van zichtbare gedichten
+ * @returns {Object} Object met expandable info
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\__tests__\example.test.js
+Line: 1
+Comment: /**
+ * Example Test Suite
+ *
+ * Dit is een voorbeeld test om te verifiëren dat:
+ * 1. Vitest correct werkt
+ * 2. Coverage reporting werkt
+ * 3. Codecov upload werkt
+ *
+ * Deze test kan later worden verwijderd zodra echte tests zijn geschreven.
+ */
+---
+File: C:\CODING PROJECTS and WEBSITES\GITHUB JEZI89\NOVI\Eindopdrachten-Clean\eindproject-fe-gedichtgevel.nl\src\utils\__tests__\example.test.js
+Line: 53
+Comment: // Voorbeeld van een utility function om coverage te testen
+---
+Scan complete.

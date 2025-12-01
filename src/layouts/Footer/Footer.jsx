@@ -10,31 +10,31 @@ export function Footer() {
             <div className={styles.footerSection}>
               <h3 className={styles.footerTitle}>Gedichtgevel</h3>
               <p className={styles.footerDescription}>
-                Where poetry and architecture meet
+                Waar poëzie en architectuur samenkomen
               </p>
             </div>
 
             <div className={styles.footerSection}>
-              <h4 className={styles.footerSubtitle}>Discover</h4>
+              <h4 className={styles.footerSubtitle}>Ontdekken</h4>
               <ul className={styles.footerLinks}>
                 <li>
                   <a href="/" className={styles.footerLink}>
-                    Search
+                    Zoeken
                   </a>
                 </li>
                 <li>
                   <a href="/designgevel" className={styles.footerLink}>
-                    Design Facade
+                    Designgevel
                   </a>
                 </li>
                 <li>
                   <a href="/spreekgevel" className={styles.footerLink}>
-                    Speak Facade
+                    Spreekgevel
                   </a>
                 </li>
                 <li>
                   <a href="/collectiegevel" className={styles.footerLink}>
-                    Collection Facade
+                    Collectiegevel
                   </a>
                 </li>
               </ul>
@@ -45,12 +45,12 @@ export function Footer() {
               <ul className={styles.footerLinks}>
                 <li>
                   <a href="/account" className={styles.footerLink}>
-                    My Account
+                    Mijn Account
                   </a>
                 </li>
                 <li>
                   <a href="/welkom" className={styles.footerLink}>
-                    Log In
+                    Inloggen
                   </a>
                 </li>
               </ul>
@@ -61,7 +61,7 @@ export function Footer() {
               <ul className={styles.footerLinks}>
                 <li>
                   <a href="/overmij" className={styles.footerLink}>
-                    About
+                    Over
                   </a>
                 </li>
                 <li>
@@ -76,7 +76,7 @@ export function Footer() {
                 </li>
                 <li>
                   <a href="/voorwaarden" className={styles.footerLink}>
-                    Terms
+                    Voorwaarden
                   </a>
                 </li>
               </ul>
@@ -85,7 +85,7 @@ export function Footer() {
 
           <div className={styles.footerBottom}>
             <p className={styles.footerCopyright}>
-              © 2025 Gedichtgevel. All rights reserved.
+              © 2025 Gedichtgevel. Alle rechten voorbehouden.
             </p>
           </div>
         </div>
