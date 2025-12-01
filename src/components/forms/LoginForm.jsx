@@ -189,9 +189,7 @@ export function LoginForm() {
                     {isSubmitting ? 'Bezig met inloggen...' : 'Inloggen'}
                 </SubmitButton>
 
-                <div className={styles.formDivider}>
-                    <span>of</span>
-                </div>
+
 
                 <SubmitButton
                     type="button"

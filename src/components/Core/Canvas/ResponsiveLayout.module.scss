@@ -16,9 +16,9 @@
   z-index: 10;       // Above canvas
   transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   background-color: vars.$neutral-cream;
-  color: #cfd4db;
+  color: vars.$canvas-control-text;
   box-sizing: border-box;
-  border-right: 1px solid #3d4a5c;
+  border-right: 1px solid vars.$canvas-control-border;
   overflow-y: auto;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);  // Subtle depth
 }
@@ -32,9 +32,9 @@
   z-index: 10;       // Above canvas
   transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   background-color: vars.$neutral-cream;
-  color: #cfd4db;
+  color: vars.$canvas-control-text;
   box-sizing: border-box;
-  border-left: 1px solid #3d4a5c;
+  border-left: 1px solid vars.$canvas-control-border;
   overflow: visible; /* Allow hint to overflow */
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@
   left: 0;
   width: 100%;        // NEW: always full-width
   height: 100%;       // NEW: always full-height
-  background-color: #1d2230;
+  background-color: vars.$canvas-bg-dark;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -68,10 +68,10 @@
   top: 16px;
   width: 40px;
   height: 40px;
-  background-color: rgba(42, 52, 65, 0.8);
+  background-color: rgba(vars.$neutral-darker, 0.8);
   backdrop-filter: blur(5px);
   color: vars.$neutral-white;
-  border: 1px solid #4a5a6d;
+  border: 1px solid vars.$neutral-mid;
   cursor: pointer;
   z-index: 5;
   display: flex;
@@ -83,7 +83,7 @@
 }
 
 .openButton:hover {
-  background-color: #3d4a5c;
+  background-color: vars.$neutral-dark;
 }
 
 .openControlsButton {
@@ -99,14 +99,14 @@
   left: auto;
   right: 0;
   border-right: none;
-  border-left: 1px solid #3d4a5c;
+  border-left: 1px solid vars.$canvas-control-border;
 }
 
 .navPanel.swapped {
   right: auto;
   left: 0;
   border-left: none;
-  border-right: 1px solid #3d4a5c;
+  border-right: 1px solid vars.$canvas-control-border;
 }
 
 .controlsPanel.swapped.collapsed {

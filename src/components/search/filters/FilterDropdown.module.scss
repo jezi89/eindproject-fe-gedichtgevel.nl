@@ -89,7 +89,7 @@
 .maxButton {
     padding: 0.25rem 0.75rem;
     margin-left: 0.5rem;
-    background-color: var(--primary-color, #FF6B35);
+    background-color: var(--primary-color, vars.$primary-flame);
     border: none;
     border-radius: 4px;
     color: vars.$neutral-light;
@@ -101,7 +101,7 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background-color: rgba(255, 107, 53, 0.8);
+        background-color: rgba(vars.$primary-flame, 0.8);
         transform: scale(1.05);
     }
 
@@ -115,15 +115,15 @@
     }
 
     @media (max-width: 480px) {
-        font-size: 10px;
+        font-size: 0.625rem;
         padding: 0.15rem 0.5rem;
     }
 }
 
 .dropdownArrow {
     position: relative;
-    width: 21px;
-    height: 16px;
+    width: 1.3125rem;
+    height: 1rem;
     margin-left: 0.75rem;
     flex-shrink: 0;
     transition: transform 0.3s ease;
@@ -137,8 +137,8 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    fill: #EFEFEF;
-    stroke: #EFEFEF;
+    fill: vars.$neutral-light;
+    stroke: vars.$neutral-light;
     stroke-width: 0.75px;
 }
 
@@ -149,10 +149,10 @@
     transform: translateX(-50%);
     z-index: 1000;
     min-width: 280px;
-    background-color: rgba(26, 26, 26, 0.98);
-    border: 1px solid rgba(239, 239, 239, 0.2);
+    background-color: rgba(vars.$neutral-darker, 0.98);
+    border: 1px solid rgba(vars.$neutral-light, 0.2);
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px vars.$shadow-base-darker;
     max-height: 400px;
     overflow-y: auto;
     animation: dropdownSlide 0.2s ease;
@@ -163,16 +163,16 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(vars.$neutral-white, 0.05);
         border-radius: 0 8px 8px 0;
     }
 
     &::-webkit-scrollbar-thumb {
-        background: rgba(255, 107, 53, 0.5);
+        background: rgba(vars.$primary-flame, 0.5);
         border-radius: 4px;
 
         &:hover {
-            background: rgba(255, 107, 53, 0.7);
+            background: rgba(vars.$primary-flame, 0.7);
         }
     }
 }
@@ -186,10 +186,10 @@
     width: 500px;
     max-width: 90vw;
     padding: 1.5rem;
-    background-color: rgba(26, 26, 26, 0.98);
-    border: 1px solid rgba(239, 239, 239, 0.2);
+    background-color: rgba(vars.$neutral-darker, 0.98);
+    border: 1px solid rgba(vars.$neutral-light, 0.2);
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px vars.$shadow-base-darker;
     animation: dropdownSlide 0.2s ease;
 
     @media (max-width: 768px) {
@@ -211,19 +211,19 @@
     padding: 0.875rem 1rem;
     background: transparent;
     border: none;
-    color: var(--text-primary, #EFEFEF);
+    color: var(--text-primary, vars.$neutral-light);
     font-size: 0.875rem;
     text-align: left;
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover:not(.disabled) {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(vars.$neutral-white, 0.1);
     }
 
     &.selected {
-        background-color: rgba(255, 107, 53, 0.15);
-        color: var(--primary-color, #FF6B35);
+        background-color: rgba(vars.$primary-flame, 0.15);
+        color: var(--primary-color, vars.$primary-flame);
         font-weight: 600;
     }
 
@@ -243,11 +243,11 @@
 }
 
 .checkIcon {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     margin-left: 0.5rem;
     flex-shrink: 0;
-    color: var(--primary-color, #FF6B35);
+    color: var(--primary-color, vars.$primary-flame);
 }
 
 // Checkbox styles for multi-select era filter
@@ -261,28 +261,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(239, 239, 239, 0.4);
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid rgba(vars.$neutral-light, 0.4);
     border-radius: 3px;
     background: transparent;
     transition: all 0.15s ease;
 
     svg {
-        width: 14px;
-        height: 14px;
+        width: 0.875rem;
+        height: 0.875rem;
         color: vars.$neutral-white;
     }
 
     &.checked {
-        background-color: var(--primary-color, #FF6B35);
-        border-color: var(--primary-color, #FF6B35);
+        background-color: var(--primary-color, vars.$primary-flame);
+        border-color: var(--primary-color, vars.$primary-flame);
     }
 }
 
 .dropdownDivider {
     height: 1px;
-    background-color: rgba(239, 239, 239, 0.1);
+    background-color: rgba(vars.$neutral-light, 0.1);
     margin: 0.5rem 0;
 }
 
@@ -296,7 +296,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: rgba(239, 239, 239, 0.5);
+    color: rgba(vars.$neutral-light, 0.5);
 }
 
 .dropdownLink {
@@ -304,21 +304,21 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1rem;
-    color: var(--primary-color, #FF6B35);
+    color: var(--primary-color, vars.$primary-flame);
     font-size: 0.8125rem;
     text-decoration: none;
     transition: all 0.15s ease;
     border-radius: 0 0 8px 8px;
 
     &:hover {
-        background-color: rgba(255, 107, 53, 0.1);
+        background-color: rgba(vars.$primary-flame, 0.1);
         text-decoration: underline;
     }
 }
 
 .linkIcon {
-    width: 18px;
-    height: 18px;
+    width: 1.125rem;
+    height: 1.125rem;
     flex-shrink: 0;
 }
 
@@ -326,11 +326,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.5em;
-    height: 1.5em;
-    margin-left: 0.75em;
-    padding: 0 0.5em;
-    background: var(--primary-color, #FF6B35);
+    min-width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 0.75rem;
+    padding: 0 0.5rem;
+    background: var(--primary-color, vars.$primary-flame);
     color: vars.$neutral-white;
     font-size: 0.85em;
     font-weight: 700;
@@ -344,11 +344,11 @@
 @keyframes dropdownSlide {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translate(-50%, -8px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, 0);
     }
 }
 

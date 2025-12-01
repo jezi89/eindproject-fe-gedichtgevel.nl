@@ -109,11 +109,11 @@
 
   // When there's content, scale up the text
   &:not(:placeholder-shown) {
-	font-size: clamp(20px, 3vw, $font-size-xxl);
+	font-size: clamp(1.25rem, 3vw, $font-size-xxl);
 	}
 
   &:focus {
-	font-size: clamp(20px, 3vw, $font-size-xxl);
+	font-size: clamp(1.25rem, 3vw, $font-size-xxl);
 	color:     $search-text;
 	outline:   none;
 	}
@@ -211,7 +211,7 @@
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(18px, 3vw, $font-size-xl + $font-size-xxs);
+	  font-size: clamp(1.125rem, 3vw, $font-size-xl + $font-size-xxs);
 	  }
 
 	&::placeholder {
@@ -220,7 +220,7 @@
 	}
 
   .searchButton {
-	font-size: clamp(18px, 2vw, $font-size-m);
+	font-size: clamp(1.125rem, 2vw, $font-size-m);
 	width:     clamp(80px, 8vw, 104px);
 	}
 
@@ -242,7 +242,7 @@
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(16px, 3vw, $font-size-l);
+	  font-size: clamp(1rem, 3vw, $font-size-l);
 	  }
 
 	&::placeholder {
@@ -251,7 +251,7 @@
 	}
 
   .searchButton {
-	font-size:  clamp(16px, 2vw, $font-size-m - $font-size-xxxs);
+	font-size:  clamp(1rem, 2vw, $font-size-m - $font-size-xxxs);
 	width:      clamp(70px, 10vw, 80px);
 	min-height: $spacing-xl + $spacing-xs;
 	}
@@ -288,7 +288,7 @@
 
 	&:not(:placeholder-shown),
 	&:focus {
-	  font-size: clamp(14px, 4vw, $font-size-m - $font-size-xxxs);
+	  font-size: clamp(0.875rem, 4vw, $font-size-m - $font-size-xxxs);
 	  }
 
 	&::placeholder {
@@ -302,7 +302,7 @@
 	}
 
   .searchButton {
-	font-size:     clamp(14px, 3vw, $font-size-s);
+	font-size:     clamp(0.875rem, 3vw, $font-size-s);
 	width:         100%;
 	border-radius: $border-radius-sm;
 	}

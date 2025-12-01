@@ -112,7 +112,7 @@ function HomePageContent() {
         let filtered = [...results];
 
         // 1. Filter by length (line count)
-        if (maxLength < 150) {
+        if (maxLength < 251) {
             filtered = filtered.filter(poem => {
                 const lineCount = poem.lines ? poem.lines.length : 0;
                 return lineCount <= maxLength;
@@ -259,19 +259,24 @@ function HomePageContent() {
                                 </div>
 
                                 {/* Creative Canvas Filter (disabled mock-up) */}
-                                <div className={styles.filterItem} onClick={handleComingSoonClick}>
+                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
                                     <FilterToggle
                                         checked={onlyMyDesigns}
                                         onChange={setOnlyMyDesigns}
                                         label="Canvas"
-                                        disabled={true}
-                                        tooltipText="Binnenkort beschikbaar"
-                                    />
-                                </div>
 
+
+                                    />
                                 {/* Meer Filters - toekomstige uitbreiding */}
-                                <div className={styles.filterItemAdvanced} onClick={handleComingSoonClick}>
-                                    <span className={styles.filterTextAdvanced}>Meer Filters</span>
+                                </div>
+                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
+                                    <FilterToggle
+                                        checked={onlyMyDesigns}
+                                        onChange={setOnlyMyDesigns}
+                                        label="Meer Filters"
+
+
+                                    />
                                 </div>
                             </div>
                         </div>

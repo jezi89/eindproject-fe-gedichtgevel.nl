@@ -114,7 +114,7 @@
 .sliderTicks {
     display: flex;
     justify-content: space-between;
-    padding: 0 2px;
+    padding: 0 0.125rem;
     margin-top: -4px;
 }
 
@@ -135,21 +135,21 @@
     animation: slideIn 0.3s ease;
 
     &.info {
-        background-color: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        color: #93C5FD;
+        background-color: rgba($feedback-info, 0.1);
+        border: 1px solid rgba($feedback-info, 0.3);
+        color: $feedback-info;
     }
 
     &.warning {
-        background-color: rgba(245, 158, 11, 0.1);
-        border: 1px solid rgba(245, 158, 11, 0.3);
-        color: #FCD34D;
+        background-color: rgba($feedback-warning, 0.1);
+        border: 1px solid rgba($feedback-warning, 0.3);
+        color: $feedback-warning;
     }
 }
 
 .hintIcon {
-    width: 18px;
-    height: 18px;
+    width: 1.125rem;
+    height: 1.125rem;
     flex-shrink: 0;
     margin-top: 1px;
 }
