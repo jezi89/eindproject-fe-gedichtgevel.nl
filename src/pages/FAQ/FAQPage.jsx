@@ -15,29 +15,33 @@
  */
 export function FAQPage() {
     return (
-        <div className="page-faq">
-            <h1 className="page-title">Hoe dan?</h1>
-            <p className="page-subtitle">Veelgestelde vragen over GedichtGevel</p>
+      <div className="page-faq">
+        <h1 className="page-title">How does it work?</h1>
+        <p className="page-subtitle">
+          Frequently asked questions about GedichtGevel
+        </p>
 
-            <section className="faq-section">
-                <h2>Hoe werkt het?</h2>
-                <p>Hier komt uitleg over hoe je GedichtGevel kunt gebruiken.</p>
-            </section>
+        <section className="faq-section">
+          <h2>How does it work?</h2>
+          <p>Here you will find an explanation of how to use GedichtGevel.</p>
+        </section>
 
-            <section className="faq-section">
-                <h2>Gedichten zoeken</h2>
-                <p>Gebruik de zoekbalk om gedichten te vinden op titel, dichter of trefwoord.</p>
-            </section>
+        <section className="faq-section">
+          <h2>Searching for poems</h2>
+          <p>Use the search bar to find poems by title, poet, or keyword.</p>
+        </section>
 
-            <section className="faq-section">
-                <h2>Gevels ontwerpen</h2>
-                <p>In de Design Gevel kun je gedichten op een gevel plaatsen en vormgeven.</p>
-            </section>
+        <section className="faq-section">
+          <h2>Designing facades</h2>
+          <p>
+            In the Design Facade, you can place and style poems on a facade.
+          </p>
+        </section>
 
-            <section className="faq-section">
-                <h2>Audio opnemen</h2>
-                <p>Met Spreek Gevel kun je gedichten inspreken en beluisteren.</p>
-            </section>
-        </div>
+        <section className="faq-section">
+          <h2>Recording audio</h2>
+          <p>With Speak Facade, you can record and listen to poems.</p>
+        </section>
+      </div>
     );
 }

@@ -1,71 +1,74 @@
 /**
- * Utility functies voor het hanteren van korte gedichten (≤4 regels)
+ * Utility functions for handling short poems (≤4 lines)
  *
- * Voor korte gedichten:
- * - Verberg alleen de laatste regel in preview
- * - Min-height behouden voor consistente uitlijning
- * - Global toggle functionaliteit in sync houden
+ * For short poems:
+ * - Hide only the last line in preview
+ * - Maintain min-height for consistent alignment
+ * - Keep global toggle functionality in sync
  */
 
-// TODO Util implementatie begrijpen en kijken of het minder verbose kan
+// TODO Understand util implementation and see if it can be less verbose
 
 /**
- * Berekent hoeveel regels verborgen zijn in preview mode
- * EENVOUDIGE LOGICA: Alleen line-level counting
+ * Calculates how many lines are hidden in preview mode
+ * SIMPLE LOGIC: Only line-level counting
  * @param {Object} poem - Gedicht object met lines array
  * @param {Object} expandablePreview - Resultaat van createExpandablePreview
  * @returns {Object} { hiddenLineCount, hiddenWordCount, displayText }
  */
 export const calculateHiddenContent = (poem, expandablePreview) => {
-    if (!poem || !poem.lines || !expandablePreview) {
-        return {hiddenLineCount: 0, hiddenWordCount: 0, displayText: ''};
-    }
+  if (!poem || !poem.lines || !expandablePreview) {
+    return { hiddenLineCount: 0, hiddenWordCount: 0, displayText: "" };
+  }
 
-    // Eenvoudige berekening: aantal hidden regels
-    const hiddenLineCount = expandablePreview.hiddenContent.length;
+  // Simple calculation: number of hidden lines
+  const hiddenLineCount = expandablePreview.hiddenContent.length;
 
-    return {
-        hiddenLineCount,
-        hiddenWordCount: 0,
-        displayText: hiddenLineCount > 0
-            ? `${hiddenLineCount} ${hiddenLineCount === 1 ? 'regel' : 'regels'} verborgen`
-            : ''
-    };
+  return {
+    hiddenLineCount,
+    hiddenWordCount: 0,
+    displayText:
+      hiddenLineCount > 0
+        ? `${hiddenLineCount} ${
+            hiddenLineCount === 1 ? "regel" : "regels"
+          } verborgen`
+        : "",
+  };
 };
 
 /**
- * EENVOUDIGE PREVIEW LOGICA: Terug naar originele, werkende implementatie
- * Alleen gedichten > 4 regels zijn expandable
- * Preview = eerste 4 regels, Hidden = regels vanaf regel 5
+ * SIMPLE PREVIEW LOGIC: Back to original, working implementation
+ * Only poems > 4 lines are expandable
+ * Preview = first 4 lines, Hidden = lines from line 5
  * @param {Object} poem - Gedicht object met lines array
  * @returns {Object} { previewLines, hiddenContent, isExpandable }
  */
 export const createExpandablePreview = (poem) => {
-    if (!poem || !poem.lines || poem.lines.length === 0) {
-        return {previewLines: [], hiddenContent: [], isExpandable: false};
-    }
+  if (!poem || !poem.lines || poem.lines.length === 0) {
+    return { previewLines: [], hiddenContent: [], isExpandable: false };
+  }
 
-    // Eenvoudige logica: alleen gedichten > 4 regels zijn expandable
-    if (poem.lines.length > 4) {
-        return {
-            previewLines: poem.lines.slice(0, 4),
-            hiddenContent: poem.lines.slice(4),
-            isExpandable: true,
-            truncationType: 'line-level'
-        };
-    }
-
-    // Gedichten <= 4 regels: toon alles, niet expandable
+  // Simple logic: only poems > 4 lines are expandable
+  if (poem.lines.length > 4) {
     return {
-        previewLines: poem.lines,
-        hiddenContent: [],
-        isExpandable: false
+      previewLines: poem.lines.slice(0, 4),
+      hiddenContent: poem.lines.slice(4),
+      isExpandable: true,
+      truncationType: "line-level",
     };
+  }
+
+  // Poems <= 4 lines: show all, not expandable
+  return {
+    previewLines: poem.lines,
+    hiddenContent: [],
+    isExpandable: false,
+  };
 };
 
 /**
- * Berekent welke gedichten daadwerkelijk kunnen expanderen bij global toggle
- * EENVOUDIGE LOGICA: Alleen gedichten > 4 regels zijn expandable
+ * Calculates which poems can actually expand with global toggle
+ * SIMPLE LOGIC: Only poems > 4 lines are expandable
  * @param {Array} poems - Array van alle gedichten
  * @param {Array} visibleIndices - Indices van zichtbare gedichten
  * @returns {Object} Object met expandable info
@@ -85,15 +88,15 @@ export const analyzeExpandablePoems = (poems, visibleIndices) => {
     const nonExpandableIndices = [];
 
     visibleIndices.forEach(index => {
-        const poem = poems[index];
-        if (!poem) return;
+      const poem = poems[index];
+      if (!poem) return;
 
-        // Eenvoudige check: alleen gedichten > 4 regels zijn expandable
-        if (poem.lines && poem.lines.length > 4) {
-            expandableIndices.push(index);
-        } else {
-            nonExpandableIndices.push(index);
-        }
+      // Simple check: only poems > 4 lines are expandable
+      if (poem.lines && poem.lines.length > 4) {
+        expandableIndices.push(index);
+      } else {
+        nonExpandableIndices.push(index);
+      }
     });
 
     // Count total expandable poems

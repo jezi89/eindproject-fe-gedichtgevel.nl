@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import styles from './SearchProgress.module.scss';
 
-// TODO error boundary check en stylen
+// TODO Check and style error boundary
 
 /**
  * Error Boundary specifically for search functionality

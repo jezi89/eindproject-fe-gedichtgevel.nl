@@ -107,7 +107,7 @@
   padding:               0.25rem;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap:                   0.75rem;
-  /* Voor scrollbar ruimte en voorkomen overflow on hover van foto's */
+  /* For scrollbar space and preventing overflow on photo hover */
 }
 
 .floatingPhotoThumbnail {

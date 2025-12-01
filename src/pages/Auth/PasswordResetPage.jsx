@@ -4,24 +4,21 @@ import '../../layouts/_auth-layout.scss';
 
 export default function PasswordResetPage() {
     return (
-        <div className="auth-layout">
-            <div className="auth-card">
-                <div className="auth-header">
-                    <h1>Wachtwoord vergeten?</h1>
-                    <p>Vul je e-mailadres in om een reset link te ontvangen</p>
-                </div>
+      <div className="auth-layout">
+        <div className="auth-card">
+          <div className="auth-header">
+            <h1>Forgot Password?</h1>
+            <p>Enter your email address to receive a reset link</p>
+          </div>
 
-                <PasswordResetForm/>
+          <PasswordResetForm />
 
-                <div className="auth-footer">
-                    <p>
-                        Weet je je wachtwoord weer? {' '}
-                        <Link to="/login">
-                            Terug naar inloggen
-                        </Link>
-                    </p>
-                </div>
-            </div>
+          <div className="auth-footer">
+            <p>
+              Remember your password? <Link to="/login">Back to login</Link>
+            </p>
+          </div>
         </div>
+      </div>
     );
 }

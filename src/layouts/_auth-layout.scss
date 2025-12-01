@@ -13,7 +13,7 @@
 @use "../styles/variables" as *;
 @use "../styles/mixins" as *;
 
-// Het gebruik van underscores voor _auth-layout.scss duidt op een Sass-partial, wat een goede praktijk is. Het globale index.scss-bestand importeert doorgaans deze partials en definieert echt globale stijlen.
+// The use of underscores for _auth-layout.scss indicates a Sass partial, which is good practice. The global index.scss file typically imports these partials and defines truly global styles.
 
 // Auth page container
 .auth-layout {

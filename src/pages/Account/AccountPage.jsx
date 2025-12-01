@@ -63,48 +63,52 @@ export function AccountPage() {
 
     // Show loading state while checking auth
     if (loading) {
-        return (
-            <div className={styles.loadingContainer}>
-                <div className={styles.spinner}/>
-                <p>Account laden...</p>
-            </div>
-        );
+      return (
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner} />
+          <p>Loading account...</p>
+        </div>
+      );
     }
 
     // Don't render if not authenticated (will redirect)
     if (!user) {
-        return null;
+      return null;
     }
 
     return (
-        <div className={styles.accountPage}>
-            <div className={styles.container}>
-                {/* Page Header */}
-                <header className={styles.header}>
-                    <h1 className={styles.title}>Mijn Account</h1>
-                    <p className={styles.subtitle}>
-                        Welkom terug, {displayName || user.user_metadata?.full_name || user.email}
-                    </p>
-                </header>
+      <div className={styles.accountPage}>
+        <div className={styles.container}>
+          {/* Page Header */}
+          <header className={styles.header}>
+            <h1 className={styles.title}>My Account</h1>
+            <p className={styles.subtitle}>
+              Welcome back,{" "}
+              {displayName || user.user_metadata?.full_name || user.email}
+            </p>
+          </header>
 
-                {/* Navigation Tabs */}
-                <AccountNav 
-                    activeTab={activeTab} 
-                    onTabChange={(tab) => {
-                        if (tab === 'stats') {
-                            addToast('Deze functie komt beschikbaar in versie 2.0', 'info');
-                            return;
-                        }
-                        setActiveTab(tab);
-                    }}
-                />
+          {/* Navigation Tabs */}
+          <AccountNav
+            activeTab={activeTab}
+            onTabChange={(tab) => {
+              if (tab === "stats") {
+                addToast(
+                  "This feature will be available in version 2.0",
+                  "info"
+                );
+                return;
+              }
+              setActiveTab(tab);
+            }}
+          />
 
-                {/* Tab Content */}
-                <div className={styles.content}>
-                    {activeTab === 'favorites' && <FavoritesSection/>}
-                    {activeTab === 'settings' && <SettingsSection/>}
-                </div>
-            </div>
+          {/* Tab Content */}
+          <div className={styles.content}>
+            {activeTab === "favorites" && <FavoritesSection />}
+            {activeTab === "settings" && <SettingsSection />}
+          </div>
         </div>
+      </div>
     );
 }

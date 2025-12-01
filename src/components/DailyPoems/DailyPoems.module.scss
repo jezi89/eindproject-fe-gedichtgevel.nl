@@ -8,7 +8,7 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 
-/// TODO Checken of er zo'n groot apart scss bestand nodig is, of dat we searchResults.module.scss verder kunnen hergebruiken
+/// TODO Check if such a large separate scss file is needed, or if we can reuse searchResults.module.scss further
 
 // Main section container
 .DailyPoemsSection {
@@ -71,39 +71,39 @@
 
 // Individual poem card container
 .dailyPoemCard {
-  // Maak daily poems kleiner via CSS sizing (geen transforms!)
-  // Dit behoudt text clarity en voorkomt browser rendering issues
+  // Make daily poems smaller via CSS sizing (no transforms!)
+  // This preserves text clarity and prevents browser rendering issues
 
   // Override SearchResults spacing for daily display
   :global(.resultCard) {
-	max-width:     90%; // Kleinere container via width
+	max-width:     90%; // Smaller container via width
 	margin-right:  auto;
 	margin-bottom: $spacing-s; // More compact than search results
 	margin-left:   auto;
 	}
 
-  // Kleinere proportional header sizing
+  // Smaller proportional header sizing
   :global(.cardHeader) {
-	padding: $spacing-s; // Compacter padding
+	padding: $spacing-s; // More compact padding
 
 	:global(.poemTitle) {
-	  font-size: $font-size-m; // Kleinere title size
+	  font-size: $font-size-m; // Smaller title size
 	  }
 
 	:global(.poemAuthor) {
-	  font-size: $font-size-s; // Kleinere author text
+	  font-size: $font-size-s; // Smaller author text
 	  }
 	}
 
-  // Compactere content spacing
+  // More compact content spacing
   :global(.poemContent) {
-	padding: $spacing-s; // Kleinere content padding
+	padding: $spacing-s; // Smaller content padding
 	}
 
-  // Kleinere poem lines
+  // Smaller poem lines
   :global(.poemLine) {
-	font-size:   $font-size-s; // Kleinere text
-	line-height: $line-height-normal; // Compacter line height
+	font-size:   $font-size-s; // Smaller text
+	line-height: $line-height-normal; // More compact line height
 	}
 
   // Hide global toggle buttons and focus studio features
@@ -127,12 +127,12 @@
 	padding:   $spacing-xs $spacing-m; // More compact button
 	}
 
-  // Button containers meer compact
+  // Button containers more compact
   :global(.buttonContainer) {
-	margin-bottom: $spacing-xs; // Smaller spacing tussen buttons
+	margin-bottom: $spacing-xs; // Smaller spacing between buttons
 	}
 
-  // Ellipsis section meer compact
+  // Ellipsis section more compact
   :global(.ellipsisSection) {
 	margin: $spacing-xs 0; // Tighter spacing
 	}

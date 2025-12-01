@@ -164,22 +164,18 @@ const changePassword = async (newPassword) => {
  */
 const deleteUserAccount = async (userId) => {
     try {
-        // Supabase RLS and CASCADE will handle deletion of related records
-        // (favorites, settings, etc. if properly configured in DB)
+      // Supabase RLS and CASCADE will handle deletion of related records
+      // (favorites, settings, etc. if properly configured in DB)
 
-        // Delete from auth.users - this triggers CASCADE delete
-        const {error} = await supabase.auth.admin.deleteUser(userId);
+      // Use RPC function to delete user account securely
+      // The 'delete_user_account' function must be defined in Supabase
+      const { error } = await supabase.rpc("delete_user_account", {
+        user_id: userId,
+      });
 
-        if (error) {
-            // If admin API not available, use RPC function (needs to be created in Supabase)
-            const {error: rpcError} = await supabase.rpc('delete_user_account', {
-                user_id: userId
-            });
+      if (error) throw error;
 
-            if (rpcError) throw rpcError;
-        }
-
-        return handleSuccess();
+      return handleSuccess();
     } catch (error) {
         return handleError('Delete user account', error);
     }

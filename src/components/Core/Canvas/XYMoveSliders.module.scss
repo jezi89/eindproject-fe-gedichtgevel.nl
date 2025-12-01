@@ -5,9 +5,9 @@
   position: fixed;
   z-index: 1000;
   right: 20px;
-  width: 400px; /* Bredere slider voor betere controle */
-  min-width: 320px; /* Minimum voor zeer kleine schermen */
-  max-width: 480px; /* Maximum om groei te voorkomen */
+  width: 400px; /* Wider slider for better control */
+  min-width: 320px; /* Minimum for very small screens */
+  max-width: 480px; /* Maximum to prevent growth */
   padding: 1rem;
   transition: all 0.3s ease;
   border: 1px solid rgba(221, 221, 221, 0.8);
@@ -15,7 +15,7 @@
   background: rgba(249, 249, 249, 0.95);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
-  will-change: transform; /* Voor betere drag-performance */
+  will-change: transform; /* For better drag performance */
 }
 
 .xyMoveContainer:hover {
@@ -101,13 +101,13 @@
 .sliderContainer {
   display: flex;
   align-items: center;
-  width: 100%; /* Zorgt dat container volledige breedte gebruikt */
+  width: 100%; /* Ensure container uses full width */
   gap: 0.5rem;
 }
 
 .slider {
   flex: 1;
-  min-width: 0; /* Voorkomt overflow in flex */
+  min-width: 0; /* Prevents overflow in flex */
   height: 6px;
   transition: all 0.2s ease;
   border-radius: 3px;
@@ -183,7 +183,7 @@
   font-weight: $font-weight-bold;
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* Voorkomt krimpen van button */
+  flex-shrink: 0; /* Prevents button shrinking */
   justify-content: center;
   width: 32px;
   height: 32px;
@@ -234,11 +234,11 @@
   background: vars.$neutral-off-white;
 }
 
-/* Responsive adjustments - alleen voor niet-popover state */
+/* Responsive adjustments - only for non-popover state */
 @media (max-width: 1200px) {
   .xyMoveContainer:not(:popover-open) {
     right: 10px;
-    bottom: 15px; /* Alleen als popover NIET open is */
+    bottom: 15px; /* Only when popover is NOT open */
   }
 }
 
@@ -265,29 +265,29 @@
 }
 
 /* ========================================
-   FOCUS OVERLAY SYSTEEM voor Alt+J
-   - Cursor: none op hele pagina tijdens focus
-   - Alleen cursor zichtbaar op XY container
-   - Voorkomt thumbnail hovers tijdens positionering
+   FOCUS OVERLAY SYSTEM for Alt+J
+   - Cursor: none on entire page during focus
+   - Only cursor visible on XY container
+   - Prevents thumbnail hovers during positioning
    ======================================== */
 
-/* Globale cursor overlay - verbergt cursor overal behalve op XY container */
+/* Global cursor overlay - hides cursor everywhere except on XY container */
 .globalCursorOverlay {
   position: fixed;
-  z-index: 999; /* Onder XY container maar boven content */
+  z-index: 999; /* Below XY container but above content */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  cursor: none; /* Verberg cursor overal */
+  cursor: none; /* Hide cursor everywhere */
   transition: opacity 0.2s ease;
   pointer-events: none;
   background: transparent;
 }
 
-/* Focus active state voor XY container */
+/* Focus active state for XY container */
 .xyMoveContainer.focusActive {
-  cursor: pointer; /* Alleen hier cursor zichtbaar */
+  cursor: pointer; /* Cursor visible only here */
   animation: focus-pulse 1.5s ease-in-out;
   pointer-events: auto;
   border-color: vars.$primary-light;
@@ -295,7 +295,7 @@
     0 0 0 6px rgba(vars.$primary-light, 0.25), 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
-/* Focus pulse animatie */
+/* Focus pulse animation */
 @keyframes focus-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(vars.$accent-gold, 0.7),
@@ -312,29 +312,29 @@
   }
 }
 
-/* Zorg dat child elements ook focus styling krijgen */
+/* Ensure child elements also get focus styling */
 .xyMoveContainer.focusActive * {
-  cursor: inherit; /* Erf cursor van parent */
+  cursor: inherit; /* Inherit cursor from parent */
 }
 
-/* Overlay fade-in animatie */
+/* Overlay fade-in animation */
 .globalCursorOverlay.fade-in {
   opacity: 1;
 }
 
-/* Responsive aanpassingen voor focus state */
+/* Responsive adjustments for focus state */
 @media (max-width: 768px) {
   .xyMoveContainer.focusActive {
     right: 5px;
     bottom: 5px;
-    transform: none; /* Voorkom conflicts met andere transforms */
+    transform: none; /* Prevent conflicts with other transforms */
     box-shadow: 0 0 0 2px vars.$accent-gold,
       0 0 0 4px rgba(vars.$accent-gold, 0.2),
       0 4px 16px rgba(vars.$neutral-black, 0.2);
   }
 
   .globalCursorOverlay {
-    /* Op mobiel minder restrictief - touch-based interaction */
+    /* Less restrictive on mobile - touch-based interaction */
     cursor: auto;
   }
 }
@@ -373,7 +373,7 @@
   }
 }
 
-/* Popover positioning - gecentreerd in vrije ruimte boven syncSection */
+/* Popover positioning - centered in free space above syncSection */
 .xyMoveContainer:popover-open {
   right: 20px;
   top: auto;
@@ -381,14 +381,14 @@
   left: auto;
 }
 
-/* Responsive vertical positioning voor verschillende schermhoogtes */
+/* Responsive vertical positioning for different screen heights */
 @media (min-height: 1100px) {
   .xyMoveContainer:popover-open {
     bottom: 40dvh;
   }
 }
 
-/* Responsive vertical positioning voor verschillende schermhoogtes */
+/* Responsive vertical positioning for different screen heights */
 @media (max-height: 900px) {
   .xyMoveContainer:popover-open {
     bottom: 10dvh;
@@ -405,11 +405,11 @@
 
 @media (max-height: 600px) {
   .xyMoveContainer:popover-open {
-    bottom: 0dvh; /* Minimale ruimte op zeer kleine schermen */
+    bottom: 0dvh; /* Minimal space on very small screens */
   }
 }
 
-/* Print styles - verwijder focus effects */
+/* Print styles - remove focus effects */
 @media print {
   .globalCursorOverlay,
   .xyMoveContainer.focusActive {

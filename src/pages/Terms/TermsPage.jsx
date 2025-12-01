@@ -15,43 +15,28 @@
  */
 export function TermsPage() {
     return (
-        <div className="page-terms">
-            <h1 className="page-title">Voorwaarden</h1>
-            <p className="page-subtitle">Gebruiksvoorwaarden en privacybeleid</p>
+      <div className="page-terms">
+        <h1 className="page-title">Terms and Conditions</h1>
+        <p className="page-subtitle">Terms of use and privacy policy</p>
 
-            <section className="terms-section">
-                <h2>Gebruiksvoorwaarden</h2>
-                <p>
-                    Door gebruik te maken van GedichtGevel.nl gaat u akkoord met de volgende voorwaarden:
-                </p>
-                <ul>
-                    <li>De gedichten op deze site zijn alleen voor persoonlijk gebruik</li>
-                    <li>Respecteer de auteursrechten van dichters</li>
-                    <li>Commercieel gebruik is niet toegestaan zonder toestemming</li>
-                </ul>
-            </section>
+        <section className="terms-section">
+          <h2>Terms of Use</h2>
+          <p>By using GedichtGevel.nl, you agree to the following terms:</p>
+          <ul>
+            <li>The poems on this site are for personal use only</li>
+            <li>Respect the copyrights of poets</li>
+            <li>Commercial use is not allowed without permission</li>
+          </ul>
+        </section>
 
-            <section className="terms-section">
-                <h2>Privacy</h2>
-                <p>
-                    Wij respecteren uw privacy. Uw gegevens worden veilig opgeslagen en niet gedeeld met derden.
-                </p>
-            </section>
-
-            <section className="terms-section">
-                <h2>Auteursrecht</h2>
-                <p>
-                    Alle gedichten blijven eigendom van hun respectievelijke auteurs.
-                    GedichtGevel faciliteert alleen de presentatie ervan.
-                </p>
-            </section>
-
-            <section className="terms-section">
-                <h2>Contact</h2>
-                <p>
-                    Voor vragen over deze voorwaarden kunt u contact opnemen via de contactpagina.
-                </p>
-            </section>
-        </div>
+        <section className="terms-section">
+          <h2>Privacy</h2>
+          <p>
+            We respect your privacy. Your data is stored securely and not shared
+            with third parties. For questions about these terms, please contact
+            us via the contact page.
+          </p>
+        </section>
+      </div>
     );
 }

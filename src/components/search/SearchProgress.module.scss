@@ -11,7 +11,7 @@
 // SHARED PROGRESS CONTAINER STYLES
 // ==============================================
 
-// TODO Checken of dit niet naar het _searchShared bestand moet
+// TODO Check if this should be moved to the _searchShared file
 
 %progressContainer {
   @include flex-center;
@@ -141,7 +141,7 @@
   background:     $neutral-grey-figma;
   }
 
-// TODO variabele css namen met figma in de naam checken en beter specificeren
+// TODO Check variable CSS names with 'figma' in the name and specify better
 
 .loadingSpinner {
   position:      relative;
@@ -174,7 +174,7 @@
 	@include flex-center;
 	}
 
-  /// TODO mooiere loading state bouwen met svgof in content zelf met url()
+  /// TODO Build nicer loading state with svg or in content itself with url()
   // Pencil/Image icon in center - matching Figma
   &::after {
 	font-size: $font-size-xl;

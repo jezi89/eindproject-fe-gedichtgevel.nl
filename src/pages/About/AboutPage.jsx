@@ -15,33 +15,37 @@
  */
 export function AboutPage() {
     return (
-        <div className="page-about">
-            <h1 className="page-title">Over GedichtGevel</h1>
-            <p className="page-subtitle">Poëzie in het straatbeeld</p>
+      <div className="page-about">
+        <h1 className="page-title">About GedichtGevel</h1>
+        <p className="page-subtitle">Poetry in the streetscape</p>
 
-            <section className="about-section">
-                <h2>Onze Missie</h2>
-                <p>
-                    GedichtGevel heeft als doel poëzie toegankelijk te maken voor iedereen. 
-                    Wij geloven dat gedichten niet alleen in boeken thuishoren, maar ook zichtbaar moeten zijn in onze dagelijkse omgeving.
-                </p>
-            </section>
+        <section className="about-section">
+          <h2>Our Mission</h2>
+          <p>
+            GedichtGevel aims to make poetry accessible to everyone. We believe
+            that poems belong not only in books but should also be visible in
+            our daily environment.
+          </p>
+        </section>
 
-            <section className="about-section">
-                <h2>Het Project</h2>
-                <p>
-                    Dit project verzamelt en presenteert gedichten die te vinden zijn op gevels, muren en in de openbare ruimte. 
-                    Door deze werken digitaal te ontsluiten, bewaren we cultureel erfgoed en inspireren we voorbijgangers om even stil te staan.
-                </p>
-            </section>
+        <section className="about-section">
+          <h2>The Project</h2>
+          <p>
+            This project collects and presents poems found on facades, walls,
+            and in public spaces. By making these works digitally accessible, we
+            preserve cultural heritage and inspire passersby to pause for a
+            moment.
+          </p>
+        </section>
 
-            <section className="about-section">
-                <h2>Doe Mee</h2>
-                <p>
-                    Kent u een gedicht in uw buurt dat nog niet op onze kaart staat? 
-                    Of bent u zelf dichter en wilt u bijdragen? Neem contact met ons op via de contactpagina.
-                </p>
-            </section>
-        </div>
+        <section className="about-section">
+          <h2>Join Us</h2>
+          <p>
+            Do you know a poem in your neighborhood that is not yet on our map?
+            Or are you a poet yourself and want to contribute? Contact us via
+            the contact page.
+          </p>
+        </section>
+      </div>
     );
 }

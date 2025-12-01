@@ -2,7 +2,7 @@
 @use "@styles/mixins" as *;
 @use "sass:color";
 
-/* Basisstijl voor alle control-knoppen */
+/* Basic style for all control buttons */
 .buttonGroup button,
 .resetButton {
   padding:          0.5rem 1rem;
@@ -16,7 +16,7 @@
   transition:       all 0.2s ease;
 }
 
-/* Stijl voor de ronde icon reset knoppen */
+/* Style for the round icon reset buttons */
 .iconResetButton {
   font-size:       1rem;
   display:         flex;
@@ -39,20 +39,20 @@
   background:   vars.$canvas-control-hover;
 }
 
-/* Hover-staat delen */
+/* Share hover state */
 .buttonGroup button:hover,
 .resetButton:hover {
   background-color: vars.$canvas-control-hover;
 }
 
-/* Active-staat delen */
+/* Share active state */
 .buttonGroup button.active,
 .resetButton.active {
   color:            vars.$neutral-cream;
   background-color: vars.$canvas-control-active;
 }
 
-/* Alleen voor groep-knoppen (scheidingslijnen en container rounding) */
+/* Only for group buttons (separators and container rounding) */
 .buttonGroup {
   display:       flex;
   overflow:      hidden;

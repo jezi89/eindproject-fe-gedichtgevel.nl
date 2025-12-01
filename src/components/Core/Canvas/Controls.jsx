@@ -260,21 +260,21 @@ export default function Controls({
     const handleDropdownSearch = (e, dropdownType) => {
         const city = e.target.value;
         if (city) {
-            // Reset andere dropdown
-            if (dropdownType === "anwb") {
-                setSelectedCapital("");
-                setSelectedAnwbCity(city);
-            } else {
-                setSelectedAnwbCity("");
-                setSelectedCapital(city);
-            }
+          // Reset other dropdown
+          if (dropdownType === "anwb") {
+            setSelectedCapital("");
+            setSelectedAnwbCity(city);
+          } else {
+            setSelectedAnwbCity("");
+            setSelectedCapital(city);
+          }
 
-            // Verberg vrij zoeken balk bij dropdown selectie
-            setIsFreeSearchVisible(false);
+          // Hide free search bar on dropdown selection
+          setIsFreeSearchVisible(false);
 
-            // Zoek EN open modal
-            onCitySearch(city);
-            onOpenPhotoGrid();
+          // Search AND open modal
+          onCitySearch(city);
+          onOpenPhotoGrid();
         }
     };
 

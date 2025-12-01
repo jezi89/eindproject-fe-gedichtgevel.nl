@@ -89,6 +89,12 @@ export function SettingsSection() {
         if (result.success) {
             await signOut();
             navigate('/');
+        } else {
+            addToast(result.error || 'Kon account niet verwijderen', 'error');
+            // If the error is about the function not existing, give a hint
+            if (result.error?.includes('function') && result.error?.includes('does not exist')) {
+                 addToast('Database functie ontbreekt. Voer de migratie uit.', 'error');
+            }
         }
     };
 

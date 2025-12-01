@@ -34,56 +34,68 @@ export const CarouselArrows = memo(({
 
     // Calculate static position for collapsed state
     const calculateStaticPosition = useCallback(() => {
-        if (!searchResultsRef?.current) {
-            return 0;
-        }
+      if (!searchResultsRef?.current) {
+        return 0;
+      }
 
-        const searchResults = searchResultsRef.current;
+      const searchResults = searchResultsRef.current;
 
-        // Voor canvas mode: gebruik searchResultsArea als referentie
-        if (canvasMode) {
-            // Zoek naar searchResultsArea in de parent hierarchy
-            let searchResultsArea = searchResults.closest('[class*="searchResultsArea"]');
-            if (!searchResultsArea) {
-                // Fallback: zoek binnen huidige container
-                searchResultsArea = searchResults.querySelector('[class*="searchResultsArea"]') || searchResults;
-            }
-
-            const areaRect = searchResultsArea.getBoundingClientRect();
-            const arrowHeight = 80; // Arrow button hoogte uit CSS
-
-            // Bereken positie: bovenkant area + helft van minimum card hoogte (450px) - halve arrow hoogte
-            const targetPosition = window.scrollY + areaRect.top + (450 / 2) - (arrowHeight / 2);
-            return targetPosition;
-        }
-
-        // Voor HomePage: betere berekening voor statische arrows
-        if (allowDynamicPositioning) {
-            // Gebruik resultsList maar verbeter de berekening
-            const resultsList = searchResults.querySelector('[class*="resultsList"]');
-
-            if (resultsList) {
-                const listRect = resultsList.getBoundingClientRect();
-                const arrowHeight = 80; // Arrow button hoogte
-
-                // Voor homepage: neem eerste 225px van de lijst (helft van 450px min-height)
-                const targetY = listRect.top + 225 - (arrowHeight / 2);
-                return window.scrollY + targetY;
-            }
-        }
-
-        // FALLBACK: zoek searchResultsArea voor beide modes
-        let searchResultsArea = searchResults.closest('[class*="searchResultsArea"]');
+      // For canvas mode: use searchResultsArea as reference
+      if (canvasMode) {
+        // Search for searchResultsArea in the parent hierarchy
+        let searchResultsArea = searchResults.closest(
+          '[class*="searchResultsArea"]'
+        );
         if (!searchResultsArea) {
-            searchResultsArea = document.querySelector('[class*="searchResultsArea"]') || searchResults;
+          // Fallback: search within current container
+          searchResultsArea =
+            searchResults.querySelector('[class*="searchResultsArea"]') ||
+            searchResults;
         }
 
         const areaRect = searchResultsArea.getBoundingClientRect();
-        const arrowHeight = 80;
+        const arrowHeight = 80; // Arrow button height from CSS
 
-        // Gebruik 225px offset (helft van 450px min-height) vanaf bovenkant area
-        const fallbackPosition = window.scrollY + areaRect.top + 225 - (arrowHeight / 2);
-        return fallbackPosition;
+        // Calculate position: top of area + half of minimum card height (450px) - half arrow height
+        const targetPosition =
+          window.scrollY + areaRect.top + 450 / 2 - arrowHeight / 2;
+        return targetPosition;
+      }
+
+      // For HomePage: better calculation for static arrows
+      if (allowDynamicPositioning) {
+        // Use resultsList but improve the calculation
+        const resultsList = searchResults.querySelector(
+          '[class*="resultsList"]'
+        );
+
+        if (resultsList) {
+          const listRect = resultsList.getBoundingClientRect();
+          const arrowHeight = 80; // Arrow button height
+
+          // For homepage: take first 225px of the list (half of 450px min-height)
+          const targetY = listRect.top + 225 - arrowHeight / 2;
+          return window.scrollY + targetY;
+        }
+      }
+
+      // FALLBACK: search searchResultsArea for both modes
+      let searchResultsArea = searchResults.closest(
+        '[class*="searchResultsArea"]'
+      );
+      if (!searchResultsArea) {
+        searchResultsArea =
+          document.querySelector('[class*="searchResultsArea"]') ||
+          searchResults;
+      }
+
+      const areaRect = searchResultsArea.getBoundingClientRect();
+      const arrowHeight = 80;
+
+      // Use 225px offset (half of 450px min-height) from top of area
+      const fallbackPosition =
+        window.scrollY + areaRect.top + 225 - arrowHeight / 2;
+      return fallbackPosition;
     }, [searchResultsRef, allowDynamicPositioning, canvasMode]);
 
     // Calculate positioning mode based on expanded state
@@ -140,37 +152,42 @@ export const CarouselArrows = memo(({
 
     // Calculate arrow position with boundary constraints
     const calculateArrowPosition = useCallback(() => {
-        if (!searchResultsRef?.current || !shouldTrackScroll) {
-            return 0;
-        }
+      if (!searchResultsRef?.current || !shouldTrackScroll) {
+        return 0;
+      }
 
-        const searchResults = searchResultsRef.current;
-        const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-        const viewportCenter = scrollY + (viewportHeight / 2) - navbarHeight.current;
+      const searchResults = searchResultsRef.current;
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const viewportCenter =
+        scrollY + viewportHeight / 2 - navbarHeight.current;
 
-        // Find resultsList for boundary calculations
-        const resultsList = searchResults.querySelector('.resultsList');
+      // Find resultsList for boundary calculations
+      const resultsList = searchResults.querySelector(".resultsList");
 
-        if (!resultsList) {
-            return viewportCenter;
-        }
+      if (!resultsList) {
+        return viewportCenter;
+      }
 
-        // UPPER BOUNDARY: Huidige statische positie (niet hoger dan dit)
-        const staticPosition = calculateStaticPosition();
-        const upperBound = staticPosition;
+      // UPPER BOUNDARY: Current static position (not higher than this)
+      const staticPosition = calculateStaticPosition();
+      const upperBound = staticPosition;
 
-        // LOWER BOUNDARY: 50vh - navbar vanaf onderkant resultsList
-        const listBottom = resultsList.offsetTop + resultsList.offsetHeight;
-        const lowerBound = listBottom - (viewportHeight * 0.5) + navbarHeight.current;
+      // LOWER BOUNDARY: 50vh - navbar from bottom of resultsList
+      const listBottom = resultsList.offsetTop + resultsList.offsetHeight;
+      const lowerBound =
+        listBottom - viewportHeight * 0.5 + navbarHeight.current;
 
-        // Dynamic positioning: viewport center binnen boundaries
-        setPositioningMode('dynamic');
+      // Dynamic positioning: viewport center within boundaries
+      setPositioningMode("dynamic");
 
-        // Clamp position tussen upper en lower boundaries
-        const clampedPosition = Math.max(upperBound, Math.min(viewportCenter, lowerBound));
+      // Clamp position between upper and lower boundaries
+      const clampedPosition = Math.max(
+        upperBound,
+        Math.min(viewportCenter, lowerBound)
+      );
 
-        return clampedPosition;
+      return clampedPosition;
     }, [searchResultsRef, shouldTrackScroll, calculateStaticPosition]);
 
     // Scroll handler with dynamic positioning
@@ -214,17 +231,17 @@ export const CarouselArrows = memo(({
 
     // Calculate container style based on positioning mode
     const containerStyle = useMemo(() => {
-        const baseStyle = {};
+      const baseStyle = {};
 
-        // Alleen dynamic/hanging positioning heeft custom top position nodig
-        // Static en canvas mode gebruiken nu CSS centering
-        if (positioningMode === 'dynamic' || positioningMode === 'hanging') {
-            if (dynamicPosition > 0) {
-                baseStyle.top = `${dynamicPosition}px`;
-            }
+      // Only dynamic/hanging positioning needs custom top position
+      // Static and canvas mode now use CSS centering
+      if (positioningMode === "dynamic" || positioningMode === "hanging") {
+        if (dynamicPosition > 0) {
+          baseStyle.top = `${dynamicPosition}px`;
         }
+      }
 
-        return baseStyle;
+      return baseStyle;
     }, [dynamicPosition, positioningMode]);
 
     const containerClasses = useMemo(() => {
