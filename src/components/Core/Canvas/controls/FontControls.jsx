@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "../Canvas.module.scss";
 import { getFontPreviewUrl } from "../../../../hooks/canvas/useFontManager";
 import fontMetadata from "../../../../data/font-metadata.json";
+import ColorPicker from './ColorPicker';
 
 const getWeightLabel = (weight) => {
     const labels = {
@@ -404,6 +405,8 @@ export default function FontControls({
                             !colorSubsectionOpen ? styles.collapsed : ""
                         }`}
                     >
+
+
                         {/* Main Color Picker met Multi-Select Support */}
                         <div
                             className={`${styles.controlRow} ${
@@ -418,13 +421,11 @@ export default function FontControls({
                                     : "Globale Kleur"}
                             </label>
                             <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="fillColor"
+                                <ColorPicker
                                     value={displayedColor}
-                                    onChange={(e) => handleColorInput(e.target.value)}
-                                    onFocus={() => onColorPickerActiveChange?.(true)}
-                                    onBlur={() => onColorPickerActiveChange?.(false)}
+                                    onChange={(val) => handleColorInput(val)}
+                                    onActiveChange={onColorPickerActiveChange}
+                                    title="Kies tekstkleur"
                                 />
                                 {hasSelection && (
                                     <div className={styles.lineControls}>
@@ -470,13 +471,10 @@ export default function FontControls({
 								</span>
                             </label>
                             <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="titleColor"
+                                <ColorPicker
                                     value={effectiveTitleColor}
-                                    onChange={(e) => {
-                                        onTitleColorChange(e.target.value);
-                                    }}
+                                    onChange={(val) => onTitleColorChange(val)}
+                                    onActiveChange={onColorPickerActiveChange}
                                     title={
                                         hasTitleColorOverride
                                             ? "Specifieke titel kleur"
@@ -519,11 +517,10 @@ export default function FontControls({
 								</span>
                             </label>
                             <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="authorColor"
+                                <ColorPicker
                                     value={effectiveAuthorColor}
-                                    onChange={(e) => onAuthorColorChange(e.target.value)}
+                                    onChange={(val) => onAuthorColorChange(val)}
+                                    onActiveChange={onColorPickerActiveChange}
                                     title={
                                         hasAuthorColorOverride
                                             ? "Specifieke auteur kleur"

@@ -254,7 +254,8 @@ export default function Canvas({
         canvasContainerRef,
         canvasState.appRef,
         backgroundImageRef,
-        canvasState.imageQualityMode
+        canvasState.imageQualityMode,
+        canvasState.viewportRef // Pass viewportRef
     );
 
     // Use canvas handlers hook - MUST be called after useCanvasExport

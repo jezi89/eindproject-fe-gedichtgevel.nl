@@ -53,7 +53,9 @@ export function FilterSlider({
                 <label className={styles.sliderLabel} htmlFor="length-slider">
                     {label}
                 </label>
-                <span className={styles.sliderValue}>{value} regels</span>
+                <span className={styles.sliderValue}>
+                    {value >= 251 ? 'Onbeperkt' : `${value} regels`}
+                </span>
             </div>
 
             <div className={styles.sliderContainer}>

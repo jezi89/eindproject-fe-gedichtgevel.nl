@@ -34,11 +34,11 @@ export function FilterDropdownSlider({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const isActive = value < 250;
+    const isActive = value < 251;
 
     const handleMaxClick = (e) => {
         e.stopPropagation();
-        onChange(250);
+        onChange(251);
     };
 
     return (
@@ -69,7 +69,7 @@ export function FilterDropdownSlider({
                         value={value}
                         onChange={onChange}
                         min={10}
-                        max={250}
+                        max={251}
                         label="Maximale lengte"
                     />
                 </div>

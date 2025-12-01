@@ -42,20 +42,9 @@ export const useExpandablePoem = (
             return;
         }
 
-        // ✅ STEP 1: Scroll FIRST to top of card (before any animation)
-        if (cardRef.current) {
-            const cardRect = cardRef.current.getBoundingClientRect();
-            const scrollTarget = window.scrollY + cardRect.top - 80; // 80px offset
+        // ✅ STEP 1: Scroll logic removed as per user request to rely on Framer Motion layout animation
+        // The explicit scroll was causing a "double scroll" effect.
 
-            // Only scroll if card is not already near top
-            if (cardRect.top > 100 || cardRect.top < 0) {
-                window.scrollTo({
-                    top: scrollTarget,
-                    behavior: 'smooth'
-                });
-                await new Promise(resolve => setTimeout(resolve, 500));
-            }
-        }
 
         // ✅ STEP 2: THEN start animation
         const isSmallPoemValue = isSmallPoem(poem);

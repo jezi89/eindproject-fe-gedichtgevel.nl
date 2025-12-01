@@ -25,7 +25,7 @@ function getExportQualityMultiplier(qualityMode) {
  * @param {string} imageQualityMode - Current quality mode for resolution scaling
  * @returns {Object} Export utilities
  */
-export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, imageQualityMode = IMAGE_QUALITY_MODE.AUTO) {
+export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, imageQualityMode = IMAGE_QUALITY_MODE.AUTO, viewportRef) {
     // Helper function to trigger browser download
     const triggerDownload = useCallback((dataUrl, filename) => {
         const link = document.createElement('a');
@@ -107,40 +107,57 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
     const exportFullSprite = useCallback(async (format = 'png', jpegQuality = 0.92) => {
         const app = appRef?.current;
         const bgImageRef = backgroundImageRef?.current;
+        const viewport = viewportRef?.current;
 
-        if (!app || !bgImageRef) {
-            console.error('❌ Export failed: Missing refs', { app: !!app, bgImageRef: !!bgImageRef });
+        if (!app || !bgImageRef || !viewport) {
+            console.error('❌ Export failed: Missing refs', { app: !!app, bgImageRef: !!bgImageRef, viewport: !!viewport });
             return null;
         }
 
         try {
-            // Get sprite bounds from BackgroundImage component
-            const spriteBounds = bgImageRef.getSpriteBounds();
+            // Get sprite bounds in PARENT (viewport) space
+            // This gives us the un-zoomed bounds of the background image within the viewport container
+            const spriteBounds = bgImageRef.getBoundsInParent ? bgImageRef.getBoundsInParent() : bgImageRef.getSpriteBounds();
+            
             if (!spriteBounds) {
                 console.error('❌ Export failed: No sprite bounds available');
                 return null;
             }
 
-            // Calculate export dimensions and resolution
-            const qualityMultiplier = getExportQualityMultiplier(imageQualityMode);
-            const exportWidth = Math.ceil(spriteBounds.width);
-            const exportHeight = Math.ceil(spriteBounds.height);
+            // Calculate resolution to match original texture size
+            // spriteScale is the scale applied to fit the image to the screen
+            const spriteScale = bgImageRef.getScale ? bgImageRef.getScale() : 1;
+            const originalResolution = 1 / spriteScale;
 
+            let finalResolution = 1.0;
 
-            // Create frame rectangle for extraction (crop to sprite bounds, remove black bars)
+            if (imageQualityMode === IMAGE_QUALITY_MODE.HIGH) {
+                // High Quality: Target original texture resolution (1:1 with source image)
+                finalResolution = originalResolution;
+            } else if (imageQualityMode === IMAGE_QUALITY_MODE.AUTO) {
+                // Auto: Target screen resolution (1.0)
+                finalResolution = 1.0;
+            } else {
+                // Eco: Reduced resolution
+                finalResolution = 0.75;
+            }
+
+            // Create frame rectangle for extraction
+            // We use the bounds in viewport space
             const frame = new Rectangle(
                 spriteBounds.x,
                 spriteBounds.y,
-                exportWidth,
-                exportHeight
+                spriteBounds.width,
+                spriteBounds.height
             );
 
             // Extract canvas from PixiJS renderer
-            // The resolution parameter scales the entire stage proportionally (sprite + text)
+            // Target the VIEWPORT (container), not the stage
+            // This renders the content inside the viewport, ignoring the viewport's own zoom/pan transform
             const extractedCanvas = app.renderer.extract.canvas({
-                target: app.stage,
+                target: viewport,
                 frame: frame,
-                resolution: qualityMultiplier
+                resolution: finalResolution
             });
 
             // Convert to data URL based on format
@@ -157,7 +174,7 @@ export function useCanvasExport(canvasContainerRef, appRef, backgroundImageRef, 
             console.error('❌ Export failed:', error);
             return null;
         }
-    }, [appRef, backgroundImageRef, imageQualityMode]);
+    }, [appRef, backgroundImageRef, imageQualityMode, viewportRef]);
 
     /**
      * Export full sprite as PNG and trigger download

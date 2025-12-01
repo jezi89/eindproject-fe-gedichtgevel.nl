@@ -557,7 +557,8 @@ export function CanvasContent({
     // Create DropShadow filter for the PoemGroup
     const groupFilters = useMemo(() => {
         // Only apply if textMaterial is active (meaning we have a "stone slab")
-        if (textMaterial) {
+        // AND if we have valid bounds to prevent WebGL errors on 0-sized filters
+        if (textMaterial && backgroundBounds.width > 0 && backgroundBounds.height > 0) {
             return [new DropShadowFilter({
                 distance: 5,
                 blur: 4,
@@ -566,7 +567,7 @@ export function CanvasContent({
             })];
         }
         return [];
-    }, [textMaterial]);
+    }, [textMaterial, backgroundBounds.width, backgroundBounds.height]);
 
 
     if (!fontLoaded || !currentPoem) {
