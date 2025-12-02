@@ -354,7 +354,7 @@ export const useRecording = (containerRef, timelineRef) => {
         const link = document.createElement('a');
         link.href = url;
         const timestamp = new Date().toISOString().slice(0, 19).replace(/[:]/g, '-');
-        link.download = `spreekgevel-opname-${timestamp}.webm`;
+        link.download = `spreekgevel-opname-${timestamp}.wav`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
