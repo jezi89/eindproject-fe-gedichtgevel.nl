@@ -45,7 +45,6 @@
 	.addressContainer {
 	  margin-top:    0;
 	  margin-bottom: $spacing-xxs;
-	  margin-bottom: $spacing-xxs;
 	  }
 
 	.globalToggleContainer,
@@ -332,7 +331,7 @@
 
 .buttonContainer {
   display:         flex;
-  align-items:     center;
+  align-items:     flex-start;
   flex-shrink:     0;
   justify-content: center;
   width:           100%;
@@ -354,7 +353,6 @@
   }
 
 .collapseButton {
-  margin-top: $spacing-m;
   background-color: color.adjust($primary-cognac, $lightness: -5%);
 
   &.inContainer {
@@ -443,7 +441,7 @@
   position:         relative;
   z-index:          1;
   min-height:       $height-min-button;
-  padding:          $spacing-s $spacing-l;
+  padding:          $spacing-s $spacing-xs;
   transition:       all $transition-fast;
   color:            $neutral-white;
   border:           $border-width-regular solid transparent;

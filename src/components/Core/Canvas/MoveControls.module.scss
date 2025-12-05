@@ -9,8 +9,8 @@
 }
 
 .moveLabel {
-  font-size: 11px;
-  color: #a0a9b8;
+  font-size: 0.6875rem;
+  color: vars.$neutral-mid;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
@@ -18,7 +18,7 @@
 
 .buttonGroup {
   display: flex;
-  border: 1px solid #4a5568;
+  border: 1px solid vars.$neutral-dark;
   border-radius: 5px;
   overflow: hidden;
   width: 100%;
@@ -29,22 +29,22 @@
   flex: 1;
   background-color: transparent;
   border: none;
-  color: #a0aec0;
+  color: vars.$neutral-mid;
   padding: 0.4rem 0.5rem;
   cursor: pointer;
   font-size: 0.75rem;
 }
 
 .buttonGroup button:first-child {
-  border-right: 1px solid #4a5568;
+  border-right: 1px solid vars.$neutral-dark;
 }
 
 .buttonGroup button:hover {
-  background-color: #4a5568;
+  background-color: vars.$neutral-dark;
 }
 
 .buttonGroup button.active {
-  background-color: #4299e1; /* Blauwe actieve kleur */
+  background-color: vars.$primary-light; /* Blauwe actieve kleur */
   color: vars.$neutral-white;
 }
 
@@ -52,28 +52,28 @@
 .buttonGroup button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  background-color: #2d3748;
-  color: #4a5568;
+  background-color: vars.$neutral-darker;
+  color: vars.$neutral-dark;
 }
 
 .buttonGroup button:disabled:hover {
-  background-color: #2d3748; /* No hover effect when disabled */
+  background-color: vars.$neutral-darker; /* No hover effect when disabled */
 }
 
 .status {
-  font-size: 11px;
-  color: #a0a9b8;
+  font-size: 0.6875rem;
+  color: vars.$neutral-mid;
   text-align: center;
   min-height: 14px;
 }
 
 /* Status indicators */
 .status.ready {
-  color: #10b981;
+  color: vars.$feedback-success;
   font-weight: 600;
 }
 
 .status.waiting {
-  color: #f59e0b;
+  color: vars.$feedback-warning;
   font-style: italic;
 }

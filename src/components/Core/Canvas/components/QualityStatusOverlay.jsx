@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../Canvas.module.scss';
+import styles from './QualityStatusOverlay.module.scss';
 
 export function QualityStatusOverlay({
     isVisible,

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState, useMemo, forwardRef, useImperativeHandle} from 'react';
-import {Assets, Texture} from 'pixi.js';
+import {Assets, Texture, Rectangle} from 'pixi.js';
 import defaultBackground from '@/assets/default-poem-background.png';
 import {calculateOptimalImageRequest, IMAGE_QUALITY_MODE} from '@/utils/imageOptimization';
 
@@ -19,6 +19,22 @@ export const BackgroundImage = forwardRef(({
         getSpriteBounds: () => {
             if (!spriteRef.current) return null;
             return spriteRef.current.getBounds();
+        },
+        getBoundsInParent: () => {
+            if (!spriteRef.current) return null;
+            const s = spriteRef.current;
+            // Calculate bounds in parent (viewport) space
+            // Anchor is 0.5, 0 so x is center, y is top
+            return new Rectangle(
+                s.x - (s.width * s.anchor.x),
+                s.y - (s.height * s.anchor.y),
+                s.width,
+                s.height
+            );
+        },
+        getScale: () => {
+            if (!spriteRef.current) return 1;
+            return spriteRef.current.scale.x;
         },
         getSpriteScale: () => {
             if (!spriteRef.current) return 1;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../Canvas.module.scss";
+import styles from "../CanvasControls.module.scss";
+import fontStyles from "../FontSelect.module.scss";
 import { getFontPreviewUrl } from "../../../../hooks/canvas/useFontManager";
 import fontMetadata from "../../../../data/font-metadata.json";
+import ColorPicker from './ColorPicker';
 
 const getWeightLabel = (weight) => {
     const labels = {
@@ -36,7 +38,7 @@ const FontOption = ({ font, onSelect, isSelected }) => {
 
     return (
         <div
-            className={`${styles.fontOption} ${isSelected ? styles.selected : ''}`}
+            className={`${fontStyles.fontOption} ${isSelected ? fontStyles.selected : ''}`}
             onClick={() => onSelect(font.value)}
             style={{ 
                 fontFamily: isLoaded ? font.value : 'inherit',
@@ -104,7 +106,7 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
                 // The dropdown content is in a portal, so `triggerRef.current.contains` will return false.
                 
                 // We can check if the click target is inside the dropdown by ID or class
-                if (!event.target.closest(`.${styles.optionsList}`)) {
+                if (!event.target.closest(`.${fontStyles.optionsList}`)) {
                      setIsOpen(false);
                 }
             }
@@ -120,20 +122,20 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
     const currentLabel = options.flatMap(g => g.fonts).find(f => f.value === value)?.label || value;
 
     return (
-        <div className={styles.customSelect}>
+        <div className={fontStyles.customSelect}>
             <button 
                 ref={triggerRef}
-                className={styles.selectTrigger} 
+                className={fontStyles.selectTrigger} 
                 onClick={() => setIsOpen(!isOpen)}
                 style={{ fontFamily: value }}
             >
                 {currentLabel}
-                <span className={styles.arrow}>▼</span>
+                <span className={fontStyles.arrow}>▼</span>
             </button>
 
             {isOpen && createPortal(
                 <div 
-                    className={styles.optionsList}
+                    className={fontStyles.optionsList}
                     style={{
                         position: 'absolute',
                         top: `${dropdownPosition.top}px`,
@@ -143,8 +145,8 @@ const CustomFontSelect = ({ value, onChange, options, layoutPosition }) => {
                     }}
                 >
                     {options.map((group) => (
-                        <div key={group.label} className={styles.optGroup}>
-                            <div className={styles.groupLabel}>{group.label}</div>
+                        <div key={group.label} className={fontStyles.optGroup}>
+                            <div className={fontStyles.groupLabel}>{group.label}</div>
                             {group.fonts.map((font) => (
                                 <FontOption 
                                     key={font.value} 
@@ -212,339 +214,371 @@ export default function FontControls({
                                          layoutPosition, // <-- Received from Controls
                                      }) {
     return (
-        <div className={styles.controlSection}>
-            <button
-                className={styles.sectionHeader}
-                onClick={() => setFontSectionOpen(!fontSectionOpen)}
+      <div className={styles.controlSection}>
+        <button
+          className={styles.sectionHeader}
+          onClick={() => setFontSectionOpen(!fontSectionOpen)}
+        >
+          <h3>✒️ Font & Stijl</h3>
+          <span
+            className={`${styles.sectionToggle} ${
+              !fontSectionOpen ? styles.collapsed : ""
+            }`}
+          >
+            ▼
+          </span>
+        </button>
+
+        <div
+          className={`${styles.sectionContent} ${
+            !fontSectionOpen ? styles.collapsed : ""
+          }`}
+        >
+          {/* Font Family */}
+          <div className={styles.controlRow}>
+            <label htmlFor="fontFamily">Lettertype</label>
+            <CustomFontSelect
+              value={displayedFontFamily}
+              onChange={onFontFamilyChange}
+              options={availableFonts}
+              layoutPosition={layoutPosition}
+            />
+          </div>
+
+          {/* Font Style Controls (Bold/Italic + Weight) */}
+          <div className={styles.controlRow}>
+            <label>Tekststijl</label>
+            <div
+              className={styles.buttonGroup}
+              style={{ flexWrap: "wrap", gap: "4px" }}
             >
-                <h3>✒️ Font & Stijl</h3>
-                <span
-                    className={`${styles.sectionToggle} ${
-                        !fontSectionOpen ? styles.collapsed : ""
-                    }`}
-                >
-					▼
-				</span>
+              <button
+                className={
+                  fontWeight === "bold" || fontWeight === "700"
+                    ? styles.active
+                    : ""
+                }
+                onClick={() =>
+                  onFontWeightChange(
+                    fontWeight === "bold" || fontWeight === "700"
+                      ? "normal"
+                      : "bold"
+                  )
+                }
+                title="Snel Vetgedrukt (700)"
+              >
+                <strong>B</strong>
+              </button>
+              <button
+                className={fontStyle === "italic" ? styles.active : ""}
+                onClick={() =>
+                  onFontStyleChange(
+                    fontStyle === "italic" ? "normal" : "italic"
+                  )
+                }
+                title="Cursief"
+              >
+                <em>I</em>
+              </button>
+
+              {/* Specific Weight Dropdown */}
+              <select
+                value={
+                  fontWeight === "bold"
+                    ? "700"
+                    : fontWeight === "normal"
+                    ? "400"
+                    : fontWeight
+                }
+                onChange={(e) => onFontWeightChange(e.target.value)}
+                className={styles.weightSelect}
+                style={{
+                  width: "auto",
+                  flex: 1,
+                  minWidth: "60px",
+                  fontFamily: "var(--font-family-section-heading)",
+                }}
+                title="Specifieke dikte (100-900)"
+              >
+                {[100, 200, 300, 400, 500, 600, 700, 800, 900].map((weight) => {
+                  const weightStr = weight.toString();
+                  // Check availability
+                  const availableWeights = fontMetadata[
+                    displayedFontFamily
+                  ] || ["400", "700"]; // Default fallback
+                  const isAvailable = availableWeights.includes(weightStr);
+
+                  return (
+                    <option
+                      key={weight}
+                      value={weightStr}
+                      disabled={!isAvailable}
+                      style={{ color: isAvailable ? "inherit" : "#aaa" }}
+                    >
+                      {weight} ({getWeightLabel(weight)}){" "}
+                      {isAvailable ? "" : "(N/A)"}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+
+          {/* Font Size Controls */}
+          {!hasSelection || isSelectAll ? (
+            // Global Font Size
+            <div
+              className={`${styles.controlRow} ${styles.verticalControlRow}`}
+            >
+              <label htmlFor="fontSize">Lettergrootte</label>
+              <div className={styles.lineControls}>
+                <input
+                  type="range"
+                  id="fontSize"
+                  min="6"
+                  max="120"
+                  value={fontSize}
+                  onChange={(e) => onFontSizeChange(Number(e.target.value))}
+                />
+                <span>{fontSize}px</span>
+              </div>
+            </div>
+          ) : (
+            // Selection Font Size (Relative Display)
+            <div
+              className={`${styles.controlRow} ${styles.verticalControlRow}`}
+            >
+              <label htmlFor="lineFontSize">
+                Lettergrootte ({selectionCount}{" "}
+                {selectionCount === 1 ? "regel" : "regels"})
+              </label>
+              <div className={styles.lineControls}>
+                <input
+                  type="range"
+                  id="lineFontSize"
+                  min="6"
+                  max="120"
+                  value={displayedFontSize}
+                  onChange={(e) => onLineFontSizeChange(Number(e.target.value))}
+                />
+                <span>
+                  {displayedFontSize}px
+                  <span className={styles.deltaValue}>
+                    ({displayedFontSize - fontSize > 0 ? "+" : ""}
+                    {displayedFontSize - fontSize}px)
+                  </span>
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Letter Spacing Controls */}
+          {!hasSelection || isSelectAll ? (
+            // Global Letter Spacing
+            <div
+              className={`${styles.controlRow} ${styles.verticalControlRow}`}
+            >
+              <label htmlFor="letterSpacing">Letterafstand</label>
+              <div className={styles.lineControls}>
+                <input
+                  type="range"
+                  id="letterSpacing"
+                  min="-5"
+                  max="15"
+                  value={displayedLetterSpacing}
+                  onChange={(e) =>
+                    onLetterSpacingChange(Number(e.target.value))
+                  }
+                />
+                <span>{displayedLetterSpacing}px</span>
+              </div>
+            </div>
+          ) : (
+            // Selection Letter Spacing (Relative Display)
+            <div
+              className={`${styles.controlRow} ${styles.verticalControlRow}`}
+            >
+              <label htmlFor="lineLetterSpacing">
+                Afstand ({selectionCount}{" "}
+                {selectionCount === 1 ? "regel" : "regels"})
+              </label>
+              <div className={styles.lineControls}>
+                <input
+                  type="range"
+                  id="lineLetterSpacing"
+                  min="-5"
+                  max="15"
+                  value={displayedLetterSpacing}
+                  onChange={(e) =>
+                    onLineLetterSpacingChange(Number(e.target.value))
+                  }
+                />
+                <span>
+                  {displayedLetterSpacing}px
+                  <span className={styles.deltaValue}>
+                    ({displayedLetterSpacing - letterSpacing > 0 ? "+" : ""}
+                    {displayedLetterSpacing - letterSpacing}px)
+                  </span>
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* --- COLOR CONTROLS SUBSECTION --- */}
+          <div className={styles.subsection}>
+            <button
+              className={styles.subsectionHeader}
+              onClick={() => setColorSubsectionOpen(!colorSubsectionOpen)}
+            >
+              <span>🎨 Kleur Controls</span>
+              <span
+                className={`${styles.sectionToggle} ${
+                  !colorSubsectionOpen ? styles.collapsed : ""
+                }`}
+              >
+                ▼
+              </span>
             </button>
 
             <div
-                className={`${styles.sectionContent} ${
-                    !fontSectionOpen ? styles.collapsed : ""
-                }`}
+              className={`${styles.subsectionContent} ${
+                !colorSubsectionOpen ? styles.collapsed : ""
+              }`}
             >
-                {/* Font Family */}
-                <div className={styles.controlRow}>
-                    <label htmlFor="fontFamily">Lettertype</label>
-                    <CustomFontSelect
-                        value={displayedFontFamily}
-                        onChange={onFontFamilyChange}
-                        options={availableFonts}
-                        layoutPosition={layoutPosition}
-                    />
+              {/* Main Color Picker with Multi-Select Support */}
+              <div
+                className={`${styles.controlRow} ${
+                  hasSelection ? styles.controlColumn : ""
+                }`}
+              >
+                <label htmlFor="fillColor">
+                  {hasSelection
+                    ? `Kleur (${selectionCount} ${
+                        selectionCount === 1 ? "regel" : "regels"
+                      })`
+                    : "Globale Kleur"}
+                </label>
+                <div className={styles.colorControls}>
+                  <ColorPicker
+                    value={displayedColor}
+                    onChange={(val) => handleColorInput(val)}
+                    onActiveChange={onColorPickerActiveChange}
+                    title="Kies tekstkleur"
+                  />
+                  {hasSelection && (
+                    <div className={styles.lineControls}>
+                      <span className={styles.hintText}>
+                        {selectionCount > 1
+                          ? "Pas kleur toe op alle geselecteerde regels."
+                          : "Kleur voor de geselecteerde regel."}
+                      </span>
+                      <button
+                        type="button"
+                        className={styles.iconResetButton}
+                        onClick={handleResetSelectedLines}
+                        title="Reset regelkleur en letterafstand"
+                      >
+                        ↺
+                      </button>{" "}
+                    </div>
+                  )}
                 </div>
+              </div>
 
-                {/* Font Style Controls (Bold/Italic + Weight) */}
-                <div className={styles.controlRow}>
-                    <label>Tekststijl</label>
-                    <div className={styles.buttonGroup} style={{ flexWrap: 'wrap', gap: '4px' }}>
-                        <button
-                            className={fontWeight === "bold" || fontWeight === "700" ? styles.active : ""}
-                            onClick={() =>
-                                onFontWeightChange(fontWeight === "bold" || fontWeight === "700" ? "normal" : "bold")
-                            }
-                            title="Snel Vetgedrukt (700)"
-                        >
-                            <strong>B</strong>
-                        </button>
-                        <button
-                            className={fontStyle === "italic" ? styles.active : ""}
-                            onClick={() =>
-                                onFontStyleChange(
-                                    fontStyle === "italic" ? "normal" : "italic"
-                                )
-                            }
-                            title="Cursief"
-                        >
-                            <em>I</em>
-                        </button>
-                        
-                        {/* Specific Weight Dropdown */}
-                        <select
-                            value={fontWeight === "bold" ? "700" : (fontWeight === "normal" ? "400" : fontWeight)}
-                            onChange={(e) => onFontWeightChange(e.target.value)}
-                            className={styles.weightSelect}
-                            style={{ width: 'auto', flex: 1, minWidth: '60px', fontFamily: 'var(--font-family-section-heading)' }}
-                            title="Specifieke dikte (100-900)"
-                        >
-                            {[100, 200, 300, 400, 500, 600, 700, 800, 900].map(weight => {
-                                const weightStr = weight.toString();
-                                // Check availability
-                                const availableWeights = fontMetadata[displayedFontFamily] || ['400', '700']; // Default fallback
-                                const isAvailable = availableWeights.includes(weightStr);
-                                
-                                return (
-                                    <option 
-                                        key={weight} 
-                                        value={weightStr}
-                                        disabled={!isAvailable}
-                                        style={{ color: isAvailable ? 'inherit' : '#aaa' }}
-                                    >
-                                        {weight} ({getWeightLabel(weight)}) {isAvailable ? '' : '(N/A)'}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                </div>
-
-                {/* Font Size Controls */}
-                {(!hasSelection || isSelectAll) ? (
-                    // Global Font Size
-                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                        <label htmlFor="fontSize">Lettergrootte</label>
-                        <div className={styles.lineControls}>
-                            <input
-                                type="range"
-                                id="fontSize"
-                                min="6"
-                                max="120"
-                                value={fontSize}
-                                onChange={(e) => onFontSizeChange(Number(e.target.value))}
-                            />
-                            <span>{fontSize}px</span>
-                        </div>
-                    </div>
-                ) : (
-                    // Selection Font Size (Relative Display)
-                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                        <label htmlFor="lineFontSize">
-                            Lettergrootte ({selectionCount} {selectionCount === 1 ? "regel" : "regels"})
-                        </label>
-                        <div className={styles.lineControls}>
-                            <input
-                                type="range"
-                                id="lineFontSize"
-                                min="6"
-                                max="120"
-                                value={displayedFontSize}
-                                onChange={(e) => onLineFontSizeChange(Number(e.target.value))}
-                            />
-                            <span>
-                                {displayedFontSize}px
-                                <span className={styles.deltaValue}>
-                                    ({displayedFontSize - fontSize > 0 ? "+" : ""}
-                                    {displayedFontSize - fontSize}px)
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                )}
-
-                {/* Letter Spacing Controls */}
-                {(!hasSelection || isSelectAll) ? (
-                     // Global Letter Spacing
-                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                        <label htmlFor="letterSpacing">Letterafstand</label>
-                        <div className={styles.lineControls}>
-                            <input
-                                type="range"
-                                id="letterSpacing"
-                                min="-5"
-                                max="15"
-                                value={displayedLetterSpacing}
-                                onChange={(e) => onLetterSpacingChange(Number(e.target.value))}
-                            />
-                            <span>{displayedLetterSpacing}px</span>
-                        </div>
-                    </div>
-                ) : (
-                    // Selection Letter Spacing (Relative Display)
-                    <div className={`${styles.controlRow} ${styles.verticalControlRow}`}>
-                        <label htmlFor="lineLetterSpacing">
-                            Afstand ({selectionCount} {selectionCount === 1 ? "regel" : "regels"})
-                        </label>
-                        <div className={styles.lineControls}>
-                            <input
-                                type="range"
-                                id="lineLetterSpacing"
-                                min="-5"
-                                max="15"
-                                value={displayedLetterSpacing}
-                                onChange={(e) => onLineLetterSpacingChange(Number(e.target.value))}
-                            />
-                            <span>
-                                {displayedLetterSpacing}px
-                                <span className={styles.deltaValue}>
-                                    ({(displayedLetterSpacing - letterSpacing) > 0 ? "+" : ""}
-                                    {displayedLetterSpacing - letterSpacing}px)
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                )}
-
-                {/* --- KLEUR CONTROLS SUBSECTIE --- */}
-                <div className={styles.subsection}>
+              {/* Hierarchical Title Color Control */}
+              <div className={styles.controlRow}>
+                <label htmlFor="titleColor">
+                  <span className={styles.labelText}>Titel Kleur</span>
+                  <span className={styles.colorIndicator}>
+                    {hasTitleColorOverride ? (
+                      <span
+                        title="Specifieke titel kleur actief"
+                        className={styles.overrideActive}
+                      >
+                        ⚙️
+                      </span>
+                    ) : (
+                      <span
+                        title="Volgt globale kleur"
+                        className={styles.globalActive}
+                      >
+                        🔗
+                      </span>
+                    )}
+                  </span>
+                </label>
+                <div className={styles.colorControls}>
+                  <ColorPicker
+                    value={effectiveTitleColor}
+                    onChange={(val) => onTitleColorChange(val)}
+                    onActiveChange={onColorPickerActiveChange}
+                    title={
+                      hasTitleColorOverride
+                        ? "Specifieke titel kleur"
+                        : "Klik om titel kleur aan te passen (overschrijft globaal)"
+                    }
+                  />
+                  {hasTitleColorOverride && (
                     <button
-                        className={styles.subsectionHeader}
-                        onClick={() => setColorSubsectionOpen(!colorSubsectionOpen)}
+                      type="button"
+                      className={styles.resetColorButton}
+                      onClick={onResetTitleColor}
+                      title="Reset naar globale kleur"
                     >
-                        <span>🎨 Kleur Controls</span>
-                        <span
-                            className={`${styles.sectionToggle} ${
-                                !colorSubsectionOpen ? styles.collapsed : ""
-                            }`}
-                        >
-							▼
-						</span>
+                      ↺
                     </button>
-
-                    <div
-                        className={`${styles.subsectionContent} ${
-                            !colorSubsectionOpen ? styles.collapsed : ""
-                        }`}
-                    >
-                        {/* Main Color Picker met Multi-Select Support */}
-                        <div
-                            className={`${styles.controlRow} ${
-                                hasSelection ? styles.controlColumn : ""
-                            }`}
-                        >
-                            <label htmlFor="fillColor">
-                                {hasSelection
-                                    ? `Kleur (${selectionCount} ${
-                                        selectionCount === 1 ? "regel" : "regels"
-                                    })`
-                                    : "Globale Kleur"}
-                            </label>
-                            <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="fillColor"
-                                    value={displayedColor}
-                                    onChange={(e) => handleColorInput(e.target.value)}
-                                    onFocus={() => onColorPickerActiveChange?.(true)}
-                                    onBlur={() => onColorPickerActiveChange?.(false)}
-                                />
-                                {hasSelection && (
-                                    <div className={styles.lineControls}>
-										<span className={styles.hintText}>
-											{selectionCount > 1
-                                                ? "Pas kleur toe op alle geselecteerde regels."
-                                                : "Kleur voor de geselecteerde regel."}
-										</span>
-                                        <button
-                                            type="button"
-                                            className={styles.iconResetButton}
-                                            onClick={handleResetSelectedLines}
-                                            title="Reset regelkleur en letterafstand"
-                                        >
-                                            ↺
-                                        </button>
-                                        {" "}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Hierarchical Title Color Control */}
-                        <div className={styles.controlRow}>
-                            <label htmlFor="titleColor">
-                                <span className={styles.labelText}>Titel Kleur</span>
-                                <span className={styles.colorIndicator}>
-									{hasTitleColorOverride ? (
-                                        <span
-                                            title="Specifieke titel kleur actief"
-                                            className={styles.overrideActive}
-                                        >
-											⚙️
-										</span>
-                                    ) : (
-                                        <span
-                                            title="Volgt globale kleur"
-                                            className={styles.globalActive}
-                                        >
-											🔗
-										</span>
-                                    )}
-								</span>
-                            </label>
-                            <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="titleColor"
-                                    value={effectiveTitleColor}
-                                    onChange={(e) => {
-                                        onTitleColorChange(e.target.value);
-                                    }}
-                                    title={
-                                        hasTitleColorOverride
-                                            ? "Specifieke titel kleur"
-                                            : "Klik om titel kleur aan te passen (overschrijft globaal)"
-                                    }
-                                />
-                                {hasTitleColorOverride && (
-                                    <button
-                                        type="button"
-                                        className={styles.resetColorButton}
-                                        onClick={onResetTitleColor}
-                                        title="Reset naar globale kleur"
-                                    >
-                                        ↺
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Hierarchical Author Color Control */}
-                        <div className={styles.controlRow}>
-                            <label htmlFor="authorColor">
-                                <span className={styles.labelText}>Auteur Kleur</span>
-                                <span className={styles.colorIndicator}>
-									{hasAuthorColorOverride ? (
-                                        <span
-                                            title="Specifieke auteur kleur actief"
-                                            className={styles.overrideActive}
-                                        >
-											⚙️
-										</span>
-                                    ) : (
-                                        <span
-                                            title="Volgt globale kleur"
-                                            className={styles.globalActive}
-                                        >
-											🔗
-										</span>
-                                    )}
-								</span>
-                            </label>
-                            <div className={styles.colorControls}>
-                                <input
-                                    type="color"
-                                    id="authorColor"
-                                    value={effectiveAuthorColor}
-                                    onChange={(e) => onAuthorColorChange(e.target.value)}
-                                    title={
-                                        hasAuthorColorOverride
-                                            ? "Specifieke auteur kleur"
-                                            : "Klik om auteur kleur aan te passen (overschrijft globaal)"
-                                    }
-                                />
-                                {hasAuthorColorOverride && (
-                                    <button
-                                        type="button"
-                                        className={styles.resetColorButton}
-                                        onClick={onResetAuthorColor}
-                                        title="Reset naar globale kleur"
-                                    >
-                                        ↺
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                  )}
                 </div>
+              </div>
+
+              {/* Hierarchical Author Color Control */}
+              <div className={styles.controlRow}>
+                <label htmlFor="authorColor">
+                  <span className={styles.labelText}>Auteur Kleur</span>
+                  <span className={styles.colorIndicator}>
+                    {hasAuthorColorOverride ? (
+                      <span
+                        title="Specifieke auteur kleur actief"
+                        className={styles.overrideActive}
+                      >
+                        ⚙️
+                      </span>
+                    ) : (
+                      <span
+                        title="Volgt globale kleur"
+                        className={styles.globalActive}
+                      >
+                        🔗
+                      </span>
+                    )}
+                  </span>
+                </label>
+                <div className={styles.colorControls}>
+                  <ColorPicker
+                    value={effectiveAuthorColor}
+                    onChange={(val) => onAuthorColorChange(val)}
+                    onActiveChange={onColorPickerActiveChange}
+                    title={
+                      hasAuthorColorOverride
+                        ? "Specifieke auteur kleur"
+                        : "Klik om auteur kleur aan te passen (overschrijft globaal)"
+                    }
+                  />
+                  {hasAuthorColorOverride && (
+                    <button
+                      type="button"
+                      className={styles.resetColorButton}
+                      onClick={onResetAuthorColor}
+                      title="Reset naar globale kleur"
+                    >
+                      ↺
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     );
 }

@@ -117,3 +117,9 @@ FILES_TO_REMOVE.txt
 # !CLAUDE.md
 /DOCS-TO-CHECK/
 README-NOVI.md
+
+# Debug en lint output bestanden
+dutch_comments.txt
+find_dutch_comments.cjs
+lint-*.txt
+lint-report*.txt

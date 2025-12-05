@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Canvas.module.scss';
+import styles from '../CanvasControls.module.scss';
 
 export default function TextEffectControls({
     effectMode,
@@ -77,12 +77,12 @@ export default function TextEffectControls({
                 {effectMode === 'raised' && (
                     <div className={styles.controlGroup}>
                         <div className={styles.valueRow}>
-                            <label>Hoogte (Schaduw)</label>
+                            <label>Hoogte / Richting</label>
                             <span>{effectParams.distance}px</span>
                         </div>
                         <input
                             type="range"
-                            min="1"
+                            min="-20"
                             max="20"
                             step="1"
                             value={effectParams.distance}
@@ -93,21 +93,38 @@ export default function TextEffectControls({
                 )}
 
                 {effectMode === 'engraved' && (
-                    <div className={styles.controlGroup}>
-                        <div className={styles.valueRow}>
-                            <label>Diepte</label>
-                            <span>{effectParams.depth}px</span>
+                    <>
+                        <div className={styles.controlGroup}>
+                            <div className={styles.valueRow}>
+                                <label>Diepte</label>
+                                <span>{effectParams.depth}px</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="1"
+                                max="10"
+                                step="0.5"
+                                value={effectParams.depth}
+                                onChange={(e) => handleParamChange('depth', e.target.value)}
+                                className={styles.slider}
+                            />
                         </div>
-                        <input
-                            type="range"
-                            min="1"
-                            max="10"
-                            step="0.5"
-                            value={effectParams.depth}
-                            onChange={(e) => handleParamChange('depth', e.target.value)}
-                            className={styles.slider}
-                        />
-                    </div>
+                        <div className={styles.controlGroup}>
+                            <div className={styles.valueRow}>
+                                <label>Dekking (Transparantie)</label>
+                                <span>{Math.round((effectParams.opacity !== undefined ? effectParams.opacity : 1) * 100)}%</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.05"
+                                value={effectParams.opacity !== undefined ? effectParams.opacity : 1}
+                                onChange={(e) => handleParamChange('opacity', e.target.value)}
+                                className={styles.slider}
+                            />
+                        </div>
+                    </>
                 )}
             </div>
         </div>

@@ -168,17 +168,20 @@ export function SignupForm() {
     // Conditional rendering for success state
     if (registrationSuccess) {
         return (
-            <div className={styles.formContainer}>
-                <div className={styles.formSuccess}>
-                    <h2>Controleer je e-mail</h2>
-                    <p>We hebben een e-mail gestuurd naar: {registeredEmail}</p>
-                    <p>
-                        Indien je nog geen account had, vind je hierin een bevestigingslink.
-                        <br/>
-                        Niks ontvangen? Probeer <Link to="/login">Wachtwoord vergeten</Link> op de inlogpagina.
-                    </p>
-                </div>
+          <div className={styles.formContainer}>
+            <div className={styles.formSuccess}>
+              <h2>Controleer je e-mail</h2>
+              <p>We hebben een e-mail gestuurd naar: {registeredEmail}</p>
+              <p>
+                Indien je nog geen account had, vind je hierin een
+                bevestigingslink.
+                <br />
+                Niks ontvangen?{" "}
+                <Link to="/password-reset">Vraag een nieuw wachtwoord aan</Link>
+                .
+              </p>
             </div>
+          </div>
         );
     }
 

@@ -4,8 +4,8 @@
 
 .feedbackContainer {
   position: fixed;
-  bottom: 20px;
-  left: 20px; /* Offset from the left edge of the screen */
+  bottom: 1.25rem;
+  left: 1.25rem; /* Offset from the left edge of the screen */
   z-index: 9998; /* Below FloatingShortcutPanel but above canvas */
   pointer-events: none; /* Don't interfere with interactions */
 }
@@ -15,11 +15,11 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   color: vars.$neutral-white;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   animation: slide-in-feedback 0.4s ease-out;
   min-width: 200px;
@@ -31,7 +31,7 @@
 }
 
 .feedbackText {
-  color: #e2e8f0;
+  color: vars.$neutral-mid-light;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.4;
@@ -60,13 +60,13 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .feedbackContainer {
-    left: 20px;
-    bottom: 20px;
+    left: 1.25rem;
+    bottom: 1.25rem;
   }
   
   .feedbackCard {
     min-width: 180px;
-    padding: 10px 14px;
+    padding: 0.625rem 0.875rem;
   }
   
   .feedbackIcon {
@@ -74,19 +74,19 @@
   }
   
   .feedbackText {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 }
 
 @media (max-width: 480px) {
   .feedbackContainer {
-    left: 10px;
-    bottom: 15px;
+    left: 0.625rem;
+    bottom: 0.9375rem;
   }
   
   .feedbackCard {
     min-width: 160px;
-    padding: 8px 12px;
+    padding: 0.5rem 0.75rem;
   }
   
   .feedbackText {

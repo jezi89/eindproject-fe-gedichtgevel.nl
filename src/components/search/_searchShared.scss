@@ -6,7 +6,7 @@
 @use "@styles/variables" as *;
 @use "@styles/mixins" as *;
 
-// TODO Checken of we niet dubbele button styling hebben, aangezien we ook buttons stylen in ui map.
+// TODO Check if we have duplicate button styling, since we also style buttons in the ui folder.
 
 // ==============================================
 // SHARED CONTAINER PATTERNS
@@ -107,11 +107,11 @@
   gap:                   $gap;
   width:                 100%;
 
-  @include media-down($screen-lg) { // Vervangt @include respond-to("tablet") (was max-width: 1024px, nu max-width: $screen-lg - 1px = 991px)
+  @include media-down($screen-lg) { // Replaces @include respond-to("tablet") (was max-width: 1024px, now max-width: $screen-lg - 1px = 991px)
 	grid-template-columns: repeat(min($columns, 2), 1fr);
 	}
 
-  @include media-down($screen-md) { // Vervangt @include respond-to("mobile") (was max-width: 768px, nu max-width: $screen-md - 1px = 767px)
+  @include media-down($screen-md) { // Replaces @include respond-to("mobile") (was max-width: 768px, now max-width: $screen-md - 1px = 767px)
 	grid-template-columns: 1fr;
 	}
   }

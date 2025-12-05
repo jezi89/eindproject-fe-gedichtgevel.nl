@@ -1,0 +1,88 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "sass:color";
+@use '@styles/variables' as vars;
+
+/* AANGEPAST: Canvas container voor hoofdproject met NavBar */
+.canvasContainer {
+  display:    flex;
+  width:      100vw;
+  height:     calc(100vh - 80px); // Account for NavBar height
+  background: $canvas-bg-dark;
+
+  @include respond-to("mobile") {
+    flex-direction: column;
+    height:         calc(100vh - 80px); // Adjust for mobile NavBar
+  }
+}
+
+.canvasWrapper {
+  flex:       1;
+  min-width:  0;
+  height:     100%;
+  background: $canvas-bg-dark;
+}
+
+
+
+.navbarToggleButton {
+  font-size:        1.125rem;
+  position:         absolute;
+  top:              8px;
+  right:            12px;
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            32px;
+  height:           32px;
+  cursor:           pointer;
+  transition:       background-color 0.2s ease;
+  animation:        pulseAttention 2s ease-in-out 3;
+  color:            $canvas-control-text;
+  border:           1px solid $canvas-control-border;
+  border-radius:    6px;
+  background-color: $canvas-control-input-bg;
+
+  // Pulsing hint arrow pointing to button
+  &::before {
+    font-family:      $font-family-section-heading; // Bitter
+    font-size:        0.875rem;
+    position:         absolute;
+    z-index:          200;
+    right:            calc(100% + 8px);
+    padding:          0.25rem 0.5rem;
+    content:          "Open nav-menu hier: →";
+    animation:        slideHint 2s ease-in-out 3;
+    white-space:      nowrap;
+    opacity:          0;
+    color:            $primary-cognac;
+    border:           1px solid $canvas-control-border;
+    border-radius:    4px;
+    background-color: rgba($canvas-control-bg, 0.98);
+    box-shadow:       0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.navbarToggleButton:hover {
+  animation:        none;
+  color:            $canvas-control-accent;
+  background-color: $canvas-control-hover;
+
+  &::before {
+    animation: none;
+    opacity:   0;
+  }
+}
+
+/* NIEUW: Thumbnail freeze overlay voor Alt+J functionaliteit */
+.thumbnailFreeze {
+  pointer-events: none;
+  background:     rgba(0, 0, 0, 0.1);
+}
+
+@include respond-to("tablet") {
+  .canvasContainer {
+    flex-direction: column;
+    height:         calc(100vh - 60px); // Smaller mobile NavBar
+  }
+}

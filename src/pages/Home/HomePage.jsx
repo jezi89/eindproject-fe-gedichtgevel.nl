@@ -19,7 +19,7 @@ import { useToast } from '@/context/ui/ToastContext.jsx';
 import { ERAS, filterPoemsByEras } from '@/utils/eraMapping.js';
 import styles from './HomePage.module.scss';
 
-// Plaats hier de Public URL van je video in Supabase Storage
+// Place the Public URL of your video in Supabase Storage here
 const WELCOME_ANIMATION_URL = "https://fwaxobqcxzrrttzfvdsw.supabase.co/storage/v1/object/public/site-video-assets/Gedichtgevel%20Animatie%20Bewerkt%20optimized%20Res.mp4";
 
 
@@ -38,23 +38,23 @@ function HomePageContent() {
 
     // --- Welcome Animation Logic ---
     useEffect(() => {
-        // 1. Voer alleen uit voor ingelogde gebruikers
+        // 1. Only execute for logged-in users
         if (!user) {
             return;
         }
 
-        // 2. Controleer of de animatie al is getoond in deze sessie
+        // 2. Check if the animation has already been shown in this session
         if (sessionStorage.getItem('hasSeenWelcomeAnimation')) {
             return;
         }
 
-        // 3. Toon de animatie direct bij het laden van de component
+        // 3. Show the animation immediately when the component loads
         setShowAnimation(true);
 
-        // 4. Markeer als gezien voor deze sessie
+        // 4. Mark as seen for this session
         sessionStorage.setItem('hasSeenWelcomeAnimation', 'true');
 
-    }, [user]); // Afhankelijk van de user state
+    }, [user]); // Dependent on the user state
 
     const handleAnimationEnd = () => {
         setShowAnimation(false);
@@ -112,7 +112,7 @@ function HomePageContent() {
         let filtered = [...results];
 
         // 1. Filter by length (line count)
-        if (maxLength < 150) {
+        if (maxLength < 251) {
             filtered = filtered.filter(poem => {
                 const lineCount = poem.lines ? poem.lines.length : 0;
                 return lineCount <= maxLength;
@@ -137,7 +137,7 @@ function HomePageContent() {
     }, [results, maxLength, selectedEras]);
     // ---------------------------------------
 
-    // Bepaal search state gebaseerd op hook
+    // Determine search state based on hook
     const getSearchState = () => {
         if (loading) return 'searching';
         if (searchMeta.hasResults) return 'results';
@@ -227,7 +227,7 @@ function HomePageContent() {
 
                 {/* Search Container with Filter Bar and Search Bar */}
                 <div className={styles.searchContainer}>
-                    {/* Filter Bar - paginabrede oranje bar met filters */}
+                    {/* Filter Bar - page-wide orange bar with filters */}
                     <div className={styles.filterBarContainer}>
                         <div className={styles.filterBar}>
                             <div className={styles.filterContainer}>
@@ -240,7 +240,7 @@ function HomePageContent() {
                                     />
                                 </div>
 
-                                {/* Length Filter - uitklapbaar met slider */}
+                                {/* Length Filter - expandable with slider */}
                                 <div className={styles.filterItem}>
                                     <FilterDropdownSlider
                                         value={maxLength}
@@ -259,19 +259,24 @@ function HomePageContent() {
                                 </div>
 
                                 {/* Creative Canvas Filter (disabled mock-up) */}
-                                <div className={styles.filterItem} onClick={handleComingSoonClick}>
+                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
                                     <FilterToggle
                                         checked={onlyMyDesigns}
                                         onChange={setOnlyMyDesigns}
                                         label="Canvas"
-                                        disabled={true}
-                                        tooltipText="Binnenkort beschikbaar"
-                                    />
-                                </div>
 
-                                {/* Meer Filters - toekomstige uitbreiding */}
-                                <div className={styles.filterItemAdvanced} onClick={handleComingSoonClick}>
-                                    <span className={styles.filterTextAdvanced}>Meer Filters</span>
+
+                                    />
+                                {/* More Filters - future extension */}
+                                </div>
+                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
+                                    <FilterToggle
+                                        checked={onlyMyDesigns}
+                                        onChange={setOnlyMyDesigns}
+                                        label="Meer Filters"
+
+
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -287,7 +292,7 @@ function HomePageContent() {
                     </SearchErrorBoundary>
                 </div>
 
-                {/* Search Results Area - alleen zichtbaar bij search */}
+                {/* Search Results Area - only visible during search */}
                 {searchState !== 'idle' && (
                     <div className={styles.searchResultsArea}>
                         {searchState === 'searching' && (
@@ -318,7 +323,7 @@ function HomePageContent() {
                 )}
             </div>
 
-            {/* USP Section - altijd zichtbaar */}
+            {/* USP Section - always visible */}
             <div className={styles.uspSection}>
                 <div className={styles.uspContainer}>
                     <div className={styles.uspColumn}>
@@ -350,12 +355,12 @@ function HomePageContent() {
                 </div>
             </div>
 
-            {/* Gedichten van de Dag - met ref voor scroll-naar-sectie */}
+            {/* Poems of the Day - with ref for scroll-to-section */}
             <div ref={dailyPoemsSectionRef}>
                 <DailyPoems/>
             </div>
 
-            {/* Footer - altijd onderaan */}
+            {/* Footer - always at the bottom */}
             <Footer/>
         </div>
 

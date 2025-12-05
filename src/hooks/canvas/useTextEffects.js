@@ -19,19 +19,23 @@ export const useTextEffects = (mode, params) => {
 
         if (mode === 'painted') {
             return {
-                filters: [new BlurFilter(effectParams.blur || 0)],
+                filters: [new BlurFilter({ strength: effectParams.blur || 0 })],
                 style: {},
-                blendMode: 'multiply',
+                blendMode: 'normal', // Changed from multiply to normal to preserve color
                 alpha: effectParams.opacity || 0.8
             };
         }
 
         if (mode === 'raised') {
+            const distance = effectParams.distance || 6;
+            const angle = 45 * (Math.PI / 180);
             const shadow = new DropShadowFilter({
-                distance: effectParams.distance || 6,
+                offset: {
+                    x: Math.round(distance * Math.cos(angle)),
+                    y: Math.round(distance * Math.sin(angle))
+                },
                 blur: 2, // Sharper shadow for more "pop"
                 alpha: 0.8, // Darker shadow
-                rotation: 45,
                 color: 0x000000
             });
             shadow.padding = 30; // Prevent clipping
@@ -46,20 +50,30 @@ export const useTextEffects = (mode, params) => {
 
         if (mode === 'engraved') {
             const depth = effectParams.depth || 2;
+            const opacity = effectParams.opacity !== undefined ? effectParams.opacity : 1;
+            
+            // Shadow (Top-Left, 225 degrees)
+            const shadowAngle = 225 * (Math.PI / 180);
             const shadow = new DropShadowFilter({
-                distance: depth,
+                offset: {
+                    x: Math.round(depth * Math.cos(shadowAngle)),
+                    y: Math.round(depth * Math.sin(shadowAngle))
+                },
                 blur: 1,
                 alpha: 0.9, // Strong inner shadow
-                rotation: 225, // Top-Left (Shadow)
                 color: 0x000000
             });
             shadow.padding = 30; // Prevent clipping
             
+            // Highlight (Bottom-Right, 45 degrees)
+            const highlightAngle = 45 * (Math.PI / 180);
             const highlight = new DropShadowFilter({
-                distance: depth,
+                offset: {
+                    x: Math.round(depth * Math.cos(highlightAngle)),
+                    y: Math.round(depth * Math.sin(highlightAngle))
+                },
                 blur: 2, // Softer highlight
-                alpha: 0.3, // Much more subtle highlight (was 0.8)
-                rotation: 45, // Bottom-Right (Highlight)
+                alpha: 0.5, // Stronger highlight for better visibility
                 color: 0xffffff
             });
             highlight.padding = 30; // Prevent clipping
@@ -67,8 +81,8 @@ export const useTextEffects = (mode, params) => {
             return {
                 filters: [shadow, highlight],
                 style: {},
-                blendMode: 'normal',
-                alpha: 1
+                blendMode: 'normal', // Changed from conditional multiply to normal to preserve color
+                alpha: opacity // Apply opacity to the whole container (text + shadow)
             };
         }
 

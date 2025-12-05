@@ -6,11 +6,11 @@
   justify-content: center;
   gap: 1rem;
   padding: 0.5rem 1rem;
-  background-color: #F1E7D2;
-  border: 1.875px solid vars.$neutral-black;
+  background-color: vars.$neutral-cream;
+  border: 0.117rem solid vars.$neutral-black;
   border-radius: 8px;
-  width: 438px;
-  height: 86px;
+  width: 27.375rem;
+  height: 5.375rem;
   box-sizing: border-box;
 }
 
@@ -30,6 +30,4 @@
   }
 }
 
-.playPause {
-  // Special style for the play/pause button if needed
-}
+

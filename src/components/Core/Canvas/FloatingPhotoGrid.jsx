@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import styles from "./Canvas.module.scss";
+import styles from "./FloatingPhotoGrid.module.scss";
 import {usePhotoPreview} from "@/hooks/canvas/usePhotoPreview.js";
 import {calculateOptimalImageRequest} from "@/utils/imageOptimization.js";
 

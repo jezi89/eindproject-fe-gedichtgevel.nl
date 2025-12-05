@@ -74,119 +74,136 @@ export const SearchResults = memo(({
     const isDailyMode = layoutMode === 'daily';
 
     return (
-        <div
-            ref={searchResultsRef}
-            className={`${styles.searchResultsSection} ${canvasMode ? styles.canvasMode : ''} ${isDailyMode ? styles.dailyMode : ''} ${isOverlay ? styles.overlayMode : ''}`}
-        >
-            {/* Section header for daily mode */}
-            {isDailyMode && sectionTitle && (
-                <div className={styles.sectionHeader}>
-                    <h2 className={styles.sectionTitle}>{sectionTitle}</h2>
-                    {sectionSubtitle && (
-                        <p className={styles.sectionSubtitle}>{sectionSubtitle}</p>
-                    )}
-                </div>
+      <div
+        ref={searchResultsRef}
+        className={`${styles.searchResultsSection} ${
+          canvasMode ? styles.canvasMode : ""
+        } ${isDailyMode ? styles.dailyMode : ""} ${
+          isOverlay ? styles.overlayMode : ""
+        }`}
+      >
+        {/* Section header for daily mode */}
+        {isDailyMode && sectionTitle && (
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>{sectionTitle}</h2>
+            {sectionSubtitle && (
+              <p className={styles.sectionSubtitle}>{sectionSubtitle}</p>
             )}
+          </div>
+        )}
 
-            {/* Results overview - hidden in canvas mode, focus mode, and daily mode */}
-            {!canvasMode && !focusMode && !isDailyMode && ResultsOverviewComponent && (
-                <div>
-                    <ResultsOverviewComponent
-                        resultCount={updatedLayout.resultCount}
-                        variant="circle"
-                        {...resultsOverviewProps}
-                    />
-                </div>
-            )}
-
-            {/* Carousel arrows - moved above dots for overlay positioning */}
-            {!isDailyMode && updatedLayout.isCarousel && (
-                <CarouselArrows
-                    onPrevious={orchestration.handlePrevious}
-                    onNext={orchestration.handleNext}
-                    hasMultiple={updatedLayout.hasMultiple}
-                    allowDynamicPositioning={!isOverlay} // Disable dynamic positioning in overlay
-                    hasAnyExpanded={orchestration.hasAnyExpanded}
-                    searchResultsRef={searchResultsRef}
-                    onCollapseEvent={handleCollapseEvent}
-                    canvasMode={canvasMode}
-                    className={isOverlay ? styles.overlayArrows : ''}
-                    isOverlay={isOverlay}
-                />
-            )}
-
-            {/* Carousel dots/indicators - show above results container */}
-            {!isDailyMode && updatedLayout.isCarousel && (
-                <CarouselDots
-                    totalCount={updatedLayout.resultCount}
-                    currentIndex={orchestration.currentIndex}
-                    onNavigate={orchestration.handleNavigateToIndex}
-                    hideSeriesNavigation={hideSeriesNavigation}
-                    hideRangeIndicator={hideRangeIndicator}
-                />
-            )}
-
-            <div className={`${styles.resultsContainer} ${styles[updatedLayout.layoutClass]}`}>
-                <LayoutGroup>
-                    <motion.div
-                        className={`${styles.resultsList}`}
-                        initial={{opacity: 1}}
-                        animate={{opacity: 1}}
-                        transition={{
-                            duration: 0.5,
-                            ease: [0.25, 0.46, 0.45, 0.94]
-                        }}
-                        style={{position: 'relative'}} // Ensure relative positioning for arrows
-                    >
-
-                        {/* TODO Checken of dit allemaal nodig is */}
-                        {updatedLayout.visibleResults.map((poem, displayIndex) => {
-                            const actualIndex = updatedLayout.getActualIndexFromDisplay(displayIndex);
-
-                            // CRITICAL: Validate actualIndex to prevent NaN keys
-                            const safeActualIndex = isNaN(actualIndex) ? displayIndex : actualIndex;
-                            const keyPrefix = updatedLayout.iscarrousel ? 'carrousel' : 'static';
-                            const safeKey = `${keyPrefix}-${safeActualIndex}`;
-
-                            // Additional validation for poem existence
-                            if (!poem) {
-                                // Missing poem at displayIndex
-                                return null;
-                            }
-
-                            return (
-                                <motion.div
-                                    key={safeKey}
-                                    initial={{opacity: 0, y: 20}}
-                                    animate={{opacity: 1, y: 0}}
-                                    transition={{
-                                        duration: 0.6,
-                                        ease: [0.25, 0.46, 0.45, 0.94],
-                                        delay: displayIndex * 0.1
-                                    }}
-                                >
-                                    <PoemResultItem
-                                        poem={poem}
-                                        index={safeActualIndex}
-                                        allPoems={results}
-                                        navigationDirection={orchestration.navigationDirection}
-                                        poemState={orchestration.poemStates[safeActualIndex]}
-                                        onPoemStateChange={orchestration.updatePoemState}
-                                        preCalculatedHeight={orchestration.preCalculatedHeights[safeActualIndex]}
-                                        canvasMode={canvasMode}
-                                        onPoemSelect={onPoemSelect}
-                                        onLoadInCanvas={onLoadInCanvas}
-                                        onNavigateToCanvas={onNavigateToCanvas}
-                                        onNavigateToRecording={onNavigateToRecording}
-                                        onCollapseEvent={handleCollapseEvent}
-                                        showLabels={!isOverlay}
-                                    />
-                                </motion.div>
-                            );
-                        })}
-                    </motion.div>
-                </LayoutGroup>
+        {/* Results overview - hidden in canvas mode, focus mode, and daily mode */}
+        {!canvasMode &&
+          !focusMode &&
+          !isDailyMode &&
+          ResultsOverviewComponent && (
+            <div>
+              <ResultsOverviewComponent
+                resultCount={updatedLayout.resultCount}
+                variant="circle"
+                {...resultsOverviewProps}
+              />
             </div>
+          )}
+
+        {/* Carousel arrows - moved above dots for overlay positioning */}
+        {!isDailyMode && updatedLayout.isCarousel && (
+          <CarouselArrows
+            onPrevious={orchestration.handlePrevious}
+            onNext={orchestration.handleNext}
+            hasMultiple={updatedLayout.hasMultiple}
+            allowDynamicPositioning={!isOverlay} // Disable dynamic positioning in overlay
+            hasAnyExpanded={orchestration.hasAnyExpanded}
+            searchResultsRef={searchResultsRef}
+            onCollapseEvent={handleCollapseEvent}
+            canvasMode={canvasMode}
+            className={isOverlay ? styles.overlayArrows : ""}
+            isOverlay={isOverlay}
+          />
+        )}
+
+        {/* Carousel dots/indicators - show above results container */}
+        {!isDailyMode && updatedLayout.isCarousel && (
+          <CarouselDots
+            totalCount={updatedLayout.resultCount}
+            currentIndex={orchestration.currentIndex}
+            onNavigate={orchestration.handleNavigateToIndex}
+            hideSeriesNavigation={hideSeriesNavigation}
+            hideRangeIndicator={hideRangeIndicator}
+          />
+        )}
+
+        <div
+          className={`${styles.resultsContainer} ${
+            styles[updatedLayout.layoutClass]
+          }`}
+        >
+          <LayoutGroup>
+            <motion.div
+              className={`${styles.resultsList}`}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
+              style={{ position: "relative" }} // Ensure relative positioning for arrows
+            >
+              {/* TODO Check if all of this is necessary */}
+              {updatedLayout.visibleResults.map((poem, displayIndex) => {
+                const actualIndex =
+                  updatedLayout.getActualIndexFromDisplay(displayIndex);
+
+                // CRITICAL: Validate actualIndex to prevent NaN keys
+                const safeActualIndex = isNaN(actualIndex)
+                  ? displayIndex
+                  : actualIndex;
+                const keyPrefix = updatedLayout.iscarrousel
+                  ? "carrousel"
+                  : "static";
+                const safeKey = `${keyPrefix}-${safeActualIndex}`;
+
+                // Additional validation for poem existence
+                if (!poem) {
+                  // Missing poem at displayIndex
+                  return null;
+                }
+
+                return (
+                  <motion.div
+                    key={safeKey}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                      delay: displayIndex * 0.1,
+                    }}
+                  >
+                    <PoemResultItem
+                      poem={poem}
+                      index={safeActualIndex}
+                      allPoems={results}
+                      navigationDirection={orchestration.navigationDirection}
+                      poemState={orchestration.poemStates[safeActualIndex]}
+                      onPoemStateChange={orchestration.updatePoemState}
+                      preCalculatedHeight={
+                        orchestration.preCalculatedHeights[safeActualIndex]
+                      }
+                      canvasMode={canvasMode}
+                      onPoemSelect={onPoemSelect}
+                      onLoadInCanvas={onLoadInCanvas}
+                      onNavigateToCanvas={onNavigateToCanvas}
+                      onNavigateToRecording={onNavigateToRecording}
+                      onCollapseEvent={handleCollapseEvent}
+                      showLabels={!isOverlay}
+                    />
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </LayoutGroup>
         </div>
+      </div>
     );
 });

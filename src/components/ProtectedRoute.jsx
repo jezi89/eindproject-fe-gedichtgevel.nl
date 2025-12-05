@@ -4,9 +4,9 @@
  * @module components/ProtectedRoute
  */
 
-import React from 'react';
-import {Navigate, useLocation} from 'react-router';
-import {useAuth} from '@/hooks/auth/useAuth.js';
+import React from "react";
+import { Navigate, useLocation } from "react-router";
+import { useAuth } from "@/hooks/auth/useAuth.js";
 
 //
 /**
@@ -25,44 +25,41 @@ import {useAuth} from '@/hooks/auth/useAuth.js';
  * @returns {JSX.Element} The protected route component
  */
 
-export function ProtectedRoute({children, redirectTo = '/login'}) {
-    // Get authentication state using the refactored useAuth hook
-    const authState = useAuth();
-    const {user, loading} = authState;
+export function ProtectedRoute({ children, redirectTo = "/login" }) {
+  // Get authentication state using the refactored useAuth hook
+  const authState = useAuth();
+  const { user, loading } = authState;
 
-    // Get current location for redirect after login
-    const location = useLocation();
+  // Get current location for redirect after login
+  const location = useLocation();
 
-    // Show loading state while checking authentication
-    if (loading) {
-        return (
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh'
-            }}>
-                <div>Authenticatie controleren...</div>
-            </div>
-        );
-    }
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <div>Authenticatie controleren...</div>
+      </div>
+    );
+  }
 
-    // Redirect to login if not authenticated
-    // Using React Router 7's Navigate component with state for return URL
-    if (!user) {
-        return (
-            <Navigate
-                to={redirectTo}
-                replace
-                state={{from: location.pathname}}
-            />
-        );
-    }
+  // Redirect to login if not authenticated
+  // Using React Router 7's Navigate component with state for return URL
+  if (!user) {
+    return (
+      <Navigate to={redirectTo} replace state={{ from: location.pathname }} />
+    );
+  }
 
-    // User is authenticated, render protected content
-    return children;
+  // User is authenticated, render protected content
+  return children;
 }
-
 
 /**
  * Implementation Notes:
@@ -87,31 +84,36 @@ export function ProtectedRoute({children, redirectTo = '/login'}) {
  *    </ProtectedRoute>
  */
 
-// TODO uitleg in verantwoordingsdocument verwerken of versimpelen
+// TODO Process explanation in accountability document or simplify
 
 /**
- * De Navigate component van React Router 6/7 en je custom hook (useNavigationState) hebben verschillende doelen, maar werken samen om een goede gebruikerservaring te bieden bij protected routes.
+ * The Navigate component from React Router 6/7 and your custom hook (useNavigationState) have different goals, but work together to provide a good user experience for protected routes.
  *
  * Navigate component (React Router 6/7)
- * Doel: Declaratief navigeren (redirecten) naar een andere route.
- * Gebruik: Je gebruikt <Navigate to="/login" state={{ from: location.pathname }} /> om een gebruiker te redirecten en optioneel extra state (zoals de oorspronkelijke URL) mee te geven.
- * Voordeel: Je kunt eenvoudig een redirect uitvoeren en extra informatie (zoals waar de gebruiker vandaan kwam) meesturen via de state prop.
+ * Goal: Declaratively navigate (redirect) to another route.
+ * Usage: You use <Navigate to="/login" state={{ from: location.pathname }} /> to redirect a user and optionally pass extra state (like the original URL).
+ * Benefit: You can easily perform a redirect and send extra information (like where the user came from) via the state prop.
+ *
  * useNavigationState custom hook
- * Doel: Gemakkelijk data ophalen uit de navigation state die je met Navigate hebt meegestuurd.
- * Gebruik: In je login-form kun je met useNavigationState('from', '/') ophalen waar de gebruiker vandaan kwam, zodat je na inloggen weer terug kunt sturen.
- * Voordeel: Je hoeft niet telkens handmatig location.state?.from te schrijven; de hook maakt dit herbruikbaar en leesbaar.
- * Hoe werken ze samen?
- * Redirect met state:
- * In ProtectedRoute stuur je de gebruiker naar /login en geef je de oorspronkelijke locatie mee:
- * <Navigate
- * Ophalen van state:
- * In je login-form gebruik je de custom hook om de oorspronkelijke locatie op te halen:
+ * Goal: Easily retrieve data from the navigation state that you sent with Navigate.
+ * Usage: In your login form you can use useNavigationState('from', '/') to retrieve where the user came from, so you can send them back after logging in.
+ * Benefit: You don't have to manually write location.state?.from every time; the hook makes this reusable and readable.
+ *
+ * How do they work together?
+ * Redirect with state:
+ * In ProtectedRoute you send the user to /login and pass the original location:
+ * <Navigate ... />
+ *
+ * Retrieving state:
+ * In your login form you use the custom hook to retrieve the original location:
  * const redirectTo = useNavigationState('from', '/');
- * Na succesvol inloggen kun je dan weer terugnavigeren naar de oorspronkelijke pagina.
- * Samenvatting
- * Navigate stuurt de gebruiker (met extra state) naar een andere route.
- * useNavigationState haalt die extra state weer op in de nieuwe route.
- * Ze vullen elkaar aan: declaratief navigeren én makkelijk state ophalen.
- * Kortom:
- * Navigate is voor het navigeren en state doorgeven, je custom hook is voor het uitlezen van die state. Ze zijn complementair.
+ * After successful login you can then navigate back to the original page.
+ *
+ * Summary
+ * Navigate sends the user (with extra state) to another route.
+ * useNavigationState retrieves that extra state in the new route.
+ * They complement each other: declarative navigation AND easy state retrieval.
+ *
+ * In short:
+ * Navigate is for navigating and passing state, your custom hook is for reading that state. They are complementary.
  */

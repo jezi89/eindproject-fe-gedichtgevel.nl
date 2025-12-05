@@ -29,35 +29,43 @@ export const PoemCard = memo(forwardRef(({
                                              styles,
                                              children
                                          }, ref) => {
-    // Debug logging voor animation states
+                                           // Debug logging for animation states
 
-    return (
-        <motion.div
-            ref={ref}
-            className={`${styles.resultCard} ${canvasMode ? styles.canvasCard : ''}`}
-            data-expanded={isExpanded}
-            onClick={onClick}
-            onDoubleClick={onDoubleClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            layout={!canvasMode} // Layout animations alleen voor search mode
-            // Geen scale transforms - deze veroorzaken altijd text rendering issues
-            // Monthly sizing wordt gedaan via CSS container sizing
-            transition={{
-                type: "spring",
-                stiffness: 350,
-                damping: 20, // Lagere damping voor natural bounce
-                mass: 0.6
-            }}
-            style={{
-                cursor: canvasMode ? 'pointer' : 'default',
-                position: 'relative',
-                transformOrigin: 'top center', // Ensure expansion happens downward
-                willChange: 'transform' // GPU acceleration hint
-            }}
-        >
-            {children}
-        </motion.div>
-    );
-}));
+                                           return (
+                                             <motion.div
+                                               ref={ref}
+                                               className={`${
+                                                 styles.resultCard
+                                               } ${
+                                                 canvasMode
+                                                   ? styles.canvasCard
+                                                   : ""
+                                               }`}
+                                               data-expanded={isExpanded}
+                                               onClick={onClick}
+                                               onDoubleClick={onDoubleClick}
+                                               onMouseEnter={onMouseEnter}
+                                               onMouseLeave={onMouseLeave}
+                                               layout={!canvasMode} // Layout animations only for search mode
+                                               // No scale transforms - these always cause text rendering issues
+                                               // Monthly sizing is done via CSS container sizing
+                                               transition={{
+                                                 type: "spring",
+                                                 stiffness: 350,
+                                                 damping: 20, // Lower damping for natural bounce
+                                                 mass: 0.6,
+                                               }}
+                                               style={{
+                                                 cursor: canvasMode
+                                                   ? "pointer"
+                                                   : "default",
+                                                 position: "relative",
+                                                 transformOrigin: "top center", // Ensure expansion happens downward
+                                                 willChange: "transform", // GPU acceleration hint
+                                               }}
+                                             >
+                                               {children}
+                                             </motion.div>
+                                           );
+                                         }));
 

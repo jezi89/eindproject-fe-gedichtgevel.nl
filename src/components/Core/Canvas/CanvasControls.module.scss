@@ -1,0 +1,872 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+/* Basic style for all control buttons */
+.buttonGroup button,
+.resetButton {
+  padding:          0.5rem 1rem;
+  cursor:           pointer;
+  font-family:      vars.$font-family-section-heading; // Bitter font
+  font-size:        vars.$font-size-xs;
+  font-weight:      vars.$font-weight-semibold;
+  color:            vars.$canvas-control-text;
+  border:           none;
+  background-color: transparent;
+  transition:       all 0.2s ease;
+}
+
+/* Style for the round icon reset buttons */
+.iconResetButton {
+  font-size:       1rem;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           28px;
+  height:          28px;
+  padding:         0;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  color:           vars.$canvas-control-text;
+  border:          1px solid vars.$canvas-control-border;
+  border-radius:   50%;
+  background:      vars.$canvas-control-input-bg;
+}
+
+.iconResetButton:hover {
+  transform:    rotate(90deg);
+  border-color: vars.$canvas-control-accent;
+  background:   vars.$canvas-control-hover;
+}
+
+/* Share hover state */
+.buttonGroup button:hover,
+.resetButton:hover {
+  background-color: vars.$canvas-control-hover;
+}
+
+/* Share active state */
+.buttonGroup button.active,
+.resetButton.active {
+  color:            vars.$neutral-cream;
+  background-color: vars.$canvas-control-active;
+}
+
+/* Only for group buttons (separators and container rounding) */
+.buttonGroup {
+  display:       flex;
+  overflow:      hidden;
+  flex-wrap:     nowrap;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 5px;
+}
+
+.buttonGroup button {
+  font-size:   0.8rem;
+  padding:     0.25rem 0.5rem;
+  border-left: 1px solid vars.$canvas-control-border;
+}
+
+.buttonGroup button:first-child {
+  border-left: none;
+}
+
+.controlsWrapper {
+  display:        flex;
+  flex-direction: column;
+  padding:        1rem;
+  background:     vars.$canvas-control-bg;
+  gap:            0.75rem;
+}
+
+.controlRow {
+  display:       flex;
+  align-items:   center;
+  max-width:     100%;
+  margin-bottom: 1rem;
+  gap:           0.5rem;
+}
+
+.controlRow label {
+  font-family:    vars.$font-family-section-heading; // Bitter
+  font-size:      vars.$font-size-xs;
+  font-weight:    vars.$font-weight-regular;
+  flex-shrink:    0;
+  min-width:      40px;
+  color:          vars.$canvas-control-text;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  white-space:    nowrap;
+}
+
+.controlRow input[type="range"] {
+  flex:      1;
+  min-width: 0;
+}
+
+.controlRow input[type="color"] {
+  width:         40px;
+  height:        30px;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 4px;
+  cursor:        pointer;
+}
+
+.controlRow span {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   vars.$font-size-xxs;
+  font-weight: vars.$font-weight-regular;
+  flex-shrink: 0;
+  min-width:   40px;
+  text-align:  right;
+  color:       vars.$canvas-control-text;
+}
+
+/* Vertical layout for controls with lineControls */
+.verticalControlRow {
+  align-items:    flex-start;
+  flex-direction: column;
+  gap:            0.2rem;
+}
+
+.lineControls {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  gap:            0.1rem;
+}
+
+.lineControls input[type="range"] {
+  width: 100%;
+}
+
+.lineControls span {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   vars.$font-size-xxs;
+  font-weight: vars.$font-weight-regular;
+  align-self:  flex-end;
+  color:       vars.$canvas-control-text;
+}
+
+/* Vertical layout for wide sliders under the label */
+.controlGroup {
+  display:        flex;
+  flex-direction: column;
+  margin-bottom:  1rem;
+  gap:            0.4rem;
+
+  // Horizontal layout variant
+  &.horizontal {
+    flex-direction:  row;
+    align-items:     flex-start;
+    justify-content: space-between;
+    margin-bottom:   0.5rem;
+    gap:             0;
+  }
+}
+
+.controlGroup label {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   vars.$font-size-xs;
+  font-weight: vars.$font-weight-regular;
+  color:       vars.$canvas-control-text;
+}
+
+.fullWidthRange {
+  width: 100%;
+}
+
+.valueRow {
+  font-family:     vars.$font-family-section-heading; // Bitter
+  font-size:       vars.$font-size-xxs;
+  font-weight:     vars.$font-weight-regular;
+  display:         flex;
+  justify-content: space-between;
+  color:           vars.$canvas-control-text;
+}
+
+.selectionInfo {
+  margin-bottom: 1rem;
+  padding:       0.5rem;
+  border:        1px solid vars.$canvas-control-accent;
+  border-radius: 4px;
+  background:    rgba(vars.$canvas-control-accent, 0.1);
+  color:         vars.$canvas-control-text;
+}
+
+.modeToggle {
+  display:       flex;
+  margin-bottom: 1rem;
+  gap:           1rem;
+}
+
+.clearButton {
+  font-family:   vars.$font-family-section-heading; // Bitter
+  font-size:     0.75rem;
+  padding:       0.25rem 0.5rem;
+  cursor:        pointer;
+  color:         vars.$neutral-cream;
+  border:        1px solid vars.$feedback-error;
+  border-radius: 4px;
+  background:    vars.$feedback-error;
+  transition:    all 0.2s ease;
+
+  &:hover {
+    background: color.adjust(vars.$feedback-error, $lightness: -10%);
+  }
+}
+
+/* Vertical layout for color controls when a line is selected */
+.controlColumn {
+  align-items:    flex-start;
+  flex-direction: column;
+  gap:            0.5rem !important;
+}
+
+.controlColumn .colorControls {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  padding-left:   0.25rem;
+  gap:            0.5rem;
+}
+
+.controlColumn .lineControls {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  gap:            0.5rem;
+}
+
+.controlColumn .hintText {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size: 0.8rem !important;
+  margin:    0.25rem 0;
+  color:     vars.$canvas-control-overlay !important;
+}
+
+.controlColumn .resetButton {
+  font-family:   vars.$font-family-section-heading; // Bitter
+  font-size:     0.85rem;
+  align-self:    flex-start;
+  margin:        0 !important;
+  padding:       0.25rem 0.5rem;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 4px;
+  background:    vars.$canvas-control-input-bg;
+  color:         vars.$canvas-control-text;
+  transition:    all 0.2s ease;
+}
+
+.controlColumn .resetButton:hover {
+  background:   vars.$canvas-control-hover;
+  border-color: vars.$canvas-control-accent;
+}
+
+/* Hierarchical Color System Styling */
+.controlSection {
+  margin:           0;
+  padding:          1rem;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    6px;
+  background-color: vars.$canvas-control-overlay-shinethrough;
+
+  // Collapsible variant
+  &.collapsible {
+    overflow:         hidden;
+    margin-bottom:    .5rem;
+    padding:          0;
+    border-radius:    8px;
+    background-color: vars.$canvas-control-bg;
+  }
+}
+
+.controlSection h3 {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   1rem;
+  font-weight: 600;
+  margin:      0 0 0.75rem 0;
+  color:       vars.$canvas-control-text;
+}
+
+.syncButton {
+  font-family:   vars.$font-family-section-heading; // Bitter
+  font-size:     0.9rem;
+  font-weight:   500;
+  padding:       0.6rem 1.2rem;
+  cursor:        pointer;
+  transition:    all 0.2s ease;
+  color:         vars.$neutral-cream;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 5px;
+  background:    vars.$canvas-control-accent;
+  box-shadow:    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.syncButton:hover {
+  transform:  translateY(-1px);
+  background: color.adjust(vars.$canvas-control-accent, $lightness: -10%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.syncButton:active {
+  transform: translateY(0);
+}
+
+/* Color control label styling */
+.labelText {
+  display:      inline-block;
+  margin-right: 0.5rem;
+}
+
+.colorIndicator {
+  font-size: 0.8rem;
+  display:   inline-block;
+}
+
+.overrideActive {
+  color:  vars.$feedback-warning;
+  filter: drop-shadow(0 0 2px rgba(246, 173, 85, 0.3));
+}
+
+.globalActive {
+  color:  vars.$feedback-success;
+  filter: drop-shadow(0 0 2px rgba(104, 211, 145, 0.3));
+}
+
+/* Color controls container */
+.colorControls {
+  display:     flex;
+  align-items: center;
+  gap:         0.5rem;
+}
+
+/* Reset color button styling */
+.resetColorButton {
+  font-size:       0.875rem;
+  font-weight:     bold;
+  display:         flex;
+  align-items:     center;
+  flex-shrink:     0;
+  justify-content: center;
+  transform:    rotate(-180deg);
+  border-color: rgba(239, 68, 68, 0.5);
+  background:   rgba(vars.$feedback-error, 0.2);
+}
+
+.resetColorButton:active {
+  transform: rotate(-180deg) scale(0.95);
+}
+
+/* Enhanced tooltips styling */
+.controlRow [title]:hover {
+  position: relative;
+}
+
+/* Responsive adjustments for color controls */
+@include respond-to("mobile") {
+  .colorControls {
+    align-items:    stretch;
+    flex-direction: column;
+    gap:            0.3rem;
+  }
+
+  .resetColorButton {
+    align-self:  flex-start;
+    margin-left: 0;
+  }
+}
+
+/* Collapsible Section Styles */
+.sectionHeader {
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  width:            100%;
+  padding:          0.75rem 1rem;
+  cursor:           pointer;
+  user-select:      none;
+  transition:       background-color 0.2s ease;
+  text-align:       left;
+  color:            vars.$canvas-control-text;
+  border:           none;
+  background-color: vars.$canvas-control-overlay-shinethrough;
+}
+
+.sectionHeader:hover {
+  background-color: vars.$canvas-control-hover;
+}
+
+.sectionHeader h3 {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   1rem;
+  font-weight: 600;
+  margin:      0;
+}
+
+.sectionToggle {
+  font-size:  1.2rem;
+  transition: transform 0.2s ease;
+  color:      vars.$canvas-control-text;
+}
+
+.sectionToggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+.sectionContent {
+  padding:          1rem;
+  background-color: vars.$canvas-control-bg;
+}
+
+.sectionContent.collapsed {
+  display: none;
+}
+
+/* Subsection styles */
+.subsection {
+  overflow:         hidden;
+  margin:           1rem 0;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    6px;
+  background-color: vars.$canvas-control-input-bg;
+}
+
+.subsectionHeader {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-size:        0.9rem;
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  width:            100%;
+  padding:          0.5rem 0.75rem;
+  cursor:           pointer;
+  user-select:      none;
+  transition:       background-color 0.2s ease;
+  text-align:       left;
+  color:            vars.$canvas-control-text;
+  border:           none;
+  background-color: vars.$canvas-control-overlay-shinethrough;
+}
+
+.subsectionHeader:hover {
+  background-color: vars.$canvas-control-hover;
+}
+
+.subsectionContent {
+  padding: 0.75rem;
+}
+
+.subsectionContent.collapsed {
+  display: none;
+}
+
+/* Styling for choice background button */
+.chooseBackgroundButton {
+  font-family:   vars.$font-family-section-heading; // Bitter
+  font-size:     0.95rem;
+  font-weight:   600;
+  width:         100%;
+  margin-bottom: 1rem;
+  padding:       0.75rem 1.5rem;
+  cursor:        pointer;
+  transition:    all 0.3s ease;
+  color:         vars.$neutral-cream;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 8px;
+  background:    vars.$canvas-control-accent;
+  box-shadow:    0 4px 15px rgba(vars.$canvas-control-accent, 0.4);
+}
+
+.chooseBackgroundButton:hover {
+  transform:  translateY(-2px);
+  background: color.adjust(vars.$canvas-control-accent, $lightness: -10%);
+  box-shadow: 0 6px 20px rgba(vars.$canvas-control-accent, 0.6);
+}
+
+.chooseBackgroundButton:active {
+  transform: translateY(0);
+}
+
+/* Button row styling */
+.buttonRow {
+  display: flex;
+  margin:  0.5rem 0;
+  gap:     0.5rem;
+}
+
+.buttonRow button {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-size:        0.9rem;
+  flex:             1;
+  padding:          0.5rem 0.75rem;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            vars.$canvas-control-text;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    4px;
+  background-color: vars.$canvas-control-input-bg;
+}
+
+.buttonRow button:hover {
+  transform:        translateY(-1px);
+  background-color: vars.$canvas-control-hover;
+  border-color:     vars.$canvas-control-accent;
+}
+
+.cityDropdown {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  width:            100%;
+  padding:          0.5rem;
+  color:            vars.$canvas-control-text;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    4px;
+  background-color: vars.$canvas-control-bg;
+}
+
+.toggleSearchButton {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  width:            100%;
+  padding:          0.5rem;
+  cursor:           pointer;
+  text-align:       center;
+  color:            vars.$canvas-control-text;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    4px;
+  background-color: vars.$canvas-control-input-bg;
+  transition:       all 0.2s ease;
+
+  &:hover {
+    background-color: vars.$canvas-control-hover;
+    border-color:     vars.$canvas-control-accent;
+  }
+}
+
+/* ========== NEW CONTROL BUTTONS ========== */
+
+.freeSearchSection {
+  margin-top:  1rem;
+  padding-top: 1rem;
+  border-top:  1px solid vars.$canvas-control-border;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.searchOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.checkboxLabel {
+  font-family: vars.$font-family-section-heading; // Bitter
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: vars.$canvas-control-text;
+  cursor: pointer;
+  user-select: none;
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: vars.$canvas-control-accent;
+  }
+}
+
+.searchInput {
+  font-family: vars.$font-family-section-heading; // Bitter
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  color: vars.$canvas-control-text;
+  background-color: vars.$canvas-control-bg;
+  border: 1px solid vars.$canvas-control-border;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: vars.$canvas-control-overlay;
+  }
+
+  &:focus {
+    border-color: vars.$canvas-control-accent;
+  }
+}
+
+.searchButtonLarge {
+  padding: 0.625rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: vars.$neutral-white;
+  background-color: vars.$primary-cognac;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust(vars.$primary-cognac, $lightness: -10%);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.searchInfo {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size: 0.85rem;
+  color: vars.$canvas-control-overlay;
+  margin: 0;
+  padding: 0.25rem 0;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Timer indicator and reset button container */
+.resetButtonContainer {
+  position:    relative;
+  display:     flex;
+  align-items: center;
+  flex:        1;
+}
+
+.timerIndicator {
+  font-size: 1rem;
+  position:  absolute;
+  z-index:   10;
+  top:       50%;
+  right:     -25px;
+  transform: translateY(-50%);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity:   0.6;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity:   1;
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    opacity:   0.6;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.labelWrapper {
+  display:       block;
+  margin-bottom: 0.5rem;
+
+  // Inline flex variant for horizontal control groups
+  &.inline {
+    flex:         1;
+    margin-right: 0.75rem;
+    margin-bottom: 0;
+  }
+}
+
+.cameraButtons {
+  display:       flex;
+  overflow:      hidden;
+  align-self:    flex-start;
+  border:        1px solid vars.$canvas-control-border;
+  border-radius: 5px;
+}
+
+.cameraButtons button {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-size:        0.9rem;
+  padding:          0.5rem 0.75rem;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            vars.$canvas-control-text;
+  border:           none;
+  background-color: vars.$canvas-control-input-bg;
+}
+
+.cameraButtons button:not(:last-child) {
+  border-right: 1px solid vars.$canvas-control-border;
+}
+
+.cameraButtons button:hover {
+  background-color: vars.$canvas-control-hover;
+}
+
+.cameraButtons button.active {
+  color:            vars.$neutral-cream;
+  background-color: vars.$feedback-success;
+}
+
+.labelWrapper .labelText {
+  font-weight:   500;
+  display:       block;
+  margin-bottom: 0.125rem;
+}
+
+.labelWrapper .hintText {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   0.7rem;
+  line-height: 1.3;
+  display:     block;
+  color:       vars.$canvas-control-overlay;
+}
+
+/* 3D Transformation Controls */
+.transform3DControls {
+  margin:           0.5rem 0;
+  padding:          0.75rem;
+  border:           1px solid rgba(139, 69, 19, 0.3);
+  border-radius:    4px;
+  background-color: rgba(139, 69, 19, 0.1);
+}
+
+.global3DSettings {
+  margin:           0.5rem 0;
+  padding:          0.75rem;
+  border:           1px solid rgba(75, 0, 130, 0.3);
+  border-radius:    4px;
+  background-color: rgba(75, 0, 130, 0.1);
+}
+
+.transform3DControls h4,
+.global3DSettings h4 {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size: 0.875rem;
+  margin:    0 0 0.5rem 0;
+  color:     vars.$canvas-control-text;
+}
+
+.infoBox {
+  margin-bottom:    0.75rem;
+  padding:          0.5rem;
+  border:           1px solid rgba(59, 130, 246, 0.3);
+  border-radius:    4px;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.infoBox .infoText {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   0.75rem;
+  line-height: 1.4;
+  margin:      0;
+  color:       vars.$canvas-control-text;
+}
+
+@include respond-to("mobile") {
+  .controlsWrapper {
+    padding: 0.5rem;
+    gap:     0.5rem;
+  }
+
+  .controlRow {
+    margin-bottom: 0.5rem;
+    gap:           0.25rem;
+  }
+}
+
+// Color Picker Styles
+.colorPickerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.colorInput {
+    width: 100%;
+    height: 2.25rem;
+    padding: 0.125rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    
+    &::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+    
+    &::-webkit-color-swatch {
+        border: none;
+        border-radius: 2px;
+    }
+}
+
+.recentColors {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.125rem;
+}
+
+.recentColorSwatch {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.1s ease, border-color 0.1s ease;
+
+    &:hover {
+        transform: scale(1.1);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+.panelHeader {
+  position:         sticky;
+  z-index:          1;
+  top:              0;
+  display:          flex;
+  align-items:      center;
+  justify-content:  space-between;
+  padding:          0.5rem 1rem;
+  border-bottom:    1px solid vars.$canvas-control-border;
+  background-color: vars.$canvas-control-overlay-shinethrough;
+  transition:       all 0.3s ease;
+}
+
+.panelHeader h2, .panelHeader h3 {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   vars.$font-size-m;
+  font-weight: vars.$font-weight-bold;
+  margin:      0;
+  color:       vars.$canvas-control-text;
+}
+
+.closeButton {
+  font-size:   1.25rem;
+  line-height: 1;
+  padding:     0.0625rem;
+  cursor:      pointer;
+  color:       vars.$canvas-control-text;
+  border:      none;
+  background:  none;
+  transition:  color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: vars.$canvas-control-accent;
+}
+

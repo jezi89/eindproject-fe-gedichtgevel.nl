@@ -92,7 +92,7 @@ export const TextBackground = ({
         }
     }, [width, height, padding, cornerRadius]);
 
-    if (!textureUrl) return null;
+    if (!textureUrl || width <= 0 || height <= 0) return null;
 
     return (
         <pixiContainer>

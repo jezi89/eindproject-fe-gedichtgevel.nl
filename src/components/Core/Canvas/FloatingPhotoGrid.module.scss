@@ -1,0 +1,306 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+/* ========== FLOATING PHOTO GRID STYLES ========== */
+
+.photoGridOverlay {
+  position:         fixed;
+  z-index:          1000;
+  top:              80px; /* Start below navbar (80px desktop) */
+  right:            0;
+  bottom:           0;
+  left:             0;
+  display:          flex;
+  align-items:      flex-start; /* CHANGED: Start from top */
+  justify-content:  flex-start; /* CHANGED: Start from left */
+  padding:          1.25rem; /* Add padding for better positioning */
+  transition:       opacity 0.3s ease;
+  opacity:          0;
+  background-color: transparent; /* CHANGED: Remove dimming, let layout filter handle it */
+}
+
+.photoGridOverlay.fadeIn {
+  opacity: 1;
+}
+
+.photoGridOverlay.fadeOut {
+  opacity: 0;
+}
+
+.floatingPhotoGrid {
+  display:          flex;
+  flex-direction:   column;
+  width:            600px;
+  max-width:        90vw;
+  max-height:       80vh;
+  padding:          1.5rem;
+  transition:       all 0.3s ease;
+  transform:        scale(0.9) translateY(20px);
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    12px;
+  background-color: rgba(vars.$neutral-cream, 0.98); /* Cream with slight transparency */
+  box-shadow:       0 20px 50px rgba(0, 0, 0, 0.3);
+  backdrop-filter:  blur(10px);
+}
+
+.floatingPhotoGrid.slideIn {
+  transform: scale(1) translateY(0);
+}
+
+.floatingPhotoGrid.slideOut {
+  transform: scale(0.9) translateY(20px);
+}
+
+.floatingGridHeader {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   1rem;
+  padding-bottom:  0.5rem;
+  border-bottom:   1px solid vars.$canvas-control-border;
+}
+
+.floatingGridHeader h3 {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   1.1rem;
+  font-weight: 600;
+  margin:      0;
+  color:       vars.$canvas-control-text;
+}
+
+.headerButtons {
+  display:     flex;
+  align-items: center;
+  gap:         0.5rem;
+}
+
+.resetPhotoButton {
+  font-size:       1.2rem;
+  line-height:     1;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           28px;
+  height:          28px;
+  padding:         0.25rem;
+  cursor:          pointer;
+  transition:      all 0.2s ease;
+  color:           vars.$canvas-control-accent;
+  border:          1px solid vars.$canvas-control-border;
+  border-radius:   4px;
+  background:      vars.$canvas-control-input-bg;
+}
+
+.resetPhotoButton:hover {
+  transform:    rotate(180deg);
+  border-color: vars.$canvas-control-accent;
+  background:   vars.$canvas-control-hover;
+}
+
+.floatingPhotoGridContent {
+  display:               grid;
+  overflow-y:            auto;
+  flex:                  1;
+  max-height:            400px;
+  margin-bottom:         1rem;
+  padding:               0.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap:                   0.75rem;
+  /* For scrollbar space and preventing overflow on photo hover */
+}
+
+.floatingPhotoThumbnail {
+  position:      relative;
+  overflow:      hidden;
+  cursor:        pointer;
+  transition:    all 0.2s ease;
+  border:        2px solid transparent;
+  border-radius: 6px;
+  aspect-ratio:  16 / 9;
+}
+
+.floatingPhotoThumbnail:hover {
+  transform:    scale(1.05);
+  border-color: vars.$canvas-control-accent;
+}
+
+.floatingPhotoThumbnail img {
+  display:    block;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.printQualityBadge {
+  font-size:  1.2rem;
+  filter:     drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.lowQualityBadge {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-size:        0.7rem;
+  font-weight:      bold;
+  padding:          0.125rem 0.25rem;
+  color:            vars.$neutral-cream;
+  border:           1px solid rgba(255, 255, 255, 0.5);
+  border-radius:    4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter:  blur(2px);
+}
+
+.badgeContainer {
+  position:       absolute;
+  top:            4px;
+  right:          4px;
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            0.25rem;
+  pointer-events: none;
+}
+
+.thumbnailLoader {
+  position:        absolute;
+  z-index:         1;
+  top:             0;
+  right:           0;
+  bottom:          0;
+  left:            0;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+  width:             20px;
+  height:            20px;
+  animation:         spin 1s linear infinite;
+  border:            2px solid rgba(vars.$canvas-control-accent, 0.3);
+  border-top-color:  vars.$canvas-control-accent;
+  border-radius:     50%;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.thumbnailMetadata {
+  position:        absolute;
+  bottom:          0;
+  left:            0;
+  right:           0;
+  background:      rgba(vars.$neutral-black, 0.85);
+  color:           vars.$neutral-white;
+  padding:         0.375rem 0.5rem;
+  font-size:       0.7rem;
+  font-family:     monospace;
+  line-height:     1.4;
+  opacity:         0;
+  transition:      opacity 0.2s ease;
+  pointer-events:  none;
+  display:         flex;
+  flex-direction:  column;
+  gap:             0.125rem;
+}
+
+.floatingPhotoThumbnail:hover .thumbnailMetadata {
+  opacity: 1;
+}
+
+.metadataDimensions {
+  font-weight: 600;
+  font-size:   0.75rem;
+  color:       vars.$feedback-success; // Green
+}
+
+.metadataRow {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  gap:             0.5rem;
+}
+
+.metadataAspect {
+  color:       vars.$feedback-warning; // Amber
+  font-weight: 500;
+  font-size:   0.7rem;
+}
+
+.metadataSource {
+  color:     vars.$feedback-info; // Blue
+  font-size: 0.65rem;
+}
+
+.metadataOrientation {
+  color:      vars.$accent-lilac; // Purple
+  font-size:  0.65rem;
+  font-style: italic;
+}
+
+.metadataCrop {
+  color:      vars.$accent-gold;
+  font-size:  0.65rem;
+}
+
+.floatingPaginationControls {
+  display:         flex;
+  justify-content: space-between;
+  margin-top:      auto;
+  padding-top:     1rem;
+  border-top:      1px solid vars.$canvas-control-border;
+  gap:             1rem;
+}
+
+.paginationButton {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-weight:      500;
+  flex:             1;
+  padding:          0.75rem 1rem;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            vars.$neutral-cream;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    6px;
+  background-color: vars.$canvas-control-accent;
+}
+
+.paginationButton:hover:not(:disabled) {
+  transform:        translateY(-1px);
+  background-color: color.adjust(vars.$canvas-control-accent, $lightness: -10%);
+}
+
+.paginationButton:disabled {
+  cursor:           not-allowed;
+  transform:        none;
+  opacity:          0.5;
+  color:            vars.$canvas-control-overlay;
+  background-color: vars.$canvas-control-input-bg;
+}
+
+.loadingMessage,
+.noResultsMessage {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-style: italic;
+  text-align: center;
+  color:      vars.$canvas-control-overlay;
+}
+
+@include respond-to("tablet") {
+  .floatingPhotoGrid {
+    width:     90vw;
+    max-width: none;
+  }
+}
+
+@include respond-to("mobile") {
+  .photoGridOverlay {
+    top: 60px; /* Mobile navbar height */
+  }
+
+  .floatingPhotoGridContent {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap:                   0.5rem;
+  }
+}

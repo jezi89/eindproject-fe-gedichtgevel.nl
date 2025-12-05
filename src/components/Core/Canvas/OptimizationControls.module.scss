@@ -1,0 +1,97 @@
+@use "@styles/variables" as vars;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+/* Optimization Toggle Styling */
+.optimizationContainer {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.optimizationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.optimizationCheckbox {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: vars.$accent-gold;
+}
+
+.optimizationTitle {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1rem;
+  color: vars.$primary-cognac; /* Using primary color for prominence */
+  line-height: 1.2;
+}
+
+.optimizationDescription {
+  font-size: 0.85em;
+  font-weight: normal;
+  opacity: 0.8;
+  margin-left: 36px; /* Indent to align with text above */
+  color: vars.$neutral-dark;
+}
+
+.optimizationButtons {
+  display: flex;
+  width:   100%;
+  gap:     0.5rem;
+}
+
+.optimizationButtons button {
+  font-family:      vars.$font-family-section-heading; // Bitter
+  font-size:        0.9rem;
+  flex:             1;
+  padding:          0.5rem 0.75rem;
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+  color:            vars.$canvas-control-text;
+  border:           1px solid vars.$canvas-control-border;
+  border-radius:    4px;
+  background-color: vars.$canvas-control-input-bg;
+}
+
+.optimizationButtons button:hover {
+  background-color: vars.$canvas-control-hover;
+  border-color:     vars.$canvas-control-accent;
+}
+
+.optimizationButtons button.active {
+  color:            vars.$neutral-cream;
+  background-color: vars.$feedback-success;
+  border-color:     vars.$feedback-success;
+}
+
+/* Optimization section styles */
+.optimizationInfo {
+  margin-top:       8px;
+  padding:          0.5rem;
+  border:           1px solid rgba(0, 128, 0, 0.3);
+  border-radius:    4px;
+  background-color: rgba(0, 128, 0, 0.1);
+}
+
+.optimizationHint {
+  margin-top:       8px;
+  padding:          0.5rem;
+  border:           1px solid rgba(59, 130, 246, 0.3);
+  border-radius:    4px;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.optimizationInfo .infoText,
+.optimizationHint .hintText {
+  font-family: vars.$font-family-section-heading; // Bitter
+  font-size:   0.75rem;
+  line-height: 1.4;
+  margin:      0;
+  color:       vars.$canvas-control-text;
+}

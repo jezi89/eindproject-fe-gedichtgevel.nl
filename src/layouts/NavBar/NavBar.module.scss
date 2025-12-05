@@ -167,17 +167,20 @@
     -webkit-text-stroke: 1px rgba(100, 100, 100, 0.8);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); // Subtle depth
 
-    &:hover {
+    &:hover,
+    &[data-active="true"] {
       color:            $navbar-text-active;
-      filter:           brightness(1.1); // Lighten on hover
+      filter:           brightness(1.2); // Lighten on hover
       transform:        translateY(-1px);
 
     }
   }
 
-  a.active {
+  a.active,
+  .dropdownToggle[data-active="true"] {
     font-weight: $font-weight-bold;
     color:       $accent-gold;
+    filter:           brightness(1.1);
     // Raised effect with multiple shadows for depth
     text-shadow:
       2px 2px 4px rgba(0, 0, 0, 0.9),
@@ -376,9 +379,19 @@
       text-shadow: none;
       font-weight: normal;
 
-      &:hover {
+      &:hover,
+      &[data-active="true"] {
         color:            $navbar-text-active;
         background-color: color.change($navbar-text-active, $alpha: 0.1);
+      }
+
+      &[data-active="true"] {
+        color: $accent-gold;
+        // Apply the same text shadow as the main active buttons
+        text-shadow:
+          2px 2px 4px rgba(0, 0, 0, 0.9),
+          0 0 8px rgba(230, 177, 122, 0.6),
+          0 0 15px rgba(230, 177, 122, 0.4);
       }
     }
   }

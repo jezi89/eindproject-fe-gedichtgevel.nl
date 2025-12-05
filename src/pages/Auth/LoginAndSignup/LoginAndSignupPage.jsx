@@ -12,6 +12,7 @@ import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
 import { useLocation } from "react-router";
 import {LoginForm} from "@/components/forms/LoginForm.jsx";
 import {SignupForm} from "@/components/forms/SignupForm.jsx";
+import { useToast } from "@/context/ui/ToastContext";
 // import LoginForm from "@/components/forms/LoginForm.jsx";
 // import SignupForm from "@/components/forms/SignupForm.jsx";
 // import {ActionButton} from "@/components/ui/button/ActionButton.jsx";
@@ -23,34 +24,54 @@ import {SignupForm} from "@/components/forms/SignupForm.jsx";
  * @returns {JSX.Element} Login and register page component
  */
 export function LoginAndSignupPage() {
-    const location = useLocation();
-    const [showLogin, setShowLogin] = useState(true);
+  const location = useLocation();
+  const [showLogin, setShowLogin] = useState(true);
+  const { addToast } = useToast();
 
-    // Check if we're coming from Signup with email
-    useEffect(() => {
-        if (location.pathname === '/login' && location.state?.email) {
-            setShowLogin(true);
-        }
-    }, [location]);
+  // Check if we're coming from Signup with email
+  useEffect(() => {
+    if (location.pathname === "/login" && location.state?.email) {
+      setShowLogin(true);
+    }
 
-    return (
-        <>
-            <h1>Log Hier in of Registreer</h1>
-            <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', margin: '1rem 0'}}>
-                <ActionButton onClick={() => setShowLogin(true)}>Inloggen</ActionButton>
-                <ActionButton onClick={() => setShowLogin(false)}>Registreren</ActionButton>
-            </div>
+    // Handle URL parameters for confirmation and errors
+    const params = new URLSearchParams(location.search);
 
-            {showLogin ? (
-                <LoginForm/>
-            ) : (
-                <SignupForm/>
-            )}
-            <p style={{textAlign: 'center', marginTop: '1rem'}}>
-                {showLogin ? 'Nog geen account? Klik op Registreren hierboven' : 'Al een account? Klik op Inloggen hierboven'}
-            </p>
-        </>
-    )
+    if (params.get("confirmed") === "true") {
+      addToast("Email succesvol bevestigd! Je kunt nu inloggen.", "success");
+      setShowLogin(true);
+    }
+
+    if (params.get("error")) {
+      addToast(decodeURIComponent(params.get("error")), "error");
+    }
+  }, [location, addToast]);
+
+  return (
+    <>
+      <h1>Log In of Registreer</h1>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          justifyContent: "center",
+          margin: "1rem 0",
+        }}
+      >
+        <ActionButton onClick={() => setShowLogin(true)}>Inloggen</ActionButton>
+        <ActionButton onClick={() => setShowLogin(false)}>
+          Registreren
+        </ActionButton>
+      </div>
+
+      {showLogin ? <LoginForm /> : <SignupForm />}
+      <p style={{ textAlign: "center", marginTop: "1rem" }}>
+        {showLogin
+          ? "Nog geen account? Klik op Registreren hierboven"
+          : "Al een account? Klik op Inloggen hierboven"}
+      </p>
+    </>
+  );
 }
 
 // State

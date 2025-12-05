@@ -394,7 +394,7 @@ export const clearCarouselCache = () => {
 };
 
 /**
- * Get carousel cache stats voor debugging
+ * Get carousel cache stats for debugging
  */
 /**
  * Responsive utility to detect when layout adjustments are needed

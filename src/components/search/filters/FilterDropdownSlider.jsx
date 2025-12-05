@@ -34,11 +34,11 @@ export function FilterDropdownSlider({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const isActive = value < 250;
+    const isActive = value < 251;
 
     const handleMaxClick = (e) => {
         e.stopPropagation();
-        onChange(250);
+        onChange(251);
     };
 
     return (

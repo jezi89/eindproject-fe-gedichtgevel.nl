@@ -24,12 +24,16 @@ export function FilterSlider({
 }) {
     const [isDragging, setIsDragging] = useState(false);
 
+    const unlimitedValue = max + 1;
+
     const handleChange = (e) => {
         onChange(parseInt(e.target.value, 10));
     };
 
     const getHintMessage = () => {
-        if (value > 60) {
+
+        
+        if (value > 60 || value >= unlimitedValue) {
             return {
                 text: 'Let op: Gedichten langer dan 60 regels zijn vaak moeilijk leesbaar, zelfs met een klein lettertype.',
                 type: 'warning'
@@ -53,7 +57,9 @@ export function FilterSlider({
                 <label className={styles.sliderLabel} htmlFor="length-slider">
                     {label}
                 </label>
-                <span className={styles.sliderValue}>{value} regels</span>
+                <span className={styles.sliderValue}>
+                    {value >= 251 ? 'Onbeperkt' : `${value} regels`}
+                </span>
             </div>
 
             <div className={styles.sliderContainer}>

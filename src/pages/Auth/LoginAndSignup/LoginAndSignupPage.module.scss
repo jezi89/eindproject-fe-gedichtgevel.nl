@@ -1,20 +1,36 @@
 // LoginAndSignupPage Styles
 // =====================================
-// Gebruik de gedeelde styles uit de styles folder:
+// Use shared styles from the styles folder:
 // 
-// 1. Import de benodigde modules:
-//    @import '@/styles/variables';     // Voor kleuren, spacing, breakpoints
-//    @import '@/styles/mixins';        // Voor herbruikbare style patronen
-//    @import '@/styles/typography';    // Voor text styling
-//    @import '@/styles/effects';       // Voor shadows, transitions
+// 1. Import necessary modules:
+//    @import '@/styles/variables';     // For colors, spacing, breakpoints
+//    @import '@/styles/mixins';        // For reusable style patterns
+//    @import '@/styles/typography';    // For text styling
+//    @import '@/styles/effects';       // For shadows, transitions
 //
-// 2. Auth-specifieke styling:
+// 2. Auth-specific styling:
 //    - Centered form layout
 //    - Tab switching (login/signup)
 //    - Form validation feedback
 //    - Social login buttons
 //
-// 3. States en feedback:
+// LoginAndSignupPage Styles
+// =====================================
+// Use shared styles from the styles folder:
+// 
+// 1. Import necessary modules:
+//    @import '@/styles/variables';     // For colors, spacing, breakpoints
+//    @import '@/styles/mixins';        // For reusable style patterns
+//    @import '@/styles/typography';    // For text styling
+//    @import '@/styles/effects';       // For shadows, transitions
+//
+// 2. Auth-specific styling:
+//    - Centered form layout
+//    - Tab switching (login/signup)
+//    - Form validation feedback
+//    - Social login buttons
+//
+// 3. States and feedback:
 //    - Loading states
 //    - Error messages
 //    - Success feedback
@@ -22,36 +38,45 @@
 
 .auth-container {
   // Full page centered container
-  }
+  // TODO: Add styles
+}
 
 .auth-card {
-  // Central card voor forms
-  }
+  // Central card for forms
+  // TODO: Add styles
+}
 
 .auth-tabs {
   // Login/Signup tab switcher
-  }
+  // TODO: Add styles
+}
 
 .tab-button {
   // Individual tab buttons
-  }
+  // TODO: Add styles
+}
 
 .auth-form {
   // Form container
-  }
+  // TODO: Add styles
+}
 
 .form-field {
   // Input field wrapper
-  }
+  // TODO: Add styles
+}
 
 .auth-actions {
-  // Submit en forgot password
-  }
+  // Submit and forgot password
+  // TODO: Add styles
+}
 
 .social-login {
-  // Social media login opties
-  }
+  // Social media login options
+  // TODO: Add styles
+}
 
 .auth-footer {
-  // Extra links en info
-  }
+  // Extra links and info
+  // TODO: Add styles
+}

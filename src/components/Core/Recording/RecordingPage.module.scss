@@ -47,7 +47,7 @@
   font-size:        1.25rem;
   font-weight:      600;
   margin:           0 0.5rem;
-  padding:          5px 42px;
+  padding:          0.3125rem 2.625rem;
   cursor:           pointer;
   transform:        rotate(-0.8deg);
   text-align:       center;
@@ -55,19 +55,19 @@
   color:            $neutral-off-white;
   border:           none;
   background-color: $secondary-dark;
-  box-shadow:       0 2.5px 5px rgb(0 0 0 / 25%);
+  box-shadow:       0 2.5px 5px rgba(vars.$neutral-black, 0.25);
 
   &.active {
 	color:       $accent-gold;
-	text-shadow: 0 1.25px 3.62px rgb(0 0 0 / 25%);
+	text-shadow: 0 1.25px 3.62px rgba(vars.$neutral-black, 0.25);
 	}
   }
 
 .AltSearchBar {
   display:     flex;
   align-items: center;
-  width:       100%; // Zorg dat de AltSearchBar de volle breedte van de container pakt
-  gap:         15px;
+  width:       100%; // Ensure the AltSearchBar takes the full width of the container
+  gap:         0.9375rem;
   }
 
 .AltSearchBar-collections {
@@ -75,13 +75,13 @@
   align-items:      center;
   max-width:        7rem;
   height:           3rem;
-  padding:          8px 6px;
+  padding:          0.5rem 0.375rem;
   cursor:           pointer;
   text-align:       center;
   color:            vars.$accent-gold;
 
   //  white-space: nowrap;
-  border:           0.5px solid #4d5061;
+  border:           0.5px solid vars.$neutral-dark;
   border-radius:    8px;
   background-color: vars.$neutral-cream;
   }
@@ -92,14 +92,14 @@
   width:         1rem;
   height:        1rem;
   cursor:        pointer;
-  border:        2px solid var(--Core-neutral-dark, #4D5061);
+  border:        2px solid vars.$neutral-dark;
   border-radius: 4px;
   aspect-ratio:  1/1;
 
   }
 
 input[type="checkbox"]:checked + .CustomCheckbox {
-  background: var(--Core-neutral-dark, #d09a47);
+  background: vars.$accent-gold;
   }
 
 .AltSearchBar-separator {
@@ -108,18 +108,18 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   align-items:   center;
   width:         100%;
   padding-right: 10px;
-  border:        3px solid $secondary-muted; // Was #0f4648
+  border:        3px solid vars.$secondary-muted;
   background:    vars.$neutral-white;
   }
 
 .AltSearchBar-input {
-  font-size:   18.6px;
+  font-size:   1.1625rem;
   font-weight: 800;
   flex-grow:   1; // Allow input to take up available space
   width:       100%;
   padding:     0.5rem 1rem;
   text-align:  center;
-  color:       $neutral-mid; // Was #5f6477
+  color:       vars.$neutral-mid;
   border:      none;
   outline:     none;
   background:  vars.$neutral-white;
@@ -134,11 +134,11 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   align-items:     center;
   justify-content: center;
   height:          100%;
-  padding:         10px 24px;
+  padding:         0.625rem 1.5rem;
   color:           $neutral-off-white;
-  border:          1.553px solid var(--Core-neutral-off-white, vars.$neutral-off-white);
-  background:      var(--Components-button-tertiary-background, #156064);
-  box-shadow:      0 0 0.776px 1.035px var(--Core-brand-secondary-muted, #0F4648), 1.035px 1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset, -1.035px -1.035px 0.259px 2.07px var(--Core-brand-secondary-muted, #0F4648) inset;
+  border:          0.097rem solid vars.$neutral-off-white;
+  background:      vars.$secondary-carribean-current;
+  box-shadow:      0 0 0.776px 1.035px vars.$secondary-muted, 1.035px 1.035px 0.259px 2.07px vars.$secondary-muted inset, -1.035px -1.035px 0.259px 2.07px vars.$secondary-muted inset;
   }
 
 .AltSearchBarContainer {
@@ -198,7 +198,7 @@ input[type="checkbox"]:checked + .CustomCheckbox {
   padding:           2rem  2rem 0 2rem;
   border-radius:    0 0 5px 5px; /* Only bottom corners rounded to connect with TopNavContainer */
   background-color: $neutral-cream;
-  box-shadow:       0 4px 15px rgb(0 0 0 / 20%);
+  box-shadow:       0 4px 15px rgba(vars.$neutral-black, 0.2);
   min-height:       0; /* Fix for nested flex scrolling */
 
   @media screen and (max-width: 900px) {
@@ -257,28 +257,28 @@ align-items:     center;
 
 .MuteButton {
   cursor:           pointer;
-  border:           2px solid #4D5061;
-  background-color: #6c7293;;
+  border:           2px solid vars.$neutral-dark;
+  background-color: vars.$neutral-mid-dark;
   }
 
 .MuteButton:hover {
   transform:        translateY(-1px);
-  background-color: #7a83aa;
-  box-shadow:       0 4px 8px rgb(0 0 0 / 15%);
+  background-color: color.adjust(vars.$neutral-mid-dark, $lightness: 10%);
+  box-shadow:       0 4px 8px rgba(vars.$neutral-black, 0.15);
   }
 
 .MuteButton:active {
   transform:  translateY(0);
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 4px rgba(vars.$neutral-black, 0.1);
   }
 
 /* Active/Muted state styling */
 .MuteButton.muted {
-  background-color: #e74c3c;
+  background-color: vars.$feedback-error;
   }
 
 .MuteButton.muted:hover {
-  background-color: #ec7063;
+  background-color: color.adjust(vars.$feedback-error, $lightness: 10%);
   }
 
 @keyframes pulse {
@@ -329,7 +329,7 @@ align-items:     center;
 
 .PoemPanel_title {
   font-family: $font-family-title;
-  font-size:   30px;
+  font-size:   1.875rem;
   font-weight: 700;
   margin:      0;
   color:       $text-inverse;
@@ -356,7 +356,7 @@ align-items:     center;
   transition:       all 0.2s ease;
   border:           4px solid vars.$neutral-black;
   border-radius:    50%;
-  background-color: #c24818;
+  background-color: vars.$primary-light;
   flex-shrink:      0; /* Prevent button from being squashed */
   }
 
@@ -370,11 +370,29 @@ align-items:     center;
 .micPlaceholder {
   color: $search-placeholder;
   font-style: italic;
+  font-size: $font-size-l;
+  padding-top: $spacing-s;
+
+  .micPlaceholderClick {
+    color: #d09a47;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-weight: bold;
+
+    &:hover {
+      transform: scale(1.05);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      color: color.adjust(#d09a47, $lightness: 5%);
+    }
+  }
 }
 
 .errorMessage {
   color: $feedback-error;
-  font-size: $font-size-xs;
+  font-size: $font-size-m;
+  font-weight: 700;
   margin-top: $spacing-xs;
   text-align: left; // Align with the label
   width: 100%;
@@ -388,7 +406,7 @@ align-items:     center;
 .micSelectWrapper {
   display:        flex;
   flex-direction: column;
-  gap:            5px;
+  gap:            0.3125rem;
   margin-bottom: 1rem; // Add some space below
   cursor:         pointer;
   position: relative;
@@ -398,10 +416,10 @@ align-items:     center;
 .micSelect {
   align-self:    flex-start;
   padding:       0.5rem;
-  color:         #333;
+  color:         vars.$neutral-darker;
   border:        1px solid vars.$border-subtle;
   border-radius: 4px;
-  font-size: 80%;
+  font-size: 0.8rem;
   background:    vars.$neutral-white;
 
   }
@@ -431,12 +449,12 @@ align-items:     center;
 @keyframes countdown-pulse {
   0%, 100% {
 	border-color: vars.$accent-gold;
-	box-shadow:   0 0 0 0 rgb(208 154 71 / 40%);
+	box-shadow:   0 0 0 0 rgba(vars.$accent-gold, 0.4);
 	}
 
   50% {
-	border-color: #c24919;
-	box-shadow:   0 0 0 8px rgb(208 154 71 / 0%);
+	border-color: vars.$primary-light;
+	box-shadow:   0 0 0 8px rgba(vars.$accent-gold, 0);
 	}
   }
 
@@ -459,7 +477,7 @@ align-items:     center;
 .waveformWrapper {
   position:      relative; /* For absolute timeline positioning */
   width:         90%; /* Added width */
-  border:        2px solid #333;
+  border:        2px solid vars.$neutral-darker;
   border-radius: 8px;
   background:    transparent; /* Changed from #000 */
   }
@@ -491,11 +509,11 @@ align-items:     center;
 
   time {
 	font-size:      0.75rem;
-	padding:        2px 4px;
+	padding:        0.125rem 0.25rem;
 	pointer-events: none;
-	color:          #333;
+	color:          vars.$neutral-darker;
 	border-radius:  2px;
-	background:     rgb(255 255 255 / 80%);
+	background:     rgba(vars.$neutral-white, 0.8);
 	}
   }
 
@@ -519,7 +537,7 @@ align-items:     center;
   display:     flex;
   align-items: center;
   transform:   translateX(-50%);
-  gap:         20px;
+  gap:         1.25rem;
   }
 
 .TimeDisplay {
@@ -554,7 +572,7 @@ align-items:     center;
 
 .SaveButton {
   font-family:      var(--font-main);
-  font-size:        17.5px;
+  font-size:        1.09375rem;
   font-weight:      600;
   padding:          0.75rem 1.5rem;
   cursor:           pointer;
@@ -567,15 +585,15 @@ align-items:     center;
 
 .SaveButton:hover:not(:disabled) {
   transform:        translateY(-1px);
-  background-color: #e6b85c;
-  box-shadow:       0 4px 8px rgb(0 0 0 / 15%);
+  background-color: color.adjust(vars.$accent-gold, $lightness: 10%);
+  box-shadow:       0 4px 8px rgba(vars.$neutral-black, 0.15);
   }
 
 .SaveButton:disabled {
   cursor:           not-allowed;
   opacity:          0.6;
-  border-color:     #666;
-  background-color: #888;
+  border-color:     vars.$neutral-mid-dark;
+  background-color: vars.$neutral-mid;
   }
 
 /*
@@ -609,13 +627,13 @@ align-items:     center;
   padding:         0.3125rem 1.75rem;
   cursor:          pointer;
   transition:      all 0.2s ease;
-  color:           var(--Core-neutral-dark, #4D5061);
-  border-top:      1.138px solid var(--Core-neutral-dark, #4D5061);
-  border-right:    1.138px solid var(--Core-neutral-dark, #4D5061);
+  color:           vars.$neutral-dark;
+  border-top:      1.138px solid vars.$neutral-dark;
+  border-right:    1.138px solid vars.$neutral-dark;
   border-bottom:   none;
-  border-left:     1.138px solid var(--Core-neutral-dark, #4D5061);
+  border-left:     1.138px solid vars.$neutral-dark;
   border-radius:   0.46875rem 0.46875rem 0 0;
-  background:      var(--Core-neutral-cream, #FFF5E1);
+  background:      vars.$neutral-cream;
   gap:             0.3125rem;
   }
 
@@ -637,7 +655,7 @@ align-items:     center;
   align-items: center;
   gap: 0.5rem;
   /* background-color: rgba(255, 255, 255, 0.5); */
-  padding: 2px 0;
+  padding: 0.125rem 0;
   border-radius: 4px;
 }
 
@@ -645,7 +663,7 @@ align-items:     center;
   font-family: var(--font-main);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--Core-neutral-dark, #4D5061);
+  color: vars.$neutral-dark;
   text-transform: uppercase;
 }
 
@@ -660,14 +678,14 @@ align-items:     center;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--Core-neutral-dark, #4D5061);
+  border: 1px solid vars.$neutral-dark;
   border-right: none; /* Remove right border for middle buttons */
-  background-color: var(--Core-neutral-cream, #FFF5E1);
+  background-color: vars.$neutral-cream;
   cursor: pointer;
   font-family: var(--font-main);
   font-size: 0.75rem;
   font-weight: bold;
-  color: var(--Core-neutral-dark, #4D5061);
+  color: vars.$neutral-dark;
   transition: all 0.2s ease;
   padding: 0;
   
@@ -677,23 +695,23 @@ align-items:     center;
   
   &:last-child {
     border-radius: 0 4px 4px 0;
-    border-right: 1px solid var(--Core-neutral-dark, #4D5061); /* Restore right border for last one */
+    border-right: 1px solid vars.$neutral-dark; /* Restore right border for last one */
   }
   
   &:hover {
-    background-color: #f0e6d2;
+    background-color: color.adjust(vars.$neutral-cream, $lightness: -5%);
   }
   
   &.active {
-    background-color: var(--Core-neutral-dark, #4D5061);
-    color: var(--Core-neutral-cream, #FFF5E1);
+    background-color: vars.$neutral-dark;
+    color: vars.$neutral-cream;
   }
 }
 
 .BrowseButton:hover,
 .ListenButton:hover {
   transform:  translateY(-2px);
-  background: #f0e6d2;
+  background: color.adjust(vars.$neutral-cream, $lightness: -5%);
   }
 
 .ButtonIcon {
@@ -724,7 +742,7 @@ align-items:     center;
   padding:          0.75rem 1rem;
   cursor:           pointer;
   color:            var(--text-color);
-  border:           1px solid #333;
+  border:           1px solid vars.$neutral-darker;
   border-radius:    4px;
   background-color: var(--background-color);
   }
@@ -759,21 +777,21 @@ align-items:     center;
   height:           40px;
   cursor:           pointer;
   transition:       all 0.2s ease;
-  color:            var(--Core-neutral-dark, #4D5061);
-  border:           1px solid var(--Core-neutral-dark, #4D5061);
+  color:            vars.$neutral-dark;
+  border:           1px solid vars.$neutral-dark;
   border-radius:    6px;
-  background-color: var(--Core-neutral-cream, #FFF5E1);
+  background-color: vars.$neutral-cream;
   }
 
 .ZoomButton:hover {
   transform:        translateY(-1px);
-  background-color: #f0e6d2;
-  box-shadow:       0 2px 4px rgb(0 0 0 / 10%);
+  background-color: color.adjust(vars.$neutral-cream, $lightness: -5%);
+  box-shadow:       0 2px 4px rgba(vars.$neutral-black, 0.1);
   }
 
 .ZoomButton:active {
   transform:  translateY(0);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+  box-shadow: 0 1px 2px rgba(vars.$neutral-black, 0.1);
   }
 
 .SearchResultsOverlay {
@@ -795,12 +813,12 @@ align-items:     center;
         align-items: center;
         margin-bottom: 1rem;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid vars.$neutral-light;
 
         h3 {
             margin: 0;
             font-size: 1.2rem;
-            color: #333;
+            color: vars.$neutral-darker;
         }
     }
 
@@ -809,11 +827,11 @@ align-items:     center;
         border: none;
         font-size: 1.5rem;
         cursor: pointer;
-        color: #666;
+        color: vars.$neutral-mid;
         padding: 0.2rem 0.5rem;
         
         &:hover {
-            color: #000;
+            color: vars.$neutral-black;
         }
     }
 }
