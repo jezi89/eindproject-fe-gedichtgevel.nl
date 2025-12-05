@@ -31,16 +31,27 @@
   justify-content: space-between;
   }
 
-.TopNavigation--left {
-  display:     flex;
-  align-items: center;
-  }
-
+.TopNavigation--left,
 .TopNavigation--right {
   display:     flex;
   align-items: center;
-  gap:         3rem;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
   }
+}
+
+.TopNavigation--right {
+  gap: 3rem;
+
+  @media screen and (max-width: 900px) {
+    gap: 0.5rem;
+  }
+}
 
 .TabButton {
   font-family:      $font-family-nav-item;
@@ -610,8 +621,21 @@ align-items:     center;
   display:         flex;
   justify-content: space-evenly;
   gap:             0.5rem;
-  align-items: flex-end;
+  align-items:     flex-end;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
   }
+}
+
+.BrowseButton {
+  @media screen and (max-width: 900px) {
+    display: none !important;
+  }
+}
 
 .BrowseButton,
 .ListenButton {
@@ -642,21 +666,28 @@ align-items:     center;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  /* Ensure the button inside takes full width/height of its original design if needed, 
-     but here we are wrapping the button. 
-     The button has fixed width/height, so we just need to center the speed controls below it. */
+  
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    align-items: center;
+    gap: 1.5rem;
+  }
 }
-
-/* Adjust ListenButton when inside AutoScrollContainer if necessary. 
-   Currently ListenButton has fixed dimensions. */
 
 .SpeedControl {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* background-color: rgba(255, 255, 255, 0.5); */
   padding: 0.125rem 0;
   border-radius: 4px;
+
+  @media screen and (max-width: 900px) {
+    justify-content: center;
+    width: 100%;
+    
+    // Potentially move outside if needed by changing component structure, 
+    // but here we align it center.
+  }
 }
 
 .SpeedLabel {

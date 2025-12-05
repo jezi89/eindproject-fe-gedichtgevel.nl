@@ -749,9 +749,56 @@
   .twoColumns,
   .threeColumns,
   .threeColumnsCarousel {
-	padding: 0 $spacing-s;
-	}
+    width:      100%;
+    max-width:  100%;
+    padding:    0 $spacing-s; // Keep some side padding so cards don't touch edges
+    box-sizing: border-box;
+
+    .resultsList {
+      flex-direction: column;
+      width:          100%;
+      max-width:      100%;
+      margin:         0;
+      gap:            $spacing-l;
+      box-sizing:     border-box;
+    }
+
+    .resultCard {
+      width:          100%; // Full width relative to container (which has padding)
+      max-width:      none;
+      margin-left:    0;
+      margin-right:   0;
+      box-sizing:     border-box;
+    }
   }
+
+  // Specific override for Daily Mode on mobile to prevent overflow
+  .dailyMode {
+    width:      100%;
+    max-width:  100%;
+    overflow-x: hidden; // Prevent horizontal scroll
+    padding:    $spacing-xl 0;
+
+    // Reset any desktop constraints
+    .resultsList {
+      max-width: 100%;
+      padding:   0 $spacing-s; // S is enough if buttons are smaller
+    }
+
+    .addressContainer {
+      white-space: normal;
+      word-wrap:   break-word;
+      hyphens:     auto;
+      width:       100%;
+    }
+
+    // Smaller font for poem content on mobile
+    .poemText {
+      font-size:   0.85rem; // Slightly smaller than standard mobile size
+      line-height: 1.4;
+    }
+  }
+}
 
 .mobileStacked {
   display:        flex;

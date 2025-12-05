@@ -258,26 +258,6 @@ function HomePageContent() {
                                     />
                                 </div>
 
-                                {/* Creative Canvas Filter (disabled mock-up) */}
-                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
-                                    <FilterToggle
-                                        checked={onlyMyDesigns}
-                                        onChange={setOnlyMyDesigns}
-                                        label="Canvas"
-
-
-                                    />
-                                {/* More Filters - future extension */}
-                                </div>
-                                <div className={styles.filterItemMuted} onClick={handleComingSoonClick}>
-                                    <FilterToggle
-                                        checked={onlyMyDesigns}
-                                        onChange={setOnlyMyDesigns}
-                                        label="Meer Filters"
-
-
-                                    />
-                                </div>
                             </div>
                         </div>
                     </div>

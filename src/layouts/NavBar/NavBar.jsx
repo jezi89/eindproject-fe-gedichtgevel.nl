@@ -189,9 +189,8 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
             <AuthButton />
           </div>
 
-          {/* Mobile controls: AuthButton and MenuToggle */}
+          {/* Mobile controls: MenuToggle only (AuthButton moved to menu) */}
           <div className={styles.mobileControls}>
-            <AuthButton />
             <button
               className={`${styles.menuToggle} ${
                 isMenuOpen ? styles.isOpen : ""
@@ -249,6 +248,11 @@ export function NavBar({isOverlayOpen, onOverlayClose}) {
               <Link to="/contact" onClick={toggleMenu}>
                 Over ons
               </Link>
+            </li>
+
+            {/* Mobile Auth Button - Full Width */}
+            <li className={`${styles.navLink} ${styles.mobileAuthItem}`}>
+              <AuthButton fullWidth={true} className={styles.mobileAuthBtn} />
             </li>
           </ul>
         </nav>

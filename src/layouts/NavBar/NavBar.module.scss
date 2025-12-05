@@ -145,7 +145,13 @@
   a,
   .dropdownToggle {
     font-family:     $font-family-nav-item;
-    font-size:       $font-size-xl;
+    // Mobile-first font size
+    font-size:       $font-size-l; 
+
+    @include mixins.media-up($screen-md) {
+      font-size: $font-size-xl;
+    }
+
     font-weight:     700; // Make text pop
     display:         inline-flex;
     align-items:     center;
@@ -296,7 +302,24 @@
     width:     100%;
     padding:   $spacing-m; // Larger padding for mobile
 
-}
+  }
+
+  // Mobile Auth Item Specifics
+  .mobileAuthItem {
+    margin-top: $spacing-l !important; // Add some separation
+    padding: 0 $spacing-m; // Ensure button has horizontal breathing room if needed
+    
+    // Override standard navLink brick texture for the container if necessary, 
+    // but we want the button to look like a button.
+  }
+
+  .mobileAuthBtn {
+    // Make it look big and clickable
+    width: 100%;
+    justify-content: center;
+    font-size: $font-size-l !important; // Override the small font size of .authButton
+    padding: $spacing-m !important;
+  }
 }
 
 // Mobile menu overlay

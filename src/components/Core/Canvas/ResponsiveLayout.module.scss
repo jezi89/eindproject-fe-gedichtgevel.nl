@@ -1,4 +1,5 @@
 @use '@styles/variables' as vars;
+@use '@styles/mixins' as mixins;
 
 .layoutContainer {
   position: relative;  // NEW: for absolute children
@@ -125,4 +126,58 @@
 .openNavButton.swapped {
   right: auto;
   left: 16px;
+}
+
+// Mobile Cycle Button
+.mobileCycleButton {
+  position:         absolute;
+  z-index:          100; // Above everything
+  top:              12px;
+  right:            50%;
+  transform:        translateX(50%); // Center it or put it in a corner?
+  // User: "Op mobiel zouden we eigenlijk één knop moeten hebben"
+  // Let's put it top-center or top-right.
+  // If panel is distinct, it might cover.
+  // Panels are fixed.
+  // If Nav Panel is open (right), and Controls (left).
+  // On Mobile, effectively one is open at a time (per my logic).
+  // Let's float it top-right.
+  right:            16px; 
+  left:             auto;
+  transform:        none;
+  
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  width:            48px;
+  height:           48px;
+  font-size:        1.5rem;
+  
+  color:            vars.$canvas-control-text;
+  background-color: vars.$accent-gold; // Prominent
+  border:           2px solid vars.$neutral-white;
+  border-radius:    50%;
+  box-shadow:       0 4px 12px rgba(0,0,0,0.3);
+  cursor:           pointer;
+  transition:       all 0.2s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Mobile Responsive Overrides
+@include mixins.respond-to("mobile") {
+  .controlsPanel {
+    width: 100%; // Full width on mobile for better usability
+    border-right: none;
+    max-width: none;
+  }
+
+  .navPanel {
+    width: 140px; // Slightly wider than desktop
+    // User requested scrollbar
+    overflow-y: auto; 
+    overflow-x: hidden;
+  }
 }

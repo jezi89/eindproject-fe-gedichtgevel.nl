@@ -280,9 +280,16 @@
 	}
 
   .searchInput {
-	font-size:     $font-size-s;
-	padding:       $spacing-m;
+	font-size:     $font-size-m;
+	padding:       $spacing-xs $spacing-m; // Balanced padding for vertical centering
+	line-height:   1.2; // Tighter line-height for better fit
 	text-align:    center;
+	
+	// Ensure placeholder is centered (browser dependent, but padding helps)
+	&::placeholder {
+	  line-height: normal;
+	}
+	
 	border:        $border-width-thin solid $accent-greyish;
 	border-radius: $border-radius-sm;
 

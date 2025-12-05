@@ -14,6 +14,7 @@ import {useSearchLayout, useSearchOrchestration} from '@/hooks/search';
 import {PoemResultItem} from '@/components/poem';
 import {CarouselArrows} from './CarrouselArrows';
 import {CarouselDots} from './CarrouselDots';
+import { useWindowSize } from "@/hooks/useWindowSize.js";
 
 /**
  * SearchResults component for displaying poem search results
@@ -28,50 +29,58 @@ import {CarouselDots} from './CarrouselDots';
  * @param {string} props.sectionSubtitle - Optional section subtitle
  * @returns {JSX.Element|null} Search results container or null if no results
  */
-export const SearchResults = memo(({
-                                       results,
-                                       searchTerm,
-                                       focusMode = false,
-                                       canvasMode = false,
-                                       layoutMode = 'search',
-                                       cardSize = 'normal',
-                                       showGlobalToggle = true,
-                                       sectionTitle,
-                                       sectionSubtitle,
-                                       onPoemSelect,
-                                       onLoadInCanvas,
-                                       onNavigateToCanvas,
-                                       onNavigateToRecording,
-                                       hideSeriesNavigation = false,
-                                       hideRangeIndicator = false,
-                                       initialIndex = 0,
-                                       ResultsOverviewComponent = ResultsOverview,
-                                       resultsOverviewProps = {},
-                                       isOverlay = false
-                                   }) => {
+export const SearchResults = memo(
+  ({
+    results,
+    searchTerm,
+    focusMode = false,
+    canvasMode = false,
+    layoutMode = "search",
+    cardSize = "normal",
+    showGlobalToggle = true,
+    sectionTitle,
+    sectionSubtitle,
+    onPoemSelect,
+    onLoadInCanvas,
+    onNavigateToCanvas,
+    onNavigateToRecording,
+    hideSeriesNavigation = false,
+    hideRangeIndicator = false,
+    initialIndex = 0,
+    ResultsOverviewComponent = ResultsOverview,
+    resultsOverviewProps = {},
+    isOverlay = false,
+  }) => {
     // Hooks before early return
     // Refs and state for dynamic positioning
     const searchResultsRef = useRef(null);
     const [collapseEventCounter, setCollapseEventCounter] = useState(0);
+
+    // Dynamic mobile detection
+    const { width: windowWidth } = useWindowSize();
+    const isMobile = windowWidth <= 768;
 
     // custom hooks for layout and orchestration
     const layout = useSearchLayout(results || [], initialIndex); // Start with saved index
     const orchestration = useSearchOrchestration(results || [], layout);
 
     // Update layout hook with current index from orchestration
-    const updatedLayout = useSearchLayout(results || [], orchestration.currentIndex);
+    const updatedLayout = useSearchLayout(
+      results || [],
+      orchestration.currentIndex
+    );
 
     // Collapse event handler (currently unused but kept for future use)
     const handleCollapseEvent = useCallback(() => {
-        setCollapseEventCounter(prev => prev + 1);
+      setCollapseEventCounter((prev) => prev + 1);
     }, []);
 
     // Early return for empty results AFTER all hooks
     if (!results || results.length === 0) {
-        return null;
+      return null;
     }
 
-    const isDailyMode = layoutMode === 'daily';
+    const isDailyMode = layoutMode === "daily";
 
     return (
       <div
@@ -172,8 +181,14 @@ export const SearchResults = memo(({
                 return (
                   <motion.div
                     key={safeKey}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{
+                      opacity: 0,
+                      y: 20,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
                     transition={{
                       duration: 0.6,
                       ease: [0.25, 0.46, 0.45, 0.94],
@@ -196,7 +211,7 @@ export const SearchResults = memo(({
                       onNavigateToCanvas={onNavigateToCanvas}
                       onNavigateToRecording={onNavigateToRecording}
                       onCollapseEvent={handleCollapseEvent}
-                      showLabels={!isOverlay}
+                      showLabels={!isOverlay && !isMobile}
                     />
                   </motion.div>
                 );
@@ -206,4 +221,5 @@ export const SearchResults = memo(({
         </div>
       </div>
     );
-});
+  }
+);

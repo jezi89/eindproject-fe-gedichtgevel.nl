@@ -15,7 +15,7 @@ import styles from './DailyPoems.module.scss';
 
 export const DailyPoems = () => {
     const navigate = useNavigate();
-    const { dailyPoems, isLoading } = useDailyPoems();
+    const { dailyPoems, isLoading, refetchDailyPoems } = useDailyPoems();
     const { user } = useAuth();
     const [showShortcutModal, setShowShortcutModal] = useState(false);
 
@@ -62,52 +62,76 @@ export const DailyPoems = () => {
     }
 
     return (
-        <div className={styles.dailyPoemsWrapper}>
-            <SearchResults
-                results={dailyPoems}
-                layoutMode="daily"
-                cardSize="compact"
-                showGlobalToggle={false}
-                sectionTitle="Straatgedichten van de Dag"
-                sectionSubtitle="Ontdek onze dagelijks wisselende curatie van daadwerkelijke Nederlandse straatpoëzie"
-                onNavigateToCanvas={handleNavigateToCanvas}
-                onNavigateToRecording={handleNavigateToRecording}
-                focusMode={false}
-                canvasMode={false}
-            />
+      <div className={styles.dailyPoemsWrapper}>
+        <SearchResults
+          results={dailyPoems}
+          layoutMode="daily"
+          cardSize="compact"
+          showGlobalToggle={false}
+          sectionTitle="Straatgedichten van de Dag"
+          sectionSubtitle="Ontdek onze dagelijks wisselende curatie van daadwerkelijke Nederlandse straatpoëzie"
+          onNavigateToCanvas={handleNavigateToCanvas}
+          onNavigateToRecording={handleNavigateToRecording}
+          focusMode={false}
+          canvasMode={false}
+        />
 
-            {/* Easter egg hint for anonymous users */}
-            {!user && (
-                <p className={styles.easterEggHint}>
-                    <em>Registreer om een verborgen easter egg te ontdekken...</em>
-                </p>
+        {/* Easter egg hint for anonymous users */}
+        {!user && (
+          <p className={styles.easterEggHint}>
+            <em>Registreer om een verborgen easter egg te ontdekken...</em>
+          </p>
+        )}
+
+        {/* Easter egg brick for logged-in users */}
+        {user && (
+          <>
+            <span
+              className={styles.brickEmoji}
+              onClick={() => {
+                if (refetchDailyPoems) refetchDailyPoems();
+                // Also show modal if desktop/keyboard interaction kept?
+                // User request: "directe knop maken om straatgedcichten van dde dag te verversen"
+                // So we refresh. Maybe show a toast/alert?
+                // Keeping it simple for now as requested.
+              }}
+              title="Ververs gedichten (of klik voor sneltoets info)"
+              role="button"
+              tabIndex={0}
+              onLongPress={() => setShowShortcutModal(true)} // Optional enhancement?
+              onContextMenu={(e) => {
+                e.preventDefault();
+                setShowShortcutModal(true);
+              }}
+              onKeyDown={(e) =>
+                e.key === "Enter" && refetchDailyPoems && refetchDailyPoems()
+              }
+            >
+              🧱
+            </span>
+
+            {showShortcutModal && (
+              <div
+                className={styles.modalOverlay}
+                onClick={() => setShowShortcutModal(false)}
+              >
+                <div
+                  className={styles.modal}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h3>🤫 Easter Egg Ontdekt!</h3>
+                  <p>
+                    Druk <kbd>Alt</kbd> + <kbd>G</kbd> om de straatgedichten te
+                    verversen
+                  </p>
+                  <button onClick={() => setShowShortcutModal(false)}>
+                    Sluiten
+                  </button>
+                </div>
+              </div>
             )}
-
-            {/* Easter egg brick for logged-in users */}
-            {user && (
-                <>
-                    <span
-                        className={styles.brickEmoji}
-                        onClick={() => setShowShortcutModal(true)}
-                        title="Klik voor geheim"
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => e.key === 'Enter' && setShowShortcutModal(true)}
-                    >
-                        🧱
-                    </span>
-
-                    {showShortcutModal && (
-                        <div className={styles.modalOverlay} onClick={() => setShowShortcutModal(false)}>
-                            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-                                <h3>🤫 Easter Egg Ontdekt!</h3>
-                                <p>Druk <kbd>Alt</kbd> + <kbd>G</kbd> om de straatgedichten te verversen</p>
-                                <button onClick={() => setShowShortcutModal(false)}>Sluiten</button>
-                            </div>
-                        </div>
-                    )}
-                </>
-            )}
-        </div>
+          </>
+        )}
+      </div>
     );
 };

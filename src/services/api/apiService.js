@@ -19,13 +19,15 @@ const fetchWithAxios = async (apiClient, config) => {
 
 // --- Pexels API Service ---
 export const pexelsApiService = {
-    search: (query, page = 1) => fetchWithAxios(pexelsApi, {
-        url: 'search',
-        params: { query, per_page: 16, orientation: 'landscape', page }
+  search: (query, page = 1, orientation = "landscape") =>
+    fetchWithAxios(pexelsApi, {
+      url: "search",
+      params: { query, per_page: 16, orientation, page },
     }),
-    getCollection: (id, page = 1) => fetchWithAxios(pexelsApi, {
-        url: `collections/${id}`,
-        params: { per_page: 16, page }
+  getCollection: (id, page = 1) =>
+    fetchWithAxios(pexelsApi, {
+      url: `collections/${id}`,
+      params: { per_page: 16, page },
     }),
 };
 
