@@ -7,7 +7,7 @@
  * - Keep global toggle functionality in sync
  */
 
-// TODO Understand util implementation and see if it can be less verbose
+
 
 /**
  * Calculates how many lines are hidden in preview mode

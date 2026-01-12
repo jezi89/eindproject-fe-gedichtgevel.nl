@@ -175,10 +175,21 @@ export default function Controls({
     }, [hasSelection, selectedLines, lineOverrides, fontSize]);
 
     // Determine which font family is displayed
-    const displayedFontFamily =
-        singleSelectedLineIndex !== null
-            ? lineOverrides[singleSelectedLineIndex]?.fontFamily ?? fontFamily
-            : fontFamily;
+    const displayedFontFamily = useMemo(() => {
+      // Fallback for global font to ensure we never have undefined
+      const effectiveGlobalFont = fontFamily || "Lato";
+
+      if (singleSelectedLineIndex !== null) {
+        // Check for specific override
+        const override = lineOverrides[singleSelectedLineIndex]?.fontFamily;
+        // Only use override if it's a valid string
+        if (override) {
+          return override;
+        }
+      }
+
+      return effectiveGlobalFont;
+    }, [singleSelectedLineIndex, lineOverrides, fontFamily]);
 
     const handleColorInput = (color) => {
         if (hasSelection) {

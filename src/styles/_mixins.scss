@@ -378,23 +378,38 @@
 @mixin button-variant($background, $color, $border-color: null) {
   background-color: $background;
   color:            $color;
-  border-color:     if($border-color, $border-color, $background);
+  
+  @if $border-color {
+    border-color: $border-color;
+  } @else {
+    border-color: $background;
+  }
 
   &:hover {
-	background-color: color.adjust($background, $lightness: -10%);
-	border-color:     if($border-color, color.adjust($border-color, $lightness: -10%), color.adjust($background, $lightness: -10%));
-	}
+    background-color: color.adjust($background, $lightness: -10%);
+    
+    @if $border-color {
+      border-color: color.adjust($border-color, $lightness: -10%);
+    } @else {
+      border-color: color.adjust($background, $lightness: -10%);
+    }
+  }
 
   &:active {
-	background-color: color.adjust($background, $lightness: -15%);
-	border-color:     if($border-color, color.adjust($border-color, $lightness: -15%), color.adjust($background, $lightness: -15%));
-	}
+    background-color: color.adjust($background, $lightness: -15%);
+    
+    @if $border-color {
+      border-color: color.adjust($border-color, $lightness: -15%);
+    } @else {
+      border-color: color.adjust($background, $lightness: -15%);
+    }
+  }
 
   &:focus {
-	//outline: 2px solid $focus-ring-color; // Ensure $focus-ring-color is defined and accessible
-	outline-offset: 2px;
-	}
+    //outline: 2px solid $focus-ring-color; // Ensure $focus-ring-color is defined and accessible
+    outline-offset: 2px;
   }
+}
 
 /// Mixin voor een kaart/card component
 /// @param {Color} $bg [vars.$card-background] - Achtergrondkleur

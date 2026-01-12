@@ -10,7 +10,6 @@
 
 .filterDropdown {
     position: relative;
-    width: 100%;
 }
 
 .dropdownButton {
@@ -148,7 +147,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    min-width: 280px;
+    min-width: 240px;
     background-color: rgba(vars.$neutral-darker, 0.98);
     border: 1px solid rgba(vars.$neutral-light, 0.2);
     border-radius: 8px;
@@ -208,7 +207,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0.875rem 1rem;
+    padding: 0.5rem 1rem;
     background: transparent;
     border: none;
     color: var(--text-primary, vars.$neutral-light);
@@ -339,6 +338,11 @@
     line-height: 1;
     vertical-align: middle;
     transition: background 0.2s;
+}
+
+.countBadgeStatic {
+    @extend .countBadge;
+    background-color: vars.$neutral-mid;
 }
 
 @keyframes dropdownSlide {

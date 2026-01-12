@@ -94,6 +94,18 @@ export function useCanvasState() {
     }
   }, [pendingFontFamily, fontStatus]);
 
+  // Ensure current font is loaded (e.g. after refresh)
+  useEffect(() => {
+    if (
+      currentFontFamily &&
+      currentFontFamily !== "Lato" &&
+      fontStatus[currentFontFamily] !== "loaded" &&
+      fontStatus[currentFontFamily] !== "loading"
+    ) {
+      loadFont(currentFontFamily);
+    }
+  }, [currentFontFamily, fontStatus, loadFont]);
+
   // Core Text Styling State - PERSISTENT
   const [fontSize, setFontSize] = usePersistedState(
     PERSISTED_KEYS.FONT_SIZE,

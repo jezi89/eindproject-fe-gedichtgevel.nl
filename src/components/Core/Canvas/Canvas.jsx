@@ -710,7 +710,9 @@ export default function Canvas({
                                            availableFonts={
                                              canvasState.availableFonts
                                            }
-                                           fontFamily={canvasState.fontFamily}
+                                           fontFamily={
+                                             canvasState.fontFamily || "Lato"
+                                           }
                                            onFontFamilyChange={
                                              handlers.handleFontFamilyChange
                                            }

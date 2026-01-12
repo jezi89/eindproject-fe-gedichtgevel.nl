@@ -84,7 +84,7 @@ export function ProtectedRoute({ children, redirectTo = "/login" }) {
  *    </ProtectedRoute>
  */
 
-// TODO Process explanation in accountability document or simplify
+
 
 /**
  * The Navigate component from React Router 6/7 and your custom hook (useNavigationState) have different goals, but work together to provide a good user experience for protected routes.

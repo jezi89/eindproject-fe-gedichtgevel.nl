@@ -1,5 +1,3 @@
-// TODO Werking en gebruik van deze utility functie voor text formatting controleren
-
 /**
  * Text formatting utilities for poem display
  * Extracted from PoemResultItem for reusability
@@ -12,18 +10,18 @@
  * @returns {Object} Object with display text and optional title
  */
 const getTitleWithTooltip = (text, maxLength = 50) => {
-    if (!text) {
-        return {display: '', title: undefined};
-    }
+  if (!text) {
+    return { display: "", title: undefined };
+  }
 
-    if (text.length > maxLength) {
-        return {
-            display: text.substring(0, maxLength) + '...',
-            title: text
-        };
-    }
+  if (text.length > maxLength) {
+    return {
+      display: text.substring(0, maxLength) + "...",
+      title: text,
+    };
+  }
 
-    return {display: text, title: undefined};
+  return { display: text, title: undefined };
 };
 
 /**
@@ -33,7 +31,7 @@ const getTitleWithTooltip = (text, maxLength = 50) => {
  * @returns {Object} Formatted title object
  */
 const formatPoemTitle = (title, maxLength = 60) => {
-    return getTitleWithTooltip(title, maxLength);
+  return getTitleWithTooltip(title, maxLength);
 };
 
 /**
@@ -48,11 +46,13 @@ const formatPoemTitle = (title, maxLength = 60) => {
  * @returns {boolean} Whether poem is valid
  */
 const isValidPoem = (poem) => {
-    return poem &&
-        typeof poem === 'object' &&
-        poem.title &&
-        poem.author &&
-        Array.isArray(poem.lines);
+  return (
+    poem &&
+    typeof poem === "object" &&
+    poem.title &&
+    poem.author &&
+    Array.isArray(poem.lines)
+  );
 };
 
 /**
@@ -62,22 +62,29 @@ const isValidPoem = (poem) => {
  * @returns {Object} Display properties (never null)
  */
 export const getPoemDisplayProps = (poem) => {
-    // Always return an object to prevent conditional hook issues
-    if (!poem || typeof poem !== 'object') {
-        return {
-            title: {display: 'Untitled', title: undefined},
-            author: {display: 'Unknown', displayWithPrefix: 'By Unknown', title: undefined},
-            lineCount: 0,
-            isShort: true,
-            isValid: false
-        };
-    }
-
+  // Always return an object to prevent conditional hook issues
+  if (!poem || typeof poem !== "object") {
     return {
-        title: formatPoemTitle(poem.title || 'Untitled'),
-        author: {display: poem.author || 'Unknown', displayWithPrefix: `By ${poem.author || 'Unknown'}`},
-        lineCount: poem.lines?.length || 0,
-        isShort: !poem.lines || poem.lines.length <= 4,
-        isValid: isValidPoem(poem)
+      title: { display: "Untitled", title: undefined },
+      author: {
+        display: "Unknown",
+        displayWithPrefix: "By Unknown",
+        title: undefined,
+      },
+      lineCount: 0,
+      isShort: true,
+      isValid: false,
     };
+  }
+
+  return {
+    title: formatPoemTitle(poem.title || "Untitled"),
+    author: {
+      display: poem.author || "Unknown",
+      displayWithPrefix: `By ${poem.author || "Unknown"}`,
+    },
+    lineCount: poem.lines?.length || 0,
+    isShort: !poem.lines || poem.lines.length <= 4,
+    isValid: isValidPoem(poem),
+  };
 };

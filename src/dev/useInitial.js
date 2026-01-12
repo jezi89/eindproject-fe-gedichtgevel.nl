@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-//todo, loaidng en error hook breed toepassen
+
 
 export const useInitial = () => {
     const [status, setStatus] = useState({

@@ -7,16 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "styles:migrate-imports": "node migrate-scss.js",
-    "styles:convert:preview": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview",
-    "styles:convert": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/Convert-StylesToDesignSystem.ps1 -Preview:$false -AutoReplace",
-    "styles:report-unused-vars": "find-unused-sass-variables \"src/**/*.scss\" --ignore \"src/styles/_mixins.scss\" \"src/styles/_effects.scss\"",
-    "knip": "knip",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "test:coverage:open": "vitest run --coverage && start coverage/index.html"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@pixi/react": "^8.0.3",
@@ -42,23 +33,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.55.1",
     "@vitejs/plugin-react": "^5.0.4",
-    "@vitest/browser": "^3.2.4",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.36.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.22",
-    "find-unused-sass-variables": "^6.1.0",
     "globals": "^16.4.0",
-    "jsdom": "^27.0.1",
-    "knip": "^5.64.1",
     "postcss": "^8.5.6",
     "postcss-preset-env": "^10.4.0",
-    "sass-embedded": "^1.93.2",
+    "sass": "^1.97.2",
     "vite": "^7.1.7",
-    "vite-plugin-svgr": "^4.5.0",
-    "vitest": "^3.2.4"
+    "vite-plugin-svgr": "^4.5.0"
   }
 }

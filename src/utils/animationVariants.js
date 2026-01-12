@@ -1,5 +1,3 @@
-// TODO check how this is used and if there are no redundancy and css/framer conflicts
-
 /**
  * Animation Variants for PoemResultItem
  * Centralized Framer Motion animation configurations

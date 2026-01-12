@@ -1,6 +1,6 @@
 import styles from './Footer.module.scss';
 
-// TODO Improve Footer
+
 
 export function Footer() {
     return (
@@ -85,7 +85,7 @@ export function Footer() {
 
           <div className={styles.footerBottom}>
             <p className={styles.footerCopyright}>
-              © 2025 Gedichtgevel. Alle rechten voorbehouden.
+              © 2026 Gedichtgevel. Alle rechten voorbehouden.
             </p>
           </div>
         </div>

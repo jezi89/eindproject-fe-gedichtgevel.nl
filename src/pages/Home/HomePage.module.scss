@@ -242,6 +242,8 @@
 
 // Filter Items
 .filterItem {
+  flex: 1;
+  width: 100%;
   position: relative;
   @include flex-center;
   cursor:   pointer;

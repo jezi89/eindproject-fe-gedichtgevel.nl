@@ -1,6 +1,6 @@
 import styles from './SearchProgress.module.scss';
 
-// TODO Check and style SearchLoadingState
+
 
 export function SearchLoadingState() {
     return (

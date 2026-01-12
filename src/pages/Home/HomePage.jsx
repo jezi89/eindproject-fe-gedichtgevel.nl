@@ -162,7 +162,7 @@ function HomePageContent() {
                 stack: error.stack,
                 poemData: poemData,
             });
-            // TODO: Show user-friendly error message (toast/notification)
+
             alert('Er ging iets mis bij het openen van het gedicht in de canvas. Probeer het opnieuw.');
         }
     };

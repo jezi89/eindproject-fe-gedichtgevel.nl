@@ -3,10 +3,10 @@
 import React, {useState} from "react";
 import styles from "../CanvasControls.module.scss";
 import {
-    anwbCities,
-    capitalCities,
-    cityDisplayNames,
-} from "@/data/canvas/searchData.js"; // Updated import path
+  anwbCities,
+  capitalCities,
+  cityDisplayNames,
+} from "@/data/canvas/searchData.js";
 import {useAuthContext} from "@/context/auth/AuthContext.jsx";
 
 export default function BackgroundControls({

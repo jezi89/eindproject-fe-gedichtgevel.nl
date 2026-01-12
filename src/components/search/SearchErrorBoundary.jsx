@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import styles from './SearchProgress.module.scss';
 
-// TODO Check and style error boundary
+
 
 /**
  * Error Boundary specifically for search functionality
@@ -33,8 +33,7 @@ export class SearchErrorBoundary extends Component {
         if (typeof window !== 'undefined' && window.console) {
         }
 
-        // TODO: Send to error tracking service
-        // trackSearchError(error, { componentStack: errorInfo.componentStack });
+
     }
 
     handleRetry = () => {

@@ -101,7 +101,7 @@ async function fetchPoemsFromPoetryDBByAuthorAndTitle(authorTerm, titleTerm, { s
  * @returns {Promise<Array<{title: string, author: string}>>} - Array of title/author combinations.
  */
 async function fetchTitleAuthorMatchesFromSupabase(query, field = 'title') { // eslint-disable-line no-unused-vars
-    // TODO: Implement real Supabase interaction when available
+
     // For now return empty array to avoid unnecessary complexity
     return Promise.resolve([]);
 }

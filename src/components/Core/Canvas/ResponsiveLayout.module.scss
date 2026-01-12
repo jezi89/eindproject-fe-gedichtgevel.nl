@@ -2,14 +2,14 @@
 @use '@styles/mixins' as mixins;
 
 .layoutContainer {
-  position: relative;  // NEW: for absolute children
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
 .controlsPanel {
-  position: fixed;   // NEW: fixed overlay (was flex item)
+  position: fixed;
   top: 0;
   left: 0;
   width: 340px;      // Fixed width (not dynamic)
@@ -25,7 +25,7 @@
 }
 
 .navPanel {
-  position: fixed;   // NEW: fixed overlay (was flex item)
+  position: fixed;
   top: 0;
   right: 0;
   width: 120px;      // Fixed width (not dynamic)
@@ -51,17 +51,17 @@
 }
 
 .canvasWrapper {
-  position: absolute;  // NEW: overlay instead of flex
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;        // NEW: always full-width
-  height: 100%;       // NEW: always full-height
+  width: 100%;
+  height: 100%;
   background-color: vars.$canvas-bg-dark;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;        // NEW: bottom layer
+  z-index: 1;
 }
 
 .openButton {
@@ -135,9 +135,6 @@
   top:              12px;
   right:            50%;
   transform:        translateX(50%); // Center it or put it in a corner?
-  // User: "Op mobiel zouden we eigenlijk één knop moeten hebben"
-  // Let's put it top-center or top-right.
-  // If panel is distinct, it might cover.
   // Panels are fixed.
   // If Nav Panel is open (right), and Controls (left).
   // On Mobile, effectively one is open at a time (per my logic).
@@ -176,7 +173,7 @@
 
   .navPanel {
     width: 140px; // Slightly wider than desktop
-    // User requested scrollbar
+    // mobile scrollbar
     overflow-y: auto; 
     overflow-x: hidden;
   }
