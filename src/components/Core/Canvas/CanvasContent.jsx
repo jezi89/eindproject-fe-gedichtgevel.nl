@@ -68,7 +68,9 @@ export function CanvasContent({
   const fontLoaded = useFontManager("Cormorant Garamond");
 
   // Use provided poemData prop first, fallback to URL-based lookup
-  const currentPoem = poemData || (poemId ? getPoemById(poemId) : null);
+  const currentPoem = useMemo(() => {
+    return poemData || (poemId ? getPoemById(poemId) : null);
+  }, [poemData, poemId]);
 
   // Responsive text positioning
   const textPosition = useResponsiveTextPosition(
@@ -342,12 +344,30 @@ export function CanvasContent({
           x: event.data.global.x,
           y: event.data.global.y,
         };
+        // Store initial Pixi positions for direct manipulation
+        const initialPixiPositions = new Map();
+        selectedLinesRef.current.forEach((lineIndex) => {
+          let childIndex = -1;
+          if (lineIndex === -2) childIndex = 0;
+          else if (lineIndex === -1) childIndex = 1;
+          else if (lineIndex >= 0) childIndex = lineIndex + 2;
+
+          if (childIndex >= 0 && contentRef.current?.children[childIndex]) {
+            const child = contentRef.current.children[childIndex];
+            initialPixiPositions.set(lineIndex, { x: child.x, y: child.y });
+          }
+        });
+
         const initialOffsets = new Map();
         selectedLinesRef.current.forEach((lineIndex) => {
           const currentOverride = lineOverridesRef.current[lineIndex] || {};
+          const pixiPos = initialPixiPositions.get(lineIndex) || { x: 0, y: 0 };
+
           initialOffsets.set(lineIndex, {
             x: currentOverride.xOffset || 0,
             y: currentOverride.yOffset || 0,
+            initialPixiX: pixiPos.x,
+            initialPixiY: pixiPos.y,
           });
         });
         dragStartLineOffsets.current = initialOffsets;
@@ -381,20 +401,42 @@ export function CanvasContent({
           groupRef.current.y = dragStartPoemOffset.current.y + dy;
         }
       } else if (dragModeRef.current === "line") {
-        if (dragStartLineOffsets.current) {
-          const newOverrides = { ...lineOverridesRef.current };
-          dragStartLineOffsets.current.forEach((startOffset, lineIndex) => {
-            newOverrides[lineIndex] = {
-              ...newOverrides[lineIndex],
-              xOffset: startOffset.x + dx,
-              yOffset: startOffset.y + dy,
-            };
+        // PERFORMANCE FIX: Direct Pixi Manipulation instead of React State
+        // Dit voorkomt zware re-renders tijdens het slepen (NFE-05 / NFE-08)
+        if (dragStartLineOffsets.current && contentRef.current) {
+          /* 
+             We hebben initialPixiPositions nodig. 
+             Echter, 'dragStartLineOffsets' bevat nu OOK initialPixiX/Y (zie handlePointerDown aanpassing)
+          */
+          dragStartLineOffsets.current.forEach((startData, lineIndex) => {
+            const childIndex =
+              lineIndex === -2 ? 0 : lineIndex === -1 ? 1 : lineIndex + 2;
+            if (contentRef.current.children[childIndex]) {
+              const child = contentRef.current.children[childIndex];
+
+              // Fallback voor mixed mode als initialPixiX ontbreekt (zou niet moeten gebeuren na fix)
+              const basePathX =
+                startData.initialPixiX !== undefined
+                  ? startData.initialPixiX
+                  : child.x;
+              const basePathY =
+                startData.initialPixiY !== undefined
+                  ? startData.initialPixiY
+                  : child.y;
+
+              // Update Pixi position directly: Initial Pixi Pos + Delta
+              // Gebruik startData.initialPixiX als source of truth
+              if (startData.initialPixiX !== undefined) {
+                child.x = startData.initialPixiX + dx;
+                child.y = startData.initialPixiY + dy;
+              }
+            }
           });
-          setLineOverrides(newOverrides);
+          // NO setLineOverrides calls here!
         }
       }
     },
-    [updateCursorForMode, setLineOverrides]
+    [updateCursorForMode] // setLineOverrides REMOVED
   );
 
   const handlePointerUp = useCallback(
@@ -416,6 +458,25 @@ export function CanvasContent({
           contentRef.current.alpha = 1.0;
         }
 
+        // Finalize drag: Update React Stae
+        if (dragModeRef.current === "line" && dragStartLineOffsets.current) {
+          // Check if we actually have data to update
+          if (dragStartPos.current) {
+            const dx = event.data.global.x - dragStartPos.current.x;
+            const dy = event.data.global.y - dragStartPos.current.y;
+
+            const newOverrides = { ...lineOverridesRef.current };
+            dragStartLineOffsets.current.forEach((startData, lineIndex) => {
+              newOverrides[lineIndex] = {
+                ...newOverrides[lineIndex],
+                xOffset: startData.x + dx,
+                yOffset: startData.y + dy,
+              };
+            });
+            setLineOverrides(newOverrides);
+          }
+        }
+
         setIsDraggingBoth(false);
         setDragMode(null);
         dragStartPos.current = null;
@@ -423,7 +484,13 @@ export function CanvasContent({
         dragStartLineOffsets.current = null;
       }
     },
-    [setIsDraggingBoth, setDragMode, contentRef, setPoemOffset]
+    [
+      setIsDraggingBoth,
+      setDragMode,
+      contentRef,
+      setPoemOffset,
+      setLineOverrides,
+    ]
   );
 
   const viewportDragEnabledRef = useRef(viewportDragEnabled);
@@ -469,6 +536,8 @@ export function CanvasContent({
     };
   }, [moveMode, viewportDragEnabled]);
 
+  // DebugManager tijdelijk uitgeschakeld om loop te voorkomen
+  /*
   useEffect(() => {
     if (app && viewportRef.current && contentRef.current) {
       debugManager.registerComponents(
@@ -478,6 +547,7 @@ export function CanvasContent({
       );
     }
   }, [app, viewportRef.current, contentRef.current]);
+  */
 
   const anchorX = useMemo(() => {
     return {
@@ -542,23 +612,21 @@ export function CanvasContent({
   useEffect(() => {
     if (!contentRef.current) return;
 
-    // Wait for next frame to ensure text is rendered
-    requestAnimationFrame(() => {
+    // Use a small timeout to batch updates and avoid rapid firing
+    // Also log to see if this is causing the loop
+    const rafId = requestAnimationFrame(() => {
       if (!contentRef.current) return;
 
-      if (!contentRef.current) return;
-
-      // Since contentRef now points to PoemContent (only text),
-      // we can get bounds directly without filtering or hiding background.
       const calculatedBounds = contentRef.current.getLocalBounds();
 
-      // Update state if changed
+      // Log only if changes are detected to trace loops
       if (
-        calculatedBounds.x !== backgroundBounds.x ||
-        calculatedBounds.y !== backgroundBounds.y ||
-        calculatedBounds.width !== backgroundBounds.width ||
-        calculatedBounds.height !== backgroundBounds.height
+        Math.abs(calculatedBounds.x - backgroundBounds.x) > 0.1 ||
+        Math.abs(calculatedBounds.y - backgroundBounds.y) > 0.1 ||
+        Math.abs(calculatedBounds.width - backgroundBounds.width) > 0.1 ||
+        Math.abs(calculatedBounds.height - backgroundBounds.height) > 0.1
       ) {
+        // console.log("Updating background bounds", calculatedBounds); // Uncomment for debugging
         setBackgroundBounds({
           x: calculatedBounds.x,
           y: calculatedBounds.y,
@@ -567,20 +635,28 @@ export function CanvasContent({
         });
       }
     });
+
+    return () => cancelAnimationFrame(rafId);
   }, [
     contentRef,
-    currentPoem, // Changed from poemData to currentPoem
+    currentPoem,
     fontSize,
     lineHeight,
     letterSpacing,
     textAlign,
     fontFamily,
     fontLoaded,
-    textPosition,
+    textPosition, // Keep dependency but rely on strict equality from useMemo
     skewX,
     skewY,
+    // lineOverrides, // <--- REMOVED from dependency array to break loop if overrides trigger it
+    // If overrides change, children positions change -> textPosition deps might not catch it?
+    // Wait, lineOverrides changes x/y of children.
+    // If we remove it, bounds update won't happen when dragging?
+    // Correct. But we are now only updating overrides on drag END.
+    // So loop risk is lower.
+    // I will keep lineOverrides but the deep check in setBackgroundBounds above safeguards it.
     lineOverrides,
-    // Exclude backgroundBounds to prevent loops
   ]);
 
   // Create DropShadow filter for the PoemGroup
