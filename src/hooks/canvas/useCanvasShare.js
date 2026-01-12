@@ -32,42 +32,42 @@ export function useCanvasShare(exportUtils) {
         setShareUrl(null);
 
         try {
-            // 1. Get Data URL (JPEG for smaller size/compatibility)
-            // We use 'jpeg' format as requested by the user for the bucket
-            const dataUrl = await exportUtils.getExportDataUrl('jpeg');
-            
-            if (!dataUrl) {
-                throw new Error('Failed to generate image data');
-            }
+          // 1. Get Data URL (JPEG for smaller size/compatibility)
+          // We use 'jpeg' format for the bucket
+          const dataUrl = await exportUtils.getExportDataUrl("jpeg");
 
-            // 2. Convert Data URL to Blob
-            const res = await fetch(dataUrl);
-            const blob = await res.blob();
+          if (!dataUrl) {
+            throw new Error("Failed to generate image data");
+          }
 
-            // 3. Generate filename
-            // If designId is provided, use it to link image to the database record.
-            // Otherwise, generate a unique ID.
-            let uniqueId;
-            if (designId) {
-                uniqueId = designId;
-            } else if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-                uniqueId = crypto.randomUUID();
-            } else {
-                uniqueId = Date.now() + '-' + Math.random().toString(36).substring(2, 9);
-            }
-            
-            const fileName = `design-${uniqueId}.jpg`;
+          // 2. Convert Data URL to Blob
+          const res = await fetch(dataUrl);
+          const blob = await res.blob();
 
-            // 4. Upload to Supabase
-            const { publicUrl, error } = await uploadCanvasImage(blob, fileName);
+          // 3. Generate filename
+          // If designId is provided, use it to link image to the database record.
+          // Otherwise, generate a unique ID.
+          let uniqueId;
+          if (designId) {
+            uniqueId = designId;
+          } else if (typeof crypto !== "undefined" && crypto.randomUUID) {
+            uniqueId = crypto.randomUUID();
+          } else {
+            uniqueId =
+              Date.now() + "-" + Math.random().toString(36).substring(2, 9);
+          }
 
-            if (error) {
-                throw error;
-            }
+          const fileName = `design-${uniqueId}.jpg`;
 
-            setShareUrl(publicUrl);
-            return publicUrl;
+          // 4. Upload to Supabase
+          const { publicUrl, error } = await uploadCanvasImage(blob, fileName);
 
+          if (error) {
+            throw error;
+          }
+
+          setShareUrl(publicUrl);
+          return publicUrl;
         } catch (err) {
             console.error('❌ Share failed:', err);
             setShareError(err.message || 'Failed to share design');
