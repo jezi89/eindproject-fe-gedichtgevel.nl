@@ -11,14 +11,14 @@ import {MuteSoundIcon} from '../icons/MuteSoundIcon.jsx';
 export const AudioControls = memo(() => {
 
     const {
-        isPlaying,
-        isAudioMuted,
-        recordedAudioBlob,
-        handlePlayPause, // New function from context
-        handleStop,      // New function from context
-        handleVolumeUp,  // New function from context
-        handleVolumeDown,// New function from context
-        handleToggleAudioMute
+      isPlaying,
+      isAudioMuted,
+      recordedAudioBlob,
+      handlePlayPause,
+      handleStop,
+      handleVolumeUp,
+      handleVolumeDown,
+      handleToggleAudioMute,
     } = useContext(ControlsContext);
 
     // FIXED: Use recordedAudioBlob instead of getDuration() to avoid re-render loops

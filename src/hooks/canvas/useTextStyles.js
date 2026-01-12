@@ -107,15 +107,15 @@ export function useTextStyles(fontLoaded, globalStyles, fontStatus) {
   }, [fontLoaded, globalStyles, fontStatus]);
 }
 
-// New hook for creating individual line styles with overrides
+// Hook for creating individual line styles with overrides
 export function useLineStyle(
   baseStyle,
   lineOverrides,
   isSelected,
   isColorPickerActive = false,
-  fontStatus, // <-- Nieuw argument
-  fallbackFontFamily, // <-- Nieuw argument
-  highlightVisible = true // <-- NEW: Toggle for highlight visibility
+  fontStatus,
+  fallbackFontFamily,
+  highlightVisible = true
 ) {
   return useMemo(() => {
     if (!baseStyle) return null;

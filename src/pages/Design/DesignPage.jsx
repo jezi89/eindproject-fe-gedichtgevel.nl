@@ -142,7 +142,7 @@ export function DesignPage() {
   }, [dataSource]);
 
   const handleCanvasSave = (imageData) => {
-    // TODO: Implement save functionality
+
   };
 
   const handleCanvasBack = () => {

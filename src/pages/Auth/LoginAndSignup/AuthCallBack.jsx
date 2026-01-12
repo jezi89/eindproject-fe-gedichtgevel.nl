@@ -1,4 +1,3 @@
-// TODO Check if this component is still needed and incorporate summary into justification documentation
 /**
  * The AuthCallback component serves as an intermediary page for processing the Supabase authentication callback after, for example, email confirmation or magic link login.
  *

@@ -25,7 +25,7 @@ class DebugManager {
     this.pixiApp = null;
     this.viewport = null;
     this.contentContainer = null;
-    this.customResetHandler = null; // NEW: For custom reset logic
+    this.customResetHandler = null;
     
     // Development mode detection
     this.isDevelopment = import.meta.env.DEV;

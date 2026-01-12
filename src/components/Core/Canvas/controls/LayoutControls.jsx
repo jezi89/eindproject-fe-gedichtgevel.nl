@@ -55,7 +55,7 @@ export default function LayoutControls({
         }`}
       >
         {/* Tekst Optimalisatie - Prominent bovenaan */}
-        {/* Tekst Optimalisatie - Prominent bovenaan */}
+
         <div className={optimizationStyles.optimizationContainer}>
           <div className={optimizationStyles.optimizationHeader}>
             <input

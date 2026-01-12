@@ -198,10 +198,7 @@ export function CollectionPage() {
         )}
       </section>
 
-      {/* TODO: Add more sections here later */}
-      {/* - Public collection */}
-      {/* - Favorites */}
-      {/* - Shared with me */}
+
     </div>
   );
 }

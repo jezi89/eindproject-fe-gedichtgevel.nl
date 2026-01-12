@@ -158,7 +158,7 @@ export const SearchResults = memo(
               }}
               style={{ position: "relative" }} // Ensure relative positioning for arrows
             >
-              {/* TODO Check if all of this is necessary */}
+
               {updatedLayout.visibleResults.map((poem, displayIndex) => {
                 const actualIndex =
                   updatedLayout.getActualIndexFromDisplay(displayIndex);

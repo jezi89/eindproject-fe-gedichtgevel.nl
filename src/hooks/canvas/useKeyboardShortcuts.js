@@ -27,62 +27,65 @@ export function useKeyboardShortcuts({
   highlightVisible,
   setHighlightVisible,
   onXyFocusRequest, // Callback om focus handler van XYMoveSliders te ontvangen
-  setHoverFreezeActive, // NEW: Callback to activate hover freeze
-  setActiveShortcut, // NEW: Callback to show shortcut visualization
-  onToggleLayoutPosition, // NEW: Alt+S
-  onToggleUIVisibility, // NEW: Alt+.
-  onToggleNav, // NEW: Alt+N
-  onCycleQuality, // NEW: Alt+Q
+  setHoverFreezeActive,
+  setActiveShortcut,
+  onToggleLayoutPosition,
+  onToggleUIVisibility,
+  onToggleNav,
+  onCycleQuality,
 }) {
   // Keep track of previous selection to restore when returning to edit/line mode
   const previousSelectionRef = useRef(new Set());
-  
+
   // Store previous selection when switching to poem mode
   useEffect(() => {
-    if (moveMode !== 'poem' && selectedLines.size > 0) {
+    if (moveMode !== "poem" && selectedLines.size > 0) {
       previousSelectionRef.current = new Set(selectedLines);
     }
   }, [moveMode, selectedLines]);
 
   // Helper function to show shortcut feedback
-  const showShortcutFeedback = useCallback((shortcutId, description) => {
-    if (setActiveShortcut) {
-      setActiveShortcut(description);
-      // Auto-clear after 6 seconds (3x longer than before)
-      setTimeout(() => {
-        setActiveShortcut(null);
-      }, 6000);
-    }
-  }, [setActiveShortcut]);
+  const showShortcutFeedback = useCallback(
+    (shortcutId, description) => {
+      if (setActiveShortcut) {
+        setActiveShortcut(description);
+        // Auto-clear after 6 seconds (3x longer than before)
+        setTimeout(() => {
+          setActiveShortcut(null);
+        }, 6000);
+      }
+    },
+    [setActiveShortcut]
+  );
 
   // Cycle through modes: edit -> line (if selection exists) -> poem -> edit
   const cycleModes = useCallback(() => {
-    setMoveMode(prevMode => {
+    setMoveMode((prevMode) => {
       const hasSelection = selectedLines.size > 0;
       const hasPreviousSelection = previousSelectionRef.current.size > 0;
 
       switch (prevMode) {
-        case 'edit':
+        case "edit":
           setXySlidersVisible(true); // Sliders should become visible for line/poem mode
           if (hasSelection) {
-            return 'line';
+            return "line";
           } else if (hasPreviousSelection) {
-            return 'line';
+            return "line";
           } else {
-            return 'poem';
+            return "poem";
           }
-        
-        case 'line':
+
+        case "line":
           setXySlidersVisible(true); // Sliders remain visible for poem mode
-          return 'poem';
-          
-        case 'poem':
+          return "poem";
+
+        case "poem":
           setXySlidersVisible(false); // Sliders hide when returning to edit mode
-          return 'edit';
-          
+          return "edit";
+
         default:
           setXySlidersVisible(false);
-          return 'edit';
+          return "edit";
       }
     });
   }, [setMoveMode, setXySlidersVisible, selectedLines.size]);
@@ -91,13 +94,12 @@ export function useKeyboardShortcuts({
   const resetToEditMode = useCallback(() => {
     clearSelection();
     previousSelectionRef.current = new Set();
-    setMoveMode('edit');
+    setMoveMode("edit");
   }, [clearSelection, setMoveMode]);
 
   // Helper functie om muiscursor te simuleren naar container centrum
   const moveMouseToContainer = useCallback((container) => {
     if (!container) {
-
       return false;
     }
 
@@ -106,98 +108,89 @@ export function useKeyboardShortcuts({
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-
       // Simuleer mouse move event naar het centrum van de container
-      const mouseMoveEvent = new MouseEvent('mousemove', {
+      const mouseMoveEvent = new MouseEvent("mousemove", {
         clientX: centerX,
         clientY: centerY,
         bubbles: true,
         cancelable: true,
-        view: window
+        view: window,
       });
 
       // Dispatch het event op de container zelf (voor hover effects)
       container.dispatchEvent(mouseMoveEvent);
 
       // Optioneel: Dispatch ook op document.body voor globale mouse tracking
-      document.dispatchEvent(new MouseEvent('mousemove', {
-        clientX: centerX,
-        clientY: centerY,
-        bubbles: true,
-        cancelable: true
-      }));
+      document.dispatchEvent(
+        new MouseEvent("mousemove", {
+          clientX: centerX,
+          clientY: centerY,
+          bubbles: true,
+          cancelable: true,
+        })
+      );
 
       return true;
     } catch (error) {
-
       return false;
     }
   }, []);
 
   // Verbeterde focus functie met ref callback, retry logic en muis verplaatsing
   const focusXyMoveSliders = useCallback(() => {
-
     // Switch to poem mode if not already active
-    if (moveMode !== 'poem') {
-
-      setMoveMode('poem');
+    if (moveMode !== "poem") {
+      setMoveMode("poem");
     }
-    
+
     // Show XY sliders if not visible
     if (!xySlidersVisible) {
-
       setXySlidersVisible(true);
     }
 
     // Wacht tot rendering voltooid is (250ms totaal voor state + render + focus)
     setTimeout(() => {
-
       // Probeer eerst ref callback (primair pad)
       if (onXyFocusRequest) {
-
         const focusSuccess = onXyFocusRequest();
-        
-        if (focusSuccess) {
 
+        if (focusSuccess) {
           // Wacht kort voor focus settling, dan mouse move
           setTimeout(() => {
-            const container = document.querySelector('[data-testid="xy-move-container"]') ||
-                            document.querySelector('[class*="xyMoveContainer"]');
+            const container =
+              document.querySelector('[data-testid="xy-move-container"]') ||
+              document.querySelector('[class*="xyMoveContainer"]');
             if (container) {
               moveMouseToContainer(container);
             } else {
-
             }
           }, 50);
           return;
         } else {
-
         }
       } else {
-
       }
 
       // Fallback: Direct querySelector met retry en mouse move
       const maxRetries = 3;
       let retryCount = 0;
-      
+
       const attemptFocusAndMouse = () => {
         retryCount++;
 
         const selectors = [
           '[data-testid="xy-move-container"]',
-          '[class*="xyMoveContainer"]'
+          '[class*="xyMoveContainer"]',
         ];
-        
+
         let xyContainer = null;
         for (const selector of selectors) {
           xyContainer = document.querySelector(selector);
           if (xyContainer) {
-
             break;
           }
         }
-        
+
         if (xyContainer) {
           try {
             // Eerst focus
@@ -209,282 +202,271 @@ export function useKeyboardShortcuts({
             }, 50); // Korte delay voor focus settling
 
             return true;
-          } catch (error) {
-
-          }
+          } catch (error) {}
         } else {
-
         }
-        
+
         if (retryCount < maxRetries) {
           const delay = 150 * retryCount; // 150ms, 300ms, 450ms
           setTimeout(attemptFocusAndMouse, delay);
         } else {
-
-
-
-
-
-
         }
       };
 
       attemptFocusAndMouse();
     }, 250); // Langere totale delay voor volledige render cycle
-  }, [moveMode, setMoveMode, xySlidersVisible, setXySlidersVisible, onXyFocusRequest, moveMouseToContainer]);
-
-
+  }, [
+    moveMode,
+    setMoveMode,
+    xySlidersVisible,
+    setXySlidersVisible,
+    onXyFocusRequest,
+    moveMouseToContainer,
+  ]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (
+        event.target.tagName === "INPUT" ||
+        event.target.tagName === "TEXTAREA"
+      ) {
+        return;
+      }
 
-			if (
-				event.target.tagName === "INPUT" ||
-				event.target.tagName === "TEXTAREA"
-			) {
-				return;
-			}
+      // SPACEBAR: Mode cycling
+      if (
+        event.key === " " &&
+        !event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
 
-			// SPACEBAR: Mode cycling
-			if (
-				event.key === " " &&
-				!event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				event.preventDefault();
+        showShortcutFeedback("space", "Space: Cycle modes");
+        cycleModes();
+        return;
+      }
 
-				showShortcutFeedback("space", "Space: Cycle modes");
-				cycleModes();
-				return;
-			}
+      // ESCAPE: Reset to edit mode
+      if (event.key === "Escape") {
+        event.preventDefault();
 
-			// ESCAPE: Reset to edit mode
-			if (event.key === "Escape") {
-				event.preventDefault();
+        showShortcutFeedback(
+          "escape",
+          "Esc: Clear selection and return to Edit mode"
+        );
+        resetToEditMode();
+        return;
+      }
 
-				showShortcutFeedback(
-					"escape",
-					"Esc: Clear selection and return to Edit mode"
-				);
-				resetToEditMode();
-				return;
-			}
+      // ALT+A: Select all poem lines only (edit mode only)
+      if (
+        event.key.toLowerCase() === "a" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        if (
+          moveMode === "edit" &&
+          selectAll &&
+          currentPoem?.lines?.length > 0
+        ) {
+          event.preventDefault();
 
-			// ALT+A: Select all poem lines only (edit mode only)
-			if (
-				event.key.toLowerCase() === "a" &&
-				event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				if (
-					moveMode === "edit" &&
-					selectAll &&
-					currentPoem?.lines?.length > 0
-				) {
-					event.preventDefault();
+          showShortcutFeedback("alta", "Alt+A: Select all poem lines");
+          selectAll(currentPoem.lines.length);
+        }
+        return;
+      }
 
-					showShortcutFeedback("alta", "Alt+A: Select all poem lines");
-					selectAll(currentPoem.lines.length);
-				}
-				return;
-			}
+      // ALT+SHIFT+A: Select all including title and author (edit mode only)
+      if (
+        event.key.toLowerCase() === "a" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        event.shiftKey
+      ) {
+        if (
+          moveMode === "edit" &&
+          selectAllIncludingTitleAuthor &&
+          currentPoem?.lines?.length > 0
+        ) {
+          event.preventDefault();
 
-			// ALT+SHIFT+A: Select all including title and author (edit mode only)
-			if (
-				event.key.toLowerCase() === "a" &&
-				event.altKey &&
-				!event.ctrlKey &&
-				event.shiftKey
-			) {
-				if (
-					moveMode === "edit" &&
-					selectAllIncludingTitleAuthor &&
-					currentPoem?.lines?.length > 0
-				) {
-					event.preventDefault();
+          showShortcutFeedback(
+            "altshifta",
+            "Alt+Shift+A: Select all + title + author"
+          );
+          selectAllIncludingTitleAuthor(currentPoem.lines.length);
+        }
+        return;
+      }
 
-					showShortcutFeedback(
-						"altshifta",
-						"Alt+Shift+A: Select all + title + author"
-					);
-					selectAllIncludingTitleAuthor(currentPoem.lines.length);
-				}
-				return;
-			}
+      // ALT+H: Toggle XY sliders visibility
+      if (
+        event.key.toLowerCase() === "h" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        if (moveMode === "line" || moveMode === "poem") {
+          event.preventDefault();
 
-			// ALT+H: Toggle XY sliders visibility
-			if (
-				event.key.toLowerCase() === "h" &&
-				event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				if (moveMode === "line" || moveMode === "poem") {
-					event.preventDefault();
+          showShortcutFeedback("alth", "Alt+H: Toggle XY sliders visibility");
+          setXySlidersVisible(!xySlidersVisible);
+        }
+        return;
+      }
 
-					showShortcutFeedback("alth", "Alt+H: Toggle XY sliders visibility");
-					setXySlidersVisible(!xySlidersVisible);
-				}
-				return;
-			}
+      // ALT+J: Focus XY sliders
+      if (
+        event.key.toLowerCase() === "j" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
 
-			// ALT+J: Focus XY sliders
-			if (
-				event.key.toLowerCase() === "j" &&
-				event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				event.preventDefault();
+        showShortcutFeedback(
+          "altj",
+          "Alt+J: Focus XY sliders + 5s hover freeze"
+        );
 
-				showShortcutFeedback(
-					"altj",
-					"Alt+J: Focus XY sliders + 5s hover freeze"
-				);
+        // Activate 5-second hover freeze
+        if (setHoverFreezeActive) {
+          setHoverFreezeActive(true);
+        }
 
-				// Activate 5-second hover freeze
-				if (setHoverFreezeActive) {
-					setHoverFreezeActive(true);
+        // Switch to poem mode if not already active
+        if (moveMode !== "poem") {
+          setMoveMode("poem");
+        }
 
-				}
+        // Show XY sliders if not visible
+        if (!xySlidersVisible) {
+          setXySlidersVisible(true);
+        }
 
-				// Switch to poem mode if not already active
-				if (moveMode !== "poem") {
+        // Focus XY sliders container
+        setTimeout(() => {
+          const container =
+            document.querySelector('[data-testid="xy-move-container"]') ||
+            document.querySelector('[class*="xyMoveContainer"]');
+          if (container) {
+            container.focus();
+            container.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+          }
+        }, 200);
+        return;
+      }
 
-					setMoveMode("poem");
-				}
+      // R: Reset camera to center
+      if (
+        event.key.toLowerCase() === "r" &&
+        !event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
 
-				// Show XY sliders if not visible
-				if (!xySlidersVisible) {
+        showShortcutFeedback("r", "R: Reset camera to center");
 
-					setXySlidersVisible(true);
-				}
+        if (window.debugCanvas?.resetViewport) {
+          window.debugCanvas.resetViewport();
+        } else {
+        }
+        return;
+      }
 
-				// Focus XY sliders container
-				setTimeout(() => {
-					const container =
-						document.querySelector('[data-testid="xy-move-container"]') ||
-						document.querySelector('[class*="xyMoveContainer"]');
-					if (container) {
-						container.focus();
-						container.scrollIntoView({ behavior: "smooth", block: "center" });
+      // ALT+Y: Toggle highlight visibility
+      if (
+        event.key.toLowerCase() === "y" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
 
-					} else {
+        showShortcutFeedback("alty", "Alt+Y: Toggle highlight visibility");
+        setHighlightVisible(!highlightVisible);
+        return;
+      }
 
-					}
-				}, 200);
-				return;
-			}
+      // ALT+S: Swap Layout Position
+      if (
+        event.key.toLowerCase() === "s" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        showShortcutFeedback("swap-layout", "Alt+S: Swap panel position");
+        if (onToggleLayoutPosition) onToggleLayoutPosition();
+        return;
+      }
 
-			// R: Reset camera to center
-			if (
-				event.key.toLowerCase() === "r" &&
-				!event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				event.preventDefault();
+      // ALT+. (Dot): Toggle UI Visibility (Controls + Nav)
+      if (
+        event.key === "." &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        showShortcutFeedback("toggle-ui", "Alt+.: Toggle UI visibility");
+        if (onToggleUIVisibility) onToggleUIVisibility();
+        return;
+      }
 
-				showShortcutFeedback("r", "R: Reset camera to center");
+      // ALT+N: Toggle Navigation
+      if (
+        event.key.toLowerCase() === "n" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        showShortcutFeedback("toggle-nav", "Alt+N: Toggle Navigation");
+        if (onToggleNav) onToggleNav();
+        return;
+      }
 
-				if (window.debugCanvas?.resetViewport) {
-					window.debugCanvas.resetViewport();
-				} else {
+      // ALT+Q: Cycle Quality
+      if (
+        event.key.toLowerCase() === "q" &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        showShortcutFeedback("cycle-quality", "Alt+Q: Cycle image quality");
+        if (onCycleQuality) onCycleQuality();
+        return;
+      }
+    };
 
-				}
-				return;
-			}
-
-			// ALT+Y: Toggle highlight visibility
-			if (
-				event.key.toLowerCase() === "y" &&
-				event.altKey &&
-				!event.ctrlKey &&
-				!event.shiftKey
-			) {
-				event.preventDefault();
-
-				showShortcutFeedback("alty", "Alt+Y: Toggle highlight visibility");
-				setHighlightVisible(!highlightVisible);
-				return;
-			}
-
-            // ALT+S: Swap Layout Position
-            if (
-                event.key.toLowerCase() === "s" &&
-                event.altKey &&
-                !event.ctrlKey &&
-                !event.shiftKey
-            ) {
-                event.preventDefault();
-                showShortcutFeedback("swap-layout", "Alt+S: Swap panel position");
-                if (onToggleLayoutPosition) onToggleLayoutPosition();
-                return;
-            }
-
-            // ALT+. (Dot): Toggle UI Visibility (Controls + Nav)
-            if (
-                event.key === "." &&
-                event.altKey &&
-                !event.ctrlKey &&
-                !event.shiftKey
-            ) {
-                event.preventDefault();
-                showShortcutFeedback("toggle-ui", "Alt+.: Toggle UI visibility");
-                if (onToggleUIVisibility) onToggleUIVisibility();
-                return;
-            }
-
-            // ALT+N: Toggle Navigation
-            if (
-                event.key.toLowerCase() === "n" &&
-                event.altKey &&
-                !event.ctrlKey &&
-                !event.shiftKey
-            ) {
-                event.preventDefault();
-                showShortcutFeedback("toggle-nav", "Alt+N: Toggle Navigation");
-                if (onToggleNav) onToggleNav();
-                return;
-            }
-
-            // ALT+Q: Cycle Quality
-            if (
-                event.key.toLowerCase() === "q" &&
-                event.altKey &&
-                !event.ctrlKey &&
-                !event.shiftKey
-            ) {
-                event.preventDefault();
-                showShortcutFeedback("cycle-quality", "Alt+Q: Cycle image quality");
-                if (onCycleQuality) onCycleQuality();
-                return;
-            }
-		};
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [
-    moveMode, 
-    setMoveMode, 
-    xySlidersVisible, 
-    setXySlidersVisible, 
-    highlightVisible, 
-    setHighlightVisible, 
-    setHoverFreezeActive, 
-    setActiveShortcut, 
-    cycleModes, 
-    resetToEditMode, 
-    selectAll, 
-    selectAllIncludingTitleAuthor, 
-    currentPoem, 
+    moveMode,
+    setMoveMode,
+    xySlidersVisible,
+    setXySlidersVisible,
+    highlightVisible,
+    setHighlightVisible,
+    setHoverFreezeActive,
+    setActiveShortcut,
+    cycleModes,
+    resetToEditMode,
+    selectAll,
+    selectAllIncludingTitleAuthor,
+    currentPoem,
     showShortcutFeedback,
     onToggleLayoutPosition,
     onToggleUIVisibility,
     onToggleNav,
-    onCycleQuality
+    onCycleQuality,
   ]);
 
   // Return function to restore previous selection (to be used by parent component)
@@ -499,6 +481,6 @@ export function useKeyboardShortcuts({
   return {
     restorePreviousSelection,
     cycleModes,
-    resetToEditMode
+    resetToEditMode,
   };
 }

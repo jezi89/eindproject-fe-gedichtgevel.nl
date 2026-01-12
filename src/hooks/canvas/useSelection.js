@@ -10,7 +10,7 @@ import { useState, useCallback } from "react";
 export function useSelection() {
   const [selectedLines, setSelectedLines] = useState(new Set());
   const [lastSelectedLine, setLastSelectedLine] = useState(null);
-  
+
   // Function to restore a specific selection set
   const restoreSelection = useCallback((selectionSet) => {
     if (selectionSet && selectionSet.size > 0) {
@@ -74,7 +74,7 @@ export function useSelection() {
     [selectedLines]
   );
 
-  // NEW: Select all lines functionality for Alt-A (poem lines only)
+  // Select all lines functionality for Alt-A (poem lines only)
   const selectAll = useCallback((totalLines) => {
     const allLines = new Set();
     for (let i = 0; i < totalLines; i++) {
@@ -84,7 +84,7 @@ export function useSelection() {
     setLastSelectedLine(totalLines > 0 ? totalLines - 1 : null); // Set last selected to final line
   }, []);
 
-  // NEW: Select all including title and author (Alt+Shift+A)
+  // Select all including title and author (Alt+Shift+A)
   const selectAllIncludingTitleAuthor = useCallback((totalLines) => {
     const allLines = new Set();
     // Add title (-2) and author (-1)
@@ -102,9 +102,9 @@ export function useSelection() {
     selectedLines,
     handleSelect,
     clearSelection,
-    selectAll, // NEW: Add selectAll to the hook interface (poem lines only)
-    selectAllIncludingTitleAuthor, // NEW: Add selectAllIncludingTitleAuthor to the hook interface
-    restoreSelection, // NEW: Add restoreSelection to the hook interface
+    selectAll,
+    selectAllIncludingTitleAuthor,
+    restoreSelection,
     isSelected,
   };
 }

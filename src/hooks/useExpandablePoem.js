@@ -1,24 +1,25 @@
-// TODO Werking useExpandablePoems.js testen en controleren of alles nog werkt na refactor
-
 /**
  * useExpandablePoem Hook
  * Expand/collapse animation logic from PoemResultItem
  * Manages poem expansion state and animations
  */
 
-import {useCallback, useEffect, useRef} from 'react';
-import {calculateCollapseScroll, isSmallPoem} from '@/utils/poemHeightCalculator';
+import { useCallback, useEffect, useRef } from "react";
+import {
+  calculateCollapseScroll,
+  isSmallPoem,
+} from "@/utils/poemHeightCalculator";
 
 export const useExpandablePoem = (
-    poem,
-    index,
-    poemState,
-    onPoemStateChange,
-    finalHeightInfo,
-    expandablePreview,
-    allPoems,
-    styles,
-    onCollapseEvent
+  poem,
+  index,
+  poemState,
+  onPoemStateChange,
+  finalHeightInfo,
+  expandablePreview,
+  allPoems,
+  styles,
+  onCollapseEvent
 ) => {
   const cardRef = useRef(null);
 

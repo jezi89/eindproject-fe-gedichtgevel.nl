@@ -1,6 +1,6 @@
 import styles from './Footer.module.scss';
 
-// TODO Improve Footer
+
 
 export function Footer() {
     return (

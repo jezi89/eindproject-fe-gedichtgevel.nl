@@ -4,7 +4,7 @@
  * Extracted from SearchResults for better separation of concerns
  */
 
-// TODO Util architectuur nakijken en begrijpen om deze utils te kunnen gebruiken in SearchResults
+
 /**
  * Determines layout class based on result count and device
  * @param {number} resultCount - Number of search results
