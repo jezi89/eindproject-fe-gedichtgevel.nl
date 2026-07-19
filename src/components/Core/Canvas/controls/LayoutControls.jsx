@@ -18,6 +18,7 @@ export default function LayoutControls({
   globalSkewY,
   perspX,
   perspY,
+  perspFreeMode,
   hasSelection,
   isSelectAll,
 
@@ -31,6 +32,8 @@ export default function LayoutControls({
   onSkewYChange,
   onPerspXChange,
   onPerspYChange,
+  onPerspFreeModeChange,
+  onResetPerspCorners,
   setIsOptimizationEnabled,
 
   // Section visibility
@@ -259,63 +262,97 @@ export default function LayoutControls({
 
         {/* Perspectief (PerspectiveMesh — echte projectie met verdwijnpunt) */}
         <div className={styles.controlGroup}>
-          <label htmlFor="perspX">
-            Perspectief horizontaal{" "}
-            <span className={styles.hintText}>(gedicht draait van je af)</span>
+          <label className={styles.checkboxLabel}>
+            <input
+              type="checkbox"
+              checked={!!perspFreeMode}
+              onChange={(e) => onPerspFreeModeChange(e.target.checked)}
+            />
+            <span>Vrij verslepen (4 hoeken)</span>
           </label>
-          <input
-            className={styles.fullWidthRange}
-            type="range"
-            id="perspX"
-            min={-45}
-            max={45}
-            step={1}
-            value={perspX || 0}
-            onChange={(e) => onPerspXChange(parseFloat(e.target.value))}
-          />
-          <div className={styles.valueRow}>
-            <span>{(perspX || 0).toFixed(0)}°</span>
-            <button
-              type="button"
-              className={styles.iconResetButton}
-              onClick={() => onPerspXChange(0)}
-              title="Reset horizontaal perspectief"
-            >
-              ↺
-            </button>
-          </div>
+          <span className={styles.hintText}>
+            {perspFreeMode
+              ? "Sleep de vier blauwe hoekpunten op het canvas naar de randen van de gevel."
+              : "Of gebruik de sliders hieronder voor een symmetrische kanteling."}
+          </span>
         </div>
 
-        <div className={styles.controlGroup}>
-          <label htmlFor="perspY">Perspectief verticaal</label>
-          <input
-            className={styles.fullWidthRange}
-            type="range"
-            id="perspY"
-            min={-45}
-            max={45}
-            step={1}
-            value={perspY || 0}
-            onChange={(e) => onPerspYChange(parseFloat(e.target.value))}
-          />
-          <div className={styles.valueRow}>
-            <span>{(perspY || 0).toFixed(0)}°</span>
+        {perspFreeMode ? (
+          <div className={styles.controlGroup}>
             <button
               type="button"
-              className={styles.iconResetButton}
-              onClick={() => onPerspYChange(0)}
-              title="Reset verticaal perspectief"
+              onClick={() => onResetPerspCorners && onResetPerspCorners()}
             >
-              ↺
+              ↺ Hoeken terugzetten (recht)
             </button>
           </div>
-          {(perspX !== 0 || perspY !== 0) && (
+        ) : (
+          <>
+            <div className={styles.controlGroup}>
+              <label htmlFor="perspX">
+                Perspectief horizontaal{" "}
+                <span className={styles.hintText}>
+                  (gedicht draait van je af)
+                </span>
+              </label>
+              <input
+                className={styles.fullWidthRange}
+                type="range"
+                id="perspX"
+                min={-45}
+                max={45}
+                step={1}
+                value={perspX || 0}
+                onChange={(e) => onPerspXChange(parseFloat(e.target.value))}
+              />
+              <div className={styles.valueRow}>
+                <span>{(perspX || 0).toFixed(0)}°</span>
+                <button
+                  type="button"
+                  className={styles.iconResetButton}
+                  onClick={() => onPerspXChange(0)}
+                  title="Reset horizontaal perspectief"
+                >
+                  ↺
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.controlGroup}>
+              <label htmlFor="perspY">Perspectief verticaal</label>
+              <input
+                className={styles.fullWidthRange}
+                type="range"
+                id="perspY"
+                min={-45}
+                max={45}
+                step={1}
+                value={perspY || 0}
+                onChange={(e) => onPerspYChange(parseFloat(e.target.value))}
+              />
+              <div className={styles.valueRow}>
+                <span>{(perspY || 0).toFixed(0)}°</span>
+                <button
+                  type="button"
+                  className={styles.iconResetButton}
+                  onClick={() => onPerspYChange(0)}
+                  title="Reset verticaal perspectief"
+                >
+                  ↺
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {(perspFreeMode || perspX !== 0 || perspY !== 0) && (
+          <div className={styles.controlGroup}>
             <span className={styles.hintText}>
               In perspectief-modus is tekst op het canvas niet aanklikbaar;
-              gebruik de sliders/panelen om te stylen.
+              gebruik de sliders/hoeken en de panelen om te stylen.
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Camera Control */}
         <div className={styles.controlGroup}>

@@ -51,6 +51,8 @@ export const PERSISTED_KEYS = {
   FONT_FAMILY: "canvas_font_family",
   SEARCH_CONTEXT: "canvas_search_context",
   PHOTO_SOURCE: "canvas_photo_source",
+  PERSP_FREE_MODE: "canvas_persp_free_mode",
+  PERSP_CORNERS: "canvas_persp_corners",
   OPTIMIZATION_ENABLED: "canvas_optimization_enabled",
   // Persistent keys for sticky state
   POEM_OFFSET: "canvas_poem_offset",

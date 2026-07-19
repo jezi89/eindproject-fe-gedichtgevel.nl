@@ -59,6 +59,9 @@ export default function Controls({
                                      onPerspXChange,
                                      perspY,
                                      onPerspYChange,
+                                     perspFreeMode,
+                                     onPerspFreeModeChange,
+                                     onResetPerspCorners,
                                      onLineTextAlignChange,
                                      isLoading,
                                      error,
@@ -454,6 +457,9 @@ export default function Controls({
                 perspY={perspY}
                 onPerspXChange={onPerspXChange}
                 onPerspYChange={onPerspYChange}
+                perspFreeMode={perspFreeMode}
+                onPerspFreeModeChange={onPerspFreeModeChange}
+                onResetPerspCorners={onResetPerspCorners}
                 setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}

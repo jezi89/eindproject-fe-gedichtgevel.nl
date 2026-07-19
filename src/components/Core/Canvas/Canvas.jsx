@@ -12,6 +12,7 @@ import {useCanvasHandlers} from "../../../hooks/canvas/useCanvasHandlers";
 import {useKeyboardShortcuts} from "../../../hooks/canvas/useKeyboardShortcuts";
 import {useCanvasExport} from "../../../hooks/canvas/useCanvasExport";
 import {CanvasContent} from "./CanvasContent.jsx";
+import {DEFAULT_PERSPECTIVE_CORNERS} from "./PerspectivePoem.jsx";
 import {ResponsiveLayout} from "./ResponsiveLayout.jsx";
 import Navigation from "./Navigation.jsx";
 import FloatingPhotoGrid from "./FloatingPhotoGrid.jsx";
@@ -155,6 +156,14 @@ export default function Canvas({
                                        if (savedCanvasState.perspY !== undefined)
                                          canvasState.setPerspY(
                                            savedCanvasState.perspY
+                                         );
+                                       if (savedCanvasState.perspFreeMode !== undefined)
+                                         canvasState.setPerspFreeMode(
+                                           savedCanvasState.perspFreeMode
+                                         );
+                                       if (savedCanvasState.perspCorners)
+                                         canvasState.setPerspCorners(
+                                           savedCanvasState.perspCorners
                                          );
                                        // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
                                        // if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
@@ -579,6 +588,10 @@ export default function Canvas({
                                    canvasState.setSkewY(0);
                                    canvasState.setPerspX(0);
                                    canvasState.setPerspY(0);
+                                   canvasState.setPerspFreeMode(false);
+                                   canvasState.setPerspCorners(
+                                     DEFAULT_PERSPECTIVE_CORNERS
+                                   );
                                    canvasState.setFontWeight("normal");
                                    canvasState.setFontStyle("normal");
 
@@ -754,6 +767,17 @@ export default function Canvas({
                                            onPerspYChange={
                                              canvasState.setPerspY
                                            }
+                                           perspFreeMode={
+                                             canvasState.perspFreeMode
+                                           }
+                                           onPerspFreeModeChange={
+                                             canvasState.setPerspFreeMode
+                                           }
+                                           onResetPerspCorners={() =>
+                                             canvasState.setPerspCorners(
+                                               DEFAULT_PERSPECTIVE_CORNERS
+                                             )
+                                           }
                                            onLineSkewYChange={
                                              handlers.handleLineSkewYChange
                                            }
@@ -898,6 +922,15 @@ export default function Canvas({
                                                skewY={canvasState.skewY}
                                                perspX={canvasState.perspX}
                                                perspY={canvasState.perspY}
+                                               perspFreeMode={
+                                                 canvasState.perspFreeMode
+                                               }
+                                               perspCorners={
+                                                 canvasState.perspCorners
+                                               }
+                                               onPerspCornersChange={
+                                                 canvasState.setPerspCorners
+                                               }
                                                onFontFamilyChange={
                                                  handlers.handleFontFamilyChange
                                                }

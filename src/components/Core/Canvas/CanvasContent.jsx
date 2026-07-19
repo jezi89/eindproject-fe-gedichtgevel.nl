@@ -42,6 +42,9 @@ export function CanvasContent({
   skewY = 0,
   perspX = 0,
   perspY = 0,
+  perspFreeMode = false,
+  perspCorners,
+  onPerspCornersChange,
   backgroundImage,
   contentRef,
   appRef,
@@ -654,6 +657,7 @@ export function CanvasContent({
     skewY,
     perspX,
     perspY,
+    perspFreeMode,
     // lineOverrides, // <--- REMOVED from dependency array to break loop if overrides trigger it
     // If overrides change, children positions change -> textPosition deps might not catch it?
     // Wait, lineOverrides changes x/y of children.
@@ -740,9 +744,12 @@ export function CanvasContent({
         filters={groupFilters}
       >
         <PerspectivePoem
-          enabled={perspX !== 0 || perspY !== 0}
+          enabled={perspFreeMode || perspX !== 0 || perspY !== 0}
           perspX={perspX}
           perspY={perspY}
+          freeMode={perspFreeMode}
+          corners={perspCorners}
+          onCornersChange={onPerspCornersChange}
           bounds={backgroundBounds}
           padding={(textPadding || 20) + 40}
         >

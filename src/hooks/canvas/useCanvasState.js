@@ -7,6 +7,7 @@ import { usePexels } from "./usePexels";
 import { usePersistedState, PERSISTED_KEYS } from "./usePersistedState";
 import { useFlickr } from "./useFlickr";
 import { GEO_PHOTO_SOURCE } from "../../services/api/apiService";
+import { DEFAULT_PERSPECTIVE_CORNERS } from "../../components/Core/Canvas/PerspectivePoem.jsx";
 import { IMAGE_QUALITY_MODE } from "../../utils/imageOptimization";
 
 import { useWindowSize } from "../useWindowSize.js";
@@ -150,6 +151,15 @@ export function useCanvasState() {
   // Echte perspectiefprojectie (PerspectiveMesh) — graden -45..45, 0 = uit
   const [perspX, setPerspX] = useState(0);
   const [perspY, setPerspY] = useState(0);
+  // Vrije modus: gebruiker versleept de 4 hoeken zelf (genormaliseerde punten)
+  const [perspFreeMode, setPerspFreeMode] = usePersistedState(
+    PERSISTED_KEYS.PERSP_FREE_MODE,
+    false
+  );
+  const [perspCorners, setPerspCorners] = usePersistedState(
+    PERSISTED_KEYS.PERSP_CORNERS,
+    DEFAULT_PERSPECTIVE_CORNERS
+  );
   const [userHasAdjusted, setUserHasAdjusted] = useState(false);
 
   // Hierarchical color system - PERSISTENT
@@ -302,6 +312,10 @@ export function useCanvasState() {
     setPerspX,
     perspY,
     setPerspY,
+    perspFreeMode,
+    setPerspFreeMode,
+    perspCorners,
+    setPerspCorners,
     poemOffset,
     setPoemOffset,
     moveMode,
