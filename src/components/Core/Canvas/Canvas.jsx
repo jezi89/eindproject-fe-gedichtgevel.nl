@@ -476,8 +476,9 @@ export default function Canvas({
 
                                  // Determine which data to show in photo gallery based on active search source
                                  const isFlickrActive =
-                                   canvasState.searchContext?.source ===
-                                     "flickr" &&
+                                   ["flickr", "commons"].includes(
+                                     canvasState.searchContext?.source
+                                   ) &&
                                    (canvasState.isFlickrLoading ||
                                      (canvasState.flickrPhotos &&
                                        canvasState.flickrPhotos.length > 0));
@@ -568,6 +569,8 @@ export default function Canvas({
                                    canvasState.setFillColor("#000000");
                                    canvasState.setSkewX(0);
                                    canvasState.setSkewY(0);
+                                   canvasState.setPerspX(0);
+                                   canvasState.setPerspY(0);
                                    canvasState.setFontWeight("normal");
                                    canvasState.setFontStyle("normal");
 
@@ -735,6 +738,14 @@ export default function Canvas({
                                            onSkewYChange={
                                              handlers.handleSkewYChange
                                            }
+                                           perspX={canvasState.perspX}
+                                           onPerspXChange={
+                                             canvasState.setPerspX
+                                           }
+                                           perspY={canvasState.perspY}
+                                           onPerspYChange={
+                                             canvasState.setPerspY
+                                           }
                                            onLineSkewYChange={
                                              handlers.handleLineSkewYChange
                                            }
@@ -871,6 +882,8 @@ export default function Canvas({
                                                fontStyle={canvasState.fontStyle}
                                                skewX={canvasState.skewX}
                                                skewY={canvasState.skewY}
+                                               perspX={canvasState.perspX}
+                                               perspY={canvasState.perspY}
                                                onFontFamilyChange={
                                                  handlers.handleFontFamilyChange
                                                }

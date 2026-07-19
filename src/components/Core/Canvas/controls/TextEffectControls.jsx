@@ -14,6 +14,13 @@ export default function TextEffectControls({
         });
     };
 
+    const handleStringParamChange = (param, value) => {
+        onEffectParamsChange({
+            ...effectParams,
+            [param]: value
+        });
+    };
+
     return (
         <div className={styles.subsection}>
             <div className={styles.subsectionHeader}>
@@ -33,11 +40,75 @@ export default function TextEffectControls({
                         style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
                     >
                         <option value="none">Geen</option>
+                        <option value="muurverf">Muurverf (op de muur)</option>
                         <option value="painted">Painted (Verf/Inkt)</option>
                         <option value="raised">Raised (Losliggend)</option>
                         <option value="engraved">Engraved (Gegraveerd)</option>
                     </select>
                 </div>
+
+                {effectMode === 'muurverf' && (
+                    <>
+                        <div className={styles.controlGroup}>
+                            <label>Verfstijl</label>
+                            <select
+                                value={effectParams.blendMode || 'multiply'}
+                                onChange={(e) => handleStringParamChange('blendMode', e.target.value)}
+                                className={styles.select}
+                            >
+                                <option value="multiply">Donkere verf (multiply)</option>
+                                <option value="overlay">Contrastverf (overlay)</option>
+                                <option value="soft-light">Zachte verf (soft light)</option>
+                                <option value="hard-light">Felle verf (hard light)</option>
+                            </select>
+                        </div>
+                        <div className={styles.controlGroup}>
+                            <div className={styles.valueRow}>
+                                <label>Dekking</label>
+                                <span>{Math.round((effectParams.opacity !== undefined ? effectParams.opacity : 0.9) * 100)}%</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="0.1"
+                                max="1.0"
+                                step="0.05"
+                                value={effectParams.opacity !== undefined ? effectParams.opacity : 0.9}
+                                onChange={(e) => handleParamChange('opacity', e.target.value)}
+                                className={styles.slider}
+                            />
+                        </div>
+                        <div className={styles.controlGroup}>
+                            <div className={styles.valueRow}>
+                                <label>Vervaging (Blur)</label>
+                                <span>{effectParams.blur}px</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="2"
+                                step="0.1"
+                                value={effectParams.blur}
+                                onChange={(e) => handleParamChange('blur', e.target.value)}
+                                className={styles.slider}
+                            />
+                        </div>
+                        <div className={styles.controlGroup}>
+                            <div className={styles.valueRow}>
+                                <label>Reliëf (oppervlak volgen)</label>
+                                <span>{effectParams.displacement || 0}</span>
+                            </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="30"
+                                step="1"
+                                value={effectParams.displacement || 0}
+                                onChange={(e) => handleParamChange('displacement', e.target.value)}
+                                className={styles.slider}
+                            />
+                        </div>
+                    </>
+                )}
 
                 {effectMode === 'painted' && (
                     <>

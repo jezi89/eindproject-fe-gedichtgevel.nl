@@ -55,6 +55,10 @@ export default function Controls({
                                      skewY,
                                      onSkewYChange,
                                      onLineSkewYChange,
+                                     perspX,
+                                     onPerspXChange,
+                                     perspY,
+                                     onPerspYChange,
                                      onLineTextAlignChange,
                                      isLoading,
                                      error,
@@ -442,6 +446,10 @@ export default function Controls({
                 onResetViewport={onResetViewport}
                 onSkewXChange={handleSkewXInput}
                 onSkewYChange={handleSkewYInput}
+                perspX={perspX}
+                perspY={perspY}
+                onPerspXChange={onPerspXChange}
+                onPerspYChange={onPerspYChange}
                 setIsOptimizationEnabled={setIsOptimizationEnabled}
                 layoutSectionOpen={layoutSectionOpen}
                 setLayoutSectionOpen={setLayoutSectionOpen}

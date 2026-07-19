@@ -13,6 +13,7 @@ import {useAutoRecenter} from "@/hooks/canvas/useAutoRecenter.js";
 import {debugManager} from "@/debug/DebugManager.js";
 import {BackgroundImage} from "./BackgroundImage.jsx";
 import {TextBackground} from "./TextBackground.jsx"; // <-- Import TextBackground
+import {PerspectivePoem} from "./PerspectivePoem.jsx";
 
 import { DropShadowFilter } from 'pixi-filters';
 
@@ -39,6 +40,8 @@ export function CanvasContent({
   fontStyle,
   skewX = 0,
   skewY = 0,
+  perspX = 0,
+  perspY = 0,
   backgroundImage,
   contentRef,
   appRef,
@@ -649,6 +652,8 @@ export function CanvasContent({
     textPosition, // Keep dependency but rely on strict equality from useMemo
     skewX,
     skewY,
+    perspX,
+    perspY,
     // lineOverrides, // <--- REMOVED from dependency array to break loop if overrides trigger it
     // If overrides change, children positions change -> textPosition deps might not catch it?
     // Wait, lineOverrides changes x/y of children.
@@ -734,6 +739,13 @@ export function CanvasContent({
         interactiveChildren={moveMode === "edit"}
         filters={groupFilters}
       >
+        <PerspectivePoem
+          enabled={perspX !== 0 || perspY !== 0}
+          perspX={perspX}
+          perspY={perspY}
+          bounds={backgroundBounds}
+          padding={(textPadding || 20) + 40}
+        >
         {/* Node 4: TextBackground (Sibling of Content) */}
         {textMaterial && (
           <pixiContainer
@@ -830,6 +842,7 @@ export function CanvasContent({
             );
           })}
         </pixiContainer>
+        </PerspectivePoem>
       </pixiContainer>
     </pixiViewport>
   );

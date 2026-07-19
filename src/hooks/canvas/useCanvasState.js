@@ -141,6 +141,9 @@ export function useCanvasState() {
   );
   const [skewX, setSkewX] = usePersistedState(PERSISTED_KEYS.SKEW_X, 0);
   const [skewY, setSkewY] = usePersistedState(PERSISTED_KEYS.SKEW_Y, 0);
+  // Echte perspectiefprojectie (PerspectiveMesh) — graden -45..45, 0 = uit
+  const [perspX, setPerspX] = useState(0);
+  const [perspY, setPerspY] = useState(0);
   const [userHasAdjusted, setUserHasAdjusted] = useState(false);
 
   // Hierarchical color system - PERSISTENT
@@ -287,6 +290,10 @@ export function useCanvasState() {
     setSkewX,
     skewY,
     setSkewY,
+    perspX,
+    setPerspX,
+    perspY,
+    setPerspY,
     poemOffset,
     setPoemOffset,
     moveMode,
