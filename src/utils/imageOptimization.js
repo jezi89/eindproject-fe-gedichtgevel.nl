@@ -153,7 +153,8 @@ export function calculateOptimalImageRequest(
     // Route to appropriate strategy
     if (photo.source === 'pexels' || !photo.source) {
         return calculatePexelsOptimalURL(photo, viewportWidth, viewportHeight, qualityMode);
-    } else if (photo.source === 'flickr') {
+    } else if (photo.source === 'flickr' || photo.source === 'commons') {
+        // Commons-foto's gebruiken dezelfde url_q/url_b/url_h/url_k/url_o-varianten als Flickr
         return calculateFlickrOptimalURL(photo, viewportWidth, viewportHeight, qualityMode);
     }
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { flickrApiService } from '../../services/api/apiService';
+import { geoPhotoApiService } from '../../services/api/apiService';
 
 /**
  * Normalize Flickr photo object to ensure metadata and variant dimensions are preserved
@@ -67,7 +67,9 @@ function normalizeFlickrPhoto(photo) {
         width: effectiveWidth || 1024,
         height: effectiveHeight || 768,
 
-        source: 'flickr',
+        source: photo.server === 'commons' ? 'commons' : 'flickr',
+        license: photo.license || null,
+        descriptionurl: photo.descriptionurl || null,
 
         // URL variants (preview + selection)
         url_q: photo.url_q || null,  // 150px square
@@ -108,8 +110,8 @@ export function useFlickrSearchByText(query, page = 1) {
         error,
         isFetching,
     } = useQuery({
-        queryKey: ['flickr', 'text', query, page],
-        queryFn: () => flickrApiService.searchByText(query, page),
+        queryKey: ['geophotos', 'text', query, page],
+        queryFn: () => geoPhotoApiService.searchByText(query, page),
         enabled: !!query,
     });
 

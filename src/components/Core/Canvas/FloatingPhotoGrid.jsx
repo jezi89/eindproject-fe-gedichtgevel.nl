@@ -62,10 +62,16 @@ export default function FloatingPhotoGrid({
         }
     }, [photoPreview.previewMode, photoPreview.previewImage, photoPreview.hasHovered, onPreviewChange]);
 
+    const SOURCE_LABELS = {
+        flickr: '📸 Flickr',
+        commons: '🏛️ Wikimedia Commons',
+        pexels: '🔍 Pexels',
+    };
+
     const getTitle = () => {
         if (!searchContext) return "Achtergronden";
 
-        const source = searchContext.source === 'flickr' ? '📸 Flickr' : '🔍 Pexels';
+        const source = SOURCE_LABELS[searchContext.source] || '🔍 Pexels';
 
         switch (searchContext.type) {
             case 'collection':
@@ -216,7 +222,7 @@ export default function FloatingPhotoGrid({
                                         width: photo.width || null,
                                         height: photo.height || null,
 
-                                        ...(photo.source === 'flickr' && {
+                                        ...((photo.source === 'flickr' || photo.source === 'commons') && {
                                             url_b: photo.url_b,
                                             url_h: photo.url_h,
                                             url_k: photo.url_k,
@@ -230,6 +236,10 @@ export default function FloatingPhotoGrid({
                                             width_o: photo.width_o,
                                             height_o: photo.height_o,
                                         }),
+
+                                        // Attributie-info (Commons vereist naamsvermelding + licentie)
+                                        license: photo.license || null,
+                                        descriptionurl: photo.descriptionurl || null,
 
                                         ...(searchContext?.source === 'pexels' && photo.src && {
                                             src: photo.src
@@ -344,12 +354,19 @@ function PhotoThumbnail({ photo, isPrintQuality, isLowQuality, styles, onClick, 
                             {calculateAspectRatio(photo.width, photo.height)}
                         </span>
                         <span className={styles.metadataSource}>
-                            {searchContext?.source === 'flickr' ? '📸 Flickr' : '🔍 Pexels'}
+                            {{flickr: '📸 Flickr', commons: '🏛️ Commons'}[photo.source] || '🔍 Pexels'}
                         </span>
                     </div>
                     <div className={styles.metadataOrientation}>
                         {photo.height > photo.width ? '📱 Portrait' : '🖼️ Landscape'}
                     </div>
+                    {/* Attributie: fotograaf + licentie (verplicht bij CC-licenties) */}
+                    {photo.photographer && photo.photographer !== 'Unknown' && (
+                        <div className={styles.metadataAttribution}>
+                            © {photo.photographer}
+                            {photo.license ? ` · ${photo.license}` : ''}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

@@ -239,6 +239,14 @@
   font-style: italic;
 }
 
+.metadataAttribution {
+  color:         vars.$neutral-off-white;
+  font-size:     0.65rem;
+  overflow:      hidden;
+  white-space:   nowrap;
+  text-overflow: ellipsis;
+}
+
 .metadataCrop {
   color:      vars.$accent-gold;
   font-size:  0.65rem;

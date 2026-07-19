@@ -7,6 +7,7 @@ import {
     resetLineHeightUtil,
 } from "@/utils/canvas/lineHeightUtils";
 import {getGeoDataByCity} from "@/data/canvas/cityGeoData";
+import {GEO_PHOTO_SOURCE} from "@/services/api/apiService";
 import fontMetadata from "../../data/font-metadata.json";
 
 
@@ -556,14 +557,14 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
         setSearchContext({
           type: "flickr_city",
           query: city,
-          source: "flickr",
+          source: GEO_PHOTO_SOURCE,
         });
       } else {
         clearFlickrPhotos();
         setSearchContext({
           type: "flickr_city",
           query: city,
-          source: "flickr",
+          source: GEO_PHOTO_SOURCE,
         });
       }
     },
@@ -576,7 +577,7 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
       setSearchContext({
         type: "flickr_text",
         query: query,
-        source: "flickr",
+        source: GEO_PHOTO_SOURCE,
       });
     },
     [searchPhotosByText, setSearchContext]

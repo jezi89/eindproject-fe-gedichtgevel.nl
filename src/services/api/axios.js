@@ -28,3 +28,6 @@ export const flickrApi = createApiClient('https://api.flickr.com/services/rest/'
 export const pexelsApi = createApiClient('https://api.pexels.com/v1/', {
     Authorization: import.meta.env.VITE_PEXELS_API_KEY,
 });
+
+// Client voor Wikimedia Commons (gratis, geen API key nodig; CORS via origin=* param)
+export const commonsApi = createApiClient('https://commons.wikimedia.org/w/');

@@ -1,4 +1,4 @@
-import { pexelsApi, flickrApi } from './axios';
+import { pexelsApi, flickrApi, commonsApi } from './axios';
 import { supabase } from '../supabase/supabase';
 
 /**
@@ -93,6 +93,118 @@ export const flickrApiService = {
         return fetchWithAxios(flickrApi, { params });
     },
 };
+
+// --- Wikimedia Commons API Service ---
+// Drop-in vervanger voor de Flickr geo/tekst-zoek: gratis, geen API key.
+// Levert foto-objecten in dezelfde vorm als de Flickr API zodat de bestaande
+// hooks (useFlickrSearchByGeo/Text) en de FloatingPhotoGrid ongewijzigd werken.
+const COMMONS_PER_PAGE = 16;
+
+const stripHtml = (html) =>
+    (html || '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#0?39;/g, "'")
+        .trim();
+
+// Wikimedia accepteert alleen vaste thumbnail-breedtes bij directe requests
+// (zie https://www.mediawiki.org/wiki/Common_thumbnail_sizes); andere maten geven HTTP 400.
+const COMMONS_ALLOWED_WIDTHS = [20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840];
+
+// Commons thumb-URL's bevatten '/<breedte>px-'; door die breedte te vervangen door de
+// dichtstbijzijnde toegestane maat (naar boven) krijgen we een geldig formaat.
+// Vanaf de originele breedte gebruiken we het origineel.
+const commonsThumb = (thumburl, requestedWidth, originalWidth, originalUrl) => {
+    const snapped = COMMONS_ALLOWED_WIDTHS.find((w) => w >= requestedWidth)
+        || COMMONS_ALLOWED_WIDTHS[COMMONS_ALLOWED_WIDTHS.length - 1];
+    if (originalWidth && snapped >= originalWidth) return originalUrl;
+    return thumburl.replace(/\/(\d+)px-/, `/${snapped}px-`);
+};
+
+const normalizeCommonsPage = (page) => {
+    const info = page.imageinfo?.[0];
+    if (!info?.thumburl) return null;
+
+    const meta = info.extmetadata || {};
+    const thumb = (w) => commonsThumb(info.thumburl, w, info.width, info.url);
+    const title = (meta.ObjectName?.value || page.title || '')
+        .replace(/^File:/, '')
+        .replace(/\.\w+$/, '');
+
+    return {
+        // Flickr-vormige velden (zie normalizeFlickrPhoto in de hooks)
+        id: String(page.pageid),
+        title,
+        ownername: stripHtml(meta.Artist?.value) || 'Onbekende maker',
+        datetaken: meta.DateTimeOriginal?.value || null,
+        secret: 'commons', // laat de bestaande p.secret-filter passeren
+        server: 'commons',
+
+        url_q: thumb(150),
+        url_n: thumb(320),
+        url_m: thumb(500),
+        url_b: thumb(1024),
+        url_h: thumb(1600),
+        url_k: thumb(2048),
+        url_o: info.url,
+        width_o: info.width,
+        height_o: info.height,
+        o_dims: `${info.width}x${info.height}`,
+
+        // Extra t.o.v. Flickr: licentie & bronpagina voor correcte attributie
+        license: meta.LicenseShortName?.value || null,
+        descriptionurl: info.descriptionurl || null,
+    };
+};
+
+const commonsSearch = async (gsrsearch, page = 1) => {
+    const params = {
+        action: 'query',
+        generator: 'search',
+        gsrsearch,
+        gsrnamespace: 6, // File-namespace
+        gsrlimit: COMMONS_PER_PAGE,
+        gsroffset: (page - 1) * COMMONS_PER_PAGE,
+        gsrinfo: 'totalhits',
+        prop: 'imageinfo',
+        iiprop: 'url|size|extmetadata',
+        iiurlwidth: 1600,
+        format: 'json',
+        origin: '*', // CORS
+    };
+
+    const data = await fetchWithAxios(commonsApi, { url: 'api.php', params });
+
+    const photos = Object.values(data?.query?.pages || {})
+        .sort((a, b) => (a.index || 0) - (b.index || 0))
+        .map(normalizeCommonsPage)
+        .filter(Boolean);
+
+    const totalHits = data?.query?.searchinfo?.totalhits;
+    const pages = totalHits
+        ? Math.ceil(totalHits / COMMONS_PER_PAGE)
+        : (data?.continue ? page + 1 : page);
+
+    // Zelfde envelope als de Flickr API
+    return { photos: { page, pages, perpage: COMMONS_PER_PAGE, photo: photos }, stat: 'ok' };
+};
+
+export const commonsApiService = {
+    // searchParams: { city, lat, lon, radius (km) } — zelfde vorm als flickrApiService.searchByGeo
+    searchByGeo: (searchParams, page = 1) =>
+        commonsSearch(`filetype:bitmap nearcoord:${searchParams.radius}km,${searchParams.lat},${searchParams.lon}`, page),
+    searchByText: (query, page = 1) =>
+        commonsSearch(`filetype:bitmap ${query}`, page),
+};
+
+// --- Geo-foto bron-switch ---
+// Commons is de standaardbron (gratis). Zet VITE_USE_FLICKR=true in .env.local om
+// tijdelijk terug te vallen op Flickr zolang de API key nog werkt (vereist Pro sinds 2025).
+const USE_FLICKR_GEO = import.meta.env.VITE_USE_FLICKR === 'true';
+export const geoPhotoApiService = USE_FLICKR_GEO ? flickrApiService : commonsApiService;
+// Bron-identifier voor searchContext/labels, zodat UI en optimalisatie weten waar foto's vandaan komen
+export const GEO_PHOTO_SOURCE = USE_FLICKR_GEO ? 'flickr' : 'commons';
 
 // --- Supabase Service (Uses JS Client) ---
 // Wraps the Supabase call in an async function for TanStack Query.
