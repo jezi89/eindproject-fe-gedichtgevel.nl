@@ -7,7 +7,6 @@ import {
     resetLineHeightUtil,
 } from "@/utils/canvas/lineHeightUtils";
 import {getGeoDataByCity} from "@/data/canvas/cityGeoData";
-import {GEO_PHOTO_SOURCE} from "@/services/api/apiService";
 import fontMetadata from "../../data/font-metadata.json";
 
 
@@ -52,6 +51,8 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
     goToPrevPage,
     searchContext,
     setSearchContext,
+    photoSource,
+    setPhotoSource,
     goToNextFlickrPage,
     goToPrevFlickrPage,
     flickrPhotos,
@@ -557,18 +558,18 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
         setSearchContext({
           type: "flickr_city",
           query: city,
-          source: GEO_PHOTO_SOURCE,
+          source: photoSource,
         });
       } else {
         clearFlickrPhotos();
         setSearchContext({
           type: "flickr_city",
           query: city,
-          source: GEO_PHOTO_SOURCE,
+          source: photoSource,
         });
       }
     },
-    [searchPhotosByGeo, clearFlickrPhotos, setSearchContext]
+    [searchPhotosByGeo, clearFlickrPhotos, setSearchContext, photoSource]
   );
 
   const handlePremiumSearch = useCallback(
@@ -577,10 +578,45 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
       setSearchContext({
         type: "flickr_text",
         query: query,
-        source: GEO_PHOTO_SOURCE,
+        source: photoSource,
       });
     },
-    [searchPhotosByText, setSearchContext]
+    [searchPhotosByText, setSearchContext, photoSource]
+  );
+
+  // Wisselen van geo-fotobron (flickr <-> commons). Werkt de bron bij en voert een
+  // eventuele actieve zoekopdracht opnieuw uit zodat grid en label direct kloppen.
+  const handlePhotoSourceChange = useCallback(
+    (nextSource) => {
+      if (!nextSource || nextSource === photoSource) return;
+      setPhotoSource(nextSource);
+
+      // Herzoek de actieve stad/tekst zodat resultaten van de nieuwe bron komen.
+      if (searchContext?.type === "flickr_city" && searchContext.query) {
+        const geoData = getGeoDataByCity(searchContext.query);
+        if (geoData) {
+          searchPhotosByGeo(
+            { ...geoData, city: searchContext.query, tags: "gevel,facade,architecture" },
+            true
+          );
+        }
+      } else if (searchContext?.type === "flickr_text" && searchContext.query) {
+        searchPhotosByText(searchContext.query);
+      }
+
+      // Label meteen bijwerken (React Query refetcht de resultaten al via de queryKey).
+      if (searchContext?.type?.startsWith("flickr")) {
+        setSearchContext({ ...searchContext, source: nextSource });
+      }
+    },
+    [
+      photoSource,
+      setPhotoSource,
+      searchContext,
+      setSearchContext,
+      searchPhotosByGeo,
+      searchPhotosByText,
+    ]
   );
 
   const handleNextPage = useCallback(() => {
@@ -702,6 +738,7 @@ export function useCanvasHandlers({ canvasState, currentPoem: poemData = null })
     handleNextPage, // <-- Exporteren
     handlePrevPage, // <-- Exporteren
     handleCitySearch, // <-- Exporteer de nieuwe handler
+    handlePhotoSourceChange, // Wisselen tussen flickr/commons
     handleResetToCollection, // Export reset handler
     handleOpenPhotoGrid, // Export open photo grid handler
   };

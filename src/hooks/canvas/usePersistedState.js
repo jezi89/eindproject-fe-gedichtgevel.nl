@@ -50,6 +50,7 @@ export const PERSISTED_KEYS = {
   LINE_OVERRIDES: "canvas_line_overrides",
   FONT_FAMILY: "canvas_font_family",
   SEARCH_CONTEXT: "canvas_search_context",
+  PHOTO_SOURCE: "canvas_photo_source",
   OPTIMIZATION_ENABLED: "canvas_optimization_enabled",
   // Persistent keys for sticky state
   POEM_OFFSET: "canvas_poem_offset",

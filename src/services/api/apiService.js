@@ -190,21 +190,48 @@ const commonsSearch = async (gsrsearch, page = 1) => {
     return { photos: { page, pages, perpage: COMMONS_PER_PAGE, photo: photos }, stat: 'ok' };
 };
 
+// Kwaliteitsfilter: alleen bitmaps van minstens deze breedte, zodat lage-resolutie
+// scans/thumbnails wegvallen (canvas-export vraagt ~2000px).
+const COMMONS_MIN_WIDTH = 1600;
+const COMMONS_QUALITY = `filetype:bitmap filew:>${COMMONS_MIN_WIDTH}`;
+
+// Onderwerpbias voor geo-zoek: duwt resultaten richting gevels/architectuur i.p.v.
+// standbeelden, interieurs of kaarten die toevallig op de coördinaten liggen.
+const COMMONS_FACADE_TERMS = 'gevel OR facade OR building OR architecture OR straat OR huis';
+
 export const commonsApiService = {
     // searchParams: { city, lat, lon, radius (km) } — zelfde vorm als flickrApiService.searchByGeo
     searchByGeo: (searchParams, page = 1) =>
-        commonsSearch(`filetype:bitmap nearcoord:${searchParams.radius}km,${searchParams.lat},${searchParams.lon}`, page),
+        commonsSearch(
+            `${COMMONS_QUALITY} nearcoord:${searchParams.radius}km,${searchParams.lat},${searchParams.lon} ${COMMONS_FACADE_TERMS}`,
+            page
+        ),
     searchByText: (query, page = 1) =>
-        commonsSearch(`filetype:bitmap ${query}`, page),
+        commonsSearch(`${COMMONS_QUALITY} ${query}`, page),
 };
 
 // --- Geo-foto bron-switch ---
-// Commons is de standaardbron (gratis). Zet VITE_USE_FLICKR=true in .env.local om
-// tijdelijk terug te vallen op Flickr zolang de API key nog werkt (vereist Pro sinds 2025).
+// Twee bronnen: Wikimedia Commons (gratis, geen key) en Flickr (gratis account,
+// max 1024px). De gebruiker wisselt op runtime via de UI-toggle; VITE_USE_FLICKR
+// bepaalt alleen nog de standaardbron bij eerste gebruik.
 const USE_FLICKR_GEO = import.meta.env.VITE_USE_FLICKR === 'true';
-export const geoPhotoApiService = USE_FLICKR_GEO ? flickrApiService : commonsApiService;
-// Bron-identifier voor searchContext/labels, zodat UI en optimalisatie weten waar foto's vandaan komen
+
+// Bron-identifier (default) voor searchContext/labels, zodat UI en optimalisatie
+// weten waar foto's vandaan komen zolang de gebruiker niets heeft gekozen.
 export const GEO_PHOTO_SOURCE = USE_FLICKR_GEO ? 'flickr' : 'commons';
+
+const GEO_PHOTO_SERVICES = {
+    flickr: flickrApiService,
+    commons: commonsApiService,
+};
+
+// Resolver: geef de service voor de gekozen bron; val terug op de default.
+export const getGeoPhotoService = (source) =>
+    GEO_PHOTO_SERVICES[source] || GEO_PHOTO_SERVICES[GEO_PHOTO_SOURCE];
+
+// Backwards-compat: de default-service als losse export (nog gebruikt waar geen
+// expliciete bron wordt doorgegeven).
+export const geoPhotoApiService = getGeoPhotoService(GEO_PHOTO_SOURCE);
 
 // --- Supabase Service (Uses JS Client) ---
 // Wraps the Supabase call in an async function for TanStack Query.

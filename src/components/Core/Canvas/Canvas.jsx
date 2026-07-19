@@ -764,6 +764,12 @@ export default function Canvas({
                                            onPremiumSearch={
                                              handlers.handlePremiumSearch
                                            }
+                                           photoSource={
+                                             canvasState.photoSource
+                                           }
+                                           onPhotoSourceChange={
+                                             handlers.handlePhotoSourceChange
+                                           }
                                            onSetBackground={
                                              handlers.handleSetBackground
                                            }

@@ -27,6 +27,10 @@ export default function BackgroundControls({
                                                usePremiumSearch,
                                                setUsePremiumSearch,
 
+                                               // Geo-fotobron (flickr | commons)
+                                               photoSource,
+                                               onPhotoSourceChange,
+
                                                // Handlers
                                                onSearch,
                                                onOpenPhotoGrid,
@@ -66,6 +70,33 @@ export default function BackgroundControls({
           >
             🖼️ Kies achtergrond
           </button>
+
+          {/* Geo-fotobron kiezen: Wikimedia Commons (gratis, hi-res) of Flickr */}
+          {onPhotoSourceChange && (
+            <div className={styles.sourceToggle}>
+              <span className={styles.sourceToggleLabel}>Fotobron</span>
+              <div className={styles.sourceToggleButtons}>
+                <button
+                  type="button"
+                  className={photoSource === "commons" ? styles.sourceActive : ""}
+                  onClick={() => onPhotoSourceChange("commons")}
+                  aria-pressed={photoSource === "commons"}
+                  title="Wikimedia Commons: gratis, hoge resolutie, correcte licenties"
+                >
+                  🏛️ Commons
+                </button>
+                <button
+                  type="button"
+                  className={photoSource === "flickr" ? styles.sourceActive : ""}
+                  onClick={() => onPhotoSourceChange("flickr")}
+                  aria-pressed={photoSource === "flickr"}
+                  title="Flickr: gratis account, max 1024px"
+                >
+                  📸 Flickr
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Dropdown selections */}
           <div className={styles.controlRow}>

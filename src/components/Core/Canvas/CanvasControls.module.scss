@@ -870,3 +870,44 @@
   color: vars.$canvas-control-accent;
 }
 
+
+/* Fotobron-toggle: Wikimedia Commons <-> Flickr */
+.sourceToggle {
+  display:        flex;
+  align-items:    center;
+  gap:            8px;
+  margin:         8px 0 4px;
+}
+
+.sourceToggleLabel {
+  font-size:  0.8rem;
+  color:      vars.$canvas-control-text;
+  flex:       0 0 auto;
+}
+
+.sourceToggleButtons {
+  display:        flex;
+  flex:           1 1 auto;
+  gap:            4px;
+
+  button {
+    flex:          1 1 0;
+    padding:       6px 4px;
+    font-size:     0.78rem;
+    cursor:        pointer;
+    color:         vars.$canvas-control-text;
+    background:    vars.$canvas-control-input-bg;
+    border:        1px solid vars.$canvas-control-border;
+    border-radius: 4px;
+    transition:    background 0.15s ease, border-color 0.15s ease;
+
+    &:hover { border-color: vars.$canvas-control-accent; }
+  }
+}
+
+.sourceActive {
+  border-color: vars.$canvas-control-accent !important;
+  background:   vars.$canvas-control-accent !important;
+  color:        #fff !important;
+  font-weight:  600;
+}

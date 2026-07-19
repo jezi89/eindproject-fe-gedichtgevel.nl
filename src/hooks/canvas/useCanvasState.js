@@ -6,6 +6,7 @@ import { useFontManager } from "./useFontManager";
 import { usePexels } from "./usePexels";
 import { usePersistedState, PERSISTED_KEYS } from "./usePersistedState";
 import { useFlickr } from "./useFlickr";
+import { GEO_PHOTO_SOURCE } from "../../services/api/apiService";
 import { IMAGE_QUALITY_MODE } from "../../utils/imageOptimization";
 
 import { useWindowSize } from "../useWindowSize.js";
@@ -79,7 +80,12 @@ export function useCanvasState() {
   });
 
   const pexels = usePexels(orientation);
-  const flickr = useFlickr();
+  // Actieve geo-fotobron (flickr | commons); persistent zodat de keuze bewaard blijft
+  const [photoSource, setPhotoSource] = usePersistedState(
+    PERSISTED_KEYS.PHOTO_SOURCE,
+    GEO_PHOTO_SOURCE
+  );
+  const flickr = useFlickr(photoSource);
 
   const [searchContext, setSearchContext] = useState({
     type: "collection",
@@ -260,6 +266,8 @@ export function useCanvasState() {
     setTextEffectParams,
     searchContext,
     setSearchContext,
+    photoSource,
+    setPhotoSource,
 
     // Text Styling State
     fontSize,

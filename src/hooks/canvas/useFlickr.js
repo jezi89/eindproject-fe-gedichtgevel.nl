@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useFlickrSearchByGeo } from "../search/useFlickrSearchByGeo";
 import { useFlickrSearchByText } from "../search/useFlickrSearchByText";
 
-export function useFlickr() {
+export function useFlickr(source) {
     const [page, setPage] = useState(1);
     const [lastSearch, setLastSearch] = useState(null);
 
@@ -13,7 +13,7 @@ export function useFlickr() {
         isLoading: isGeoLoading,
         isError: isGeoError,
         error: geoError,
-    } = useFlickrSearchByGeo(lastSearch?.type === 'geo' ? lastSearch.params : null, page);
+    } = useFlickrSearchByGeo(lastSearch?.type === 'geo' ? lastSearch.params : null, page, source);
 
     const {
         photos: textPhotos,
@@ -21,7 +21,7 @@ export function useFlickr() {
         isLoading: isTextLoading,
         isError: isTextError,
         error: textError,
-    } = useFlickrSearchByText(lastSearch?.type === 'text' ? lastSearch.query : null, page);
+    } = useFlickrSearchByText(lastSearch?.type === 'text' ? lastSearch.query : null, page, source);
 
     const searchPhotosByGeo = useCallback((searchParams) => {
         setLastSearch({ type: 'geo', params: searchParams });

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { geoPhotoApiService } from '../../services/api/apiService';
+import { getGeoPhotoService } from '../../services/api/apiService';
 
 /**
  * Normalize Flickr photo object to ensure metadata and variant dimensions are preserved
@@ -102,7 +102,7 @@ function normalizeFlickrPhoto(photo) {
     };
 }
 
-export function useFlickrSearchByGeo(searchParams, page = 1) {
+export function useFlickrSearchByGeo(searchParams, page = 1, source) {
     const {
         data,
         isLoading,
@@ -110,8 +110,8 @@ export function useFlickrSearchByGeo(searchParams, page = 1) {
         error,
         isFetching,
     } = useQuery({
-        queryKey: ['geophotos', 'geo', searchParams, page],
-        queryFn: () => geoPhotoApiService.searchByGeo(searchParams, page),
+        queryKey: ['geophotos', 'geo', source, searchParams, page],
+        queryFn: () => getGeoPhotoService(source).searchByGeo(searchParams, page),
         enabled: !!searchParams,
     });
 

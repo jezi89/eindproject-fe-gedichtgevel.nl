@@ -65,6 +65,8 @@ export default function Controls({
                                      onSearch,
                                      onCitySearch,
                                      onPremiumSearch,
+                                     photoSource,
+                                     onPhotoSourceChange,
                                      onResetToCollection,
                                      onOpenPhotoGrid,
                                      onResetViewport,
@@ -374,6 +376,8 @@ export default function Controls({
                 handleDropdownSearch={handleDropdownSearch}
                 backgroundSectionOpen={backgroundSectionOpen}
                 setBackgroundSectionOpen={setBackgroundSectionOpen}
+                photoSource={photoSource}
+                onPhotoSourceChange={onPhotoSourceChange}
             />
 
             {/* Material & Background Controls */}
