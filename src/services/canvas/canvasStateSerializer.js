@@ -77,6 +77,12 @@ export function serializeCanvasState(canvasState, poemData = null) {
                 z: canvasState.skewZ ?? 0
             },
 
+            // Echte perspectiefprojectie (PerspectiveMesh) — graden -45..45, 0 = uit
+            perspective: {
+                x: canvasState.perspX ?? 0,
+                y: canvasState.perspY ?? 0
+            },
+
             // 3D transformations per line
             lineTransforms: canvasState.lineTransforms ?? {},
 
@@ -187,6 +193,10 @@ export function deserializeCanvasState(designSettings) {
             skewX: designSettings.containerSkew?.x ?? 0,
             skewY: designSettings.containerSkew?.y ?? 0,
             skewZ: designSettings.containerSkew?.z ?? 0,
+
+            // Perspectiefprojectie
+            perspX: designSettings.perspective?.x ?? 0,
+            perspY: designSettings.perspective?.y ?? 0,
 
             // 3D transforms
             lineTransforms: designSettings.lineTransforms || {},

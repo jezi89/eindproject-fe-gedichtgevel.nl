@@ -148,6 +148,14 @@ export default function Canvas({
                                          canvasState.setSkewY(
                                            savedCanvasState.skewY
                                          );
+                                       if (savedCanvasState.perspX !== undefined)
+                                         canvasState.setPerspX(
+                                           savedCanvasState.perspX
+                                         );
+                                       if (savedCanvasState.perspY !== undefined)
+                                         canvasState.setPerspY(
+                                           savedCanvasState.perspY
+                                         );
                                        // NOTE: moveMode is intentionally NOT restored - always start in "edit" mode for clarity
                                        // if (savedCanvasState.moveMode) canvasState.setMoveMode(savedCanvasState.moveMode);
                                      }, 50); // Small delay to ensure localStorage is cleared
