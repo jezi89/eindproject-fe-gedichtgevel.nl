@@ -4,10 +4,15 @@ import {useWindowSize} from "../useWindowSize.js";
 /**
  * Custom hook for responsive canvas sizing with fixed controls/nav widths
  */
+const MOBILE_BREAKPOINT = 768;
+
 export function useResponsiveCanvas() {
     const {width: windowWidth, height: windowHeight} = useWindowSize();
-    const [controlsVisible, setControlsVisible] = useState(true);
-    const [navVisible, setNavVisible] = useState(true);
+    // Op mobiel starten beide panelen dicht zodat het canvas direct zichtbaar is;
+    // de mobiele cycle-knop (☰) opent daarna Nav of Controls één voor één.
+    const startsMobile = () => (typeof window !== "undefined" ? window.innerWidth : 1920) <= MOBILE_BREAKPOINT;
+    const [controlsVisible, setControlsVisible] = useState(() => !startsMobile());
+    const [navVisible, setNavVisible] = useState(() => !startsMobile());
 
     const layout = useMemo(() => {
         const safeWindowWidth = windowWidth || 1920;

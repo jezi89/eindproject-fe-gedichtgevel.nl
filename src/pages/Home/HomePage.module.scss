@@ -418,6 +418,7 @@ a
 
 .uspContainer {
   display:   flex;
+  flex-wrap: wrap; // Kolommen hebben min-width 300px; laat ze stapelen i.p.v. overlopen (992-1100px bereik)
   max-width: 1600px;
   margin:    0 auto;
   padding:   0 $spacing-l;

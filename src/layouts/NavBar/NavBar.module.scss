@@ -2,6 +2,10 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as mixins;
 
+// De volledige desktop-nav (7 items + logo + auth) past pas vanaf ~1200px;
+// daaronder tonen we het mobiele menu om horizontale overflow te voorkomen.
+$nav-breakpoint: $screen-xl;
+
 // Navbar container - sticky header that works with natural flow
 .navbar {
   position:         sticky;
@@ -69,7 +73,7 @@
   max-width:       100%;
   padding:         $spacing-m $spacing-l; // Mobile padding
 
-  @include mixins.media-up($screen-md + 1px) { // Desktop: Logo | Nav | Auth
+  @include mixins.media-up($nav-breakpoint) { // Desktop: Logo | Nav | Auth
     display:               grid;
     align-items:           center;
     padding:               $spacing-m $spacing-xl; // Desktop padding
@@ -109,7 +113,7 @@
 .desktopNav {
   display: none; // Hidden on mobile
 
-  @include mixins.media-up($screen-md + 1px) {
+  @include mixins.media-up($nav-breakpoint) {
     display:         flex; // Use flex to center the UL inside this grid cell
     align-items:     center;
     justify-content: center;
@@ -122,15 +126,7 @@
   @include mixins.list-unstyled;
   display:     flex; // UL is a flex container for LIs
   align-items: center; // Vertically align LIs
-  gap:         clamp($spacing-s, 2.5vw, $spacing-l); // Gap between LIs, adjusted clamp
-
-  @include mixins.media-between($screen-md, $screen-lg) {
-    // zoom: 0.85;
-    // gap: clamp($spacing-xs, 2vw, $spacing-l);
-  }
-  @include mixins.media-between($screen-lg, $screen-xl) {
-    // zoom: 0.92;
-  }
+  gap:         clamp($spacing-xs, 1.25vw, $spacing-l); // Gap between LIs, adjusted clamp
 }
 
 // Individual nav link LI item
@@ -146,10 +142,13 @@
   .dropdownToggle {
     font-family:     $font-family-nav-item;
     // Mobile-first font size
-    font-size:       $font-size-l; 
+    font-size:       $font-size-l;
 
-    @include mixins.media-up($screen-md) {
-      font-size: $font-size-xl;
+    @include mixins.media-up($nav-breakpoint) {
+      // Vloeiend meeschalen zodat alle items op één regel blijven passen;
+      // bereikt $font-size-xl pas op zeer brede schermen (~2000px)
+      font-size: clamp($font-size-m, 1.1vw + 0.6rem, $font-size-xl);
+      padding:   $spacing-xs $spacing-s;
     }
 
     font-weight:     700; // Make text pop
@@ -200,7 +199,7 @@
 .desktopAuth {
   display: none; // Hidden on mobile
 
-  @include mixins.media-up($screen-md + 1px) {
+  @include mixins.media-up($nav-breakpoint) {
     display:         flex;
     justify-content: flex-end; // Aligns button to the right of this cell
   }
@@ -220,7 +219,7 @@
   align-items: center;
   gap:         $spacing-s;
 
-  @include mixins.media-up($screen-md + 1px) {
+  @include mixins.media-up($nav-breakpoint) {
     display: none; // Hidden on desktop
   }
 }
@@ -281,7 +280,7 @@
   background-color: $navbar-background;
   box-shadow:       -2px 0 8px rgba($neutral-black, 0.2);
 
-  @include mixins.media-up($screen-md + 1px) { display: none; }
+  @include mixins.media-up($nav-breakpoint) { display: none; }
 
   &.open { right: 0; }
 
@@ -335,7 +334,7 @@
   opacity:          0;
   background-color: rgba($neutral-black, 0.5);
 
-  @include mixins.media-up($screen-md + 1px) { display: none; }
+  @include mixins.media-up($nav-breakpoint) { display: none; }
 
   &.open { visibility: visible; opacity: 1; }
 }

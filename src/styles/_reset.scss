@@ -71,6 +71,7 @@ body {
   -moz-osx-font-smoothing: grayscale; // Voor Firefox op macOS
   text-rendering:          optimizeLegibility; // Algemene tekstoptimalisatie
   font-synthesis:          none; // Voorkomt synthetische vette of cursieve stijlen
+  overflow-x:              clip; // Full-bleed secties gebruiken 100vw (incl. scrollbar); voorkom horizontale scroll
   }
 
 /* ------------------------------------------------------- 
