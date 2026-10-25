@@ -20,7 +20,7 @@
     "axios": "^1.12.2",
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
-    "framer-motion": "^12.23.22",
+    "motion": "^12.23.22",
     "html-to-image": "^1.11.13",
     "pixi-filters": "^6.1.4",
     "pixi-viewport": "^6.0.3",
